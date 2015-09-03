@@ -18,6 +18,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initData(Bundle savedInstanceState);
 
+    public String toString() {
+        return TAG;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
