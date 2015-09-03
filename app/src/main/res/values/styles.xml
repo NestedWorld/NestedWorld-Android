@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TypefaceStyle">
+        <item name="typeface">ProximaNova-Reg.ttf</item>
+    </style>
+
+    <style name="TypefaceStyle.ProximaNova">
+        <item name="typeface">ProximaNova-Reg.ttf</item>
+    </style>
+
+    <style name="TypefaceStyle.ProximaNova.bold">
+        <item name="typeface">ProximaNova-Bold.ttf</item>
+    </style>
+
+    <style name="TypefaceStyle.ProximaNova.semibold">
+        <item name="typeface">ProximaNova-Sbold.ttf</item>
+    </style>
+
+    <style name="TypefaceStyle.ProximaNova.thin">
+        <item name="typeface">ProximaNova-Thin.ttf</item>
+    </style>
+
+    <style name="TypefaceStyle.ProximaNova.light">
+        <item name="typeface">ProximaNova-Light.ttf</item>
+    </style>
+</resources>
