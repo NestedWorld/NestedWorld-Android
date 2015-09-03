@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FontManager {
-    private static FontManager instance;
+    private static FontManager instance = null;
 
     private AssetManager mgr;
 
@@ -23,7 +23,10 @@ public class FontManager {
         instance = new FontManager(mgr);
     }
 
-    public static FontManager getInstance() {
+    public static FontManager getInstance(AssetManager mgr) {
+        if (instance == null) {
+            init(mgr);
+        }
         return instance;
     }
 
