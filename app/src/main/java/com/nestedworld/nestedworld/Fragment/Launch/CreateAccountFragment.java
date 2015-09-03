@@ -28,7 +28,7 @@ public class CreateAccountFragment extends BaseFragment {
      */
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
+        fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
         fragmentTransaction.replace(R.id.container, new CreateAccountFragment());
         fragmentTransaction.addToBackStack("CreateAccountFragment");
         fragmentTransaction.commit();
