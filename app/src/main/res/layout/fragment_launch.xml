@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearlayout_bottom"
         android:layout_alignParentTop="true"
+        android:scaleType="fitCenter"
         android:src="@drawable/logo"/>
 
     <LinearLayout
@@ -19,8 +20,9 @@
         android:padding="8dip"
         android:weightSum="2">
 
-        <Button
+        <com.nestedworld.nestedworld.CustomWidget.Typeface.Button
             android:id="@+id/button_login"
+            style="@style/TypefaceStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -28,8 +30,9 @@
             android:gravity="center"
             android:text="Connexion"/>
 
-        <Button
+        <com.nestedworld.nestedworld.CustomWidget.Typeface.Button
             android:id="@+id/button_inscription"
+            style="@style/TypefaceStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
