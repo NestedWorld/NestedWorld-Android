@@ -7,9 +7,18 @@ import com.nestedworld.nestedworld.R;
 
 public class LoginActivity extends BaseActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected int getLayoutResource() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initVariable(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        
     }
 }
 
