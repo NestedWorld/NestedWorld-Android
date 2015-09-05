@@ -1,17 +1,23 @@
-package com.nestedworld.nestedworld.activity.Launch;
+package com.nestedworld.nestedworld.activity.launch;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.nestedworld.nestedworld.activity.Base.BaseActivity;
-import com.nestedworld.nestedworld.activity.MainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.fragment.Launch.LaunchFragment;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activity.Base.BaseActivity;
+import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
+import com.nestedworld.nestedworld.fragment.launch.LaunchFragment;
 
 import butterknife.Bind;
 
 public class LaunchActivity extends BaseActivity {
+    /*
+    ** ButterKnife
+     */
+    @Bind(R.id.default_background)
+    ImageView mImageViewBackground;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_empty;
@@ -32,12 +38,6 @@ public class LaunchActivity extends BaseActivity {
             startActivity(MainMenuActivity.class);
         }
     }
-
-    /*
-    ** ButterKnife
-     */
-    @Bind(R.id.default_background)
-    ImageView mImageViewBackground;
 
     /*
     ** Utils

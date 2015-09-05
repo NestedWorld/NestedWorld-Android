@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.api.Implementation;
+package com.nestedworld.nestedworld.api.implementation;
 
 import android.content.Context;
 
@@ -12,21 +12,10 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
 public class NestedWorldApi {
+    private static com.nestedworld.nestedworld.api.implementation.NestedWorldApi mSingleton;
     private final String TAG = getClass().getSimpleName();
-
-    private static com.nestedworld.nestedworld.api.Implementation.NestedWorldApi mSingleton;
     private Context mContext;
     private NestedWorldApiInterface mClient;
-
-    /*
-    ** Singleton
-     */
-    public static com.nestedworld.nestedworld.api.Implementation.NestedWorldApi getInstance(final Context context) {
-        if (mSingleton == null) {
-            mSingleton = new com.nestedworld.nestedworld.api.Implementation.NestedWorldApi(context);
-        }
-        return mSingleton;
-    }
 
     /*
     ** Constructor
@@ -38,6 +27,16 @@ public class NestedWorldApi {
 
         //init API
         mContext = context;
+    }
+
+    /*
+    ** Singleton
+     */
+    public static com.nestedworld.nestedworld.api.implementation.NestedWorldApi getInstance(final Context context) {
+        if (mSingleton == null) {
+            mSingleton = new com.nestedworld.nestedworld.api.implementation.NestedWorldApi(context);
+        }
+        return mSingleton;
     }
 
     private void init() {

@@ -20,7 +20,7 @@
         android:padding="8dip"
         android:weightSum="2">
 
-        <com.nestedworld.nestedworld.customWidget.Typeface.Button
+        <com.nestedworld.nestedworld.customWidget.typeface.Button
             android:id="@+id/button_login"
             style="@style/TypefaceStyle"
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:text="Connexion"/>
 
-        <com.nestedworld.nestedworld.customWidget.Typeface.Button
+        <com.nestedworld.nestedworld.customWidget.typeface.Button
             android:id="@+id/button_inscription"
             style="@style/TypefaceStyle"
             android:layout_width="wrap_content"

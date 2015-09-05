@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.fragment.Base;
+package com.nestedworld.nestedworld.fragment.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

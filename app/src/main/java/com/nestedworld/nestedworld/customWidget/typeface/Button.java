@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.customWidget.Typeface;
+package com.nestedworld.nestedworld.customWidget.typeface;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.utils.Typeface.FontManager;
+import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
 public class Button extends com.rey.material.widget.Button {
     public Button(Context context) {

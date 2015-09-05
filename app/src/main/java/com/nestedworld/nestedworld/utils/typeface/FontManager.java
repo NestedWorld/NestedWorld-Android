@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.utils.Typeface;
+package com.nestedworld.nestedworld.utils.typeface;
 
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
