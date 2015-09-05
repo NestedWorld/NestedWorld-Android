@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activity.Base.BaseActivity;
+import com.nestedworld.nestedworld.activity.base.BaseActivity;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.fragment.launch.LaunchFragment;
 

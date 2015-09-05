@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.activity.mainMenu;
 import android.os.Bundle;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activity.Base.BaseActivity;
+import com.nestedworld.nestedworld.activity.base.BaseActivity;
 
 public class MainMenuActivity extends BaseActivity {
     @Override

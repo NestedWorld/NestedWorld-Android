@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.activity.Base;
+package com.nestedworld.nestedworld.activity.base;
 
 import android.content.Context;
 import android.content.Intent;
