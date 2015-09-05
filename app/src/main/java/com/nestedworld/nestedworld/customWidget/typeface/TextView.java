@@ -1,7 +1,14 @@
 package com.nestedworld.nestedworld.customWidget.typeface;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
 public class TextView extends com.rey.material.widget.TextView {
 
@@ -10,7 +17,7 @@ public class TextView extends com.rey.material.widget.TextView {
     }
 
     public TextView(final Context context, final AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, android.R.attr.editTextStyle);
     }
 
     public TextView(final Context context, final AttributeSet attrs, final int defStyle) {
@@ -21,6 +28,19 @@ public class TextView extends com.rey.material.widget.TextView {
             return;
         }
 
-        //TODO appliquer la typeface
+        final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TypefaceStyle);
+
+        if (array != null) {
+            final String typefaceName = array.getString(R.styleable.TypefaceStyle_typeface);
+
+            if (!TextUtils.isEmpty(typefaceName)) {
+                final Typeface typeface = FontManager.getInstance(context.getAssets()).getFont(typefaceName);
+                setTypeface(typeface);
+
+                //Ajout d'un flag qui permet d'avoir un affichage correct de la police
+                setPaintFlags(getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
+            }
+            array.recycle();
+        }
     }
 }

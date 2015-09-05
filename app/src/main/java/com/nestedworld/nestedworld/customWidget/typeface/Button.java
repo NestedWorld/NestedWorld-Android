@@ -16,7 +16,7 @@ public class Button extends com.rey.material.widget.Button {
     }
 
     public Button(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.buttonStyle);
+        this(context, attrs, android.R.attr.buttonStyle);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyleAttr) {
