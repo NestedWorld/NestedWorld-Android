@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.Api.Implementation;
+package com.nestedworld.nestedworld.api.Implementation;
 
 import com.nestedworld.nestedworld.BuildConfig;
 

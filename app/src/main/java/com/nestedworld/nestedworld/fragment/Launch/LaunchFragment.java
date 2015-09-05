@@ -1,11 +1,11 @@
-package com.nestedworld.nestedworld.Fragment.Launch;
+package com.nestedworld.nestedworld.fragment.Launch;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Button;
 
-import com.nestedworld.nestedworld.Fragment.Base.BaseFragment;
+import com.nestedworld.nestedworld.fragment.Base.BaseFragment;
 import com.nestedworld.nestedworld.R;
 
 import butterknife.OnClick;

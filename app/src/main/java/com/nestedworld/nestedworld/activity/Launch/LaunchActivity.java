@@ -1,12 +1,12 @@
-package com.nestedworld.nestedworld.Activity.Launch;
+package com.nestedworld.nestedworld.activity.Launch;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.nestedworld.nestedworld.Activity.Base.BaseActivity;
-import com.nestedworld.nestedworld.Activity.MainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.Fragment.Launch.LaunchFragment;
+import com.nestedworld.nestedworld.activity.Base.BaseActivity;
+import com.nestedworld.nestedworld.activity.MainMenu.MainMenuActivity;
+import com.nestedworld.nestedworld.fragment.Launch.LaunchFragment;
 import com.nestedworld.nestedworld.R;
 
 import butterknife.Bind;

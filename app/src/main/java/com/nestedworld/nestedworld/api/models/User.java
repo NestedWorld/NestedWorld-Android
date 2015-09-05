@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.Api.models;
+package com.nestedworld.nestedworld.api.models;
 
 import java.io.Serializable;
 

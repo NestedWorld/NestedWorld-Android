@@ -1,8 +1,8 @@
-package com.nestedworld.nestedworld.Activity.MainMenu;
+package com.nestedworld.nestedworld.activity.MainMenu;
 
 import android.os.Bundle;
 
-import com.nestedworld.nestedworld.Activity.Base.BaseActivity;
+import com.nestedworld.nestedworld.activity.Base.BaseActivity;
 import com.nestedworld.nestedworld.R;
 
 public class MainMenuActivity extends BaseActivity {

@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.CustomWidget.Typeface;
+package com.nestedworld.nestedworld.customWidget.Typeface;
 
 import android.content.Context;
 import android.util.AttributeSet;

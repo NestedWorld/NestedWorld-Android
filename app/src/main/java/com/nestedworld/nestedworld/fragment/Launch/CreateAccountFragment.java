@@ -1,10 +1,10 @@
-package com.nestedworld.nestedworld.Fragment.Launch;
+package com.nestedworld.nestedworld.fragment.Launch;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.nestedworld.nestedworld.Fragment.Base.BaseFragment;
+import com.nestedworld.nestedworld.fragment.Base.BaseFragment;
 import com.nestedworld.nestedworld.R;
 
 public class CreateAccountFragment extends BaseFragment {

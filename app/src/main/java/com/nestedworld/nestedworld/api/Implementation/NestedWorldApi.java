@@ -1,8 +1,8 @@
-package com.nestedworld.nestedworld.Api.Implementation;
+package com.nestedworld.nestedworld.api.Implementation;
 
 import android.content.Context;
 
-import com.nestedworld.nestedworld.Api.models.User;
+import com.nestedworld.nestedworld.api.models.User;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -14,16 +14,16 @@ import retrofit.http.POST;
 public class NestedWorldApi {
     private final String TAG = getClass().getSimpleName();
 
-    private static com.nestedworld.nestedworld.Api.Implementation.NestedWorldApi mSingleton;
+    private static com.nestedworld.nestedworld.api.Implementation.NestedWorldApi mSingleton;
     private Context mContext;
     private NestedWorldApiInterface mClient;
 
     /*
     ** Singleton
      */
-    public static com.nestedworld.nestedworld.Api.Implementation.NestedWorldApi getInstance(final Context context) {
+    public static com.nestedworld.nestedworld.api.Implementation.NestedWorldApi getInstance(final Context context) {
         if (mSingleton == null) {
-            mSingleton = new com.nestedworld.nestedworld.Api.Implementation.NestedWorldApi(context);
+            mSingleton = new com.nestedworld.nestedworld.api.Implementation.NestedWorldApi(context);
         }
         return mSingleton;
     }
@@ -45,8 +45,11 @@ public class NestedWorldApi {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                //TODO completer headers
-                //request.addHeader("key", "value");
+                //TODO completer les header
+                request.addHeader("X-User-Id", "userId");
+                request.addHeader("X-User-Email", "userEmail");
+                request.addHeader("X-User-Token", "authentificationToken");
+                request.addHeader("X-User-Push-Token", "pushToken");
             }
         };
 
