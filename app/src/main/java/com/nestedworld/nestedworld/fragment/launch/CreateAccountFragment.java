@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
+import butterknife.OnClick;
+
 public class CreateAccountFragment extends BaseFragment {
     /*
     ** Utils
@@ -19,6 +21,9 @@ public class CreateAccountFragment extends BaseFragment {
         fragmentTransaction.commit();
     }
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_create_account;
@@ -32,5 +37,13 @@ public class CreateAccountFragment extends BaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
 
+    }
+
+    /*
+    ** ButterKnife
+     */
+    @OnClick(R.id.nav_back)
+    public void back() {
+        getActivity().onBackPressed();
     }
 }

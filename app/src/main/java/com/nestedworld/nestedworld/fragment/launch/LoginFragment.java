@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
+import butterknife.OnClick;
+
 public class LoginFragment extends BaseFragment {
     /*
     ** Utils
@@ -19,6 +21,9 @@ public class LoginFragment extends BaseFragment {
         fragmentTransaction.commit();
     }
 
+    /*
+    ** Life Cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_login;
@@ -32,5 +37,13 @@ public class LoginFragment extends BaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
 
+    }
+
+    /*
+    ** ButterKnife
+     */
+    @OnClick(R.id.nav_back)
+    public void back() {
+        getActivity().onBackPressed();
     }
 }
