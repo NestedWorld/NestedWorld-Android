@@ -6,6 +6,9 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseActivity;
 
 public class MainMenuActivity extends BaseActivity {
+    /*
+    ** Life cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_empty;
@@ -18,6 +21,6 @@ public class MainMenuActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        //TODO charger le fragment
+        //TODO load the mainMenu fragment
     }
 }

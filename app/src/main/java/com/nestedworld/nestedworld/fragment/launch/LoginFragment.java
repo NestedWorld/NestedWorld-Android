@@ -10,9 +10,7 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import butterknife.OnClick;
 
 public class LoginFragment extends BaseFragment {
-    /*
-    ** Utils
-     */
+
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);

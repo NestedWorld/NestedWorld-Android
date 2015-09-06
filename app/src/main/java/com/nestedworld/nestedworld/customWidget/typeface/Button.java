@@ -11,6 +11,10 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
 public class Button extends com.rey.material.widget.Button {
+
+    /*
+    ** Constructor
+     */
     public Button(Context context) {
         this(context, null);
     }
@@ -26,11 +30,17 @@ public class Button extends com.rey.material.widget.Button {
     public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        //Permet d'éviter le crash dans Android studio / ADT interface builder
+        //Avoid crash under interface build
         if (this.isInEditMode()) {
             return;
         }
+        applyTypeface(context, attrs);
+    }
 
+    /*
+    ** Utils
+     */
+    private void applyTypeface(final Context context, final AttributeSet attrs) {
         final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TypefaceStyle);
 
         if (array != null) {
@@ -40,10 +50,11 @@ public class Button extends com.rey.material.widget.Button {
                 final Typeface typeface = FontManager.getInstance(context.getAssets()).getFont(typefaceName);
                 setTypeface(typeface);
 
-                //Ajout d'un flag qui permet d'avoir un affichage correct de la police
+                //Render Optimisation
                 setPaintFlags(getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
             }
             array.recycle();
         }
     }
+
 }

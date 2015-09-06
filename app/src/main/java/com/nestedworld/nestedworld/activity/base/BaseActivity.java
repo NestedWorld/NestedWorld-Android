@@ -9,8 +9,8 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    protected final String TAG = getClass().getSimpleName();
     protected Context mContext;
-    protected String TAG = getClass().getSimpleName();
 
     protected abstract int getLayoutResource();
 

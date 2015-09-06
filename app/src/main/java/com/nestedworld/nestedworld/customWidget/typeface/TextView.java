@@ -12,6 +12,9 @@ import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
 public class TextView extends com.rey.material.widget.TextView {
 
+    /*
+    ** Constructor
+     */
     public TextView(final Context context) {
         this(context, null);
     }
@@ -23,11 +26,18 @@ public class TextView extends com.rey.material.widget.TextView {
     public TextView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
-        //Permet d'éviter le crash dans Android studio / ADT interface builder
+        //Avoid crash under interface build
         if (this.isInEditMode()) {
             return;
         }
 
+        applyTypeface(context, attrs);
+    }
+
+    /*
+    ** Utils
+     */
+    private void applyTypeface(final Context context, final AttributeSet attrs) {
         final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TypefaceStyle);
 
         if (array != null) {
@@ -37,7 +47,7 @@ public class TextView extends com.rey.material.widget.TextView {
                 final Typeface typeface = FontManager.getInstance(context.getAssets()).getFont(typefaceName);
                 setTypeface(typeface);
 
-                //Ajout d'un flag qui permet d'avoir un affichage correct de la police
+                //Render Optimisation
                 setPaintFlags(getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
             }
             array.recycle();

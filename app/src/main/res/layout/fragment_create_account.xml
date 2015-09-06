@@ -7,16 +7,18 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:contentDescription="@string/desc"
         android:scaleType="fitCenter"
         android:src="@drawable/logo"/>
 
     <ImageButton
+        android:contentDescription="@string/desc"
         android:id="@+id/nav_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
-        android:padding="8dip"
+        android:padding="@dimen/global_padding"
         android:src="@drawable/navigate_before"/>
 
     <ScrollView
@@ -40,7 +42,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dip"
                 android:gravity="center"
-                android:padding="8dip"
+                android:padding="@dimen/global_padding"
                 android:text="Rejoignez nous !"
                 android:textColor="@color/apptheme_color"
                 android:textSize="22sp"/>
@@ -56,7 +58,7 @@
                 android:gravity="center"
                 android:hint="Saisissez votre adresse email"
                 android:inputType="textEmailAddress"
-                android:padding="8dip"
+                android:padding="@dimen/global_padding"
                 auto:et_inputId="@+id/editText_userEmail"/>
 
             <com.nestedworld.nestedworld.customWidget.typeface.EditText
@@ -70,7 +72,7 @@
                 android:gravity="center"
                 android:hint="Mot de passe"
                 android:inputType="textPassword"
-                android:padding="8dip"
+                android:padding="@dimen/global_padding"
                 auto:et_inputId="@+id/editText_userPassword"/>
 
             <com.nestedworld.nestedworld.customWidget.typeface.Button
@@ -93,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="8dip"
+                android:padding="@dimen/global_padding"
                 android:text="En cliquant sur 'inscription' vous acceptez les Conditions générales d'utilisation."
                 android:textColor="@color/apptheme_color"
                 android:textSize="16sp"/>

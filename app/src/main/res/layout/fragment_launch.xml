@@ -9,6 +9,7 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:contentDescription="@string/desc"
         android:scaleType="fitCenter"
         android:src="@drawable/logo"/>
 
@@ -17,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="8dip"
+        android:padding="@dimen/global_padding"
         android:weightSum="2">
 
         <com.nestedworld.nestedworld.customWidget.typeface.Button

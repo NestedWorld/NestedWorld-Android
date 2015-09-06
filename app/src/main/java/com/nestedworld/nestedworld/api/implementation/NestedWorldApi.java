@@ -47,7 +47,7 @@ public class NestedWorldApi {
                 //TODO completer les header
                 request.addHeader("X-User-Id", "userId");
                 request.addHeader("X-User-Email", "userEmail");
-                request.addHeader("X-User-Token", "authentificationToken");
+                request.addHeader("X-User-Token", "authenticationToken");
                 request.addHeader("X-User-Push-Token", "pushToken");
             }
         };

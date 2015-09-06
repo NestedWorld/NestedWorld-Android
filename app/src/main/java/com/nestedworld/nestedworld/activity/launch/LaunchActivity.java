@@ -18,6 +18,9 @@ public class LaunchActivity extends BaseActivity {
     @Bind(R.id.default_background)
     ImageView mImageViewBackground;
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_empty;
@@ -47,4 +50,3 @@ public class LaunchActivity extends BaseActivity {
         return false;
     }
 }
-

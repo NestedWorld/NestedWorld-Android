@@ -20,7 +20,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar {
     private Typeface mTypeface;
 
     /*
-    ** Constructeur
+    ** Constructor
      */
     public Toolbar(Context context) {
         this(context, null);
@@ -41,7 +41,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar {
     }
 
     /*
-    ** On override les methodes lié au titre
+    ** override every method linked to the title
      */
     @Override
     public void setTitleTextColor(int color) {

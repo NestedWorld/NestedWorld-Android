@@ -10,13 +10,13 @@ import java.util.Map;
 public class FontManager {
     private static FontManager instance = null;
 
-    private AssetManager mgr;
+    private final AssetManager mgr;
 
-    private Map<String, Typeface> fonts;
+    private final Map<String, Typeface> fonts;
 
     private FontManager(AssetManager _mgr) {
         mgr = _mgr;
-        fonts = new HashMap<String, Typeface>();
+        fonts = new HashMap<>();
     }
 
     public static void init(AssetManager mgr) {
