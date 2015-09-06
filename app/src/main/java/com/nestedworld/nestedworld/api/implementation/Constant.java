@@ -3,11 +3,11 @@ package com.nestedworld.nestedworld.api.implementation;
 import com.nestedworld.nestedworld.BuildConfig;
 
 public class Constant {
-    public final static String BASE_URL = BuildConfig.DEBUG ? "" : "";
-    public final static String API_VERSION = "v0";
+    public final static String BASE_URL = BuildConfig.DEBUG ? "http://eip-api.kokakiwi.net/" : "http://eip-api.kokakiwi.net/";
+    public final static String API_VERSION = "v1";
 
-    public static final String USER_SIGN_UP = "/users/sign_up";
-    public static final String USER_SIGN_IN = "/users/sign_in";
-    public static final String USER_SIGN_OUT = "/users/sign_out";
-    public static final String RESET_PASSWORD_URL = "/users/password";
+    public final static String BASE_END_POINT = BASE_URL + API_VERSION;
+
+    public static final String USER_SIGN_IN = "/user/auth/login/simple";
+    public static final String USER_SIGN_UP = "";
 }

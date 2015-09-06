@@ -12,10 +12,10 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
 public class NestedWorldApi {
-    private static com.nestedworld.nestedworld.api.implementation.NestedWorldApi mSingleton;
+    private static NestedWorldApi mSingleton;
     private final String TAG = getClass().getSimpleName();
     private Context mContext;
-    private NestedWorldApiInterface mClient;
+    private ApiInterface mClient;
 
     /*
     ** Constructor
@@ -27,14 +27,15 @@ public class NestedWorldApi {
 
         //init API
         mContext = context;
+        init();
     }
 
     /*
     ** Singleton
      */
-    public static com.nestedworld.nestedworld.api.implementation.NestedWorldApi getInstance(final Context context) {
+    public static NestedWorldApi getInstance(final Context context) {
         if (mSingleton == null) {
-            mSingleton = new com.nestedworld.nestedworld.api.implementation.NestedWorldApi(context);
+            mSingleton = new NestedWorldApi(context);
         }
         return mSingleton;
     }
@@ -44,7 +45,7 @@ public class NestedWorldApi {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                //TODO completer les header
+                //TODO completer les header avec les bonnes valeurs
                 request.addHeader("X-User-Id", "userId");
                 request.addHeader("X-User-Email", "userEmail");
                 request.addHeader("X-User-Token", "authenticationToken");
@@ -52,32 +53,46 @@ public class NestedWorldApi {
             }
         };
 
-        // Add interceptor when building adapter
+        // Add request interceptor when building adapter
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constant.BASE_URL)
+                .setEndpoint(Constant.BASE_END_POINT)
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setRequestInterceptor(requestInterceptor)
                 .build();
-        mClient = restAdapter.create(NestedWorldApiInterface.class);
+        mClient = restAdapter.create(ApiInterface.class);
     }
 
     /*
     ** Interface implementation
      */
-    public void signUp(final User user, final Callback<User> callback) {
-        mClient.signUp(user.getEmail(), user.getPassword(), callback);
+    public void signUp(final String email, final String password, final Callback<User> callback) {
+        //TODO mettre le bon app_token
+        mClient.signUp(email, password, "test", callback);
+    }
+
+    public void signIn(final String email, final String password, final Callback<User> callback) {
+        //TODO mettre le bon app_token
+        mClient.signUp(email, password, "test", callback);
     }
 
     /*
     ** Interface
      */
-
-    public interface NestedWorldApiInterface {
+    public interface ApiInterface {
         @POST(Constant.USER_SIGN_UP)
         @FormUrlEncoded
         void signUp(
-                @Field("user[email]") String email,
-                @Field("user[password]") String password,
+                @Field("email") String email,
+                @Field("password") String password,
+                @Field("app_token") String app_token,
+                Callback<User> callback);
+
+        @POST(Constant.USER_SIGN_IN)
+        @FormUrlEncoded
+        void signIn(
+                @Field("email") String email,
+                @Field("password") String password,
+                @Field("app_token") String app_token,
                 Callback<User> callback);
     }
 }

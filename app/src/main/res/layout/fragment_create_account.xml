@@ -76,7 +76,7 @@
                 auto:et_inputId="@+id/editText_userPassword"/>
 
             <com.nestedworld.nestedworld.customWidget.typeface.Button
-                android:id="@+id/button_login"
+                android:id="@+id/button_inscription"
                 style="@style/TypefaceStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

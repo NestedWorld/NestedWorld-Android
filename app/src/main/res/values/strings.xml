@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">NestedWorld</string>
     <string name="desc">description</string>
+    <string name="email_invalid">Votre email est invalide !</string>
+    <string name="password_invalid">Votre mot de passe est trop court !</string>
 </resources>

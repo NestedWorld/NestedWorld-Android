@@ -3,11 +3,18 @@ package com.nestedworld.nestedworld.fragment.launch;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.EditText;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
+import butterknife.Bind;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginFragment extends BaseFragment {
 
@@ -43,5 +50,31 @@ public class LoginFragment extends BaseFragment {
     @OnClick(R.id.nav_back)
     public void back() {
         getActivity().onBackPressed();
+    }
+
+    @Bind(R.id.editText_userEmail)
+    EditText etEmail;
+
+    @Bind(R.id.editText_userPassword)
+    EditText etPassword;
+
+    @OnClick(R.id.button_login)
+    public void login() {
+        //TODO ajouter un spinner de chargement pendant la requete
+
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
+
+        NestedWorldApi.getInstance(getContext()).signIn(email, password, new Callback<User>() {
+            @Override
+            public void success(User user, Response response) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 }
