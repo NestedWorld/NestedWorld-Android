@@ -12,12 +12,12 @@
         android:src="@drawable/logo"/>
 
     <ImageButton
-        android:contentDescription="@string/desc"
         android:id="@+id/nav_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
+        android:contentDescription="@string/desc"
         android:padding="@dimen/global_padding"
         android:src="@drawable/navigate_before"/>
 

@@ -6,10 +6,10 @@
              android:fitsSystemWindows="true">
 
     <ImageView
-        android:contentDescription="@string/desc"
         android:id="@+id/default_background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:contentDescription="@string/desc"
         android:scaleType="centerCrop"
         android:visibility="gone"/>
 
