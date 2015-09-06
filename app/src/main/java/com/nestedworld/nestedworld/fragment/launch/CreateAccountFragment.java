@@ -10,6 +10,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.rey.material.widget.ProgressView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +22,13 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class CreateAccountFragment extends BaseFragment {
+
+    @Bind(R.id.editText_userEmail)
+    EditText etEmail;
+    @Bind(R.id.editText_userPassword)
+    EditText etPassword;
+    @Bind(R.id.progressView)
+    ProgressView progressView;
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -56,12 +64,6 @@ public class CreateAccountFragment extends BaseFragment {
         getActivity().onBackPressed();
     }
 
-    @Bind(R.id.editText_userEmail)
-    EditText etEmail;
-
-    @Bind(R.id.editText_userPassword)
-    EditText etPassword;
-
     @OnClick(R.id.button_inscription)
     public void createAccount() {
         final String email = etEmail.getText().toString();
@@ -76,17 +78,17 @@ public class CreateAccountFragment extends BaseFragment {
     ** Utils
      */
     private void createAccount(final String email, final String password) {
-        //TODO ajouter un spinner de chargement pendant la requete
+        progressView.start();
 
         NestedWorldApi.getInstance(getContext()).signUp(email, password, new Callback<User>() {
             @Override
             public void success(User user, Response response) {
-
+                progressView.stop();
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                progressView.stop();
             }
         });
     }

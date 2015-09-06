@@ -9,6 +9,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -17,6 +18,12 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class LoginFragment extends BaseFragment {
+
+    @Bind(R.id.editText_userEmail)
+    EditText etEmail;
+    @Bind(R.id.editText_userPassword)
+    EditText etPassword;
+    ProgressView progressView;
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -52,15 +59,10 @@ public class LoginFragment extends BaseFragment {
         getActivity().onBackPressed();
     }
 
-    @Bind(R.id.editText_userEmail)
-    EditText etEmail;
-
-    @Bind(R.id.editText_userPassword)
-    EditText etPassword;
-
     @OnClick(R.id.button_login)
     public void login() {
-        //TODO ajouter un spinner de chargement pendant la requete
+
+        progressView.start();
 
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
@@ -68,12 +70,12 @@ public class LoginFragment extends BaseFragment {
         NestedWorldApi.getInstance(getContext()).signIn(email, password, new Callback<User>() {
             @Override
             public void success(User user, Response response) {
-
+                progressView.stop();
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                progressView.stop();
             }
         });
     }
