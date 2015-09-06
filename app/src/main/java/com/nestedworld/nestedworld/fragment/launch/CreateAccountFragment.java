@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
@@ -84,11 +85,13 @@ public class CreateAccountFragment extends BaseFragment {
             @Override
             public void success(User user, Response response) {
                 progressView.stop();
+                Toast.makeText(getContext(), "CreateAccount successfull", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 progressView.stop();
+                Toast.makeText(getContext(), "CreateAccount failed", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -98,11 +101,11 @@ public class CreateAccountFragment extends BaseFragment {
      */
     private boolean checkInput(final String email, final String password) {
         if (!checkEmailFormat(email)) {
-            etEmail.setError(getString(R.string.email_invalid));
+            etEmail.setError(getString(R.string.editText_email_invalid));
             return false;
         }
         else if (!checkPasswordFormat(password)) {
-            etPassword.setError(getString(R.string.password_invalid));
+            etPassword.setError(getString(R.string.editText_password_invalid));
             return false;
         }
         return true;
