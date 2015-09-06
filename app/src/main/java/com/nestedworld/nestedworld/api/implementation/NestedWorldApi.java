@@ -72,7 +72,7 @@ public class NestedWorldApi {
 
     public void signIn(final String email, final String password, final Callback<User> callback) {
         //TODO mettre le bon app_token
-        mClient.signUp(email, password, "test", callback);
+        mClient.signIn(email, password, "test", callback);
     }
 
     /*
