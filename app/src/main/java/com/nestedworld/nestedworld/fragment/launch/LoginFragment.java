@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
@@ -71,11 +72,13 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void success(User user, Response response) {
                 progressView.stop();
+                Toast.makeText(getContext(), "Login successfull", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 progressView.stop();
+                Toast.makeText(getContext(), "Login failed", Toast.LENGTH_LONG).show();
             }
         });
     }
