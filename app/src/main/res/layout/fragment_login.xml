@@ -1,104 +1,102 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context=".LoginActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo"/>
+
+    <ImageView
+        android:id="@+id/nav_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
+        android:clickable="true"
+        android:src="@android:drawable/ic_media_previous"/>
 
     <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/nav_back">
+
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/plus_sign_in_button"
+            <com.nestedworld.nestedworld.customWidget.typeface.TextView
+                android:id="@+id/textView"
+                style="@style/TypefaceStyle.ProximaNova.semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dip"
+                android:gravity="center"
+                android:padding="8dip"
+                android:text="Connectez-vous à votre espace personnel"
+                android:textColor="@color/apptheme_color"
+                android:textSize="22sp"/>
+
+            <com.nestedworld.nestedworld.customWidget.typeface.EditText
+                android:id="@+id/textField_userEmail"
+                style="@style/TypefaceStyle.ProximaNova"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"/>
+                android:layout_margin="8dip"
+                android:layout_marginTop="30dip"
+                android:background="#AAEEEEEE"
+                android:gravity="center"
+                android:hint="Saisissez votre adresse email"
+                android:inputType="textEmailAddress"
+                android:padding="8dip"
+                auto:et_inputId="@+id/editText_userEmail"/>
 
-            <LinearLayout
-                android:id="@+id/plus_sign_out_buttons"
+            <com.nestedworld.nestedworld.customWidget.typeface.EditText
+                android:id="@+id/textField_userPassword"
+                style="@style/TypefaceStyle.ProximaNova"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:weightSum="2">
+                android:layout_margin="8dip"
+                android:layout_marginTop="30dip"
+                android:background="#AAEEEEEE"
+                android:gravity="center"
+                android:hint="Mot de passe"
+                android:inputType="textPassword"
+                android:padding="8dip"
+                auto:et_inputId="@+id/editText_userPassword"/>
 
-                <Button
-                    android:id="@+id/plus_sign_out_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/plus_sign_out"/>
-
-                <Button
-                    android:id="@+id/plus_disconnect_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/plus_disconnect"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/email_login_form"
-                android:layout_width="match_parent"
+            <com.nestedworld.nestedworld.customWidget.typeface.Button
+                android:id="@+id/button_login"
+                style="@style/TypefaceStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dip"
+                android:layout_marginTop="30dip"
+                android:paddingLeft="30dip"
+                android:paddingRight="30dip"
+                android:text="Connexion"
+                android:textColor="@color/white"
+                auto:rd_enable="true"/>
 
-                <AutoCompleteTextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"/>
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true"/>
-
-                <Button
-                    android:id="@+id/email_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/action_sign_in"
-                    android:textStyle="bold"/>
-
-            </LinearLayout>
+            <com.nestedworld.nestedworld.customWidget.typeface.TextView
+                android:id="@+id/textView_forgotPassword"
+                style="@style/TypefaceStyle.ProximaNova.thin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dip"
+                android:text="Mot de passe oublié ?"
+                android:textColor="@color/apptheme_color"
+                android:textSize="16sp"/>
         </LinearLayout>
+
     </ScrollView>
 
-</LinearLayout>
-
+</RelativeLayout>

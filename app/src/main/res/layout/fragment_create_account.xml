@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:auto="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo"/>
+
+    <ImageView
+        android:id="@+id/nav_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@android:drawable/ic_media_previous"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/nav_back">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <com.nestedworld.nestedworld.customWidget.typeface.TextView
+                android:id="@+id/textView"
+                style="@style/TypefaceStyle.ProximaNova.semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dip"
+                android:gravity="center"
+                android:padding="8dip"
+                android:text="Rejoignez nous !"
+                android:textColor="@color/apptheme_color"
+                android:textSize="22sp"/>
+
+            <com.nestedworld.nestedworld.customWidget.typeface.EditText
+                android:id="@+id/textField_userEmail"
+                style="@style/TypefaceStyle.ProximaNova"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dip"
+                android:layout_marginTop="30dip"
+                android:background="#AAEEEEEE"
+                android:gravity="center"
+                android:hint="Saisissez votre adresse email"
+                android:inputType="textEmailAddress"
+                android:padding="8dip"
+                auto:et_inputId="@+id/editText_userEmail"/>
+
+            <com.nestedworld.nestedworld.customWidget.typeface.EditText
+                android:id="@+id/textField_userPassword"
+                style="@style/TypefaceStyle.ProximaNova"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dip"
+                android:layout_marginTop="30dip"
+                android:background="#AAEEEEEE"
+                android:gravity="center"
+                android:hint="Mot de passe"
+                android:inputType="textPassword"
+                android:padding="8dip"
+                auto:et_inputId="@+id/editText_userPassword"/>
+
+            <com.nestedworld.nestedworld.customWidget.typeface.Button
+                android:id="@+id/button_login"
+                style="@style/TypefaceStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dip"
+                android:layout_marginTop="30dip"
+                android:paddingLeft="30dip"
+                android:paddingRight="30dip"
+                android:text="Inscription"
+                android:textColor="@color/white"
+                auto:rd_enable="true"/>
+
+            <com.nestedworld.nestedworld.customWidget.typeface.TextView
+                android:id="@+id/textView_forgotPassword"
+                style="@style/TypefaceStyle.ProximaNova.thin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dip"
+                android:text="En cliquant sur 'inscription' vous acceptez les Conditions générales d'utilisation."
+                android:textColor="@color/apptheme_color"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
