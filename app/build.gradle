@@ -22,9 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    //Fragment support
-    compile 'com.android.support:appcompat-v7:23.0.1'
-
     //GPS
     compile 'com.google.android.gms:play-services:7.8.0'
 
@@ -32,6 +29,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
 
     //Material design support
+    compile 'com.android.support:design:23.0.1'
     compile 'com.github.rey5137:material:1.2.1'
 
     //API
