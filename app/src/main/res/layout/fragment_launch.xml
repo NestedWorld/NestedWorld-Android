@@ -29,7 +29,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Connexion"
+            android:text="@string/text_login_short"
             auto:rd_enable="true"/>
 
         <com.nestedworld.nestedworld.customWidget.typeface.Button
@@ -40,6 +40,6 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Inscription"/>
+            android:text="@string/text_inscription"/>
     </LinearLayout>
 </RelativeLayout>
