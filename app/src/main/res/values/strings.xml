@@ -1,5 +1,4 @@
 <resources>
-
     <string name="app_name" translatable="false">NestedWorld</string>
     <string name="desc" translatable="false">desc</string>
 
@@ -14,7 +13,6 @@
     <string name="text_login_full">Connectez-vous à votre espace personnel</string>
 
     <string name="text_join_us">Rejoignez nous !</string>
-    <string name="text_cgu">En cliquant sur 'inscription' vous acceptez les Conditions générales d'utilisation.</string>
+    <string name="text_cgu">En cliquant sur \'inscription\' vous acceptez les Conditions générales d\'utilisation.</string>
     <string name="text_forgot_password">Mot de passe oublié ?</string>
-
 </resources>

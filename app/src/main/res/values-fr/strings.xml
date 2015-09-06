@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NestedWorld</string>
-    <string name="desc" translatable="false">desc</string>
-
     <string name="editText_email">Saisissez votre adresse email</string>
     <string name="editText_email_invalid">Votre email est invalide !</string>
 
@@ -14,6 +11,6 @@
     <string name="text_login_full">Connectez-vous à votre espace personnel</string>
 
     <string name="text_join_us">Rejoignez nous !</string>
-    <string name="text_cgu">En cliquant sur 'inscription' vous acceptez les Conditions générales d'utilisation.</string>
+    <string name="text_cgu">En cliquant sur \'inscription\' vous acceptez les Conditions générales d\'utilisation.</string>
     <string name="text_forgot_password">Mot de passe oublié ?</string>
 </resources>
