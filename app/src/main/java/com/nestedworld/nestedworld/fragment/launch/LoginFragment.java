@@ -24,6 +24,7 @@ public class LoginFragment extends BaseFragment {
     EditText etEmail;
     @Bind(R.id.editText_userPassword)
     EditText etPassword;
+    @Bind(R.id.progressView)
     ProgressView progressView;
 
     public static void load(final FragmentManager fragmentManager) {
