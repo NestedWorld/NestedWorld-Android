@@ -8,6 +8,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseActivity;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.fragment.launch.LaunchFragment;
+import com.newrelic.agent.android.NewRelic;
 
 import butterknife.Bind;
 
@@ -34,6 +35,10 @@ public class LaunchActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        //init crash logger
+        NewRelic.withApplicationToken("AAfa7011e7d073accc8bc537079365343349369b8f").start(this.getApplication());
+
+        //choose the corect view
         if (!checkForExistingSession()) {
             LaunchFragment.load(this.getSupportFragmentManager());
         }
