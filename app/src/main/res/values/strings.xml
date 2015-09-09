@@ -15,4 +15,7 @@
     <string name="text_join_us">Rejoignez nous !</string>
     <string name="text_cgu">En cliquant sur \'inscription\' vous acceptez les Conditions générales d\'utilisation.</string>
     <string name="text_forgot_password">Mot de passe oublié ?</string>
+
+    <string name="tab_village_name">Mon village</string>
+    <string name="tab_monster_name">Mes monstres</string>
 </resources>

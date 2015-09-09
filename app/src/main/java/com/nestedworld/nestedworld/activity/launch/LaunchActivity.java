@@ -13,9 +13,6 @@ import com.newrelic.agent.android.NewRelic;
 import butterknife.Bind;
 
 public class LaunchActivity extends BaseActivity {
-    /*
-    ** ButterKnife
-     */
     @Bind(R.id.default_background)
     ImageView mImageViewBackground;
 
