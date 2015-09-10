@@ -27,13 +27,17 @@ public class MainMenuActivity extends BaseFragmentActivty {
     }
 
     @Override
-    protected void initVariable(Bundle savedInstanceState) {
+    protected void initUI(Bundle savedInstanceState) {
 
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        viewPager.setAdapter(new TabsAdapter(getSupportFragmentManager(), mContext));
+    protected void initLogics(Bundle savedInstanceState) {
+        //Init view pager
+        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), mContext);
+        viewPager.setAdapter(adapter);
+
+        //Add view pager to the tabLayout
         tabLayout.setupWithViewPager(viewPager);
     }
 }

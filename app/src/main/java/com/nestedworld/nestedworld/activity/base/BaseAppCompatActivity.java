@@ -8,15 +8,15 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
     protected Context mContext;
 
     protected abstract int getLayoutResource();
 
-    protected abstract void initVariable(Bundle savedInstanceState);
+    protected abstract void initUI(Bundle savedInstanceState);
 
-    protected abstract void initData(Bundle savedInstanceState);
+    protected abstract void initLogics(Bundle savedInstanceState);
 
     public String toString() {
         return TAG;
@@ -28,8 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
         ButterKnife.bind(this);
         mContext = getApplicationContext();
-        initVariable(savedInstanceState);
-        initData(savedInstanceState);
+        initUI(savedInstanceState);
+        initLogics(savedInstanceState);
     }
 
     @Override

@@ -5,14 +5,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activity.base.BaseActivity;
+import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.fragment.launch.LaunchFragment;
 import com.newrelic.agent.android.NewRelic;
 
 import butterknife.Bind;
 
-public class LaunchActivity extends BaseActivity {
+public class LaunchActivity extends BaseAppCompatActivity {
     @Bind(R.id.default_background)
     ImageView mImageViewBackground;
 
@@ -25,13 +25,13 @@ public class LaunchActivity extends BaseActivity {
     }
 
     @Override
-    protected void initVariable(Bundle savedInstanceState) {
+    protected void initUI(Bundle savedInstanceState) {
         mImageViewBackground.setBackgroundResource(R.drawable.logo);
         mImageViewBackground.setVisibility(View.VISIBLE);
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
+    protected void initLogics(Bundle savedInstanceState) {
         //init crash logger
         NewRelic.withApplicationToken("AAfa7011e7d073accc8bc537079365343349369b8f").start(this.getApplication());
 

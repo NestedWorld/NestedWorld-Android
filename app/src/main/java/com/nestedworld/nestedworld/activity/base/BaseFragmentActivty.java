@@ -15,9 +15,9 @@ public abstract class BaseFragmentActivty extends FragmentActivity {
 
     protected abstract int getLayoutResource();
 
-    protected abstract void initVariable(Bundle savedInstanceState);
+    protected abstract void initUI(Bundle savedInstanceState);
 
-    protected abstract void initData(Bundle savedInstanceState);
+    protected abstract void initLogics(Bundle savedInstanceState);
 
     public String toString() {
         return TAG;
@@ -29,8 +29,8 @@ public abstract class BaseFragmentActivty extends FragmentActivity {
         setContentView(getLayoutResource());
         ButterKnife.bind(this);
         mContext = getApplicationContext();
-        initVariable(savedInstanceState);
-        initData(savedInstanceState);
+        initUI(savedInstanceState);
+        initLogics(savedInstanceState);
     }
 
     @Override
