@@ -82,17 +82,20 @@ public class CreateAccountFragment extends BaseFragment {
     private void createAccount(final String email, final String password) {
         progressView.start();
 
-        NestedWorldApi.getInstance(getContext()).signUp(email, password, new Callback<User>() {
+        NestedWorldApi.getInstance(mContext).signUp(email, password, new Callback<User>() {
             @Override
             public void success(User user, Response response) {
                 progressView.stop();
-                Toast.makeText(getContext(), "CreateAccount successfull", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "CreateAccount successfull", Toast.LENGTH_LONG).show();
+                //TODO signup + load MainMenuActivity
             }
 
             @Override
             public void failure(RetrofitError error) {
                 progressView.stop();
-                Toast.makeText(getContext(), RetrofitErrorHandler.getErrorMessage(error, getContext()), Toast.LENGTH_LONG).show();
+
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
     }

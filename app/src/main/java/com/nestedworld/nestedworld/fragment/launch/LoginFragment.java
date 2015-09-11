@@ -70,17 +70,20 @@ public class LoginFragment extends BaseFragment {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
 
-        NestedWorldApi.getInstance(getContext()).signIn(email, password, new Callback<User>() {
+        NestedWorldApi.getInstance(mContext).signIn(email, password, new Callback<User>() {
             @Override
             public void success(User user, Response response) {
                 progressView.stop();
-                Toast.makeText(getContext(), "Login success", Toast.LENGTH_LONG).show();
+
+                //TODO store user data & start MainMenu
             }
 
             @Override
             public void failure(RetrofitError error) {
                 progressView.stop();
-                Toast.makeText(getContext(), RetrofitErrorHandler.getErrorMessage(error, getContext()), Toast.LENGTH_LONG).show();
+
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
     }
