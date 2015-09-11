@@ -54,13 +54,20 @@ public class RetrofitErrorHandler {
 
     private static String getHttpError(final RetrofitError error, final Context context) {
         //The server should a json body (describe under RestError.class)
-        final RestError body = (RestError) error.getBodyAs(RestError.class);
+
+        RestError body = null;
+
+        try {
+            body = (RestError) error.getBodyAs(RestError.class);
+        } catch (Exception ignored) {
+            //can't parse response body
+        }
 
         if (body != null && !TextUtils.isEmpty(body.message)) {
             return body.message;
         }
 
-        //No custom message so we return "unknow error" message
+        //The server didn't send an error message
         return context.getResources().getString(R.string.error_unknow);
     }
 }
