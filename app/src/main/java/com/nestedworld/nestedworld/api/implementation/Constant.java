@@ -10,4 +10,6 @@ public class Constant {
 
     public static final String USER_SIGN_IN = "/users/auth/login/simple";
     public static final String USER_SIGN_UP = "/users/auth/register";
+    public static final String USER_PASSWORD = "/users/password";
+
 }

@@ -87,4 +87,20 @@ public class LoginFragment extends BaseFragment {
             }
         });
     }
+
+    @OnClick(R.id.textView_forgotPassword)
+    public void forgotPassword() {
+        NestedWorldApi.getInstance(mContext).forgotPassword("", new Callback<User>() {
+            @Override
+            public void success(User user, Response response) {
+                Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

@@ -74,6 +74,10 @@ public class NestedWorldApi {
         mClient.signIn(email, password, "test", callback);
     }
 
+    public void forgotPassword(final String email, final Callback<User> callback) {
+        mClient.forgotPassword(email, callback);
+    }
+
     /*
     ** Interface
      */
@@ -91,6 +95,12 @@ public class NestedWorldApi {
                 @Field("email") String email,
                 @Field("password") String password,
                 @Field("app_token") String app_token,
+                Callback<User> callback);
+
+        @POST(Constant.USER_PASSWORD)
+        @FormUrlEncoded
+        void forgotPassword(
+                @Field("email") String email,
                 Callback<User> callback);
     }
 }
