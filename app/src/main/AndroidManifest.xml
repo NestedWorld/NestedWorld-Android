@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
+        android:name=".NestedWorldApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@drawable/logo"
