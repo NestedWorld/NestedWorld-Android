@@ -66,8 +66,7 @@ public class NestedWorldApi {
     ** Interface implementation
      */
     public void signUp(final String email, final String password, final Callback<User> callback) {
-        //TODO mettre le bon app_token
-        mClient.signUp(email, password, "test", callback);
+        mClient.signUp(email, password, callback);
     }
 
     public void signIn(final String email, final String password, final Callback<User> callback) {
@@ -84,7 +83,6 @@ public class NestedWorldApi {
         void signUp(
                 @Field("email") String email,
                 @Field("password") String password,
-                @Field("app_token") String app_token,
                 Callback<User> callback);
 
         @POST(Constant.USER_SIGN_IN)

@@ -114,7 +114,7 @@ public class CreateAccountFragment extends BaseFragment {
     private boolean checkEmailFormat(final String email) {
         boolean isValid = false;
 
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        final String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
