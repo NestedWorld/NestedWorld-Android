@@ -18,4 +18,10 @@
 
     <string name="tab_village_name">Mon village</string>
     <string name="tab_monster_name">Mes monstres</string>
+
+    <string name="error_no_internet">Veillez vous connecter a internet et réesayer</string>
+    <string name="error_unexpected">Une erreur innatendu est servenu, merci de réésayer</string>
+    <string name="error_conversion">Une erreur innatendu est servenu, merci de réésayer</string>
+    <string name="error_unknow">Une erreur innatendu est servenu, merci de réésayer</string>
+
 </resources>
