@@ -1,27 +1,4 @@
 apply plugin: 'com.android.application'
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-    //GPS
-    compile 'com.google.android.gms:play-services:7.8.0'
-
-    //Annotation replacing findViewById()
-    compile 'com.jakewharton:butterknife:7.0.1'
-
-    //Material design support
-    compile 'com.android.support:design:23.0.1'
-    compile 'com.github.rey5137:material:1.2.1'
-
-    //API
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.google.code.gson:gson:2.3'
-}
-
-/*
-** New relic
- */
 apply plugin: 'newrelic'
 
 buildscript {
@@ -57,5 +34,23 @@ android {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //GPS
+    compile 'com.google.android.gms:play-services:7.8.0'
+
+    //Annotation replacing findViewById()
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    //Material design support
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.github.rey5137:material:1.2.1'
+
+    //API
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp:2.3.0'//keep under 2.3 until new relic fix his library
+    compile 'com.google.code.gson:gson:2.3'
+
+    //New relic
     compile 'com.newrelic.agent.android:android-agent:5.3.0'
 }
