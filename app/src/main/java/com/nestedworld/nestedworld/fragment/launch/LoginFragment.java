@@ -10,6 +10,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.nestedworld.nestedworld.utils.retrofitErrorHandler.RetrofitErrorHandler;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
@@ -73,13 +74,13 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void success(User user, Response response) {
                 progressView.stop();
-                Toast.makeText(getContext(), "Login successfull", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Login success", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 progressView.stop();
-                Toast.makeText(getContext(), "Login failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), RetrofitErrorHandler.getErrorMessage(error, getContext()), Toast.LENGTH_LONG).show();
             }
         });
     }

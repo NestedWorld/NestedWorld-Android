@@ -11,6 +11,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.nestedworld.nestedworld.utils.retrofitErrorHandler.RetrofitErrorHandler;
 import com.rey.material.widget.ProgressView;
 
 import java.util.regex.Matcher;
@@ -91,7 +92,7 @@ public class CreateAccountFragment extends BaseFragment {
             @Override
             public void failure(RetrofitError error) {
                 progressView.stop();
-                Toast.makeText(getContext(), "CreateAccount failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), RetrofitErrorHandler.getErrorMessage(error, getContext()), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -116,8 +117,8 @@ public class CreateAccountFragment extends BaseFragment {
 
         final String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
+        final Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        final Matcher matcher = pattern.matcher(email);
         if (matcher.matches()) {
             isValid = true;
         }
