@@ -10,7 +10,9 @@ public class NestedWorldApp extends Application {
         super.onCreate();
 
         //init crash logger
-        NewRelic.withApplicationToken("AAfa7011e7d073accc8bc537079365343349369b8f")
-                .start(this);
+        if (!BuildConfig.DEBUG) {
+            NewRelic.withApplicationToken("AAfa7011e7d073accc8bc537079365343349369b8f")
+                    .start(this);
+        }
     }
 }
