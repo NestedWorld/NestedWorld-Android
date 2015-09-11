@@ -8,6 +8,6 @@ public class Constant {
 
     public final static String BASE_END_POINT = BASE_URL + API_VERSION;
 
-    public static final String USER_SIGN_IN = "/user/auth/login/simple";
-    public static final String USER_SIGN_UP = "/user/auth/register";
+    public static final String USER_SIGN_IN = "/users/auth/login/simple";
+    public static final String USER_SIGN_UP = "/users/auth/register";
 }
