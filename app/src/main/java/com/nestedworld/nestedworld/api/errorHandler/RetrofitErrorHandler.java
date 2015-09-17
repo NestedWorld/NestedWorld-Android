@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.utils.retrofitErrorHandler;
+package com.nestedworld.nestedworld.api.errorHandler;
 
 import android.content.Context;
 import android.text.TextUtils;

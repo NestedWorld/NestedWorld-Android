@@ -8,10 +8,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-import com.nestedworld.nestedworld.utils.retrofitErrorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.rey.material.widget.ProgressView;
 
 import java.util.regex.Matcher;
@@ -87,7 +88,9 @@ public class CreateAccountFragment extends BaseFragment {
             public void success(User user, Response response) {
                 progressView.stop();
                 Toast.makeText(mContext, "CreateAccount successfull", Toast.LENGTH_LONG).show();
-                //TODO signup + load MainMenuActivity
+
+                //TODO Save userData
+                startActivity(MainMenuActivity.class);
             }
 
             @Override
