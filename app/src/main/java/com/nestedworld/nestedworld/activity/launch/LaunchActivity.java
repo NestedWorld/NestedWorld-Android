@@ -30,7 +30,7 @@ public class LaunchActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void initLogics(Bundle savedInstanceState) {
+    protected void initLogic(Bundle savedInstanceState) {
         //choose the corect view
         if (!checkForExistingSession()) {
             //we don't have a sesion so we display the launch screen

@@ -32,7 +32,7 @@ public class MainMenuActivity extends BaseFragmentActivty {
     }
 
     @Override
-    protected void initLogics(Bundle savedInstanceState) {
+    protected void initLogic(Bundle savedInstanceState) {
         //Init view pager
         final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), mContext);
         viewPager.setAdapter(adapter);

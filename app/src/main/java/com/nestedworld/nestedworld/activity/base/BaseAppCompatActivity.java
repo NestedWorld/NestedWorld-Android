@@ -16,7 +16,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     protected abstract void initUI(Bundle savedInstanceState);
 
-    protected abstract void initLogics(Bundle savedInstanceState);
+    protected abstract void initLogic(Bundle savedInstanceState);
 
     public String toString() {
         return TAG;
@@ -29,7 +29,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = getApplicationContext();
         initUI(savedInstanceState);
-        initLogics(savedInstanceState);
+        initLogic(savedInstanceState);
     }
 
     @Override

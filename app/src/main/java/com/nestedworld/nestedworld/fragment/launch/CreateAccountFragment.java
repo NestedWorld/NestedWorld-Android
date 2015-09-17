@@ -50,12 +50,12 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     @Override
-    protected void initVariable(Bundle savedInstanceState) {
+    protected void initUI(Bundle savedInstanceState) {
 
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
+    protected void initLogics(Bundle savedInstanceState) {
 
     }
 
