@@ -8,10 +8,11 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
+import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.utils.userManager.UserManager;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
@@ -76,7 +77,8 @@ public class LoginFragment extends BaseFragment {
             public void success(User user, Response response) {
                 progressView.stop();
 
-                //TODO store user data
+                //Store userData and then display the mainMenu
+                UserManager.storeUser(user);
                 startActivity(MainMenuActivity.class);
             }
 

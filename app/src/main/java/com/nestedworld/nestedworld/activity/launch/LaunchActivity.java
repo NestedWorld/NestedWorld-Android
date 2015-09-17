@@ -8,6 +8,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.fragment.launch.LaunchFragment;
+import com.nestedworld.nestedworld.utils.userManager.UserManager;
 
 import butterknife.Bind;
 
@@ -47,7 +48,6 @@ public class LaunchActivity extends BaseAppCompatActivity {
     ** Utils
      */
     private boolean checkForExistingSession() {
-        //TODO make a real check
-        return false;
+        return (UserManager.getUser() != null);
     }
 }
