@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
-public class Button extends com.rey.material.widget.Button {
+public class Button extends AppCompatButton {
 
     /*
     ** Constructor
@@ -20,15 +21,11 @@ public class Button extends com.rey.material.widget.Button {
     }
 
     public Button(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.buttonStyle);
+        this(context, attrs, android.support.v7.appcompat.R.attr.buttonStyle);
     }
 
     public Button(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public Button(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
 
         //Avoid crash under interface build
         if (this.isInEditMode()) {

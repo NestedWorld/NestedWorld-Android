@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
-public class TextView extends com.rey.material.widget.TextView {
+public class TextView extends AppCompatTextView {
 
     /*
     ** Constructor

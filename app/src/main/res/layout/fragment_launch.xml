@@ -6,12 +6,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/desc"
         android:scaleType="fitCenter"
         android:src="@drawable/logo"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <com.nestedworld.nestedworld.customWidget.typeface.TextView
+            android:id="@+id/textView_title"
+            style="@style/TypefaceStyle.ProximaNova.bold"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dip"
+            android:gravity="center"
+            android:text="NestedWorld"
+            android:textColor="@color/black"
+            android:textSize="28sp"/>
+
+        <com.nestedworld.nestedworld.customWidget.typeface.TextView
+            android:id="@+id/textView_subtitle"
+            style="@style/TypefaceStyle.ProximaNova.semibold"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dip"
+            android:gravity="center"
+            android:text="Attrapez les tous et devenez le champion!"
+            android:textColor="@color/black"
+            android:textSize="22sp"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearlayout_bottom"

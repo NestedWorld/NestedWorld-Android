@@ -3,13 +3,15 @@ package com.nestedworld.nestedworld.customWidget.typeface;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.support.v7.internal.widget.TintContextWrapper;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
-public class EditText extends com.rey.material.widget.EditText {
+public class EditText extends AppCompatEditText {
 
     /*
     ** Constructor
@@ -23,12 +25,7 @@ public class EditText extends com.rey.material.widget.EditText {
     }
 
     public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    public EditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-
+        super(TintContextWrapper.wrap(context), attrs, defStyleAttr);
         //Avoid crash under interface build
         if (this.isInEditMode()) {
             return;

@@ -22,69 +22,66 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip">
 
             <com.nestedworld.nestedworld.customWidget.typeface.TextView
                 android:id="@+id/textView"
                 style="@style/TypefaceStyle.ProximaNova.semibold"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dip"
+                android:layout_marginBottom="24dip"
                 android:gravity="center"
-                android:padding="@dimen/global_padding"
                 android:text="@string/text_login_full"
                 android:textColor="@color/apptheme_color"
                 android:textSize="22sp"/>
 
             <com.nestedworld.nestedworld.customWidget.typeface.EditText
-                android:id="@+id/textField_userEmail"
+                android:id="@+id/editText_userEmail"
                 style="@style/TypefaceStyle.ProximaNova"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dip"
-                android:layout_marginTop="30dip"
+                android:layout_marginBottom="8dip"
+                android:layout_marginTop="8dip"
                 android:background="#AAEEEEEE"
                 android:gravity="center"
                 android:hint="@string/editText_email"
                 android:inputType="textEmailAddress"
-                android:padding="@dimen/global_padding"
-                auto:et_inputId="@+id/editText_userEmail"/>
+                android:padding="@dimen/global_padding"/>
 
             <com.nestedworld.nestedworld.customWidget.typeface.EditText
-                android:id="@+id/textField_userPassword"
+                android:id="@+id/editText_userPassword"
                 style="@style/TypefaceStyle.ProximaNova"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dip"
-                android:layout_marginTop="30dip"
+                android:layout_marginBottom="8dip"
+                android:layout_marginTop="8dip"
                 android:background="#AAEEEEEE"
                 android:gravity="center"
                 android:hint="@string/editText_password"
                 android:inputType="textPassword"
-                android:padding="@dimen/global_padding"
-                auto:et_inputId="@+id/editText_userPassword"/>
+                android:padding="@dimen/global_padding"/>
 
             <com.nestedworld.nestedworld.customWidget.typeface.Button
                 android:id="@+id/button_login"
                 style="@style/TypefaceStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dip"
-                android:layout_marginTop="30dip"
-                android:paddingLeft="30dip"
-                android:paddingRight="30dip"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:padding="12dip"
                 android:text="@string/text_login_short"
-                android:textColor="@color/white"
-                auto:rd_enable="true"/>
+                android:textColor="@color/white"/>
 
             <com.nestedworld.nestedworld.customWidget.typeface.TextView
                 android:id="@+id/textView_forgotPassword"
                 style="@style/TypefaceStyle.ProximaNova.thin"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginBottom="24dip"
+                android:clickable="true"
+                android:gravity="center"
                 android:padding="@dimen/global_padding"
                 android:text="@string/text_forgot_password"
                 android:textColor="@color/apptheme_color"
