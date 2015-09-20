@@ -5,12 +5,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activity.base.BaseFragmentActivty;
+import com.nestedworld.nestedworld.activity.base.BaseFragmentActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
 
 import butterknife.Bind;
 
-public class MainMenuActivity extends BaseFragmentActivty {
+public class MainMenuActivity extends BaseFragmentActivity {
 
     @Bind(R.id.viewpager)
     ViewPager viewPager;

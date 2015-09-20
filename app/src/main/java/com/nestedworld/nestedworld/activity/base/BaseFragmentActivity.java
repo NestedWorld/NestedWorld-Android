@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragmentActivty extends FragmentActivity {
+public abstract class BaseFragmentActivity extends FragmentActivity {
     protected final String TAG = getClass().getSimpleName();
     protected Context mContext;
 

@@ -31,7 +31,7 @@ public class MyMonsterFragment extends BaseFragment {
     }
 
     @Override
-    protected void initLogics(Bundle savedInstanceState) {
+    protected void initLogic(Bundle savedInstanceState) {
 
     }
 }

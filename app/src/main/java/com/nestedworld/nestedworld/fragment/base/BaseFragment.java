@@ -21,7 +21,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initUI(Bundle savedInstanceState);
 
-    protected abstract void initLogics(Bundle savedInstanceState);
+    protected abstract void initLogic(Bundle savedInstanceState);
 
     public String toString() {
         return TAG;
@@ -34,7 +34,7 @@ public abstract class BaseFragment extends Fragment {
         View rootView = inflater.inflate(getLayoutResource(), container, false);
         ButterKnife.bind(this, rootView);
         initUI(savedInstanceState);
-        initLogics(savedInstanceState);
+        initLogic(savedInstanceState);
         return rootView;
     }
 

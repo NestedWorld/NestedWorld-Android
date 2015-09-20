@@ -16,7 +16,7 @@ import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 
 public class NWAuthenticator extends AbstractAccountAuthenticator {
 
-    private Context mContext;
+    private final Context mContext;
 
     public NWAuthenticator(Context context) {
         super(context);
@@ -31,7 +31,7 @@ public class NWAuthenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
         // We absolutely cannot add an account without some information from the user
-        // so we're definitely going to return an Intentvia KEY_INTENT
+        // so we're definitely going to return an Intent via KEY_INTENT
         final Bundle bundle = new Bundle();
 
         // We're going to use a LoginActivity to talk to the user (mContext

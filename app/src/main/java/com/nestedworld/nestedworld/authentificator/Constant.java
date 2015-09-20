@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.authentificator;
 
 public class Constant {
-    // /!\ Do not edit this field, it has to be the same in authentificator.xml
+    // /!\ Do not edit this field, it has to be the same in authenticator.xml
     public static final String ACCOUNT_TYPE = "com.nestedworld.account";
 
     public static final String AUTHTOKEN_TYPE = "api";

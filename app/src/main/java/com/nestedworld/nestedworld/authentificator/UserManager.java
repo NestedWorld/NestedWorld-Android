@@ -20,14 +20,14 @@ import java.io.IOException;
 */
 public class UserManager {
     //private static field
-    private final static String ACCOUNT_DETAIL_KEY = "com.nestedworld.accounnt_detail";
+    private final static String ACCOUNT_DETAIL_KEY = "com.nestedworld.account_detail";
     private final static String KEY_ACCOUNT_NAME = "name";
     private final static String TAG = UserManager.class.getSimpleName();
 
     //private properties
-    private Context mContext;
+    private final Context mContext;
+    private final AccountManager mAccountManager;
     private Account mAccount;
-    private AccountManager mAccountManager;
 
     /*
     ** Constructor

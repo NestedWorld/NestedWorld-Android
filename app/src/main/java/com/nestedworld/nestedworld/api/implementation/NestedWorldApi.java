@@ -45,7 +45,7 @@ public class NestedWorldApi {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                //TODO completer les header avec les bonnes valeurs
+                //TODO complete header with real value
                 request.addHeader("X-User-Id", "userId");
                 request.addHeader("X-User-Email", "userEmail");
                 request.addHeader("X-User-Token", "authenticationToken");

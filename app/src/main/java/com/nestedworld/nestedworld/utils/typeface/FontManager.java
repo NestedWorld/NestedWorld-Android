@@ -39,7 +39,7 @@ public class FontManager {
         try {
             font = Typeface.createFromAsset(mgr, asset);
             fonts.put(asset, font);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
@@ -49,7 +49,7 @@ public class FontManager {
                 font = Typeface.createFromAsset(mgr, fixedAsset);
                 fonts.put(asset, font);
                 fonts.put(fixedAsset, font);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }

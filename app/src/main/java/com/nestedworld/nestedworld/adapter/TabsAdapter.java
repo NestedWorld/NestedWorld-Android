@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabsAdapter extends FragmentPagerAdapter {
-    private List<CustomTab> tabList = new ArrayList<>();
-    private Context mContext;
+    private final List<CustomTab> tabList = new ArrayList<>();
+    private final Context mContext;
 
     /*
     ** Constructor
@@ -66,9 +66,9 @@ public class TabsAdapter extends FragmentPagerAdapter {
     ** Custom class for easy tab management
      */
     private class CustomTab {
+        private final Fragment mFragment;
+        private final int mIcon;
         private String mTitle = "";
-        private Fragment mFragment;
-        private int mIcon;
 
         public CustomTab(final String title, final Fragment fragment, final int icon) {
             mTitle = title;

@@ -31,7 +31,7 @@ public class LaunchFragment extends BaseFragment {
     }
 
     @Override
-    protected void initLogics(Bundle savedInstanceState) {
+    protected void initLogic(Bundle savedInstanceState) {
 
     }
 
