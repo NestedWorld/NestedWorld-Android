@@ -13,7 +13,7 @@ import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-import com.nestedworld.nestedworld.utils.userManager.UserManager;
+import com.nestedworld.nestedworld.authentificator.UserManager;
 import com.rey.material.widget.ProgressView;
 
 import java.util.regex.Matcher;
@@ -89,8 +89,12 @@ public class CreateAccountFragment extends BaseFragment {
             public void success(User user, Response response) {
                 progressView.stop();
 
-                //We store the user and we display the mainMenu
-                UserManager.storeUser(user);
+                //Store user Data
+                Bundle bundle = new Bundle();
+                bundle.putString("token", user.getToken());
+                UserManager.get(mContext).setUser(email, password, user.getToken(), null);
+
+                //display MainMenu
                 startActivity(MainMenuActivity.class);
             }
 

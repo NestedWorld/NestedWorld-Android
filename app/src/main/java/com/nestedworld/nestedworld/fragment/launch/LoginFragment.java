@@ -12,7 +12,7 @@ import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-import com.nestedworld.nestedworld.utils.userManager.UserManager;
+import com.nestedworld.nestedworld.authentificator.UserManager;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
@@ -77,8 +77,10 @@ public class LoginFragment extends BaseFragment {
             public void success(User user, Response response) {
                 progressView.stop();
 
-                //Store userData and then display the mainMenu
-                UserManager.storeUser(user);
+                //Store userData
+                UserManager.get(mContext).setUser(email, password, user.getToken(), null);
+
+                //display the mainMenu
                 startActivity(MainMenuActivity.class);
             }
 
