@@ -92,10 +92,13 @@ public class CreateAccountFragment extends BaseFragment {
                 //Store user Data
                 Bundle bundle = new Bundle();
                 bundle.putString("token", user.getToken());
-                UserManager.get(mContext).setUser(email, password, user.getToken(), null);
-
-                //display MainMenu
-                startActivity(MainMenuActivity.class);
+                if (UserManager.get(mContext).setUser(email, password, user.getToken(), null)) {
+                    //display MainMenu
+                    startActivity(MainMenuActivity.class);
+                }
+                else {
+                    Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

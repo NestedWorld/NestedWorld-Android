@@ -77,11 +77,13 @@ public class LoginFragment extends BaseFragment {
             public void success(User user, Response response) {
                 progressView.stop();
 
-                //Store userData
-                UserManager.get(mContext).setUser(email, password, user.getToken(), null);
-
-                //display the mainMenu
-                startActivity(MainMenuActivity.class);
+                if (UserManager.get(mContext).setUser(email, password, user.getToken(), null)) {
+                    //display the mainMenu
+                    startActivity(MainMenuActivity.class);
+                }
+                else {
+                    Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
