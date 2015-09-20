@@ -53,18 +53,23 @@ public class UserManager {
     }
 
     public boolean setUser(final String name, final String password, final String authToken, final Bundle bundle) {
-        //Create a new account
-        Account newAccount = new Account(name, Constant.ACCOUNT_TYPE);
+        //check if account already exist
+        Account account = retrieveAccount(name);
 
-        //Save account
-        if (mAccountManager.addAccountExplicitly(newAccount, password, bundle)) {
-            //Store authToken under created account
-            setAuthTokenType(newAccount, authToken);
-            setAccountNameToPref(name);
-            mAccount = newAccount;
-            return true;
+        if (account == null) {
+            //We have to create a new account
+            account = new Account(name, Constant.ACCOUNT_TYPE);
+            if (!mAccountManager.addAccountExplicitly(account, password, bundle)) {
+                return false;
+            }
+            Log.d(TAG, "Successfully create a new account");
         }
-        return false;
+
+        mAccount = account;
+        setAuthTokenType(account, authToken);
+        setAccountNameToPref(name);
+
+        return true;
     }
 
     public String getUserExtraData(final String key) {
