@@ -11,20 +11,20 @@ import android.util.AttributeSet;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
-public class EditText extends AppCompatEditText {
+public class TypefaceEditText extends AppCompatEditText {
 
     /*
     ** Constructor
      */
-    public EditText(Context context) {
+    public TypefaceEditText(Context context) {
         this(context, null);
     }
 
-    public EditText(Context context, AttributeSet attrs) {
+    public TypefaceEditText(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.editTextStyle);
     }
 
-    public EditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TypefaceEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(TintContextWrapper.wrap(context), attrs, defStyleAttr);
         //Avoid crash under interface build
         if (this.isInEditMode()) {

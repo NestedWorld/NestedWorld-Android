@@ -11,20 +11,20 @@ import android.util.AttributeSet;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
-public class TextView extends AppCompatTextView {
+public class TypefaceTextView extends AppCompatTextView {
 
     /*
     ** Constructor
      */
-    public TextView(final Context context) {
+    public TypefaceTextView(final Context context) {
         this(context, null);
     }
 
-    public TextView(final Context context, final AttributeSet attrs) {
+    public TypefaceTextView(final Context context, final AttributeSet attrs) {
         this(context, attrs, android.R.attr.textViewStyle);
     }
 
-    public TextView(final Context context, final AttributeSet attrs, final int defStyle) {
+    public TypefaceTextView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
         //Avoid crash under interface build

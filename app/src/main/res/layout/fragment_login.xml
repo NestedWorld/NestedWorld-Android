@@ -26,7 +26,7 @@
             android:paddingLeft="16dip"
             android:paddingRight="16dip">
 
-            <com.nestedworld.nestedworld.customWidget.typeface.TextView
+            <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
                 android:id="@+id/textView"
                 style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:layout_width="fill_parent"
@@ -37,7 +37,7 @@
                 android:textColor="@color/apptheme_color"
                 android:textSize="22sp"/>
 
-            <com.nestedworld.nestedworld.customWidget.typeface.EditText
+            <com.nestedworld.nestedworld.customWidget.typeface.TypefaceEditText
                 android:id="@+id/editText_userEmail"
                 style="@style/TypefaceStyle.ProximaNova"
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 android:inputType="textEmailAddress"
                 android:padding="@dimen/global_padding"/>
 
-            <com.nestedworld.nestedworld.customWidget.typeface.EditText
+            <com.nestedworld.nestedworld.customWidget.typeface.TypefaceEditText
                 android:id="@+id/editText_userPassword"
                 style="@style/TypefaceStyle.ProximaNova"
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:inputType="textPassword"
                 android:padding="@dimen/global_padding"/>
 
-            <com.nestedworld.nestedworld.customWidget.typeface.Button
+            <com.nestedworld.nestedworld.customWidget.typeface.TypefaceButton
                 android:id="@+id/button_login"
                 style="@style/TypefaceStyle"
                 android:layout_width="fill_parent"
@@ -74,7 +74,7 @@
                 android:text="@string/text_login_short"
                 android:textColor="@color/white"/>
 
-            <com.nestedworld.nestedworld.customWidget.typeface.TextView
+            <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
                 android:id="@+id/textView_forgotPassword"
                 style="@style/TypefaceStyle.ProximaNova.thin"
                 android:layout_width="fill_parent"

@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <com.nestedworld.nestedworld.customWidget.typeface.TextView
+        <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
             android:id="@+id/textView_title"
             style="@style/TypefaceStyle.ProximaNova.bold"
             android:layout_width="fill_parent"
@@ -31,7 +31,7 @@
             android:textColor="@color/black"
             android:textSize="28sp"/>
 
-        <com.nestedworld.nestedworld.customWidget.typeface.TextView
+        <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
             android:id="@+id/textView_subtitle"
             style="@style/TypefaceStyle.ProximaNova.semibold"
             android:layout_width="fill_parent"
@@ -53,7 +53,7 @@
         android:padding="@dimen/global_padding"
         android:weightSum="2">
 
-        <com.nestedworld.nestedworld.customWidget.typeface.Button
+        <com.nestedworld.nestedworld.customWidget.typeface.TypefaceButton
             android:id="@+id/button_login"
             style="@style/TypefaceStyle"
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             android:text="@string/text_login_short"
             auto:rd_enable="true"/>
 
-        <com.nestedworld.nestedworld.customWidget.typeface.Button
+        <com.nestedworld.nestedworld.customWidget.typeface.TypefaceButton
             android:id="@+id/button_inscription"
             style="@style/TypefaceStyle"
             android:layout_width="wrap_content"

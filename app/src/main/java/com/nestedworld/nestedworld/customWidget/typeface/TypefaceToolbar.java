@@ -6,10 +6,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.internal.widget.TintTypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 
-public class Toolbar extends android.support.v7.widget.Toolbar {
+public class TypefaceToolbar extends android.support.v7.widget.Toolbar {
 
     private final String DEFAULT_TOOLBAR_TYPEFACE = "ProximaNova-Reg.ttf";
 
@@ -22,15 +23,15 @@ public class Toolbar extends android.support.v7.widget.Toolbar {
     /*
     ** Constructor
      */
-    public Toolbar(Context context) {
+    public TypefaceToolbar(Context context) {
         this(context, null);
     }
 
-    public Toolbar(Context context, AttributeSet attrs) {
+    public TypefaceToolbar(Context context, AttributeSet attrs) {
         this(context, attrs, android.support.v7.appcompat.R.attr.toolbarStyle);
     }
 
-    public Toolbar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TypefaceToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         // Need to use getContext() here so that we use the themed context
@@ -102,7 +103,7 @@ public class Toolbar extends android.support.v7.widget.Toolbar {
         mTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
         mTitleTextView.setTypeface(mTypeface);
         if (mTitleTextAppearance != 0) {
-            mTitleTextView.setTextAppearance(mTitleTextAppearance);
+            mTitleTextView.setTextAppearance(context, mTitleTextAppearance);
         }
         if (mTitleTextColor != 0) {
             mTitleTextView.setTextColor(mTitleTextColor);

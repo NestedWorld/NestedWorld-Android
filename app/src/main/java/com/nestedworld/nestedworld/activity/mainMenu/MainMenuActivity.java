@@ -5,12 +5,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activity.base.BaseFragmentActivity;
+import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
+import com.nestedworld.nestedworld.customWidget.typeface.TypefaceToolbar;
 
 import butterknife.Bind;
 
-public class MainMenuActivity extends BaseFragmentActivity {
+public class MainMenuActivity extends BaseAppCompatActivity {
+    @Bind(R.id.toolbar)
+    TypefaceToolbar toolbar;
 
     @Bind(R.id.viewpager)
     ViewPager viewPager;
@@ -28,7 +31,7 @@ public class MainMenuActivity extends BaseFragmentActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-
+        setUpToolbar();
     }
 
     @Override
@@ -39,5 +42,12 @@ public class MainMenuActivity extends BaseFragmentActivity {
 
         //Add view pager to the tabLayout
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    /*
+    ** Utils
+     */
+    private void setUpToolbar() {
+        setSupportActionBar(toolbar);
     }
 }

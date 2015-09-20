@@ -11,20 +11,20 @@ import android.util.AttributeSet;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
-public class Button extends AppCompatButton {
+public class TypefaceButton extends AppCompatButton {
 
     /*
     ** Constructor
      */
-    public Button(Context context) {
+    public TypefaceButton(Context context) {
         this(context, null);
     }
 
-    public Button(Context context, AttributeSet attrs) {
+    public TypefaceButton(Context context, AttributeSet attrs) {
         this(context, attrs, android.support.v7.appcompat.R.attr.buttonStyle);
     }
 
-    public Button(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TypefaceButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         //Avoid crash under interface build
