@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">NestedWorld</string>
     <string name="desc" translatable="false">desc</string>
+    <string name="action_settings" translatable="false">action settings</string>
 
     <string name="editText_email">Saisissez votre adresse email</string>
     <string name="editText_email_invalid">Votre email est invalide !</string>
@@ -18,6 +19,7 @@
 
     <string name="tab_village_name">Mon village</string>
     <string name="tab_monster_name">Mes monstres</string>
+    <string name="tab_city_name">Ma ville</string>
 
     <string name="error_no_internet">Veillez vous connecter a internet et réesayer.</string>
     <string name="error_unexpected">Une erreur innatendu est servenu, merci de réésayer.</string>
@@ -26,5 +28,7 @@
     <string name="error_create_account">Impossible de créer votre compte, merci de réésayer</string>
 
     <string name="password_send">Vous allez recevoir un mail d\'ici peu.</string>
+
+    <string name="menu_profil">Profil</string>
 
 </resources>

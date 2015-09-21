@@ -12,6 +12,7 @@ import android.text.style.ImageSpan;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCityFragment;
+import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCountryFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyMonsterFragment;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
         //TODO use good icon
         tabList.add(new CustomTab(mContext.getString(R.string.tab_village_name), new MyCityFragment(), R.drawable.ic_cast_dark));
         tabList.add(new CustomTab(mContext.getString(R.string.tab_monster_name), new MyMonsterFragment(), R.drawable.ic_cast_dark));
+        tabList.add(new CustomTab(mContext.getString(R.string.tab_city_name), new MyCountryFragment(), R.drawable.ic_cast_dark));
     }
 
     /*

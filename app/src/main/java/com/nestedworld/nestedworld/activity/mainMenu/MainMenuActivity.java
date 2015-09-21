@@ -3,6 +3,8 @@ package com.nestedworld.nestedworld.activity.mainMenu;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
@@ -42,6 +44,25 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         //Add view pager to the tabLayout
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(menuItem);
     }
 
     /*
