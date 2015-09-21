@@ -9,11 +9,13 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
 public class MyMonsterFragment extends BaseFragment {
 
+    public final static String FRAGMENT_NAME = MyMonsterFragment.class.getSimpleName();
+
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
         fragmentTransaction.replace(R.id.container, new MyMonsterFragment());
-        fragmentTransaction.addToBackStack("MyMonsterFragment");
+        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         fragmentTransaction.commit();
     }
 
@@ -22,7 +24,7 @@ public class MyMonsterFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_my_city;
+        return R.layout.fragment_my_monster;
     }
 
     @Override

@@ -9,11 +9,13 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
 public class MyCityFragment extends BaseFragment {
 
+    public final static String FRAGMENT_NAME = MyCityFragment.class.getSimpleName();
+
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
         fragmentTransaction.replace(R.id.container, new MyCityFragment());
-        fragmentTransaction.addToBackStack("MyCityFragment");
+        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         fragmentTransaction.commit();
     }
 

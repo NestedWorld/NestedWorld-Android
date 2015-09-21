@@ -11,9 +11,12 @@ import butterknife.OnClick;
 
 public class LaunchFragment extends BaseFragment {
 
+    public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
+
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new LaunchFragment());
+        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         fragmentTransaction.commit();
     }
 

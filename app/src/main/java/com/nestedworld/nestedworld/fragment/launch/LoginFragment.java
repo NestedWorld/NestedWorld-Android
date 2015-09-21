@@ -23,6 +23,8 @@ import retrofit.client.Response;
 
 public class LoginFragment extends BaseFragment {
 
+    public final static String FRAGMENT_NAME = LoginFragment.class.getSimpleName();
+
     @Bind(R.id.editText_userEmail)
     EditText etEmail;
     @Bind(R.id.editText_userPassword)
@@ -34,7 +36,7 @@ public class LoginFragment extends BaseFragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
         fragmentTransaction.replace(R.id.container, new LoginFragment());
-        fragmentTransaction.addToBackStack("LoginFragment");
+        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         fragmentTransaction.commit();
     }
 
