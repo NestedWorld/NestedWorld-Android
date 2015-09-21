@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
+import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
 import com.nestedworld.nestedworld.customWidget.typeface.TypefaceToolbar;
 
@@ -57,11 +58,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
+                startActivity(ProfileActivity.class);
                 return true;
             default:
                 break;
         }
-
         return super.onOptionsItemSelected(menuItem);
     }
 

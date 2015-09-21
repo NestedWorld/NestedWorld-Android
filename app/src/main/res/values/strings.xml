@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">NestedWorld</string>
     <string name="desc" translatable="false">desc</string>
-    <string name="action_settings" translatable="false">action settings</string>
 
     <string name="editText_email">Saisissez votre adresse email</string>
     <string name="editText_email_invalid">Votre email est invalide !</string>
@@ -29,6 +28,6 @@
 
     <string name="password_send">Vous allez recevoir un mail d\'ici peu.</string>
 
-    <string name="menu_profil">Profil</string>
+    <string name="menu_ation_profil">Profil</string>
 
 </resources>
