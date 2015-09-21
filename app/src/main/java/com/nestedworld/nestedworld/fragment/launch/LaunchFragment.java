@@ -13,10 +13,12 @@ public class LaunchFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
 
-    public static void load(final FragmentManager fragmentManager) {
+    public static void load(final FragmentManager fragmentManager, final Boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new LaunchFragment());
-        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
+        if (toBackStack) {
+            fragmentTransaction.addToBackStack(FRAGMENT_NAME);
+        }
         fragmentTransaction.commit();
     }
 

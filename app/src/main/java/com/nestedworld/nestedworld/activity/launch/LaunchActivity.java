@@ -35,7 +35,7 @@ public class LaunchActivity extends BaseAppCompatActivity {
         //choose the correct view
         if (!checkForExistingSession()) {
             //we don't have a session so we display the launch screen
-            LaunchFragment.load(this.getSupportFragmentManager());
+            LaunchFragment.load(this.getSupportFragmentManager(), false);
         }
         else {
             //We have a session so we go to the main menu
