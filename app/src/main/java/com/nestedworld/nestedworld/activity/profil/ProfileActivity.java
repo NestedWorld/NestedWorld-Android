@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.activity.profil;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
@@ -37,8 +38,16 @@ public class ProfileActivity extends BaseAppCompatActivity {
     ** Utils
      */
     private void setUpToolbar() {
-        toolbar.setTitle(getString(R.string.menu_ation_profil));
-        toolbar.setNavigationIcon(R.drawable.ic_navigation_chevron_left_white);
+        //Set the toolbar as actionBar
         setSupportActionBar(toolbar);
+
+        //Get back the Toolbar as actionBar
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            //customise the actionBar
+            actionBar.setTitle(getString(R.string.menu_ation_profil));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 }

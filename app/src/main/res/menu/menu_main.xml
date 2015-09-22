@@ -6,7 +6,6 @@
     <!-- Menu for the toolbar under the main menu-->
     <item
         android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_navigation_more_white"
         android:orderInCategory="100"
         android:title="@string/menu_ation_profil"
         app:showAsAction="never"/>
