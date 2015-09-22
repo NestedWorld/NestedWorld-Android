@@ -1,3 +1,4 @@
 <resources>
+    <!--Put your global dimension here-->
     <dimen name="global_padding">8dip</dimen>
 </resources>

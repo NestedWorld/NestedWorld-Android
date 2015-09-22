@@ -2,16 +2,14 @@ package com.nestedworld.nestedworld.customWidget.typeface;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.internal.widget.TintTypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.nestedworld.nestedworld.R;
-
 public class TypefaceToolbar extends android.support.v7.widget.Toolbar {
 
+    private final static String TAG = TypefaceToolbar.class.getSimpleName();
     private final String DEFAULT_TOOLBAR_TYPEFACE = "ProximaNova-Reg.ttf";
 
     private TextView mTitleTextView;
@@ -37,7 +35,7 @@ public class TypefaceToolbar extends android.support.v7.widget.Toolbar {
         // Need to use getContext() here so that we use the themed context
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs, android.support.v7.appcompat.R.styleable.Toolbar, defStyleAttr, 0);
         mTitleTextAppearance = a.getResourceId(android.support.v7.appcompat.R.styleable.Toolbar_titleTextAppearance, 0);
-        mTitleTextColor = ContextCompat.getColor(context, R.color.apptheme_color);
+        mTitleTextColor = a.getColor(android.support.v7.appcompat.R.styleable.Toolbar_titleTextColor, 0xffffffff);
         initView();
     }
 
@@ -103,6 +101,9 @@ public class TypefaceToolbar extends android.support.v7.widget.Toolbar {
         mTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
         mTitleTextView.setTypeface(mTypeface);
         if (mTitleTextAppearance != 0) {
+            // Use the depreciated version cause
+            // mTitleTextView.setTextAppearance(mTitleTextAppearance);
+            // cause a crash...
             mTitleTextView.setTextAppearance(context, mTitleTextAppearance);
         }
         if (mTitleTextColor != 0) {

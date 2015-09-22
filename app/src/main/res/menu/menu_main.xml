@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Menu for the toolbar under the main menu-->
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

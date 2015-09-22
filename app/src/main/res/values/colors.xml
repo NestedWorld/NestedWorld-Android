@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#ffffffff</color>
-    <color name="black">#ff000000</color>
+    <!-- Every color should respect material design spec-->
+    <!-- See https://www.google.com/design/spec/style/color.html -->
+
+    <!-- Color for the theme -->
+    <color name="apptheme_color">#009688</color>
+    <color name="apptheme_color_dark">#00796b</color>
+
+    <!-- Custom color-->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
-    <color name="background_dark">#ff000000</color>
-    <color name="background_light">#ffffffff</color>
 </resources>

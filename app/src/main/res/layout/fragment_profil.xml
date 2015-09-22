@@ -4,37 +4,38 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
+    <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
         android:id="@+id/textView0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <TextView
+    <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
         android:id="@+id/textView_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <TextView
+    <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Token"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <TextView
+    <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
         android:id="@+id/textView_token"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <Button
+    <com.nestedworld.nestedworld.customWidget.typeface.TypefaceButton
         android:id="@+id/button_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Déconnexion"/>
+        android:text="Déconnexion"
+        android:textColor="@color/white"/>
 </LinearLayout>

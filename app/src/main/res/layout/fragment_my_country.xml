@@ -4,11 +4,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
+    <com.nestedworld.nestedworld.customWidget.typeface.TypefaceTextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="My country"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:text="My country"/>
 </LinearLayout>
