@@ -93,12 +93,12 @@ public class UserManager {
      */
     private Boolean deleteAccount(@NonNull final Account account) {
         removeAccountNameFromPref();
-        invalidateAuthTokenFromAccount(mAccount);
+        invalidateAuthTokenFromAccount(account);
         if (Build.VERSION.SDK_INT >= 22) {
-            mAccountManager.removeAccountExplicitly(mAccount);
+            mAccountManager.removeAccountExplicitly(account);
         }
         else {
-            mAccountManager.removeAccount(mAccount, null, null);
+            mAccountManager.removeAccount(account, null, null);
         }
         return true;
     }
