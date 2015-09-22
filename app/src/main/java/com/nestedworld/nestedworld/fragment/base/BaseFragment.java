@@ -19,19 +19,34 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     protected final String TAG = getClass().getSimpleName();
-
     protected Context mContext;
 
+    /*
+    ** Method that every child will have to implement
+     */
+
+    /**
+     * get the layout id
+     * it will be use under onCreateView()
+     * as inflater.inflate(getLayoutResource(), ...)
+     */
     protected abstract int getLayoutResource();
 
+    /**
+     * init the graphical part
+     * /*like putting text under Editext
+     */
     protected abstract void initUI(Bundle savedInstanceState);
 
+    /**
+     * init the logical part
+     * like retrieving date from an API
+     */
     protected abstract void initLogic(Bundle savedInstanceState);
 
-    public String toString() {
-        return TAG;
-    }
-
+    /*
+    ** Life cycle
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +62,13 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    /*
+    ** Utils
+     */
+    public String toString() {
+        return TAG;
     }
 
     protected void startActivity(Class clazz, Bundle bundle) {

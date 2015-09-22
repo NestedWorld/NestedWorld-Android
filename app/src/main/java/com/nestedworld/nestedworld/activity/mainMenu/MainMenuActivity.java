@@ -3,7 +3,6 @@ package com.nestedworld.nestedworld.activity.mainMenu;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -71,14 +70,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     ** Utils
      */
     private void setUpToolbar() {
-        //Set the toolbar as actionBar
         setSupportActionBar(toolbar);
-
-        //Get back the Toolbar as actionBar
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            //customise the actionBar
-            actionBar.setHomeButtonEnabled(true);
-        }
     }
 }

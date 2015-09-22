@@ -68,8 +68,8 @@ public class TabsAdapter extends FragmentPagerAdapter {
         return sb;
     }
 
-    /*
-    ** Custom class for easy tab management
+    /**
+     * Custom class for easy tab management
      */
     private class CustomTab {
         private final Fragment mFragment;

@@ -66,8 +66,8 @@ public class NestedWorldApi {
         mClient = restAdapter.create(ApiInterface.class);
     }
 
-    /*
-    ** Interface implementation
+    /**
+     * Interface implementation
      */
     public void signUp(final String email, final String password, final Callback<User> callback) {
         mClient.signUp(email, password, callback);
@@ -82,8 +82,8 @@ public class NestedWorldApi {
         mClient.forgotPassword(email, callback);
     }
 
-    /*
-    ** Interface
+    /**
+     * API Interface which use the butterknife annotation
      */
     public interface ApiInterface {
         @POST(Constant.USER_SIGN_UP)

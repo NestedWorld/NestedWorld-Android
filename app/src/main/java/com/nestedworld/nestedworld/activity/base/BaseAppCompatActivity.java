@@ -21,19 +21,24 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     ** Method that every child will have to implement
      */
 
-    //get the layout id
-    //it will be use under onCreate()
-    //as setContentView(getLayoutResource());
+    /**
+     * get the layout id
+     * it will be use under onCreate()
+     * as setContentView(getLayoutResource());
+     */
     protected abstract int getLayoutResource();
 
-    //init the graphical part
-    //like putting text under Editext
+    /**
+     * init the graphical part
+     * /*like putting text under Editext
+     */
     protected abstract void initUI(Bundle savedInstanceState);
 
-    //init the logical part
-    //like retrieving date from an API
+    /**
+     * init the logical part
+     * like retrieving date from an API
+     */
     protected abstract void initLogic(Bundle savedInstanceState);
-
 
     /*
     ** Life cycle

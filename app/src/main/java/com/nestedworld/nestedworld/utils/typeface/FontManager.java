@@ -13,12 +13,24 @@ import java.util.Map;
  * and it will improve the loading by putting the typeface under the cache
  */
 public class FontManager {
+
     private static FontManager instance = null;
-
     private final AssetManager mgr;
-
     private final Map<String, Typeface> fonts;
 
+    /*
+    ** Singleton
+     */
+    public static FontManager getInstance(final AssetManager mgr) {
+        if (instance == null) {
+            init(mgr);
+        }
+        return instance;
+    }
+
+    /*
+    ** Constructor
+     */
     private FontManager(final AssetManager _mgr) {
         mgr = _mgr;
         fonts = new HashMap<>();
@@ -28,13 +40,9 @@ public class FontManager {
         instance = new FontManager(mgr);
     }
 
-    public static FontManager getInstance(final AssetManager mgr) {
-        if (instance == null) {
-            init(mgr);
-        }
-        return instance;
-    }
-
+    /*
+    ** Public method
+     */
     public Typeface getFont(String asset) {
         if (fonts.containsKey(asset))
             return fonts.get(asset);
@@ -62,6 +70,9 @@ public class FontManager {
         return font;
     }
 
+    /*
+    ** Private method
+     */
     private String fixAssetFilename(String asset) {
         // Empty font filename?
         // Just return it. We can't help.
