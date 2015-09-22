@@ -8,8 +8,14 @@ import com.nestedworld.nestedworld.api.models.RestError;
 
 import retrofit.RetrofitError;
 
+/*
+** Simple RetrofitError parser
+*  it's return an explicit error message
+*  if the server provide an error message he will be returned
+*  if the server didn't provide any error message, a custom (static) message will be returned
+ */
 public class RetrofitErrorHandler {
-    private final static String TAG = "RetrofitErrorHandler";
+    private final static String TAG = RetrofitErrorHandler.class.getSimpleName();
 
     /*
     ** Public method
@@ -18,6 +24,7 @@ public class RetrofitErrorHandler {
 
         String errorMessage;
 
+        //check the error type and call the corespondent error parser
         switch (error.getKind()) {
             case NETWORK:
                 errorMessage = getNetworkError(error, context);
@@ -53,7 +60,8 @@ public class RetrofitErrorHandler {
     }
 
     private static String getHttpError(final RetrofitError error, final Context context) {
-        //The server should a json body (describe under RestError.class)
+        //The server should send a json body (describe under RestError.class)
+        //The body should contain the error message so we'll try to get it
 
         RestError body = null;
 

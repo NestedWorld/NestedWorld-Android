@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 
+/*
+** Abstract class for Fragment
+*  it make a little abstraction of the life cycle
+*  it add a butterKnife support and some useful field/method
+*/
 public abstract class BaseFragment extends Fragment {
 
     protected final String TAG = getClass().getSimpleName();

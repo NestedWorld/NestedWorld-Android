@@ -7,6 +7,11 @@ import android.text.TextUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+** Useful class typeface management
+*  It make typeface easier to load
+*  and it will improve the loading by putting the typeface under the cache
+ */
 public class FontManager {
     private static FontManager instance = null;
 
@@ -14,7 +19,7 @@ public class FontManager {
 
     private final Map<String, Typeface> fonts;
 
-    private FontManager(AssetManager _mgr) {
+    private FontManager(final AssetManager _mgr) {
         mgr = _mgr;
         fonts = new HashMap<>();
     }
@@ -23,7 +28,7 @@ public class FontManager {
         instance = new FontManager(mgr);
     }
 
-    public static FontManager getInstance(AssetManager mgr) {
+    public static FontManager getInstance(final AssetManager mgr) {
         if (instance == null) {
             init(mgr);
         }

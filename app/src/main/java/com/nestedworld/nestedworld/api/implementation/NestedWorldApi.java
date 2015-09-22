@@ -11,11 +11,24 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
+/*
+** Simple Api containing the retrofit interface and his implementation
+ */
 public class NestedWorldApi {
     private static NestedWorldApi mSingleton;
     private final String TAG = getClass().getSimpleName();
     private Context mContext;
     private ApiInterface mClient;
+
+    /*
+    ** Singleton
+     */
+    public static NestedWorldApi getInstance(final Context context) {
+        if (mSingleton == null) {
+            mSingleton = new NestedWorldApi(context);
+        }
+        return mSingleton;
+    }
 
     /*
     ** Constructor
@@ -30,15 +43,6 @@ public class NestedWorldApi {
         init();
     }
 
-    /*
-    ** Singleton
-     */
-    public static NestedWorldApi getInstance(final Context context) {
-        if (mSingleton == null) {
-            mSingleton = new NestedWorldApi(context);
-        }
-        return mSingleton;
-    }
 
     private void init() {
         // Define the interceptor, add authentication headers

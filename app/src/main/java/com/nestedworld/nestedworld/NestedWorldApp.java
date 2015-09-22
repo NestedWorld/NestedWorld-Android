@@ -4,6 +4,10 @@ import android.app.Application;
 
 import com.newrelic.agent.android.NewRelic;
 
+/*
+** Application implementation
+*  it allow the crash logger to be launch at the very start of the application
+ */
 public class NestedWorldApp extends Application {
     /*
     ** Life cycle

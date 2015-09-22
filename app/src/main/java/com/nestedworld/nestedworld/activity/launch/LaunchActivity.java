@@ -26,6 +26,7 @@ public class LaunchActivity extends BaseAppCompatActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        //set the activity background and then make it visible
         mImageViewBackground.setBackgroundResource(R.drawable.logo);
         mImageViewBackground.setVisibility(View.VISIBLE);
     }

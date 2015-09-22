@@ -7,6 +7,11 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+/*
+** Custom Toolbar implementation
+*  it will change the typeface of the title
+*  the typeface is define with a static field (DEFAULT_TOOLBAR_TYPEFACE)
+ */
 public class TypefaceToolbar extends android.support.v7.widget.Toolbar {
 
     private final static String TAG = TypefaceToolbar.class.getSimpleName();

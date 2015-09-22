@@ -8,20 +8,36 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 
+/*
+** Abstract class for AppCompatActivity
+*  it make a little abstraction of the life cycle
+*  it add a butterKnife support and some useful field/method
+*/
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
     protected Context mContext;
 
+    /*
+    ** Method that every child will have to implement
+     */
+
+    //get the layout id
+    //it will be use under onCreate()
+    //as setContentView(getLayoutResource());
     protected abstract int getLayoutResource();
 
+    //init the graphical part
+    //like putting text under Editext
     protected abstract void initUI(Bundle savedInstanceState);
 
+    //init the logical part
+    //like retrieving date from an API
     protected abstract void initLogic(Bundle savedInstanceState);
 
-    public String toString() {
-        return TAG;
-    }
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +55,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
                 onBackPressed();
         }
         return (super.onOptionsItemSelected(menuItem));
+    }
+
+    /*
+    ** Utils
+     */
+    public String toString() {
+        return TAG;
     }
 
     protected void startActivity(Class clazz, Bundle bundle) {

@@ -14,6 +14,9 @@ import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 
+/*
+** Simple implementation of AbstractAccountAuthenticator
+ */
 public class NWAuthenticator extends AbstractAccountAuthenticator {
 
     private final Context mContext;

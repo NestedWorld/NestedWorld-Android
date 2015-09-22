@@ -18,6 +18,10 @@ import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyMonsterFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+** Custom FragmentPagerAdapter
+*  It's use for displaying the TABS under activity.mainMenu
+ */
 public class TabsAdapter extends FragmentPagerAdapter {
     private final List<CustomTab> tabList = new ArrayList<>();
     private final Context mContext;
