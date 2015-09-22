@@ -94,7 +94,7 @@ public class CreateAccountFragment extends BaseFragment {
                 //Store user Data
                 Bundle bundle = new Bundle();
                 bundle.putString("token", user.getToken());
-                if (UserManager.get(mContext).setUser(email, password, user.getToken(), null)) {
+                if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
                     //display MainMenu
                     startActivity(MainMenuActivity.class);
                 }

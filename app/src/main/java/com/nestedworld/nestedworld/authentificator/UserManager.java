@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
@@ -32,29 +34,29 @@ public class UserManager {
     /*
     ** Constructor
      */
-    private UserManager(final Context context) {
+    private UserManager(@NonNull final Context context) {
         mContext = context;
         mAccountManager = AccountManager.get(context);
-        mAccount = retrieveAccount(getLastAccountNameConnected());
+        mAccount = getAccountByName(getLastAccountNameConnected());
     }
 
     /*
     ** singleton
      */
-    public static UserManager get(final Context context) {
+    public static UserManager get(@NonNull final Context context) {
         return (new UserManager(context));
     }
 
     /*
     ** public method
      */
-    public Account getUserAccount() {
+    public Account getCurrentAccount() {
         return mAccount;
     }
 
-    public boolean setUser(final String name, final String password, final String authToken, final Bundle bundle) {
+    public boolean setCurrentUser(@NonNull final String name, @NonNull final String password, @NonNull final String authToken, @Nullable final Bundle bundle) {
         //check if account already exist
-        Account account = retrieveAccount(name);
+        Account account = getAccountByName(name);
 
         if (account == null) {
             //We have to create a new account
@@ -66,32 +68,48 @@ public class UserManager {
         }
 
         mAccount = account;
-        setAuthTokenType(account, authToken);
+        setAuthTokenTypeOnAccount(account, authToken);
         setAccountNameToPref(name);
 
         return true;
     }
 
-    public String getUserExtraData(final String key) {
-        return mAccountManager.getUserData(getUserAccount(), key);
+    public String getCurrentUserData(@NonNull final String key) {
+        if (mAccount == null) {
+            return null;
+        }
+        return mAccountManager.getUserData(mAccount, key);
     }
 
-    public Boolean deleteAccount(final Account account) {
-        removeAccountNameFromPref();
-        invalidateAuthToken(account);
-        if (Build.VERSION.SDK_INT >= 22) {
-            mAccountManager.removeAccountExplicitly(account);
-        }
-        else {
-            mAccountManager.removeAccount(account, null, null);
-        }
-        return true;
+    public Boolean deleteCurrentAccount() {
+        return deleteAccount(mAccount);
     }
+
+    public String getCurrentAuthToken() {
+        return getAuthTokenFromAccount(mAccount);
+    }
+
+    public String getCurrentAccountName() {
+        return mAccount.name;
+    }
+
 
     /*
     ** Private method
      */
-    private Account retrieveAccount(final String accountName) {
+    private Boolean deleteAccount(@NonNull final Account account) {
+        removeAccountNameFromPref();
+        invalidateAuthTokenFromAccount(mAccount);
+        if (Build.VERSION.SDK_INT >= 22) {
+            mAccountManager.removeAccountExplicitly(mAccount);
+        }
+        else {
+            mAccountManager.removeAccount(mAccount, null, null);
+        }
+        return true;
+    }
+
+    private Account getAccountByName(@NonNull final String accountName) {
         Account[] accounts = mAccountManager.getAccountsByType(Constant.ACCOUNT_TYPE);
         if (accounts.length == 0) {
             Log.d(TAG, "No registered account");
@@ -106,28 +124,24 @@ public class UserManager {
         return null;
     }
 
-    private String getAuthToken(final Account account) {
-        try {
-            AccountManagerFuture<Bundle> accountManagerFuture = mAccountManager.getAuthToken(account, Constant.AUTHTOKEN_TYPE, null, (Activity) mContext, null, null);
-            Bundle authTokenBundle = accountManagerFuture.getResult();
-            Object tokenObject = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN);
-            return tokenObject != null ? tokenObject.toString() : null;
-        } catch (OperationCanceledException | IOException | AuthenticatorException e) {
-            e.printStackTrace();
-        }
+    private String getAuthTokenFromAccount(@NonNull final Account account) {
+        //TODO get token under async task
+//        try {
+//            AccountManagerFuture<Bundle> accountManagerFuture = mAccountManager.getAuthToken(account, Constant.AUTHTOKEN_TYPE, null, (Activity) mContext, null, null);
+//            Bundle authTokenBundle = accountManagerFuture.getResult();
+//            Object tokenObject = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN);
+//            return tokenObject != null ? tokenObject.toString() : null;
+//        } catch (OperationCanceledException | IOException | AuthenticatorException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 
-    private Boolean invalidateAuthToken(final Account account) {
-        String authToken = getAuthToken(account);
-        if (authToken != null) {
-            mAccountManager.invalidateAuthToken(account.type, authToken);
-            return true;
-        }
-        return false;
+    private void invalidateAuthTokenFromAccount(@NonNull final Account account) {
+        mAccountManager.invalidateAuthToken(account.type, getAuthTokenFromAccount(account));
     }
 
-    private void setAuthTokenType(final Account account, final String authToken) {
+    private void setAuthTokenTypeOnAccount(@NonNull final Account account, @NonNull final String authToken) {
         mAccountManager.setAuthToken(account, Constant.AUTHTOKEN_TYPE, authToken);
     }
 
@@ -138,7 +152,7 @@ public class UserManager {
         return mContext.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_NAME, "");
     }
 
-    private void setAccountNameToPref(final String name) {
+    private void setAccountNameToPref(@NonNull final String name) {
         SharedPreferences.Editor edit = mContext.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit();
         edit.clear();
         edit.putString(KEY_ACCOUNT_NAME, name);

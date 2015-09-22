@@ -79,7 +79,7 @@ public class LoginFragment extends BaseFragment {
             public void success(User user, Response response) {
                 progressView.stop();
 
-                if (UserManager.get(mContext).setUser(email, password, user.getToken(), null)) {
+                if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
                     //display the mainMenu
                     startActivity(MainMenuActivity.class);
                 }
