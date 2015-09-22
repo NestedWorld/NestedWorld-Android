@@ -8,11 +8,11 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 
-/*
-** Abstract class for AppCompatActivity
-*  it make a little abstraction of the life cycle
-*  it add a butterKnife support and some useful field/method
-*/
+/**
+ * Abstract class for AppCompatActivity
+ * it make a little abstraction of the life cycle
+ * it add a butterKnife support and some useful field/method
+ */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
     protected Context mContext;

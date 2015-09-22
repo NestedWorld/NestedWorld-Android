@@ -7,10 +7,10 @@ import android.text.TextUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-/*
-** Useful class typeface management
-*  It make typeface easier to load
-*  and it will improve the loading by putting the typeface under the cache
+/**
+ * Useful class typeface management
+ * It make typeface easier to load
+ * and it will improve the loading by putting the typeface under the cache
  */
 public class FontManager {
     private static FontManager instance = null;

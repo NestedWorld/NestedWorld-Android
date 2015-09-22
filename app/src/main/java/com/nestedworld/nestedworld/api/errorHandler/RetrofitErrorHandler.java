@@ -8,11 +8,11 @@ import com.nestedworld.nestedworld.api.models.RestError;
 
 import retrofit.RetrofitError;
 
-/*
-** Simple RetrofitError parser
-*  it's return an explicit error message
-*  if the server provide an error message he will be returned
-*  if the server didn't provide any error message, a custom (static) message will be returned
+/**
+ * Simple RetrofitError parser
+ * it's return an explicit error message
+ * if the server provide an error message he will be returned
+ * if the server didn't provide any error message, a custom (static) message will be returned
  */
 public class RetrofitErrorHandler {
     private final static String TAG = RetrofitErrorHandler.class.getSimpleName();

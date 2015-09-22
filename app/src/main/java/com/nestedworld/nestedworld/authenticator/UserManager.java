@@ -10,10 +10,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-/*
-** AccountManager abstraction
-** /!\ this implementation allow only one account per application /!\
-*/
+/**
+ * AccountManager abstraction
+ * /!\ this implementation only allow one account per application (it's a personal choice) /!\
+ */
 public class UserManager {
     //private static field
     private final static String ACCOUNT_DETAIL_KEY = "com.nestedworld.account_detail";

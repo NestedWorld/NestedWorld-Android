@@ -11,8 +11,8 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
-/*
-** Simple Api containing the retrofit interface and his implementation
+/**
+ * Simple Api containing the retrofit interface and his implementation
  */
 public class NestedWorldApi {
     private static NestedWorldApi mSingleton;

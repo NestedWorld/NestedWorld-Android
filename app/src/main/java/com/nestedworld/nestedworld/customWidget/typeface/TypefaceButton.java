@@ -11,9 +11,9 @@ import android.util.AttributeSet;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
-/*
-** Custom Button implementation
-*  it allow custom typeface via xml attribute
+/**
+ * Custom Button implementation
+ * it allow custom typeface via xml attribute
  */
 public class TypefaceButton extends AppCompatButton {
 

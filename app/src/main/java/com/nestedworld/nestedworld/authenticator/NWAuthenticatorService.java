@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+/**
+ * Simple service implementation (it's require by the accountManager)
+ */
 public class NWAuthenticatorService extends Service {
     @Nullable
     @Override
