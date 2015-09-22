@@ -14,8 +14,8 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class ProfilFragment extends BaseFragment {
-    public final static String FRAGMENT_NAME = ProfilFragment.class.getSimpleName();
+public class ProfileFragment extends BaseFragment {
+    public final static String FRAGMENT_NAME = ProfileFragment.class.getSimpleName();
 
     @Bind(R.id.textView_username)
     TextView textViewUsername;
@@ -25,7 +25,7 @@ public class ProfilFragment extends BaseFragment {
 
     public static void load(final FragmentManager fragmentManager, final boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new ProfilFragment());
+        fragmentTransaction.replace(R.id.container, new ProfileFragment());
         if (toBackStack) {
             fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         }
@@ -33,7 +33,7 @@ public class ProfilFragment extends BaseFragment {
     }
 
     /*
-    ** Lyfe cycle
+    ** Life cycle
      */
     @Override
     protected int getLayoutResource() {
