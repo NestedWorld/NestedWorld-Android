@@ -1,0 +1,16 @@
+com.nestedworld.nestedworld
+com.nestedworld.nestedworld.activity.base
+com.nestedworld.nestedworld.activity.launch
+com.nestedworld.nestedworld.activity.mainMenu
+com.nestedworld.nestedworld.activity.profil
+com.nestedworld.nestedworld.adapter
+com.nestedworld.nestedworld.api.errorHandler
+com.nestedworld.nestedworld.api.implementation
+com.nestedworld.nestedworld.api.models
+com.nestedworld.nestedworld.authenticator
+com.nestedworld.nestedworld.customWidget.typeface
+com.nestedworld.nestedworld.fragment.base
+com.nestedworld.nestedworld.fragment.launch
+com.nestedworld.nestedworld.fragment.mainMenu.tabs
+com.nestedworld.nestedworld.fragment.profil
+com.nestedworld.nestedworld.utils.typeface

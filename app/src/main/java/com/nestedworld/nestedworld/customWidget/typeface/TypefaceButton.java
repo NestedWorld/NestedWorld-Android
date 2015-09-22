@@ -57,5 +57,4 @@ public class TypefaceButton extends AppCompatButton {
             array.recycle();
         }
     }
-
 }
