@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.authentificator;
+package com.nestedworld.nestedworld.authenticator;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.app.Service;

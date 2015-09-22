@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.authentificator.UserManager;
+import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.launch.LaunchFragment;
 
 import butterknife.Bind;

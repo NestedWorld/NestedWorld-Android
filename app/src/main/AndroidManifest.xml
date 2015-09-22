@@ -56,7 +56,7 @@
 
         <!-- Account Authenticator-->
         <service
-            android:name=".authentificator.NWAuthenticatorService"
+            android:name=".authenticator.NWAuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>

@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.authentificator;
+package com.nestedworld.nestedworld.authenticator;
 
 public class Constant {
     // /!\ Do not edit this field, it has to be the same in authenticator.xml
