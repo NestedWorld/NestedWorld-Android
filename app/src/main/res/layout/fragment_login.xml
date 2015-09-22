@@ -98,7 +98,7 @@
         android:clickable="true"
         android:contentDescription="@string/desc"
         android:padding="@dimen/global_padding"
-        android:src="@drawable/ic_navigation_chevron_left"/>
+        android:src="@drawable/ic_navigation_chevron_left_green"/>
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progressView"

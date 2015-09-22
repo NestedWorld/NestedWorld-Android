@@ -38,7 +38,7 @@ public class ProfileActivity extends BaseAppCompatActivity {
      */
     private void setUpToolbar() {
         toolbar.setTitle(getString(R.string.menu_ation_profil));
-        toolbar.setNavigationIcon(R.drawable.ic_navigation_chevron_left);
+        toolbar.setNavigationIcon(R.drawable.ic_navigation_chevron_left_green);
         setSupportActionBar(toolbar);
     }
 }

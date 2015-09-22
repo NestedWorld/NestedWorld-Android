@@ -62,6 +62,7 @@ public class ProfileFragment extends BaseFragment {
             startActivity(LaunchActivity.class);
         }
         else {
+            //TODO use a string.xml reference
             Toast.makeText(mContext, "Impossible de vous deconnecter", Toast.LENGTH_LONG).show();
         }
     }
