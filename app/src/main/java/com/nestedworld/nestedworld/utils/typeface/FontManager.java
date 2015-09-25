@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.utils.typeface;
 
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class FontManager {
     /*
     ** Singleton
      */
-    public static FontManager getInstance(final AssetManager mgr) {
+    public static FontManager getInstance(@NonNull final AssetManager mgr) {
         if (instance == null) {
             init(mgr);
         }
@@ -31,29 +32,29 @@ public class FontManager {
     /*
     ** Constructor
      */
-    private FontManager(final AssetManager _mgr) {
+    private FontManager(@NonNull final AssetManager _mgr) {
         mgr = _mgr;
         fonts = new HashMap<>();
     }
 
-    public static void init(AssetManager mgr) {
+    public static void init(@NonNull final AssetManager mgr) {
         instance = new FontManager(mgr);
     }
 
     /*
     ** Public method
      */
-    public Typeface getFont(String asset) {
+    public Typeface getFont(@NonNull final String asset) {
         if (fonts.containsKey(asset))
             return fonts.get(asset);
 
-        Typeface font = null;
+        Typeface font;
 
         try {
             font = Typeface.createFromAsset(mgr, asset);
             fonts.put(asset, font);
         } catch (Exception ignored) {
-
+            return null;
         }
 
         if (font == null) {
@@ -66,14 +67,13 @@ public class FontManager {
 
             }
         }
-
         return font;
     }
 
     /*
     ** Private method
      */
-    private String fixAssetFilename(String asset) {
+    private String fixAssetFilename(@NonNull final String asset) {
         // Empty font filename?
         // Just return it. We can't help.
         if (TextUtils.isEmpty(asset))
@@ -81,7 +81,7 @@ public class FontManager {
 
         // Make sure that the font ends in '.ttf' or '.ttc'
         if ((!asset.endsWith(".ttf")) && (!asset.endsWith(".ttc")))
-            asset = String.format("%s.ttf", asset);
+            return (String.format("%s.ttf", asset));
 
         return asset;
     }

@@ -41,7 +41,7 @@ public class ProfileActivity extends BaseAppCompatActivity {
         //Set the toolbar as actionBar
         setSupportActionBar(toolbar);
 
-        //Get back the Toolbar as actionBar
+        //Get back the Toolbar as actionBar and then custom it
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //customise the actionBar

@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +31,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
     /*
     ** Constructor
      */
-    public TabsAdapter(final FragmentManager fm, final Context context) {
+    public TabsAdapter(@NonNull final FragmentManager fm, @NonNull final Context context) {
         super(fm);
 
         mContext = context;
@@ -77,7 +78,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
         private final int mIcon;
         private String mTitle = "";
 
-        public CustomTab(final String title, final Fragment fragment, final int icon) {
+        public CustomTab(@NonNull final String title, @NonNull final Fragment fragment, final int icon) {
             mTitle = title;
             mFragment = fragment;
             mIcon = icon;

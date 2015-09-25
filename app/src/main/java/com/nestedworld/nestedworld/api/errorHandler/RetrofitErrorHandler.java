@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.api.errorHandler;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.nestedworld.nestedworld.R;
@@ -20,7 +21,7 @@ public class RetrofitErrorHandler {
     /*
     ** Public method
      */
-    public static String getErrorMessage(final RetrofitError error, final Context context) {
+    public static String getErrorMessage(@NonNull final RetrofitError error, @NonNull final Context context) {
 
         String errorMessage;
 

@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.api.implementation;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.api.models.User;
 
@@ -23,7 +24,7 @@ public class NestedWorldApi {
     /*
     ** Singleton
      */
-    public static NestedWorldApi getInstance(final Context context) {
+    public static NestedWorldApi getInstance(@NonNull final Context context) {
         if (mSingleton == null) {
             mSingleton = new NestedWorldApi(context);
         }
@@ -69,16 +70,16 @@ public class NestedWorldApi {
     /**
      * Interface implementation
      */
-    public void signUp(final String email, final String password, final Callback<User> callback) {
+    public void signUp(@NonNull final String email, @NonNull final String password, @NonNull final Callback<User> callback) {
         mClient.signUp(email, password, callback);
     }
 
-    public void signIn(final String email, final String password, final Callback<User> callback) {
+    public void signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<User> callback) {
         //TODO add the good token (and make it static)
         mClient.signIn(email, password, "test", callback);
     }
 
-    public void forgotPassword(final String email, final Callback<User> callback) {
+    public void forgotPassword(@NonNull final String email, @NonNull final Callback<User> callback) {
         mClient.forgotPassword(email, callback);
     }
 
