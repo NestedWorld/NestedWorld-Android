@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.authenticator;
 
+import com.nestedworld.nestedworld.utils.log.LogHelper;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
@@ -8,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 /**
  * AccountManager abstraction
@@ -58,7 +59,7 @@ public class UserManager {
             if (!mAccountManager.addAccountExplicitly(account, password, bundle)) {
                 return false;
             }
-            Log.d(TAG, "Successfully create a new account");
+            LogHelper.d(TAG, "Successfully create a new account");
         }
 
         mAccount = account;
@@ -105,15 +106,15 @@ public class UserManager {
     private Account getAccountByName(@NonNull final String accountName) {
         Account[] accounts = mAccountManager.getAccountsByType(Constant.ACCOUNT_TYPE);
         if (accounts.length == 0) {
-            Log.d(TAG, "No registered account");
+            LogHelper.d(TAG, "No registered account");
         }
         for (Account account : accounts) {
             if (account.name.equalsIgnoreCase(accountName)) {
-                Log.d(TAG, "Successfully found an account (last_registered = " + accountName + ")");
+                LogHelper.d(TAG, "Successfully found an account (last_registered = " + accountName + ")");
                 return account;
             }
         }
-        Log.d(TAG, "No account found (last_registered = " + accountName + ")");
+        LogHelper.d(TAG, "No account found (last_registered = " + accountName + ")");
         return null;
     }
 
