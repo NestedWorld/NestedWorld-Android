@@ -82,8 +82,7 @@ public class LoginFragment extends BaseFragment {
                 if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
                     //display the mainMenu
                     startActivity(MainMenuActivity.class);
-                }
-                else {
+                } else {
                     Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
                 }
             }

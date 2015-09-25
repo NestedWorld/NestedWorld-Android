@@ -97,8 +97,7 @@ public class CreateAccountFragment extends BaseFragment {
                 if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
                     //display MainMenu
                     startActivity(MainMenuActivity.class);
-                }
-                else {
+                } else {
                     Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
                 }
             }
@@ -120,8 +119,7 @@ public class CreateAccountFragment extends BaseFragment {
         if (!checkEmailFormat(email)) {
             etEmail.setError(getString(R.string.editText_email_invalid));
             return false;
-        }
-        else if (!checkPasswordFormat(password)) {
+        } else if (!checkPasswordFormat(password)) {
             etPassword.setError(getString(R.string.editText_password_invalid));
             return false;
         }

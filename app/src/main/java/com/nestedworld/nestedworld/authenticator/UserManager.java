@@ -96,8 +96,7 @@ public class UserManager {
         invalidateAuthTokenFromAccount(account);
         if (Build.VERSION.SDK_INT >= 22) {
             mAccountManager.removeAccountExplicitly(account);
-        }
-        else {
+        } else {
             mAccountManager.removeAccount(account, null, null);
         }
         return true;
