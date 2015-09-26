@@ -1,11 +1,5 @@
 package com.nestedworld.nestedworld.fragment.launch;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
@@ -14,6 +8,13 @@ import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -80,8 +81,9 @@ public class LoginFragment extends BaseFragment {
                 progressView.stop();
 
                 if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
-                    //display the mainMenu
+                    //display the mainMenu and stop the launchActivity
                     startActivity(MainMenuActivity.class);
+                    ((FragmentActivity) mContext).finish();
                 } else {
                     Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
                 }

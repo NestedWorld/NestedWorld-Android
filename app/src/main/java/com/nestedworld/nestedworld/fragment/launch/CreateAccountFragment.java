@@ -10,6 +10,7 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -95,8 +96,9 @@ public class CreateAccountFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("token", user.getToken());
                 if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
-                    //display MainMenu
+                    //display MainMenu and then stop le launchMenu
                     startActivity(MainMenuActivity.class);
+                    ((FragmentActivity) mContext).finish();
                 } else {
                     Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
                 }
