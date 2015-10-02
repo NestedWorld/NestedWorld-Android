@@ -1,19 +1,22 @@
 package com.nestedworld.nestedworld.fragment.profil;
 
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
+import com.nestedworld.nestedworld.authenticator.UserManager;
+import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
-import com.nestedworld.nestedworld.authenticator.UserManager;
-import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 
+/**
+ * A placeholder fragment containing a simple view.
+ */
 public class ProfileFragment extends BaseFragment {
     public final static String FRAGMENT_NAME = ProfileFragment.class.getSimpleName();
 

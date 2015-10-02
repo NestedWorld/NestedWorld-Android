@@ -26,6 +26,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+/**
+ * A placeholder fragment containing a simple view.
+ */
 public class CreateAccountFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();

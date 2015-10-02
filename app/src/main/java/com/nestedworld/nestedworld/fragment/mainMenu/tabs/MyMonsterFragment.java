@@ -1,12 +1,15 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-
+/**
+ * A placeholder fragment containing a simple view.
+ */
 public class MyMonsterFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = MyMonsterFragment.class.getSimpleName();
