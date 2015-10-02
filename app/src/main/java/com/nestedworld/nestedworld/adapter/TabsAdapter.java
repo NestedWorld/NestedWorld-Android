@@ -1,9 +1,13 @@
 package com.nestedworld.nestedworld.adapter;
 
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCityFragment;
+import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCountryFragment;
+import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyMonsterFragment;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,11 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCityFragment;
-import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCountryFragment;
-import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyMonsterFragment;
 
 import java.util.ArrayList;
 import java.util.List;
