@@ -45,6 +45,7 @@ public class UserManager {
     /*
     ** public method
      */
+    @Nullable
     public Account getCurrentAccount() {
         return mAccount;
     }
@@ -69,6 +70,7 @@ public class UserManager {
         return true;
     }
 
+    @Nullable
     public String getCurrentUserData(@NonNull final String key) {
         if (mAccount == null) {
             return null;
@@ -84,6 +86,7 @@ public class UserManager {
         return getAuthTokenFromAccount(mAccount);
     }
 
+    @Nullable
     public String getCurrentAccountName() {
         return mAccount.name;
     }
@@ -103,6 +106,7 @@ public class UserManager {
         return true;
     }
 
+    @Nullable
     private Account getAccountByName(@NonNull final String accountName) {
         Account[] accounts = mAccountManager.getAccountsByType(Constant.ACCOUNT_TYPE);
         if (accounts.length == 0) {
