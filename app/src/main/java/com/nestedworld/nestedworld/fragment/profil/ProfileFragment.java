@@ -64,8 +64,7 @@ public class ProfileFragment extends BaseFragment {
         if (userManager.deleteCurrentAccount()) {
             startActivity(LaunchActivity.class);
         } else {
-            //TODO use a string.xml reference
-            Toast.makeText(mContext, "Impossible de vous deconnecter", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, getString(R.string.error_logout), Toast.LENGTH_LONG).show();
         }
     }
 }
