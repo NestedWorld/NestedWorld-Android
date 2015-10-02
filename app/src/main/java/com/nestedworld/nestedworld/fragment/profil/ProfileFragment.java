@@ -46,8 +46,8 @@ public class ProfileFragment extends BaseFragment {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         final UserManager userManager = UserManager.get(mContext);
-        textViewUsername.setText("" + userManager.getCurrentAccountName());
-        textViewToken.setText("" + userManager.getCurrentAuthToken());
+        textViewUsername.setText(userManager.getCurrentAccountName());
+        textViewToken.setText(userManager.getCurrentAuthToken());
     }
 
     @Override
