@@ -1,5 +1,8 @@
 package com.nestedworld.nestedworld.customWidget.typeface;
 
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.utils.typeface.FontManager;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -7,9 +10,6 @@ import android.support.v7.internal.widget.TintContextWrapper;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
 /**
  * Custom EditText implementation
@@ -25,17 +25,21 @@ public class TypefaceEditText extends AppCompatEditText {
     }
 
     public TypefaceEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.editTextStyle);
+        super(context, attrs);
+
+        //Avoid crash under interface build
+        if (!this.isInEditMode()) {
+            applyTypeface(context, attrs);
+        }
     }
 
     public TypefaceEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(TintContextWrapper.wrap(context), attrs, defStyleAttr);
-        //Avoid crash under interface build
-        if (this.isInEditMode()) {
-            return;
-        }
 
-        applyTypeface(context, attrs);
+        //Avoid crash under interface build
+        if (!this.isInEditMode()) {
+            applyTypeface(context, attrs);
+        }
     }
 
     /*

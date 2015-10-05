@@ -1,5 +1,8 @@
 package com.nestedworld.nestedworld.customWidget.typeface;
 
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.utils.typeface.FontManager;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -7,9 +10,6 @@ import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
 /**
  * Custom Button implementation
@@ -25,17 +25,21 @@ public class TypefaceButton extends AppCompatButton {
     }
 
     public TypefaceButton(Context context, AttributeSet attrs) {
-        this(context, attrs, android.support.v7.appcompat.R.attr.buttonStyle);
+        super(context, attrs);
+
+        //Avoid crash under interface build
+        if (!this.isInEditMode()) {
+            applyTypeface(context, attrs);
+        }
     }
 
     public TypefaceButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         //Avoid crash under interface build
-        if (this.isInEditMode()) {
-            return;
+        if (!this.isInEditMode()) {
+            applyTypeface(context, attrs);
         }
-        applyTypeface(context, attrs);
     }
 
     /*

@@ -1,5 +1,8 @@
 package com.nestedworld.nestedworld.customWidget.typeface;
 
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.utils.typeface.FontManager;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -7,9 +10,6 @@ import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.utils.typeface.FontManager;
 
 /**
  * Custom TextView implementation
@@ -25,18 +25,21 @@ public class TypefaceTextView extends AppCompatTextView {
     }
 
     public TypefaceTextView(final Context context, final AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
+        super(context, attrs);
+
+        //Avoid crash under interface build
+        if (!this.isInEditMode()) {
+            applyTypeface(context, attrs);
+        }
     }
 
     public TypefaceTextView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
         //Avoid crash under interface build
-        if (this.isInEditMode()) {
-            return;
+        if (!this.isInEditMode()) {
+            applyTypeface(context, attrs);
         }
-
-        applyTypeface(context, attrs);
     }
 
     /*
