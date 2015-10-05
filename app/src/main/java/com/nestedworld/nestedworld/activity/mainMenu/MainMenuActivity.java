@@ -4,6 +4,9 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
+import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCityFragment;
+import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCountryFragment;
+import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyMonsterFragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -39,8 +42,12 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     @Override
     protected void initLogic(Bundle savedInstanceState) {
-        //Init view pager
+        //TODO use good icon
         final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), mContext);
+        adapter.addFragment(getString(R.string.tab_village_name), new MyCityFragment(), R.drawable.ic_cast_light);
+        adapter.addFragment(getString(R.string.tab_monster_name), new MyMonsterFragment(), R.drawable.ic_cast_light);
+        adapter.addFragment(getString(R.string.tab_city_name), new MyCountryFragment(), R.drawable.ic_cast_light);
+
         viewPager.setAdapter(adapter);
 
         //Add view pager to the tabLayout

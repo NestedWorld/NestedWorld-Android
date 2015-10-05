@@ -1,10 +1,5 @@
 package com.nestedworld.nestedworld.adapter;
 
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCityFragment;
-import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyCountryFragment;
-import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MyMonsterFragment;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -12,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.ImageSpan;
 
 import java.util.ArrayList;
@@ -34,12 +29,13 @@ public class TabsAdapter extends FragmentPagerAdapter {
         super(fm);
 
         mContext = context;
+    }
 
-        //init tabsList
-        //TODO use good icon
-        tabList.add(new CustomTab(mContext.getString(R.string.tab_village_name), new MyCityFragment(), R.drawable.ic_cast_dark));
-        tabList.add(new CustomTab(mContext.getString(R.string.tab_monster_name), new MyMonsterFragment(), R.drawable.ic_cast_dark));
-        tabList.add(new CustomTab(mContext.getString(R.string.tab_city_name), new MyCountryFragment(), R.drawable.ic_cast_dark));
+    /*
+    ** Public method
+     */
+    public void addFragment(@NonNull final String title, @NonNull final Fragment fragment, final int icon) {
+        tabList.add(new CustomTab(title, fragment, icon));
     }
 
     /*
@@ -58,21 +54,23 @@ public class TabsAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
 
-        // Generate title based on item position
-        Drawable image = ContextCompat.getDrawable(mContext, tabList.get(position).getIcon());
-        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+        final CustomTab tab = tabList.get(position);
 
-        // Replace blank spaces with image icon
-        SpannableString sb = new SpannableString("   " + tabList.get(position).getTitle());
-        ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
-        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Drawable drawable = ContextCompat.getDrawable(mContext, tab.getIcon());
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        SpannableString sb = new SpannableString("   " + tab.getTitle());
+        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+
+        sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         return sb;
     }
 
     /**
      * Custom class for easy tab management
      */
-    private class CustomTab {
+    public class CustomTab {
         private final Fragment mFragment;
         private final int mIcon;
         private String mTitle = "";
