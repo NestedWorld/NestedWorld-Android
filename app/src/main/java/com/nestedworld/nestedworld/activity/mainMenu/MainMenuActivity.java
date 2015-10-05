@@ -4,11 +4,11 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
-import com.nestedworld.nestedworld.customWidget.typeface.TypefaceToolbar;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +16,7 @@ import butterknife.Bind;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
-    TypefaceToolbar toolbar;
+    Toolbar toolbar;
 
     @Bind(R.id.viewpager)
     ViewPager viewPager;

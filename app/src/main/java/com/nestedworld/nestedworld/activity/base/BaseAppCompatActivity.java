@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Abstract class for AppCompatActivity
@@ -46,9 +47,10 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(getLayoutResource());
-        ButterKnife.bind(this);
         mContext = getApplicationContext();
+        ButterKnife.bind(this);
         initUI(savedInstanceState);
         initLogic(savedInstanceState);
     }
@@ -60,6 +62,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
                 onBackPressed();
         }
         return (super.onOptionsItemSelected(menuItem));
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        //We override the font
+        //See https://github.com/chrisjenx/Calligraphy
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     /*

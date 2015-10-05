@@ -2,28 +2,28 @@
 <resources>
 
     <!-- Proxima font -->
-    <style name="TypefaceStyle">
-        <item name="typeface">ProximaNova-Reg.ttf</item>
+    <style name="TypefaceStyle" parent="android:TextAppearance">
+        <item name="fontPath">fonts/ProximaNova-Reg.ttf</item>
     </style>
 
     <style name="TypefaceStyle.ProximaNova">
-        <item name="typeface">ProximaNova-Reg.ttf</item>
+        <item name="fontPath">fonts/ProximaNova-Reg.ttf</item>
     </style>
 
     <style name="TypefaceStyle.ProximaNova.bold">
-        <item name="typeface">ProximaNova-Bold.ttf</item>
+        <item name="fontPath">fonts/ProximaNova-Bold.ttf</item>
     </style>
 
     <style name="TypefaceStyle.ProximaNova.semibold">
-        <item name="typeface">ProximaNova-Sbold.ttf</item>
+        <item name="fontPath">fonts/ProximaNova-Sbold.ttf</item>
     </style>
 
     <style name="TypefaceStyle.ProximaNova.thin">
-        <item name="typeface">ProximaNova-Thin.ttf</item>
+        <item name="fontPath">fonts/ProximaNova-Thin.ttf</item>
     </style>
 
     <style name="TypefaceStyle.ProximaNova.light">
-        <item name="typeface">ProximaNova-Light.ttf</item>
+        <item name="fontPath">fonts/ProximaNova-Light.ttf</item>
     </style>
 
     <!-- Custom TabLayout style for displaying spannable-->

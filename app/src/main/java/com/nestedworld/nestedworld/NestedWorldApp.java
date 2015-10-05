@@ -1,8 +1,10 @@
 package com.nestedworld.nestedworld;
 
+import com.newrelic.agent.android.NewRelic;
+
 import android.app.Application;
 
-import com.newrelic.agent.android.NewRelic;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Application implementation
@@ -16,6 +18,7 @@ public class NestedWorldApp extends Application {
     public void onCreate() {
         super.onCreate();
         initCrashLogger();
+        initFontOverrider();
     }
 
     /*
@@ -26,5 +29,13 @@ public class NestedWorldApp extends Application {
             NewRelic.withApplicationToken("AAfa7011e7d073accc8bc537079365343349369b8f")
                     .start(this);
         }
+    }
+
+    private void initFontOverrider() {
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/ProximaNova-Reg.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
     }
 }

@@ -1,19 +1,19 @@
 package com.nestedworld.nestedworld.activity.profil;
 
-import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.customWidget.typeface.TypefaceToolbar;
 import com.nestedworld.nestedworld.fragment.profil.ProfileFragment;
+
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 
 import butterknife.Bind;
 
 public class ProfileActivity extends BaseAppCompatActivity {
 
     @Bind(R.id.toolbar)
-    TypefaceToolbar toolbar;
+    Toolbar toolbar;
 
     /*
     ** Life Cycle
