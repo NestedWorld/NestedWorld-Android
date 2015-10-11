@@ -17,8 +17,6 @@ import android.support.annotation.Nullable;
  */
 public class UserManager {
     //private static field
-    private final static String ACCOUNT_DETAIL_KEY = "com.nestedworld.account_detail";
-    private final static String KEY_ACCOUNT_NAME = "name";
     private final static String TAG = UserManager.class.getSimpleName();
 
     //private properties
@@ -32,7 +30,7 @@ public class UserManager {
     private UserManager(@NonNull final Context context) {
         mContext = context;
         mAccountManager = AccountManager.get(context);
-        mAccount = getAccountByName(getLastAccountNameConnected());
+        mAccount = getAccountByName(SharedPreferenceUtils.getLastAccountNameConnected(mContext));
     }
 
     /*
@@ -64,8 +62,9 @@ public class UserManager {
         }
 
         mAccount = account;
-        setAuthTokenTypeOnAccount(account, authToken);
-        setAccountNameToPref(name);
+        //store name/authToken to sharedPreference
+        SharedPreferenceUtils.setAuthTokenToPref(mContext, authToken);
+        SharedPreferenceUtils.setAccountNameToPref(mContext, name);
 
         return true;
     }
@@ -83,7 +82,7 @@ public class UserManager {
     }
 
     public String getCurrentAuthToken() {
-        return getAuthTokenFromAccount(mAccount);
+        return SharedPreferenceUtils.getCurrentAuthToken(mContext);
     }
 
     @Nullable
@@ -96,7 +95,7 @@ public class UserManager {
     ** Private method
      */
     private Boolean deleteAccount(@NonNull final Account account) {
-        removeAccountNameFromPref();
+        SharedPreferenceUtils.clearPref(mContext);
         invalidateAuthTokenFromAccount(account);
         if (Build.VERSION.SDK_INT >= 22) {
             mAccountManager.removeAccountExplicitly(account);
@@ -122,42 +121,56 @@ public class UserManager {
         return null;
     }
 
-    private String getAuthTokenFromAccount(@NonNull final Account account) {
-        //TODO get token under async task
-//        try {
-//            AccountManagerFuture<Bundle> accountManagerFuture = mAccountManager.getAuthToken(account, Constant.AUTHTOKEN_TYPE, null, (Activity) mContext, null, null);
-//            Bundle authTokenBundle = accountManagerFuture.getResult();
-//            Object tokenObject = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN);
-//            return tokenObject != null ? tokenObject.toString() : null;
-//        } catch (OperationCanceledException | IOException | AuthenticatorException e) {
-//            e.printStackTrace();
-//        }
-        return null;
-    }
 
     private void invalidateAuthTokenFromAccount(@NonNull final Account account) {
-        mAccountManager.invalidateAuthToken(account.type, getAuthTokenFromAccount(account));
-    }
-
-    private void setAuthTokenTypeOnAccount(@NonNull final Account account, @NonNull final String authToken) {
-        mAccountManager.setAuthToken(account, Constant.AUTHTOKEN_TYPE, authToken);
+        mAccountManager.invalidateAuthToken(account.type, SharedPreferenceUtils.getCurrentAuthToken(mContext));
     }
 
     /*
     ** SharedPreference Utils
      */
-    private String getLastAccountNameConnected() {
-        return mContext.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_NAME, "");
+    private static class SharedPreferenceUtils {
+        private final static String TAG = SharedPreferenceUtils.class.getSimpleName();
+
+        private final static String ACCOUNT_DETAIL_KEY = "com.nestedworld.account_detail";
+        private final static String KEY_ACCOUNT_NAME = "name";
+        private final static String KEY_ACCOUNT_TOKEN = "token";
+
+        /*
+        ** Account name
+         */
+        public static String getLastAccountNameConnected(@NonNull final Context context) {
+            return context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_NAME, "");
+        }
+
+        public static void setAccountNameToPref(@NonNull final Context context, @NonNull final String name) {
+            LogHelper.d(TAG, "setAccountNameToPref : " + name);
+            SharedPreferences.Editor edit = context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit();
+            edit.putString(KEY_ACCOUNT_NAME, name);
+            edit.apply();
+        }
+
+        /*
+        ** AuthToken
+         */
+        public static String getCurrentAuthToken(@NonNull final Context context) {
+            return context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_TOKEN, "");
+        }
+
+        public static void setAuthTokenToPref(@NonNull final Context context, @NonNull final String authToken) {
+            LogHelper.d(TAG, "setAuthTokenToPref : " + authToken);
+            SharedPreferences.Editor edit = context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit();
+            edit.putString(KEY_ACCOUNT_TOKEN, authToken);
+            edit.apply();
+        }
+
+        /*
+        ** Utils
+         */
+        public static void clearPref(@NonNull final Context context) {
+            LogHelper.d(TAG, "clearPref");
+            context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit().clear().apply();
+        }
     }
 
-    private void setAccountNameToPref(@NonNull final String name) {
-        SharedPreferences.Editor edit = mContext.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit();
-        edit.clear();
-        edit.putString(KEY_ACCOUNT_NAME, name);
-        edit.apply();
-    }
-
-    private void removeAccountNameFromPref() {
-        mContext.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit().clear().apply();
-    }
 }
