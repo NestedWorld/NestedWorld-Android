@@ -10,13 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyCityFragment extends BaseFragment {
+public class ShopFragment extends BaseFragment {
 
-    public final static String FRAGMENT_NAME = MyCityFragment.class.getSimpleName();
+    public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new MyCityFragment());
+        fragmentTransaction.replace(R.id.container, new HomeFragment());
         fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         fragmentTransaction.commit();
     }
@@ -26,7 +26,7 @@ public class MyCityFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_my_city;
+        return R.layout.fragment_tab_shop;
     }
 
     @Override

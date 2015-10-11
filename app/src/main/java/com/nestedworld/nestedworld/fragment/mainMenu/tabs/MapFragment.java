@@ -10,9 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyCountryFragment extends BaseFragment {
+public class MapFragment extends BaseFragment {
 
-    public final static String FRAGMENT_NAME = MyCountryFragment.class.getSimpleName();
+    public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -26,7 +26,7 @@ public class MyCountryFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_my_country;
+        return R.layout.fragment_tab_map;
     }
 
     @Override

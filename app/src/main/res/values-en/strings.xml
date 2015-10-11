@@ -21,10 +21,10 @@
     <string name="error_no_internet">Veillez vous connecter a internet et réesayer.</string>
     <string name="error_unexpected">Une erreur innatendu est servenu, merci de réésayer.</string>
     <string name="error_conversion">Une erreur innatendu est servenu, merci de réésayer.</string>
-    <string name="error_unknow">Une erreur innatendu est servenu, merci de réésayer.</string>
+    <string name="error_unknown">Une erreur innatendu est servenu, merci de réésayer.</string>
     <string name="error_create_account">Impossible de créer votre compte, merci de réésayer</string>
 
     <string name="password_send">Vous allez recevoir un mail d\'ici peu.</string>
 
-    <string name="menu_ation_profil">Profil</string>
+    <string name="menu_action_profil">Profil</string>
 </resources>

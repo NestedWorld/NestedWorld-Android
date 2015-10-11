@@ -10,13 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyMonsterFragment extends BaseFragment {
+public class MonstersFragment extends BaseFragment {
 
-    public final static String FRAGMENT_NAME = MyMonsterFragment.class.getSimpleName();
+    public final static String FRAGMENT_NAME = MonstersFragment.class.getSimpleName();
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new MyMonsterFragment());
+        fragmentTransaction.replace(R.id.container, new MonstersFragment());
         fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         fragmentTransaction.commit();
     }
@@ -26,7 +26,7 @@ public class MyMonsterFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_my_monster;
+        return R.layout.fragment_tab_monsters;
     }
 
     @Override

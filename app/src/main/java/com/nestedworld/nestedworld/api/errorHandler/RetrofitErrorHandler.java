@@ -77,6 +77,6 @@ public class RetrofitErrorHandler {
         }
 
         //The server didn't send an error message
-        return context.getResources().getString(R.string.error_unknow);
+        return context.getResources().getString(R.string.error_unknown);
     }
 }
