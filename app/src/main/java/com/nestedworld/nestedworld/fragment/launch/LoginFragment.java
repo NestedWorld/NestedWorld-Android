@@ -1,5 +1,10 @@
 package com.nestedworld.nestedworld.fragment.launch;
 
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.nestedworld.nestedworld.NestedWorldApp;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
@@ -9,10 +14,12 @@ import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -35,6 +42,8 @@ public class LoginFragment extends BaseFragment {
     EditText etPassword;
     @Bind(R.id.progressView)
     ProgressView progressView;
+    @Bind(R.id.facebook_login_button)
+    LoginButton facebookLoginButton;
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -58,8 +67,34 @@ public class LoginFragment extends BaseFragment {
     }
 
     @Override
-    protected void initLogic(Bundle savedInstanceState) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        NestedWorldApp.get().getCallbackManager().onActivityResult(requestCode, resultCode, data);
+    }
 
+    @Override
+    protected void initLogic(Bundle savedInstanceState) {
+        facebookLoginButton.setFragment(this);
+        facebookLoginButton.registerCallback(NestedWorldApp.get().getCallbackManager(),
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.e(TAG, "Success");
+                        Toast.makeText(mContext, "Success", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.e(TAG, "Cancel");
+                        Toast.makeText(mContext, "Cancel", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Log.e(TAG, "Error");
+                        Toast.makeText(mContext, "Error", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /*

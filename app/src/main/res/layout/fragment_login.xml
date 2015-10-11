@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/desc"
         android:scaleType="fitCenter"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/logo" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -35,7 +35,7 @@
                 android:gravity="center"
                 android:text="@string/text_login_full"
                 android:textColor="@color/apptheme_color"
-                android:textSize="22sp"/>
+                android:textSize="22sp" />
 
             <EditText
                 android:id="@+id/editText_userEmail"
@@ -48,7 +48,7 @@
                 android:gravity="center"
                 android:hint="@string/editText_email"
                 android:inputType="textEmailAddress"
-                android:padding="@dimen/global_padding"/>
+                android:padding="@dimen/global_padding" />
 
             <EditText
                 android:id="@+id/editText_userPassword"
@@ -61,7 +61,18 @@
                 android:gravity="center"
                 android:hint="@string/editText_password"
                 android:inputType="textPassword"
-                android:padding="@dimen/global_padding"/>
+                android:padding="@dimen/global_padding" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/facebook_login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dip"
+                android:layout_marginTop="8dip"
+                android:padding="12dip"
+                android:text="@string/text_login_short"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/button_login"
@@ -72,7 +83,7 @@
                 android:layout_marginTop="24dp"
                 android:padding="12dip"
                 android:text="@string/text_login_short"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/textView_forgotPassword"
@@ -85,7 +96,7 @@
                 android:padding="@dimen/global_padding"
                 android:text="@string/text_forgot_password"
                 android:textColor="@color/apptheme_color"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
     </ScrollView>
@@ -98,7 +109,7 @@
         android:clickable="true"
         android:contentDescription="@string/desc"
         android:padding="@dimen/global_padding"
-        android:src="@drawable/ic_navigation_chevron_left_green"/>
+        android:src="@drawable/ic_navigation_chevron_left_green" />
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progressView"
@@ -108,6 +119,6 @@
         app:pv_autostart="false"
         app:pv_circular="true"
         app:pv_progressMode="indeterminate"
-        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
 
 </RelativeLayout>
