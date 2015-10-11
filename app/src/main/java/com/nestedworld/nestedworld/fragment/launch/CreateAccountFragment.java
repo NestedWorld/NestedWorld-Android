@@ -20,18 +20,17 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.nestedworld.nestedworld.utils.input.InputChecker.checkEmailFormat;
+import static com.nestedworld.nestedworld.utils.input.InputChecker.checkPasswordFormat;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -163,22 +162,5 @@ public class CreateAccountFragment extends BaseFragment {
             return false;
         }
         return true;
-    }
-
-    private boolean checkEmailFormat(final String email) {
-        boolean isValid = false;
-
-        final String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-
-        final Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        final Matcher matcher = pattern.matcher(email);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
-    }
-
-    private boolean checkPasswordFormat(final String password) {
-        return !TextUtils.isEmpty(password) && password.length() >= 6;
     }
 }
