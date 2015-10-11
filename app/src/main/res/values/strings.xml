@@ -3,11 +3,13 @@
     <string name="app_name" translatable="false">NestedWorld</string>
     <string name="desc" translatable="false">desc</string>
 
+    <string name="editText_pseudo">Saisisez votre pseudo</string>
     <string name="editText_email">Saisissez votre adresse email</string>
     <string name="editText_email_invalid">Votre email est invalide !</string>
 
     <string name="editText_password">Mot de passe</string>
     <string name="editText_password_invalid">Votre mot de passe est trop court !</string>
+    <string name="editText_pseudo_invalid">Votre pseudo ne peut être vide !</string>
 
     <string name="text_inscription">Inscription</string>
     <string name="text_login_short">Connexion</string>

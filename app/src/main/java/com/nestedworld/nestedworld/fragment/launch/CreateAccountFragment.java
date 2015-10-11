@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class CreateAccountFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
 
+    @Bind(R.id.editText_pseudo)
+    EditText etPseudo;
     @Bind(R.id.editText_userEmail)
     EditText etEmail;
     @Bind(R.id.editText_userPassword)
@@ -111,54 +114,59 @@ public class CreateAccountFragment extends BaseFragment {
     public void createAccount() {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
+        final String pseudo = etPseudo.getText().toString();
 
-        if (checkInput(email, password)) {
-            createAccount(email, password);
+        if (checkInput(email, password, pseudo)) {
+            createAccount(email, password, pseudo);
         }
     }
 
     /*
     ** Utils
      */
-    private void createAccount(final String email, final String password) {
+    private void createAccount(final String email, final String password, final String pseudo) {
         progressView.start();
 
-        NestedWorldApi.getInstance(mContext).signUp(email, password, new Callback<User>() {
-            @Override
-            public void success(User user, Response response) {
-                progressView.stop();
+        NestedWorldApi.getInstance(mContext).register(email, password, pseudo,
+                new Callback<User>() {
+                    @Override
+                    public void success(User user, Response response) {
+                        progressView.stop();
 
-                //Store user Data
-                Bundle bundle = new Bundle();
-                bundle.putString("token", user.getToken());
-                if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
-                    //display MainMenu and then stop le launchMenu
-                    startActivity(MainMenuActivity.class);
-                    ((FragmentActivity) mContext).finish();
-                } else {
-                    Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
-                }
-            }
+                        //Store user Data
+                        Bundle bundle = new Bundle();
+                        bundle.putString("token", user.getToken());
+                        if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
+                            //display MainMenu and then stop le launchMenu
+                            startActivity(MainMenuActivity.class);
+                            ((FragmentActivity) mContext).finish();
+                        } else {
+                            Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
+                        }
+                    }
 
-            @Override
-            public void failure(RetrofitError error) {
-                progressView.stop();
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progressView.stop();
 
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /*
     ** InputChecker
      */
-    private boolean checkInput(final String email, final String password) {
+    private boolean checkInput(final String email, final String password, final String pseudo) {
         if (!checkEmailFormat(email)) {
             etEmail.setError(getString(R.string.editText_email_invalid));
             return false;
         } else if (!checkPasswordFormat(password)) {
             etPassword.setError(getString(R.string.editText_password_invalid));
+            return false;
+        } else if (TextUtils.isEmpty(pseudo)) {
+            etPseudo.setError(getString(R.string.editText_pseudo_invalid));
             return false;
         }
         return true;

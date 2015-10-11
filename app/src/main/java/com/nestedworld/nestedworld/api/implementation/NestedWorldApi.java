@@ -45,7 +45,7 @@ public class NestedWorldApi {
     }
 
     /*
-    ** Private method
+
      */
     private void init() {
         // Define the interceptor, add authentication headers
@@ -72,8 +72,8 @@ public class NestedWorldApi {
     /**
      * Interface implementation
      */
-    public void signUp(@NonNull final String email, @NonNull final String password, @NonNull final Callback<User> callback) {
-        mClient.signUp(email, password, callback);
+    public void register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo, @NonNull final Callback<User> callback) {
+        mClient.register(email, password, pseudo, callback);
     }
 
     public void signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<User> callback) {
@@ -85,13 +85,26 @@ public class NestedWorldApi {
         mClient.forgotPassword(email, callback);
     }
 
+    public void logout(@NonNull final String token, @NonNull final Callback<User> callback) {
+        mClient.logout(token, callback);
+    }
+
     /**
      * API Interface which use the butterknife annotation
      */
     public interface ApiInterface {
+
+        @POST(Constant.USER_LOGOUT)
+        @FormUrlEncoded
+        void logout(
+                @Field("app_token") String token,
+                Callback<User> callback;
+        );
+
         @POST(Constant.USER_SIGN_UP)
         @FormUrlEncoded
-        void signUp(
+        void register(
+                @Field("pseudo") String pseudo,
                 @Field("email") String email,
                 @Field("password") String password,
                 Callback<User> callback);
