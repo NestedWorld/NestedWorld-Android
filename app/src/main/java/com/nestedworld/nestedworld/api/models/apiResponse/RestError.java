@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.api.models;
+package com.nestedworld.nestedworld.api.models.apiResponse;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -2,17 +2,22 @@ package com.nestedworld.nestedworld.fragment.profil;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
+import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -60,11 +65,24 @@ public class ProfileFragment extends BaseFragment {
      */
     @OnClick(R.id.button_logout)
     public void logout() {
-        final UserManager userManager = UserManager.get(mContext);
-        if (userManager.deleteCurrentAccount()) {
-            startActivity(LaunchActivity.class);
-        } else {
-            Toast.makeText(mContext, getString(R.string.error_logout), Toast.LENGTH_LONG).show();
-        }
+
+        NestedWorldApi.getInstance(mContext).logout(UserManager.get(mContext).getCurrentAuthToken(),
+                new Callback<Logout>() {
+                    @Override
+                    public void success(Logout logout, Response response) {
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+        //remove user
+        UserManager.get(mContext).deleteCurrentAccount();
+
+        //go to launch screen & kill the current context
+        startActivity(LaunchActivity.class);
+        ((AppCompatActivity) mContext).finish();
     }
 }

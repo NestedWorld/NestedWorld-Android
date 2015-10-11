@@ -1,6 +1,9 @@
 package com.nestedworld.nestedworld.api.implementation;
 
-import com.nestedworld.nestedworld.api.models.User;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPassword;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Register;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignIn;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -72,20 +75,20 @@ public class NestedWorldApi {
     /**
      * Interface implementation
      */
-    public void register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo, @NonNull final Callback<User> callback) {
+    public void register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo, @NonNull final Callback<Register> callback) {
         mClient.register(email, password, pseudo, callback);
     }
 
-    public void signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<User> callback) {
+    public void signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<SignIn> callback) {
         //TODO add the good token (and make it static)
         mClient.signIn(email, password, "test", callback);
     }
 
-    public void forgotPassword(@NonNull final String email, @NonNull final Callback<User> callback) {
+    public void forgotPassword(@NonNull final String email, @NonNull final Callback<ForgotPassword> callback) {
         mClient.forgotPassword(email, callback);
     }
 
-    public void logout(@NonNull final String token, @NonNull final Callback<User> callback) {
+    public void logout(@NonNull final String token, @NonNull final Callback<Logout> callback) {
         mClient.logout(token, callback);
     }
 
@@ -98,16 +101,15 @@ public class NestedWorldApi {
         @FormUrlEncoded
         void logout(
                 @Field("app_token") String token,
-                Callback<User> callback;
-        );
+                Callback<Logout> callback);
 
-        @POST(Constant.USER_SIGN_UP)
+        @POST(Constant.USER_REGISTER)
         @FormUrlEncoded
         void register(
-                @Field("pseudo") String pseudo,
-                @Field("email") String email,
-                @Field("password") String password,
-                Callback<User> callback);
+                @Field("email") String pseudo,
+                @Field("password") String email,
+                @Field("pseudo") String password,
+                Callback<Register> callback);
 
         @POST(Constant.USER_SIGN_IN)
         @FormUrlEncoded
@@ -115,12 +117,12 @@ public class NestedWorldApi {
                 @Field("email") String email,
                 @Field("password") String password,
                 @Field("app_token") String app_token,
-                Callback<User> callback);
+                Callback<SignIn> callback);
 
         @POST(Constant.USER_PASSWORD)
         @FormUrlEncoded
         void forgotPassword(
                 @Field("email") String email,
-                Callback<User> callback);
+                Callback<ForgotPassword> callback);
     }
 }

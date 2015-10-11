@@ -9,7 +9,8 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.User;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Register;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignIn;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.nestedworld.nestedworld.utils.log.LogHelper;
@@ -21,6 +22,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -128,31 +130,46 @@ public class CreateAccountFragment extends BaseFragment {
         progressView.start();
 
         NestedWorldApi.getInstance(mContext).register(email, password, pseudo,
-                new Callback<User>() {
+                new Callback<Register>() {
                     @Override
-                    public void success(User user, Response response) {
-                        progressView.stop();
-
-                        //Store user Data
-                        Bundle bundle = new Bundle();
-                        bundle.putString("token", user.getToken());
-                        if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
-                            //display MainMenu and then stop le launchMenu
-                            startActivity(MainMenuActivity.class);
-                            ((FragmentActivity) mContext).finish();
-                        } else {
-                            Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
-                        }
+                    public void success(Register json, Response response) {
+                        login(email, password);
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         progressView.stop();
 
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_create_account));
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    private void login(final String email, final String password) {
+        NestedWorldApi.getInstance(mContext).signIn(email, password, new Callback<SignIn>() {
+            @Override
+            public void success(SignIn json, Response response) {
+                progressView.stop();
+
+                //Store user Data
+                if (UserManager.get(mContext).setCurrentUser(email, password, json.token, null)) {
+                    //display MainMenu and then stop le launchMenu
+                    startActivity(MainMenuActivity.class);
+                    ((FragmentActivity) mContext).finish();
+                } else {
+                    Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                progressView.stop();
+
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_login));
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     /*

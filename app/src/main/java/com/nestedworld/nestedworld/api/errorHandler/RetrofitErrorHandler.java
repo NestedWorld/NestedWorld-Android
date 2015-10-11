@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.api.errorHandler;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.models.RestError;
+import com.nestedworld.nestedworld.api.models.apiResponse.RestError;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -21,7 +21,7 @@ public class RetrofitErrorHandler {
     /*
     ** Public method
      */
-    public static String getErrorMessage(@NonNull final RetrofitError error, @NonNull final Context context) {
+    public static String getErrorMessage(@NonNull final Context context, @NonNull final RetrofitError error, @NonNull final String defaultMessage) {
 
         String errorMessage;
 
@@ -31,7 +31,7 @@ public class RetrofitErrorHandler {
                 errorMessage = getNetworkError(error, context);
                 break;
             case UNEXPECTED:
-                errorMessage = getUnexpectedError(error, context);
+                errorMessage = defaultMessage;
                 break;
             case CONVERSION:
                 errorMessage = getConversionError(error, context);
@@ -50,10 +50,6 @@ public class RetrofitErrorHandler {
      */
     private static String getNetworkError(final RetrofitError error, final Context context) {
         return context.getResources().getString(R.string.error_no_internet);
-    }
-
-    private static String getUnexpectedError(final RetrofitError error, final Context context) {
-        return context.getResources().getString(R.string.error_unexpected);
     }
 
     private static String getConversionError(final RetrofitError error, final Context context) {

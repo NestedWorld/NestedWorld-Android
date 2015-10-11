@@ -9,7 +9,8 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.User;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPassword;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignIn;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -113,45 +114,47 @@ public class LoginFragment extends BaseFragment {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
 
-        NestedWorldApi.getInstance(mContext).signIn(email, password, new Callback<User>() {
-            @Override
-            public void success(User user, Response response) {
-                progressView.stop();
+        NestedWorldApi.getInstance(mContext).signIn(email, password,
+                new Callback<SignIn>() {
+                    @Override
+                    public void success(SignIn json, Response response) {
+                        progressView.stop();
 
-                if (UserManager.get(mContext).setCurrentUser(email, password, user.getToken(), null)) {
-                    //display the mainMenu and stop the launchActivity
-                    startActivity(MainMenuActivity.class);
-                    ((FragmentActivity) mContext).finish();
-                } else {
-                    Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
-                }
-            }
+                        if (UserManager.get(mContext).setCurrentUser(email, password, json.token, null)) {
+                            //display the mainMenu and stop the launchActivity
+                            startActivity(MainMenuActivity.class);
+                            ((FragmentActivity) mContext).finish();
+                        } else {
+                            Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
+                        }
+                    }
 
-            @Override
-            public void failure(RetrofitError error) {
-                progressView.stop();
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progressView.stop();
 
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_login));
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @OnClick(R.id.textView_forgotPassword)
     public void forgotPassword() {
         final String email = etEmail.getText().toString();
 
-        NestedWorldApi.getInstance(mContext).forgotPassword(email, new Callback<User>() {
-            @Override
-            public void success(User user, Response response) {
-                Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
-            }
+        NestedWorldApi.getInstance(mContext).forgotPassword(email,
+                new Callback<ForgotPassword>() {
+                    @Override
+                    public void success(ForgotPassword json, Response response) {
+                        Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
+                    }
 
-            @Override
-            public void failure(RetrofitError error) {
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(error, mContext);
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_forgot_password));
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
