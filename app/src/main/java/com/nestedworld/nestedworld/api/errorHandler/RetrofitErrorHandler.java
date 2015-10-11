@@ -1,11 +1,11 @@
 package com.nestedworld.nestedworld.api.errorHandler;
 
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.models.RestError;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.models.RestError;
 
 import retrofit.RetrofitError;
 

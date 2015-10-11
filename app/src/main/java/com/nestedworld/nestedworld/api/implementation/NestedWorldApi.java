@@ -1,9 +1,9 @@
 package com.nestedworld.nestedworld.api.implementation;
 
+import com.nestedworld.nestedworld.api.models.User;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
-
-import com.nestedworld.nestedworld.api.models.User;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -22,16 +22,6 @@ public class NestedWorldApi {
     private ApiInterface mClient;
 
     /*
-    ** Singleton
-     */
-    public static NestedWorldApi getInstance(@NonNull final Context context) {
-        if (mSingleton == null) {
-            mSingleton = new NestedWorldApi(context);
-        }
-        return mSingleton;
-    }
-
-    /*
     ** Constructor
      */
     public NestedWorldApi(final Context context) {
@@ -44,7 +34,19 @@ public class NestedWorldApi {
         init();
     }
 
+    /*
+    ** Singleton
+     */
+    public static NestedWorldApi getInstance(@NonNull final Context context) {
+        if (mSingleton == null) {
+            mSingleton = new NestedWorldApi(context);
+        }
+        return mSingleton;
+    }
 
+    /*
+    ** Private method
+     */
     private void init() {
         // Define the interceptor, add authentication headers
         RequestInterceptor requestInterceptor = new RequestInterceptor() {

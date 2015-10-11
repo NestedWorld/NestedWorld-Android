@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.authenticator;
 
+import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
+
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
@@ -11,8 +13,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
-
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 
 /**
@@ -22,11 +22,17 @@ public class NWAuthenticator extends AbstractAccountAuthenticator {
 
     private final Context mContext;
 
+    /*
+    ** Constructor
+     */
     public NWAuthenticator(@NonNull Context context) {
         super(context);
         mContext = context;
     }
 
+    /*
+    ** Parents Method implementation
+     */
     @Override
     public Bundle editProperties(AccountAuthenticatorResponse response, String accountType) {
         return null;

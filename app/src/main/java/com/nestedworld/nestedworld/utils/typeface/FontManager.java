@@ -20,16 +20,6 @@ public class FontManager {
     private final Map<String, Typeface> fonts;
 
     /*
-    ** Singleton
-     */
-    public static FontManager getInstance(@NonNull final AssetManager mgr) {
-        if (instance == null) {
-            init(mgr);
-        }
-        return instance;
-    }
-
-    /*
     ** Constructor
      */
     private FontManager(@NonNull final AssetManager _mgr) {
@@ -37,8 +27,14 @@ public class FontManager {
         fonts = new HashMap<>();
     }
 
-    public static void init(@NonNull final AssetManager mgr) {
-        instance = new FontManager(mgr);
+    /*
+    ** Singleton
+     */
+    public static FontManager getInstance(@NonNull final AssetManager mgr) {
+        if (instance == null) {
+            instance = new FontManager(mgr);
+        }
+        return instance;
     }
 
     /*

@@ -13,9 +13,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 public class NestedWorldApp extends android.support.multidex.MultiDexApplication {
     private static String TAG = NestedWorldApp.class.getSimpleName();
-
-    private CallbackManager mCallbackManager;
     private static NestedWorldApp mApplication;
+    private CallbackManager mCallbackManager;
 
     /*
     ** singleton
