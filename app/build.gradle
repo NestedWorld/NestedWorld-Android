@@ -56,6 +56,9 @@ dependencies {
 
     //New relic
     compile 'com.newrelic.agent.android:android-agent:5.3.0'
+
+    //facebook
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
 }
 
 android.applicationVariants.all { variant ->
