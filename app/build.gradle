@@ -60,6 +60,9 @@ dependencies {
 
     //facebook
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
+
+    //multi dex
+    compile 'com.android.support:multidex:1.0.1'
 }
 
 android.applicationVariants.all { variant ->
