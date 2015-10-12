@@ -4,8 +4,9 @@
     <!-- See https://www.google.com/design/spec/style/color.html -->
 
     <!-- Color for the theme -->
-    <color name="apptheme_color">#009688</color>
-    <color name="apptheme_color_dark">#00796b</color>
+    <!-- 500 = normal / 700 = dark -->
+    <color name="apptheme_color">#03a9f4</color>
+    <color name="apptheme_color_dark">#0288d1</color>
 
     <!-- Custom color-->
     <color name="white">#ffffff</color>
