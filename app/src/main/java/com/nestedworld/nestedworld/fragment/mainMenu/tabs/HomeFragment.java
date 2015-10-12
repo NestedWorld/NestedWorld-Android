@@ -1,11 +1,15 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.TextView;
+
+import butterknife.Bind;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -13,6 +17,11 @@ import android.support.v4.app.FragmentTransaction;
 public class HomeFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
+
+    @Bind(R.id.textView_username)
+    TextView textViewUsername;
+    @Bind(R.id.textView_userLevel)
+    TextView textViewUserLevel;
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -31,7 +40,8 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-
+        textViewUsername.setText(UserManager.get(mContext).getCurrentAccountName());
+        textViewUserLevel.setText("16");
     }
 
     @Override
