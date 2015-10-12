@@ -28,7 +28,7 @@
 
     <!-- Custom TabLayout style for displaying spannable-->
     <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorColor">@color/apptheme_color</item>
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
     </style>
 
