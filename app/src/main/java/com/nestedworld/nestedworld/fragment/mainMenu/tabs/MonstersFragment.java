@@ -9,7 +9,6 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.widget.ListView;
 
 import butterknife.Bind;
