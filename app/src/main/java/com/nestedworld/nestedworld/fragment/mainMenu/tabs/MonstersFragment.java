@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
@@ -9,10 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import retrofit.Callback;
@@ -27,7 +25,7 @@ public class MonstersFragment extends BaseFragment {
     public final static String FRAGMENT_NAME = MonstersFragment.class.getSimpleName();
 
     @Bind(R.id.listview_monsters_list)
-    ListView istViewMonstersList;
+    ListView listViewMonstersList;
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -55,20 +53,13 @@ public class MonstersFragment extends BaseFragment {
                 new Callback<MonstersList>() {
                     @Override
                     public void success(final MonstersList json, Response response) {
-                        final ArrayList<String> list = new ArrayList<>();
-                        Log.e(TAG, "LIST : " + json.monsters);
-                        for (MonstersList.Monster monster : json.monsters) {
-                            Log.e(TAG, "add");
-                            list.add(monster.name + ", " + monster.hp + ", " + monster.attack + ", " + monster.defense + ", ");
-                        }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, android.R.id.text1, list);
-                        istViewMonstersList.setAdapter(adapter);
+                        final MonsterAdapter adapter = new MonsterAdapter(mContext, json.monsters);
+                        listViewMonstersList.setAdapter(adapter);
                     }
-
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        //TODO no monster to display
                     }
                 }
         );
