@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.api.implementation;
 
+import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPassword;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Register;
@@ -13,6 +14,7 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
 
 /**
@@ -92,6 +94,10 @@ public class NestedWorldApi {
         mClient.logout(token, callback);
     }
 
+    public void getMonstersList(@NonNull final Callback<MonstersList> callback) {
+        mClient.getMonstersList(callback);
+    }
+
     /**
      * API Interface which use the butterknife annotation
      */
@@ -124,5 +130,8 @@ public class NestedWorldApi {
         void forgotPassword(
                 @Field("email") String email,
                 Callback<ForgotPassword> callback);
+
+        @GET(Constant.MONSTERS_LIST)
+        void getMonstersList(Callback<MonstersList> callback);
     }
 }

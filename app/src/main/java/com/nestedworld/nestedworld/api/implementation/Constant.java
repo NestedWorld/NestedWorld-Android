@@ -13,4 +13,8 @@ public class Constant {
     public static final String USER_REGISTER = AUTH_PREFIX + "/register";
     public static final String USER_PASSWORD = AUTH_PREFIX + "/resetpassword";
     public static final String USER_LOGOUT = AUTH_PREFIX + "/logout";
+
+    private static final String MONSTERS_PREFIX = "/monsters";
+    public static final String MONSTERS_LIST = MONSTERS_PREFIX;
+
 }
