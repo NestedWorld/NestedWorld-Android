@@ -1,5 +1,8 @@
 package com.nestedworld.nestedworld.fragment.base;
 
+import com.nestedworld.nestedworld.NestedWorldApp;
+import com.squareup.leakcanary.RefWatcher;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,6 +65,15 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //Notify canaryLeak that the fragment has been destroy
+        RefWatcher refWatcher = ((NestedWorldApp) mContext.getApplicationContext()).getRefWatcher();
+        refWatcher.watch(this);
     }
 
     /*

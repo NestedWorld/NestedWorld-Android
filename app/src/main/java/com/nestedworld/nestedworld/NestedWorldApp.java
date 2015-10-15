@@ -4,6 +4,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.newrelic.agent.android.NewRelic;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -15,6 +17,7 @@ public class NestedWorldApp extends android.support.multidex.MultiDexApplication
     private static String TAG = NestedWorldApp.class.getSimpleName();
     private static NestedWorldApp mApplication;
     private CallbackManager mCallbackManager;
+    private RefWatcher mRefWatcher;
 
     /*
     ** singleton
@@ -36,14 +39,22 @@ public class NestedWorldApp extends android.support.multidex.MultiDexApplication
         initCrashLogger();
         initFontOverrider();
         initFacebookSDK();
+        initLeakLogger();
     }
 
     /*
     ** Public method
      */
+    //return the facebook callbackManager
     public CallbackManager getCallbackManager() {
         return mCallbackManager;
     }
+
+    //return the refWater from LeakCanary
+    public RefWatcher getRefWatcher() {
+        return mRefWatcher;
+    }
+
 
     /*
     ** Utils
@@ -54,6 +65,11 @@ public class NestedWorldApp extends android.support.multidex.MultiDexApplication
             NewRelic.withApplicationToken("AAfa7011e7d073accc8bc537079365343349369b8f")
                     .start(this);
         }
+    }
+
+    private void initLeakLogger() {
+        LogHelper.d(TAG, "initLeakLogger");
+        mRefWatcher = LeakCanary.install(this);
     }
 
     private void initFacebookSDK() {

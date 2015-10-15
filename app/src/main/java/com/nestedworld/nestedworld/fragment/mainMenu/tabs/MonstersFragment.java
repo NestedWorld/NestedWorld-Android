@@ -53,7 +53,10 @@ public class MonstersFragment extends BaseFragment {
                     @Override
                     public void success(final MonstersList json, Response response) {
                         final MonsterAdapter adapter = new MonsterAdapter(mContext, json.monsters);
-                        listViewMonstersList.setAdapter(adapter);
+                        // listViewMonstersList = null if we've change view before the end of the request
+                        if (listViewMonstersList != null) {
+                            listViewMonstersList.setAdapter(adapter);
+                        }
                     }
 
                     @Override
