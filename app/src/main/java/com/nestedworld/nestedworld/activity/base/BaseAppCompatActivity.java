@@ -16,7 +16,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
-    protected Context mContext;
 
     /*
     ** Method that every child will have to implement
@@ -49,7 +48,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(getLayoutResource());
-        mContext = getApplicationContext();
         ButterKnife.bind(this);
         initUI(savedInstanceState);
         initLogic(savedInstanceState);

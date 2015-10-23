@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.fragment.profil;
 
+import com.nestedworld.nestedworld.NestedWorldApp;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
@@ -52,7 +53,7 @@ public class ProfileFragment extends BaseFragment {
     protected void initUI(Bundle savedInstanceState) {
         final UserManager userManager = UserManager.get(mContext);
         textViewUsername.setText(userManager.getCurrentAccountName());
-        textViewToken.setText(userManager.getCurrentAuthToken());
+        textViewToken.setText(userManager.getCurrentAuthToken(mContext));
     }
 
     @Override
@@ -66,7 +67,7 @@ public class ProfileFragment extends BaseFragment {
     @OnClick(R.id.button_logout)
     public void logout() {
 
-        NestedWorldApi.getInstance(mContext).logout(UserManager.get(mContext).getCurrentAuthToken(),
+        NestedWorldApi.getInstance().logout(UserManager.get(mContext).getCurrentAuthToken(mContext),
                 new Callback<Logout>() {
                     @Override
                     public void success(Logout logout, Response response) {
@@ -79,7 +80,7 @@ public class ProfileFragment extends BaseFragment {
                     }
                 });
         //remove user
-        UserManager.get(mContext).deleteCurrentAccount();
+        UserManager.get(mContext).deleteCurrentAccount(mContext);
 
         //go to launch screen & kill the current context
         startActivity(LaunchActivity.class);

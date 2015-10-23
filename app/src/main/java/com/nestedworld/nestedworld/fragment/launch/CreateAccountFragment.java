@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.fragment.launch;
 
+import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
@@ -75,13 +76,16 @@ public class CreateAccountFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        NestedWorldApp.get().getCallbackManager().onActivityResult(requestCode, resultCode, data);
+
+        final CallbackManager callbackManager = NestedWorldApp.getInstance(mContext).getCallbackManager();
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void initLogic(Bundle savedInstanceState) {
         facebookLoginButton.setFragment(this);
-        facebookLoginButton.registerCallback(NestedWorldApp.get().getCallbackManager(),
+        final CallbackManager callbackManager = NestedWorldApp.getInstance(mContext).getCallbackManager();
+        facebookLoginButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
@@ -128,7 +132,7 @@ public class CreateAccountFragment extends BaseFragment {
     private void createAccount(final String email, final String password, final String pseudo) {
         progressView.start();
 
-        NestedWorldApi.getInstance(mContext).register(email, password, pseudo,
+        NestedWorldApi.getInstance().register(email, password, pseudo,
                 new Callback<Register>() {
                     @Override
                     public void success(Register json, Response response) {
@@ -146,13 +150,13 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     private void login(final String email, final String password) {
-        NestedWorldApi.getInstance(mContext).signIn(email, password, new Callback<SignIn>() {
+        NestedWorldApi.getInstance().signIn(email, password, new Callback<SignIn>() {
             @Override
             public void success(SignIn json, Response response) {
                 progressView.stop();
 
                 //Store user Data
-                if (UserManager.get(mContext).setCurrentUser(email, password, json.token, null)) {
+                if (UserManager.get(mContext).setCurrentUser(mContext, email, password, json.token, null)) {
                     //display MainMenu and then stop le launchMenu
                     startActivity(MainMenuActivity.class);
                     ((FragmentActivity) mContext).finish();

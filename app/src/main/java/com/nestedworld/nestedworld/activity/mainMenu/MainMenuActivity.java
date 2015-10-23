@@ -45,7 +45,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     @Override
     protected void initLogic(Bundle savedInstanceState) {
         //TODO use good icon
-        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), mContext);
+        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), this);
         adapter.addFragment(getString(R.string.tab_home), new HomeFragment(), R.drawable.ic_cast_light);
         adapter.addFragment(getString(R.string.tab_tools), new ToolsFragment(), R.drawable.ic_cast_light);
         adapter.addFragment(getString(R.string.tab_map), new MapFragment(), R.drawable.ic_cast_light);

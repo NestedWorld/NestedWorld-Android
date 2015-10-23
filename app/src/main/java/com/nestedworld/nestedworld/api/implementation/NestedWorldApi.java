@@ -6,7 +6,6 @@ import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Register;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignIn;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import retrofit.Callback;
@@ -23,34 +22,32 @@ import retrofit.http.POST;
 public class NestedWorldApi {
     private static NestedWorldApi mSingleton;
     private final String TAG = getClass().getSimpleName();
-    private Context mContext;
     private ApiInterface mClient;
 
     /*
     ** Constructor
      */
-    public NestedWorldApi(final Context context) {
+    public NestedWorldApi() {
         if (mSingleton != null) {
             return;
         }
 
         //init API
-        mContext = context;
         init();
     }
 
     /*
     ** Singleton
      */
-    public static NestedWorldApi getInstance(@NonNull final Context context) {
+    public static NestedWorldApi getInstance() {
         if (mSingleton == null) {
-            mSingleton = new NestedWorldApi(context);
+            mSingleton = new NestedWorldApi();
         }
         return mSingleton;
     }
 
     /*
-
+    ** Private method
      */
     private void init() {
         // Define the interceptor, add authentication headers

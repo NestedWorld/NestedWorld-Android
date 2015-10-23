@@ -47,6 +47,6 @@ public class LaunchActivity extends BaseAppCompatActivity {
     ** Utils
      */
     private boolean checkForExistingSession() {
-        return (UserManager.get(mContext).getCurrentAccount() != null);
+        return (UserManager.get(this).getCurrentAccount() != null);
     }
 }

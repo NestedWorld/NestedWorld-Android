@@ -20,7 +20,6 @@ public class UserManager {
     private final static String TAG = UserManager.class.getSimpleName();
 
     //private properties
-    private final Context mContext;
     private final AccountManager mAccountManager;
     private Account mAccount;
 
@@ -28,9 +27,8 @@ public class UserManager {
     ** Constructor
      */
     private UserManager(@NonNull final Context context) {
-        mContext = context;
         mAccountManager = AccountManager.get(context);
-        mAccount = getAccountByName(SharedPreferenceUtils.getLastAccountNameConnected(mContext));
+        mAccount = getAccountByName(SharedPreferenceUtils.getLastAccountNameConnected(context));
     }
 
     /*
@@ -48,7 +46,7 @@ public class UserManager {
         return mAccount;
     }
 
-    public boolean setCurrentUser(@NonNull final String name, @NonNull final String password, @NonNull final String authToken, @Nullable final Bundle bundle) {
+    public boolean setCurrentUser(@NonNull final Context context, @NonNull final String name, @NonNull final String password, @NonNull final String authToken, @Nullable final Bundle bundle) {
         //check if account already exist
         Account account = getAccountByName(name);
 
@@ -63,8 +61,8 @@ public class UserManager {
 
         mAccount = account;
         //store name/authToken to sharedPreference
-        SharedPreferenceUtils.setAuthTokenToPref(mContext, authToken);
-        SharedPreferenceUtils.setAccountNameToPref(mContext, name);
+        SharedPreferenceUtils.setAuthTokenToPref(context, authToken);
+        SharedPreferenceUtils.setAccountNameToPref(context, name);
 
         return true;
     }
@@ -77,12 +75,12 @@ public class UserManager {
         return mAccountManager.getUserData(mAccount, key);
     }
 
-    public Boolean deleteCurrentAccount() {
-        return deleteAccount(mAccount);
+    public Boolean deleteCurrentAccount(@NonNull final Context context) {
+        return deleteAccount(context, mAccount);
     }
 
-    public String getCurrentAuthToken() {
-        return SharedPreferenceUtils.getCurrentAuthToken(mContext);
+    public String getCurrentAuthToken(@NonNull final Context context) {
+        return SharedPreferenceUtils.getCurrentAuthToken(context);
     }
 
     @Nullable
@@ -94,9 +92,9 @@ public class UserManager {
     /*
     ** Private method
      */
-    private Boolean deleteAccount(@NonNull final Account account) {
-        SharedPreferenceUtils.clearPref(mContext);
-        invalidateAuthTokenFromAccount(account);
+    private Boolean deleteAccount(@NonNull final Context context, @NonNull final Account account) {
+        SharedPreferenceUtils.clearPref(context);
+        invalidateAuthTokenFromAccount(context, account);
         if (Build.VERSION.SDK_INT >= 22) {
             mAccountManager.removeAccountExplicitly(account);
         } else {
@@ -122,8 +120,8 @@ public class UserManager {
     }
 
 
-    private void invalidateAuthTokenFromAccount(@NonNull final Account account) {
-        mAccountManager.invalidateAuthToken(account.type, SharedPreferenceUtils.getCurrentAuthToken(mContext));
+    private void invalidateAuthTokenFromAccount(@NonNull final Context context, @NonNull final Account account) {
+        mAccountManager.invalidateAuthToken(account.type, SharedPreferenceUtils.getCurrentAuthToken(context));
     }
 
     /*

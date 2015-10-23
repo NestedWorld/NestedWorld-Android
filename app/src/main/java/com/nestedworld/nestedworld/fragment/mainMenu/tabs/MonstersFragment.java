@@ -48,7 +48,8 @@ public class MonstersFragment extends BaseFragment {
 
     @Override
     protected void initLogic(Bundle savedInstanceState) {
-        NestedWorldApi.getInstance(mContext).getMonstersList(
+        //TODO display a loading animation
+        NestedWorldApi.getInstance().getMonstersList(
                 new Callback<MonstersList>() {
                     @Override
                     public void success(final MonstersList json, Response response) {

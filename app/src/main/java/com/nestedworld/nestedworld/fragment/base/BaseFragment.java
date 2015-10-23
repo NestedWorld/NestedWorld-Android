@@ -53,7 +53,6 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mContext = getContext();
         View rootView = inflater.inflate(getLayoutResource(), container, false);
         ButterKnife.bind(this, rootView);
         initUI(savedInstanceState);
@@ -72,8 +71,14 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
 
         //Notify canaryLeak that the fragment has been destroy
-        RefWatcher refWatcher = ((NestedWorldApp) mContext.getApplicationContext()).getRefWatcher();
+        RefWatcher refWatcher = NestedWorldApp.getInstance(mContext).getRefWatcher();
         refWatcher.watch(this);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     /*

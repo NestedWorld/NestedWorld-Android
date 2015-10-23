@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.fragment.launch;
 
+import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
@@ -70,13 +71,16 @@ public class LoginFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        NestedWorldApp.get().getCallbackManager().onActivityResult(requestCode, resultCode, data);
+
+        final CallbackManager callbackManager = NestedWorldApp.getInstance(mContext).getCallbackManager();
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void initLogic(Bundle savedInstanceState) {
         facebookLoginButton.setFragment(this);
-        facebookLoginButton.registerCallback(NestedWorldApp.get().getCallbackManager(),
+        final CallbackManager callbackManager = NestedWorldApp.getInstance(mContext).getCallbackManager();
+        facebookLoginButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
@@ -114,13 +118,13 @@ public class LoginFragment extends BaseFragment {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
 
-        NestedWorldApi.getInstance(mContext).signIn(email, password,
+        NestedWorldApi.getInstance().signIn(email, password,
                 new Callback<SignIn>() {
                     @Override
                     public void success(SignIn json, Response response) {
                         progressView.stop();
 
-                        if (UserManager.get(mContext).setCurrentUser(email, password, json.token, null)) {
+                        if (UserManager.get(mContext).setCurrentUser(mContext, email, password, json.token, null)) {
                             //display the mainMenu and stop the launchActivity
                             startActivity(MainMenuActivity.class);
                             ((FragmentActivity) mContext).finish();
@@ -143,7 +147,7 @@ public class LoginFragment extends BaseFragment {
     public void forgotPassword() {
         final String email = etEmail.getText().toString();
 
-        NestedWorldApi.getInstance(mContext).forgotPassword(email,
+        NestedWorldApi.getInstance().forgotPassword(email,
                 new Callback<ForgotPassword>() {
                     @Override
                     public void success(ForgotPassword json, Response response) {
