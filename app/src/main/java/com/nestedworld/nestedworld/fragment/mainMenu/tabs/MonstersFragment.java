@@ -5,11 +5,15 @@ import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.rey.material.widget.ProgressView;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import retrofit.Callback;
@@ -25,6 +29,9 @@ public class MonstersFragment extends BaseFragment {
 
     @Bind(R.id.listview_monsters_list)
     ListView listViewMonstersList;
+
+    @Bind(R.id.progressView)
+    ProgressView progressView;
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -48,21 +55,30 @@ public class MonstersFragment extends BaseFragment {
 
     @Override
     protected void initLogic(Bundle savedInstanceState) {
-        //TODO display a loading animation
+        progressView.start();
+
         NestedWorldApi.getInstance().getMonstersList(
                 new Callback<MonstersList>() {
                     @Override
                     public void success(final MonstersList json, Response response) {
+                        progressView.stop();
+
                         final MonsterAdapter adapter = new MonsterAdapter(mContext, json.monsters);
                         // listViewMonstersList = null if we've change view before the end of the request
                         if (listViewMonstersList != null) {
                             listViewMonstersList.setAdapter(adapter);
+                            listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Toast.makeText(mContext, "" + json.monsters.get(position).name, Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        //TODO no monster to display
+                        progressView.stop();
                     }
                 }
         );

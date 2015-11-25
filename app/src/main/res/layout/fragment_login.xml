@@ -63,17 +63,6 @@
                 android:inputType="textPassword"
                 android:padding="@dimen/global_padding" />
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/facebook_login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dip"
-                android:layout_marginTop="8dip"
-                android:padding="12dip"
-                android:text="@string/text_login_short"
-                android:textColor="@color/white" />
-
             <Button
                 android:id="@+id/button_login"
                 style="@style/TypefaceStyle"

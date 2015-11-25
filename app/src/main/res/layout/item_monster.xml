@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/messenger_button_send_round_shadow" />
+        android:src="@drawable/common_ic_googleplayservices" />
 
     <LinearLayout
         android:layout_width="wrap_content"

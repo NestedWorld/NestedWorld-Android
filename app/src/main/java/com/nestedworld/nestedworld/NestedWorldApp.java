@@ -1,13 +1,10 @@
 package com.nestedworld.nestedworld;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
 import com.nestedworld.nestedworld.utils.log.LogHelper;
-import com.newrelic.agent.android.NewRelic;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
+import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -15,14 +12,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Application implementation
  * it allow the crash logger to be launch at the very start of the application
  */
-public class NestedWorldApp extends android.support.multidex.MultiDexApplication {
-    private static String TAG = NestedWorldApp.class.getSimpleName();
-    private CallbackManager mCallbackManager;
-    private RefWatcher mRefWatcher;
+public class NestedWorldApp extends Application {
 
-    public static NestedWorldApp getInstance(Context context) {
-        return ((NestedWorldApp) context.getApplicationContext());
-    }
+    private static String TAG = NestedWorldApp.class.getSimpleName();
 
     /*
     ** Life cycle
@@ -30,49 +22,18 @@ public class NestedWorldApp extends android.support.multidex.MultiDexApplication
     @Override
     public void onCreate() {
         super.onCreate();
-        initCrashLogger();
         initFontOverrider();
-        initFacebookSDK();
-        initLeakLogger();
     }
 
-
-
-    /*
-    ** Public method
-     */
-    //return the facebook callbackManager
-    public CallbackManager getCallbackManager() {
-        return mCallbackManager;
-    }
-
-    //return the refWater from LeakCanary
-    public RefWatcher getRefWatcher() {
-        return mRefWatcher;
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     /*
     ** Utils
      */
-    private void initCrashLogger() {
-        LogHelper.d(TAG, "initCrashLogger");
-        if (!BuildConfig.DEBUG) {
-            NewRelic.withApplicationToken("AAfa7011e7d073accc8bc537079365343349369b8f")
-                    .start(this);
-        }
-    }
-
-    private void initLeakLogger() {
-        LogHelper.d(TAG, "initLeakLogger");
-        mRefWatcher = LeakCanary.install(this);
-    }
-
-    private void initFacebookSDK() {
-        LogHelper.d(TAG, "initFacebookSDK");
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        mCallbackManager = CallbackManager.Factory.create();
-    }
-
     private void initFontOverrider() {
         LogHelper.d(TAG, "initFontOverrider");
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()

@@ -1,10 +1,5 @@
 package com.nestedworld.nestedworld.fragment.launch;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.nestedworld.nestedworld.NestedWorldApp;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
@@ -50,8 +45,6 @@ public class CreateAccountFragment extends BaseFragment {
     EditText etPassword;
     @Bind(R.id.progressView)
     ProgressView progressView;
-    @Bind(R.id.facebook_login_button)
-    LoginButton facebookLoginButton;
 
     public static void load(final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -74,37 +67,8 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        final CallbackManager callbackManager = NestedWorldApp.getInstance(mContext).getCallbackManager();
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
     protected void initLogic(Bundle savedInstanceState) {
-        facebookLoginButton.setFragment(this);
-        final CallbackManager callbackManager = NestedWorldApp.getInstance(mContext).getCallbackManager();
-        facebookLoginButton.registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        LogHelper.d(TAG, "Success");
-                        Toast.makeText(mContext, "Success", Toast.LENGTH_LONG).show();
-                    }
 
-                    @Override
-                    public void onCancel() {
-                        LogHelper.d(TAG, "Cancel");
-                        Toast.makeText(mContext, "Cancel", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        LogHelper.d(TAG, "Error");
-                        Toast.makeText(mContext, "Error", Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 
     /*
