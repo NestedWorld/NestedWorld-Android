@@ -114,7 +114,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.e(TAG, error.getMessage());
-                Toast.makeText(MainMenuActivity.this, "Impossible de récuperer vos informations", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainMenuActivity.this, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
 
                 //remove user
                 UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);
