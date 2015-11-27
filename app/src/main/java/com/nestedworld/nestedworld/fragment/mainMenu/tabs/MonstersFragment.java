@@ -94,9 +94,19 @@ public class MonstersFragment extends BaseFragment {
     ** Utils
      */
     private void displayMonsterDetail(@NonNull MonstersList.Monster monster, @NonNull final View view) {
+
         PopupWindow popup = new PopupWindow(mContext);
         View layout = ((AppCompatActivity)mContext).getLayoutInflater().inflate(R.layout.fragment_tab_monsters_details, null);
-        ((TextView)layout.findViewById(R.id.monsterName)).setText(monster.name);
+
+        // Populate the popup
+        //TODO transformer les string static en référence vers R
+        ((TextView)layout.findViewById(R.id.monsterName)).setText("Nom : " + monster.name);
+        ((TextView)layout.findViewById(R.id.monsterAtk)).setText("Attaque : " + monster.attack);
+        ((TextView)layout.findViewById(R.id.monsterDefense)).setText("Defence : " + monster.defense);
+        ((TextView)layout.findViewById(R.id.monsterHp)).setText("Pv : " + monster.hp);
+
+
+
         popup.setContentView(layout);
 
         // Set content width and height
