@@ -1,12 +1,16 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.MonsterAdapter;
@@ -70,7 +74,8 @@ public class MonstersFragment extends BaseFragment {
                             listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Toast.makeText(mContext, "" + json.monsters.get(position).name, Toast.LENGTH_LONG).show();
+                                    final MonstersList.Monster selectedMonster = json.monsters.get(position);
+                                    displayMonsterDetail(selectedMonster, view);
                                 }
                             });
                         }
@@ -84,4 +89,25 @@ public class MonstersFragment extends BaseFragment {
         );
 
     }
+
+    /*
+    ** Utils
+     */
+    private void displayMonsterDetail(@NonNull MonstersList.Monster monster, @NonNull final View view) {
+        PopupWindow popup = new PopupWindow(mContext);
+        View layout = ((AppCompatActivity)mContext).getLayoutInflater().inflate(R.layout.fragment_tab_monsters_details, null);
+        ((TextView)layout.findViewById(R.id.monsterName)).setText(monster.name);
+        popup.setContentView(layout);
+
+        // Set content width and height
+        popup.setHeight(LayoutParams.WRAP_CONTENT);
+        popup.setWidth(LayoutParams.WRAP_CONTENT);
+
+        // Closes the popup window when touch outside of it - when looses focus
+        popup.setOutsideTouchable(true);
+        popup.setFocusable(true);
+
+        popup.showAsDropDown(view);
+    }
+
 }

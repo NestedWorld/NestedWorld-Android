@@ -6,10 +6,10 @@
     android:padding="8dip">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="58dip"
+        android:layout_height="58dip"
         android:layout_gravity="center"
-        android:src="@drawable/common_ic_googleplayservices" />
+        android:src="@drawable/default_monster" />
 
     <LinearLayout
         android:layout_width="wrap_content"
