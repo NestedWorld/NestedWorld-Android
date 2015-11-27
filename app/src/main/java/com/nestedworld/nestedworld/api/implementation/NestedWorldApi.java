@@ -1,12 +1,12 @@
 package com.nestedworld.nestedworld.api.implementation;
 
+import android.support.annotation.NonNull;
+
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPassword;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Register;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignIn;
-
-import android.support.annotation.NonNull;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;

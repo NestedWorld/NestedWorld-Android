@@ -1,12 +1,12 @@
 package com.nestedworld.nestedworld.activity.profil;
 
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.fragment.profil.ProfileFragment;
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
+import com.nestedworld.nestedworld.fragment.profil.ProfileFragment;
 
 import butterknife.Bind;
 

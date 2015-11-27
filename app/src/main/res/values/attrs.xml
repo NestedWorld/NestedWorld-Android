@@ -2,6 +2,6 @@
 <resources>
     <!-- Style for the customWidget-->
     <declare-styleable name="TypefaceStyle">
-        <attr name="typeface" format="string"/>
+        <attr name="typeface" format="string" />
     </declare-styleable>
 </resources>

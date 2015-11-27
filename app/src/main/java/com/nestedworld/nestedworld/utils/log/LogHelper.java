@@ -1,8 +1,8 @@
 package com.nestedworld.nestedworld.utils.log;
 
-import com.nestedworld.nestedworld.BuildConfig;
-
 import android.util.Log;
+
+import com.nestedworld.nestedworld.BuildConfig;
 
 public final class LogHelper {
     static final boolean IS_ENABLE = BuildConfig.DEBUG;

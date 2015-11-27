@@ -1,7 +1,5 @@
 package com.nestedworld.nestedworld.fragment.base;
 
-import com.nestedworld.nestedworld.NestedWorldApp;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

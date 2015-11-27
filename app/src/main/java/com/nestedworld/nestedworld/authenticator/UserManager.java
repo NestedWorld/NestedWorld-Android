@@ -1,7 +1,5 @@
 package com.nestedworld.nestedworld.authenticator;
 
-import com.nestedworld.nestedworld.utils.log.LogHelper;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
@@ -10,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.nestedworld.nestedworld.utils.log.LogHelper;
 
 /**
  * AccountManager abstraction

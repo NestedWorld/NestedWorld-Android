@@ -1,12 +1,5 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.MonsterAdapter;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
-import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-import com.rey.material.widget.ProgressView;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +7,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.MonsterAdapter;
+import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
+import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import retrofit.Callback;

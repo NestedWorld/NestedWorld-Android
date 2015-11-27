@@ -1,8 +1,5 @@
 package com.nestedworld.nestedworld.adapter;
 
-import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
 
 import java.util.ArrayList;
 
