@@ -79,7 +79,7 @@ public class LoginFragment extends BaseFragment {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
 
-        NestedWorldApi.getInstance().signIn(email, password,
+        NestedWorldApi.getInstance(mContext).signIn(email, password,
                 new Callback<SignIn>() {
                     @Override
                     public void success(SignIn json, Response response) {
@@ -108,7 +108,7 @@ public class LoginFragment extends BaseFragment {
     public void forgotPassword() {
         final String email = etEmail.getText().toString();
 
-        NestedWorldApi.getInstance().forgotPassword(email,
+        NestedWorldApi.getInstance(mContext).forgotPassword(email,
                 new Callback<ForgotPassword>() {
                     @Override
                     public void success(ForgotPassword json, Response response) {

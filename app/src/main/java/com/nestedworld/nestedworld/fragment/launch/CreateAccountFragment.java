@@ -93,7 +93,7 @@ public class CreateAccountFragment extends BaseFragment {
     private void createAccount(final String email, final String password, final String pseudo) {
         progressView.start();
 
-        NestedWorldApi.getInstance().register(email, password, pseudo,
+        NestedWorldApi.getInstance(mContext).register(email, password, pseudo,
                 new Callback<Register>() {
                     @Override
                     public void success(Register json, Response response) {
@@ -111,7 +111,7 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     private void login(final String email, final String password) {
-        NestedWorldApi.getInstance().signIn(email, password, new Callback<SignIn>() {
+        NestedWorldApi.getInstance(mContext).signIn(email, password, new Callback<SignIn>() {
             @Override
             public void success(SignIn json, Response response) {
                 progressView.stop();

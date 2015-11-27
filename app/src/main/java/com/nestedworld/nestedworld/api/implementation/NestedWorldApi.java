@@ -1,12 +1,15 @@
 package com.nestedworld.nestedworld.api.implementation;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPassword;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Register;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignIn;
+import com.nestedworld.nestedworld.authenticator.UserManager;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
@@ -23,25 +26,26 @@ public class NestedWorldApi {
     private static NestedWorldApi mSingleton;
     private final String TAG = getClass().getSimpleName();
     private ApiInterface mClient;
+    private Context mContext;
 
     /*
     ** Constructor
      */
-    public NestedWorldApi() {
+    public NestedWorldApi(@NonNull final Context context) {
         if (mSingleton != null) {
             return;
         }
 
         //init API
-        init();
+        init(context);
     }
 
     /*
     ** Singleton
      */
-    public static NestedWorldApi getInstance() {
+    public static NestedWorldApi getInstance(@NonNull final Context context) {
         if (mSingleton == null) {
-            mSingleton = new NestedWorldApi();
+            mSingleton = new NestedWorldApi(context);
         }
         return mSingleton;
     }
@@ -49,16 +53,17 @@ public class NestedWorldApi {
     /*
     ** Private method
      */
-    private void init() {
+    private void init(@NonNull final Context context) {
+        //set the context to null for avoiding any leaks and then set the new context
+        mContext = null;
+        mContext = context;
+
         // Define the interceptor, add authentication headers
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                //TODO complete header with real value
-                request.addHeader("X-User-Id", "userId");
-                request.addHeader("X-User-Email", "userEmail");
-                request.addHeader("X-User-Token", "authenticationToken");
-                request.addHeader("X-User-Push-Token", "pushToken");
+                request.addHeader("X-User-Email", UserManager.get(mContext).getCurrentAccountName());
+                request.addHeader("Authorization", "Bearer " + UserManager.get(mContext).getCurrentAuthToken(mContext));
             }
         };
 
@@ -95,12 +100,16 @@ public class NestedWorldApi {
         mClient.getMonstersList(callback);
     }
 
+    public void getUserInfo(Callback<User> callback) {
+        mClient.getUserInfo(callback);
+    }
+
     /**
      * API Interface which use the butterknife annotation
      */
     public interface ApiInterface {
 
-        @POST(Constant.USER_LOGOUT)
+        @GET(Constant.USER_LOGOUT)
         @FormUrlEncoded
         void logout(
                 @Field("app_token") String token,
@@ -130,5 +139,8 @@ public class NestedWorldApi {
 
         @GET(Constant.MONSTERS_LIST)
         void getMonstersList(Callback<MonstersList> callback);
+
+        @GET(Constant.USER_INFO)
+        void getUserInfo(Callback<User> callback);
     }
 }

@@ -3,21 +3,32 @@ package com.nestedworld.nestedworld.activity.mainMenu;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
+import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
+import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
+import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.HomeFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ToolsFragment;
+import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
@@ -28,6 +39,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
+
+    @Bind(R.id.progressView)
+    ProgressView progressView;
 
     /*
     ** Life cycle
@@ -44,18 +58,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     @Override
     protected void initLogic(Bundle savedInstanceState) {
-        //TODO use good icon
-        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), this);
-        adapter.addFragment(getString(R.string.tab_home), new HomeFragment(), R.drawable.ic_cast_light);
-        adapter.addFragment(getString(R.string.tab_tools), new ToolsFragment(), R.drawable.ic_cast_light);
-        adapter.addFragment(getString(R.string.tab_map), new MapFragment(), R.drawable.ic_cast_light);
-        adapter.addFragment(getString(R.string.tab_monster), new MonstersFragment(), R.drawable.ic_cast_light);
-        adapter.addFragment(getString(R.string.tab_shop), new ShopFragment(), R.drawable.ic_cast_light);
-
-        viewPager.setAdapter(adapter);
-
-        //Add view pager to the tabLayout
-        tabLayout.setupWithViewPager(viewPager);
+        updateUserInformation();
     }
 
     @Override
@@ -82,5 +85,44 @@ public class MainMenuActivity extends BaseAppCompatActivity {
      */
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
+    }
+
+    private void initTabs() {
+        //TODO use good icon
+        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), this);
+        adapter.addFragment(getString(R.string.tab_home), new HomeFragment(), R.drawable.ic_cast_light);
+        adapter.addFragment(getString(R.string.tab_tools), new ToolsFragment(), R.drawable.ic_cast_light);
+        adapter.addFragment(getString(R.string.tab_map), new MapFragment(), R.drawable.ic_cast_light);
+        adapter.addFragment(getString(R.string.tab_monster), new MonstersFragment(), R.drawable.ic_cast_light);
+        adapter.addFragment(getString(R.string.tab_shop), new ShopFragment(), R.drawable.ic_cast_light);
+
+        viewPager.setAdapter(adapter);
+
+        //Add view pager to the tabLayout
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void updateUserInformation() {
+        progressView.start();
+        NestedWorldApi.getInstance(this).getUserInfo(new Callback<User>() {
+            @Override
+            public void success(User users, Response response) {
+                initTabs();
+                progressView.stop();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(TAG, error.getMessage());
+                Toast.makeText(MainMenuActivity.this, "Impossible de récuperer vos informations", Toast.LENGTH_LONG).show();
+
+                //remove user
+                UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);
+
+                //go to launch screen & kill the current context
+                startActivity(LaunchActivity.class);
+                MainMenuActivity.this.finish();
+            }
+        });
     }
 }
