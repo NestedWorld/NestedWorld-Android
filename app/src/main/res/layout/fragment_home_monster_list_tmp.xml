@@ -28,9 +28,9 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,9 +50,9 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,9 +72,9 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,15 +103,15 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dip"
-                android:text="Monster 1"
+                android:text="Monster 4"
                 android:textColor="@color/apptheme_color" />
 
         </LinearLayout>
@@ -125,15 +125,15 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dip"
-                android:text="Monster 2"
+                android:text="Monster 5"
                 android:textColor="@color/apptheme_color" />
 
         </LinearLayout>
@@ -147,15 +147,15 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dip"
-                android:text="Monster 3"
+                android:text="Monster 6"
                 android:textColor="@color/apptheme_color" />
 
         </LinearLayout>
@@ -178,15 +178,15 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dip"
-                android:text="Monster 1"
+                android:text="Monster 7"
                 android:textColor="@color/apptheme_color" />
 
         </LinearLayout>
@@ -200,15 +200,15 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dip"
-                android:text="Monster 2"
+                android:text="Monster 8"
                 android:textColor="@color/apptheme_color" />
 
         </LinearLayout>
@@ -222,15 +222,15 @@
             android:padding="8dip">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_ic_googleplayservices" />
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:src="@drawable/default_monster" />>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dip"
-                android:text="Monster 3"
+                android:text="Monster 9"
                 android:textColor="@color/apptheme_color" />
 
         </LinearLayout>
