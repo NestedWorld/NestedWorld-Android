@@ -85,6 +85,9 @@ public class UserManager {
 
     @Nullable
     public String getCurrentAccountName() {
+        if (mAccount == null) {
+            return null;
+        }
         return mAccount.name;
     }
 
