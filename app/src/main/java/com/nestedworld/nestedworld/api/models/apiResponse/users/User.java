@@ -1,4 +1,5 @@
 package com.nestedworld.nestedworld.api.models.apiResponse.users;
+
 import com.google.gson.annotations.Expose;
 
 public class User {

@@ -34,7 +34,7 @@
     <string name="error_logout">Impossible de vous deconnecter</string>
     <string name="error_forgot_password">Impossible de re-initialiser votre mot de passe</string>
     <string name="error_update_user_info">Impossible de récuperer vos informations, veillez vous reconnecter</string>
-    
+
     <string name="password_send">Vous allez recevoir un mail d\'ici peu.</string>
 
     <string name="menu_action_profil">Profil</string>
