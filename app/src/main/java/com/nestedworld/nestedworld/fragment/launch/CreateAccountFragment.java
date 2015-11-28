@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragment.launch;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -43,7 +44,7 @@ public class CreateAccountFragment extends BaseFragment {
     @Bind(R.id.progressView)
     ProgressView progressView;
 
-    public static void load(final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
         fragmentTransaction.replace(R.id.container, new CreateAccountFragment());
@@ -90,7 +91,7 @@ public class CreateAccountFragment extends BaseFragment {
     /*
     ** Utils
      */
-    private void createAccount(final String email, final String password, final String pseudo) {
+    private void createAccount(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         progressView.start();
 
         NestedWorldApi.getInstance(mContext).register(email, password, pseudo,
@@ -110,7 +111,7 @@ public class CreateAccountFragment extends BaseFragment {
                 });
     }
 
-    private void login(final String email, final String password) {
+    private void login(@NonNull final String email, @NonNull final String password) {
         NestedWorldApi.getInstance(mContext).signIn(email, password, new Callback<SignIn>() {
             @Override
             public void success(SignIn json, Response response) {
@@ -139,7 +140,7 @@ public class CreateAccountFragment extends BaseFragment {
     /*
     ** InputChecker
      */
-    private boolean checkInput(final String email, final String password, final String pseudo) {
+    private boolean checkInput(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         if (!checkEmailFormat(email)) {
             etEmail.setError(getString(R.string.editText_email_invalid));
             return false;

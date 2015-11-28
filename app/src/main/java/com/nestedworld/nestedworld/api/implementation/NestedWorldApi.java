@@ -100,7 +100,7 @@ public class NestedWorldApi {
         mClient.getMonstersList(callback);
     }
 
-    public void getUserInfo(Callback<User> callback) {
+    public void getUserInfo(@NonNull Callback<User> callback) {
         mClient.getUserInfo(callback);
     }
 

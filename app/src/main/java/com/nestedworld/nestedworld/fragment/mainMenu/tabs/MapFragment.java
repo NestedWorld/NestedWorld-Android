@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -14,7 +15,7 @@ public class MapFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
 
-    public static void load(final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
         fragmentTransaction.addToBackStack(FRAGMENT_NAME);

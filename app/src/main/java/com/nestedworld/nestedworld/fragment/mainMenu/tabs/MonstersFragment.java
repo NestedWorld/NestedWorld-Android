@@ -37,7 +37,7 @@ public class MonstersFragment extends BaseFragment {
     @Bind(R.id.progressView)
     ProgressView progressView;
 
-    public static void load(final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new MonstersFragment());
         fragmentTransaction.addToBackStack(FRAGMENT_NAME);

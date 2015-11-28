@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragment.profil;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,7 @@ public class ProfileFragment extends BaseFragment {
     @Bind(R.id.textView_token)
     TextView textViewToken;
 
-    public static void load(final FragmentManager fragmentManager, final boolean toBackStack) {
+    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new ProfileFragment());
         if (toBackStack) {

@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragment.launch;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -37,7 +38,7 @@ public class LoginFragment extends BaseFragment {
     @Bind(R.id.progressView)
     ProgressView progressView;
 
-    public static void load(final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
         fragmentTransaction.replace(R.id.container, new LoginFragment());

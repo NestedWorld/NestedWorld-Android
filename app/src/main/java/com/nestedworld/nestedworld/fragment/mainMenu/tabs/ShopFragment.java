@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -14,7 +15,7 @@ public class ShopFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
 
-    public static void load(final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new HomeFragment());
         fragmentTransaction.addToBackStack(FRAGMENT_NAME);

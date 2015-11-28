@@ -48,15 +48,15 @@ public class RetrofitErrorHandler {
     /*
     ** Utils
      */
-    private static String getNetworkError(final RetrofitError error, final Context context) {
+    private static String getNetworkError(@NonNull final RetrofitError error, @NonNull final Context context) {
         return context.getResources().getString(R.string.error_no_internet);
     }
 
-    private static String getConversionError(final RetrofitError error, final Context context) {
+    private static String getConversionError(@NonNull final RetrofitError error, @NonNull final Context context) {
         return context.getResources().getString(R.string.error_conversion);
     }
 
-    private static String getHttpError(final RetrofitError error, final Context context) {
+    private static String getHttpError(@NonNull final RetrofitError error, @NonNull final Context context) {
         //The server should send a json body (describe under RestError.class)
         //The body should contain the error message so we'll try to get it
 
