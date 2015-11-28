@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
 import com.nestedworld.nestedworld.utils.log.LogHelper;
 
 /**

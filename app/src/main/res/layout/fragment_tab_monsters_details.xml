@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
 
     <ImageView
-        android:layout_margin="8dip"
+        android:id="@+id/imageView2"
         android:layout_width="58dip"
         android:layout_height="58dip"
-        android:id="@+id/imageView2"
-        android:src="@drawable/default_monster"/>
+        android:layout_margin="8dip"
+        android:src="@drawable/default_monster" />
 
     <LinearLayout
-        android:layout_marginTop="8dip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dip">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
             android:id="@+id/monsterName"
-            android:layout_gravity="center_vertical" />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/monsterHp" />
+            android:text="@string/app_name" />
 
         <TextView
+            android:id="@+id/monsterHp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/monsterAtk" />
+            android:text="@string/app_name" />
 
         <TextView
+            android:id="@+id/monsterAtk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="@string/app_name" />
+
+        <TextView
             android:id="@+id/monsterDefense"
-            android:layout_gravity="center_vertical" />
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/app_name" />
 
 
     </LinearLayout>

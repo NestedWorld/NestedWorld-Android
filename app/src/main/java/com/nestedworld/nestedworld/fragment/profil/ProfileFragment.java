@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
@@ -26,13 +27,26 @@ import retrofit.client.Response;
 public class ProfileFragment extends BaseFragment {
     public final static String FRAGMENT_NAME = ProfileFragment.class.getSimpleName();
 
-    @Bind(R.id.textView_username)
-    TextView textViewUsername;
+    @Bind(R.id.textView_gender)
+    TextView textViewGender;
 
-    @Bind(R.id.textView_token)
-    TextView textViewToken;
+    @Bind(R.id.textView_pseudo)
+    TextView textViewPseudo;
 
-    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final boolean toBackStack) {
+    @Bind(R.id.textView_birthDate)
+    TextView textViewBirthDate;
+
+    @Bind(R.id.textView_city)
+    TextView textViewCity;
+
+    @Bind(R.id.textView_registeredAt)
+    TextView textViewRegisteredAt;
+
+    @Bind(R.id.textView_email)
+    TextView textViewEmail;
+
+
+    public static void load(@NonNull final FragmentManager fragmentManager, final boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new ProfileFragment());
         if (toBackStack) {
@@ -52,8 +66,14 @@ public class ProfileFragment extends BaseFragment {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         final UserManager userManager = UserManager.get(mContext);
-        textViewUsername.setText(userManager.getCurrentAccountName());
-        textViewToken.setText(userManager.getCurrentAuthToken(mContext));
+
+        //TODO afficher les bonnes informations (recu dans le /Users)
+        textViewGender.setText("null");
+        textViewPseudo.setText("kassisdion");
+        textViewBirthDate.setText("None");
+        textViewCity.setText("null");
+        textViewRegisteredAt.setText("2015-10-11T13:58:46.308922+00:00");
+        textViewEmail.setText("florian.faisant@gmail.com");
     }
 
     @Override
