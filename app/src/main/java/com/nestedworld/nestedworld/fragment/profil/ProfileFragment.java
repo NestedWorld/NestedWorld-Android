@@ -66,7 +66,7 @@ public class ProfileFragment extends BaseFragment {
     @OnClick(R.id.button_logout)
     public void logout() {
 
-        NestedWorldApi.getInstance(mContext).logout(UserManager.get(mContext).getCurrentAuthToken(mContext),
+        NestedWorldApi.getInstance(mContext).logout(
                 new Callback<Logout>() {
                     @Override
                     public void success(Logout logout, Response response) {

@@ -92,8 +92,8 @@ public class NestedWorldApi {
         mClient.forgotPassword(email, callback);
     }
 
-    public void logout(@NonNull final String token, @NonNull final Callback<Logout> callback) {
-        mClient.logout(token, callback);
+    public void logout(@NonNull final Callback<Logout> callback) {
+        mClient.logout(callback);
     }
 
     public void getMonstersList(@NonNull final Callback<MonstersList> callback) {
@@ -112,7 +112,6 @@ public class NestedWorldApi {
         @GET(Constant.USER_LOGOUT)
         @FormUrlEncoded
         void logout(
-                @Field("app_token") String token,
                 Callback<Logout> callback);
 
         @POST(Constant.USER_REGISTER)
