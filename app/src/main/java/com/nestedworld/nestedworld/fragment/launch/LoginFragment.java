@@ -21,8 +21,8 @@ import com.rey.material.widget.ProgressView;
 import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -80,13 +80,15 @@ public class LoginFragment extends BaseFragment {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
 
-        NestedWorldApi.getInstance(mContext).signIn(email, password,
+        NestedWorldApi.getInstance(mContext).signIn(
+                email,
+                password,
                 new Callback<SignIn>() {
                     @Override
-                    public void success(SignIn json, Response response) {
+                    public void onResponse(Response<SignIn> response, Retrofit retrofit) {
                         progressView.stop();
 
-                        if (UserManager.get(mContext).setCurrentUser(mContext, email, password, json.token, null)) {
+                        if (UserManager.get(mContext).setCurrentUser(mContext, email, password, response.body().token, null)) {
                             //display the mainMenu and stop the launchActivity
                             startActivity(MainMenuActivity.class);
                             ((FragmentActivity) mContext).finish();
@@ -96,10 +98,9 @@ public class LoginFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void failure(RetrofitError error) {
+                    public void onFailure(Throwable t) {
                         progressView.stop();
-
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_login));
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, t, getString(R.string.error_login));
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -109,18 +110,20 @@ public class LoginFragment extends BaseFragment {
     public void forgotPassword() {
         final String email = etEmail.getText().toString();
 
-        NestedWorldApi.getInstance(mContext).forgotPassword(email,
+        NestedWorldApi.getInstance(mContext).forgotPassword(
+                email,
                 new Callback<ForgotPassword>() {
                     @Override
-                    public void success(ForgotPassword json, Response response) {
+                    public void onResponse(Response<ForgotPassword> response, Retrofit retrofit) {
                         Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
-                    public void failure(RetrofitError error) {
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_forgot_password));
+                    public void onFailure(Throwable t) {
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, t, getString(R.string.error_forgot_password));
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
-                });
+                }
+        );
     }
 }

@@ -21,8 +21,8 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -61,32 +61,30 @@ public class MonstersFragment extends BaseFragment {
     protected void initLogic(Bundle savedInstanceState) {
         progressView.start();
 
-        NestedWorldApi.getInstance(mContext).getMonstersList(
-                new Callback<MonstersList>() {
-                    @Override
-                    public void success(final MonstersList json, Response response) {
-                        progressView.stop();
+        NestedWorldApi.getInstance(mContext).getMonstersList(new Callback<MonstersList>() {
+            @Override
+            public void onResponse(final Response<MonstersList> response, Retrofit retrofit) {
+                progressView.stop();
 
-                        final MonsterAdapter adapter = new MonsterAdapter(mContext, json.monsters);
-                        // listViewMonstersList = null if we've change view before the end of the request
-                        if (listViewMonstersList != null) {
-                            listViewMonstersList.setAdapter(adapter);
-                            listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    final MonstersList.Monster selectedMonster = json.monsters.get(position);
-                                    displayMonsterDetail(selectedMonster, view);
-                                }
-                            });
+                final MonsterAdapter adapter = new MonsterAdapter(mContext, response.body().monsters);
+                // listViewMonstersList = null if we've change view before the end of the request
+                if (listViewMonstersList != null) {
+                    listViewMonstersList.setAdapter(adapter);
+                    listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            final MonstersList.Monster selectedMonster = response.body().monsters.get(position);
+                            displayMonsterDetail(selectedMonster, view);
                         }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        progressView.stop();
-                    }
+                    });
                 }
-        );
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                progressView.stop();
+            }
+        });
 
     }
 

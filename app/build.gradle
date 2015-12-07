@@ -42,6 +42,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
 
     //GPS
     compile 'com.google.android.gms:play-services:8.1.0'
@@ -50,13 +51,15 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
 
     //Material design support
+    compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.github.rey5137:material:1.2.1'
 
     //API
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp:2.3.0'//keep under 2.3 until new relic fix his library
-    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'//send request
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'//send Json
+    compile 'com.squareup.okhttp:logging-interceptor:2.6.0'//display log
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
 
     //Customize typeface
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'

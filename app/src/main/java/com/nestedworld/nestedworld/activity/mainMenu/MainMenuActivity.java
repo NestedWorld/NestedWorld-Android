@@ -14,6 +14,7 @@ import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
+import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
 import com.nestedworld.nestedworld.authenticator.UserManager;
@@ -26,8 +27,8 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
@@ -103,17 +104,18 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private void updateUserInformation() {
         progressView.start();
+
         NestedWorldApi.getInstance(this).getUserInfo(new Callback<User>() {
             @Override
-            public void success(User users, Response response) {
+            public void onResponse(Response<User> response, Retrofit retrofit) {
                 initTabs();
                 progressView.stop();
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                Log.e(TAG, error.getMessage());
-                Toast.makeText(MainMenuActivity.this, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
+            public void onFailure(Throwable t) {
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(MainMenuActivity.this, t, getString(R.string.error_update_user_info));
+                Toast.makeText(MainMenuActivity.this, errorMessage, Toast.LENGTH_LONG).show();
 
                 //remove user
                 UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);

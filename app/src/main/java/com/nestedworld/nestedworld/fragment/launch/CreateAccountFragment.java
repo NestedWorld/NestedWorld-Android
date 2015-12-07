@@ -22,8 +22,8 @@ import com.rey.material.widget.ProgressView;
 import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static com.nestedworld.nestedworld.utils.input.InputChecker.checkEmailFormat;
 import static com.nestedworld.nestedworld.utils.input.InputChecker.checkPasswordFormat;
@@ -94,47 +94,56 @@ public class CreateAccountFragment extends BaseFragment {
     private void createAccount(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         progressView.start();
 
-        NestedWorldApi.getInstance(mContext).register(email, password, pseudo,
+        NestedWorldApi.getInstance(mContext).register(
+                email,
+                password,
+                pseudo,
                 new Callback<Register>() {
                     @Override
-                    public void success(Register json, Response response) {
+                    public void onResponse(Response<Register> response, Retrofit retrofit) {
                         login(email, password);
                     }
 
                     @Override
-                    public void failure(RetrofitError error) {
+                    public void onFailure(Throwable t) {
                         progressView.stop();
 
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_create_account));
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, t, getString(R.string.error_create_account));
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
-                });
+                }
+        );
     }
 
     private void login(@NonNull final String email, @NonNull final String password) {
-        NestedWorldApi.getInstance(mContext).signIn(email, password, new Callback<SignIn>() {
-            @Override
-            public void success(SignIn json, Response response) {
-                progressView.stop();
 
-                //Store user Data
-                if (UserManager.get(mContext).setCurrentUser(mContext, email, password, json.token, null)) {
-                    //display MainMenu and then stop le launchMenu
-                    startActivity(MainMenuActivity.class);
-                    ((FragmentActivity) mContext).finish();
-                } else {
-                    Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
+        NestedWorldApi.getInstance(mContext).signIn(
+                email,
+                password,
+                new Callback<SignIn>() {
+                    @Override
+                    public void onResponse(Response<SignIn> response, Retrofit retrofit) {
+                        progressView.stop();
+
+                        //Store user Data
+                        if (UserManager.get(mContext).setCurrentUser(mContext, email, password, response.body().token, null)) {
+                            //display MainMenu and then stop le launchMenu
+                            startActivity(MainMenuActivity.class);
+                            ((FragmentActivity) mContext).finish();
+                        } else {
+                            Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        progressView.stop();
+
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, t, getString(R.string.error_login));
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                progressView.stop();
-
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, error, getString(R.string.error_login));
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+        );
     }
 
     /*

@@ -18,8 +18,8 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -87,18 +87,17 @@ public class ProfileFragment extends BaseFragment {
     @OnClick(R.id.button_logout)
     public void logout() {
 
-        NestedWorldApi.getInstance(mContext).logout(
-                new Callback<Logout>() {
-                    @Override
-                    public void success(Logout logout, Response response) {
+        NestedWorldApi.getInstance(mContext).logout(new Callback<Logout>() {
+            @Override
+            public void onResponse(Response<Logout> response, Retrofit retrofit) {
+            }
 
-                    }
+            @Override
+            public void onFailure(Throwable t) {
 
-                    @Override
-                    public void failure(RetrofitError error) {
+            }
+        });
 
-                    }
-                });
         //remove user
         UserManager.get(mContext).deleteCurrentAccount(mContext);
 
