@@ -106,7 +106,7 @@ public class NestedWorldApi {
      * Interface implementation
      */
     public void register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo, @NonNull final Callback<Register> callback) {
-        mClient.register(pseudo, email, password).enqueue(callback);
+        mClient.register(email, password, pseudo).enqueue(callback);
     }
 
     public void signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<SignIn> callback) {
@@ -142,9 +142,9 @@ public class NestedWorldApi {
         @POST(Constant.USER_REGISTER)
         @FormUrlEncoded
         Call<Register> register(
-                @Field("email") String pseudo,
-                @Field("password") String email,
-                @Field("pseudo") String password
+                @Field("email") String email,
+                @Field("password") String password,
+                @Field("pseudo") String pseudo
         );
 
 

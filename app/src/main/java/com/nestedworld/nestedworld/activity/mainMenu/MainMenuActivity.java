@@ -1,6 +1,8 @@
 package com.nestedworld.nestedworld.activity.mainMenu;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +27,6 @@ import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ToolsFragment;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -104,17 +105,20 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     private void updateUserInformation() {
         progressView.start();
 
-        NestedWorldApi.getInstance(this).getUserInfo(new Callback<User>() {
+
+        NestedWorldApi.getInstance(this).getUserInfo(new com.nestedworld.nestedworld.api.callback.Callback<User>() {
             @Override
-            public void onResponse(Response<User> response, Retrofit retrofit) {
+            public void onSuccess(Response<User> response, Retrofit retrofit) {
                 initTabs();
                 progressView.stop();
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(MainMenuActivity.this, t, getString(R.string.error_update_user_info));
-                Toast.makeText(MainMenuActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+            public void onError(@NonNull KIND errorKind, @Nullable Response<User> response) {
+
+                Toast.makeText(MainMenuActivity.this,
+                        RetrofitErrorHandler.getErrorMessage(MainMenuActivity.this, errorKind, getString(R.string.error_update_user_info), response),
+                        Toast.LENGTH_LONG).show();
 
                 //remove user
                 UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);

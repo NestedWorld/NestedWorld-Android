@@ -2,9 +2,12 @@ package com.nestedworld.nestedworld.api.errorHandler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.callback.Callback;
+
+import retrofit.Response;
 
 /**
  * Simple RetrofitError parser
@@ -18,35 +21,29 @@ public class RetrofitErrorHandler {
     /*
     ** Public method
      */
-    public static String getErrorMessage(@NonNull final Context context, @NonNull final Throwable t, @NonNull final String defaultMessage) {
+    public static String getErrorMessage(@NonNull final Context context, @NonNull final Callback.KIND errorType, @NonNull final String defaultMessage, @Nullable Response response) {
 
-        String errorMessage;
+        if (response != null) {
+            //TODO essayer de parser le body
+        }
 
-        //TODO check the error type and call the corespondent error parser see https://gist.github.com/koesie10/bc6c62520401cc7c858f
-        errorMessage = t.getMessage();
-        Log.d(TAG, errorMessage);
-
+        switch (errorType) {
+            case NETWORK:
+                return getNetworkError(context);
+            case SERVER:
+                return getUnexpectedError(context);
+        }
         return defaultMessage;
     }
 
     /*
     ** Utils
      */
-    private static String getNetworkError(@NonNull final Throwable t, @NonNull final Context context) {
+    private static String getNetworkError(@NonNull final Context context) {
         return context.getResources().getString(R.string.error_no_internet);
     }
 
-    private static String getConversionError(@NonNull final Throwable t, @NonNull final Context context) {
+    private static String getUnexpectedError(@NonNull final Context context) {
         return context.getResources().getString(R.string.error_conversion);
-    }
-
-    private static String getHttpError(@NonNull final Throwable t, @NonNull final Context context) {
-        //The server should send a json body (describe under RestError.class)
-        //The body should contain the error message so we'll try to get it
-
-        //TODO récupérer le message d'erreur et le retourner
-
-        //The server didn't send an error message
-        return context.getResources().getString(R.string.error_unknown);
     }
 }

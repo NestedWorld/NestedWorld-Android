@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.fragment.profil;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,6 @@ import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -86,16 +86,18 @@ public class ProfileFragment extends BaseFragment {
     @OnClick(R.id.button_logout)
     public void logout() {
 
-        NestedWorldApi.getInstance(mContext).logout(new Callback<Logout>() {
-            @Override
-            public void onResponse(Response<Logout> response, Retrofit retrofit) {
-            }
+        NestedWorldApi.getInstance(mContext).logout(
+                new com.nestedworld.nestedworld.api.callback.Callback<Logout>() {
+                    @Override
+                    public void onSuccess(Response<Logout> response, Retrofit retrofit) {
 
-            @Override
-            public void onFailure(Throwable t) {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<Logout> response) {
+
+                    }
+                });
 
         //remove user
         UserManager.get(mContext).deleteCurrentAccount(mContext);

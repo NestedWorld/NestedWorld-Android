@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.fragment.launch;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +21,6 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -83,9 +83,9 @@ public class LoginFragment extends BaseFragment {
         NestedWorldApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new Callback<SignIn>() {
+                new com.nestedworld.nestedworld.api.callback.Callback<SignIn>() {
                     @Override
-                    public void onResponse(Response<SignIn> response, Retrofit retrofit) {
+                    public void onSuccess(Response<SignIn> response, Retrofit retrofit) {
                         progressView.stop();
 
                         if (UserManager.get(mContext).setCurrentUser(mContext, email, password, response.body().token, null)) {
@@ -98,9 +98,9 @@ public class LoginFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<SignIn> response) {
                         progressView.stop();
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, t, getString(R.string.error_login));
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -112,15 +112,15 @@ public class LoginFragment extends BaseFragment {
 
         NestedWorldApi.getInstance(mContext).forgotPassword(
                 email,
-                new Callback<ForgotPassword>() {
+                new com.nestedworld.nestedworld.api.callback.Callback<ForgotPassword>() {
                     @Override
-                    public void onResponse(Response<ForgotPassword> response, Retrofit retrofit) {
+                    public void onSuccess(Response<ForgotPassword> response, Retrofit retrofit) {
                         Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, t, getString(R.string.error_forgot_password));
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<ForgotPassword> response) {
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_forgot_password), response);
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 }

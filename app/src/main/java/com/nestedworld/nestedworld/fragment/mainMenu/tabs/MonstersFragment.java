@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +12,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.MonsterAdapter;
+import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
-import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
@@ -61,30 +63,34 @@ public class MonstersFragment extends BaseFragment {
     protected void initLogic(Bundle savedInstanceState) {
         progressView.start();
 
-        NestedWorldApi.getInstance(mContext).getMonstersList(new Callback<MonstersList>() {
-            @Override
-            public void onResponse(final Response<MonstersList> response, Retrofit retrofit) {
-                progressView.stop();
+        NestedWorldApi.getInstance(mContext).getMonstersList(
+                new com.nestedworld.nestedworld.api.callback.Callback<MonstersList>() {
+                    @Override
+                    public void onSuccess(final Response<MonstersList> response, Retrofit retrofit) {
+                        progressView.stop();
 
-                final MonsterAdapter adapter = new MonsterAdapter(mContext, response.body().monsters);
-                // listViewMonstersList = null if we've change view before the end of the request
-                if (listViewMonstersList != null) {
-                    listViewMonstersList.setAdapter(adapter);
-                    listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            final MonstersList.Monster selectedMonster = response.body().monsters.get(position);
-                            displayMonsterDetail(selectedMonster, view);
+                        final MonsterAdapter adapter = new MonsterAdapter(mContext, response.body().monsters);
+                        // listViewMonstersList = null if we've change view before the end of the request
+                        if (listViewMonstersList != null) {
+                            listViewMonstersList.setAdapter(adapter);
+                            listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    final MonstersList.Monster selectedMonster = response.body().monsters.get(position);
+                                    displayMonsterDetail(selectedMonster, view);
+                                }
+                            });
                         }
-                    });
-                }
-            }
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                progressView.stop();
-            }
-        });
+                    @Override
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersList> response) {
+                        progressView.stop();
+
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_cant_get_monsters_list), response);
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
 
     }
 
