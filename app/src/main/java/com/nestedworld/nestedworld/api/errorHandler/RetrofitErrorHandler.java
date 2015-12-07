@@ -2,11 +2,9 @@ package com.nestedworld.nestedworld.api.errorHandler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.models.apiResponse.RestError;
 
 /**
  * Simple RetrofitError parser

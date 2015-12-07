@@ -67,7 +67,6 @@ public class NestedWorldApi {
         mContext = null;
         mContext = context;
 
-
         // Define a request interceptor for displaying some log
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
