@@ -3,18 +3,18 @@
     package="com.nestedworld.nestedworld">
 
     <!-- To access APIs: -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- v -->
 
     <!-- for new relic -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- v -->
 
     <!-- Account manager-->
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" /> <!-- x -->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" /> <!-- x -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- x -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- x -->
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" /> <!-- x -->
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" /> <!-- x -->
 
     <!-- permissions for the 'MyLocation' functionality. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
