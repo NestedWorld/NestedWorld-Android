@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;

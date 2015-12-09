@@ -25,7 +25,6 @@ import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ToolsFragment;
-import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
