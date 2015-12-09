@@ -14,7 +14,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 public class NestedWorldApp extends Application {
 
-    private static String TAG = NestedWorldApp.class.getSimpleName();
+    private final static String TAG = NestedWorldApp.class.getSimpleName();
 
     /*
     ** Life cycle

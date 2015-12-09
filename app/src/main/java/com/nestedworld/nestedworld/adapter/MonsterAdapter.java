@@ -38,7 +38,7 @@ public class MonsterAdapter extends ArrayAdapter<MonstersList.Monster> {
         }
 
         //Populate the view
-        //TODO pupulate picture and description
+        //TODO populate picture and description
         final TextView textviewName = (TextView) convertView.findViewById(R.id.textview_monster_name);
         textviewName.setText(monster.name);
 

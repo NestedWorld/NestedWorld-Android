@@ -58,7 +58,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
 
         final CustomTab tab = tabList.get(position);
 
-        //TODO avoid crash on lowmemory
+        //TODO avoid crash on low memory
         Drawable drawable = ContextCompat.getDrawable(mContext, tab.getIcon());
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 

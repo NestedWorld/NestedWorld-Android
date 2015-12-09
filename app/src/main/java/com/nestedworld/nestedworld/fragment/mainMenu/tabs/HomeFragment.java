@@ -42,6 +42,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         textViewUsername.setText(UserManager.get(mContext).getCurrentAccountName());
+
+        //TODO metre le vrai lvl de l'utilisateur
         textViewUserLevel.setText("16");
     }
 

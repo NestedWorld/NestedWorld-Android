@@ -14,18 +14,18 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 
 /**
  * Simple for used for 'Android M permission' simplification
- *
+ * <p/>
  * Call askForEveryPermissions() if you need multiple permission
  * Call askForPermissions() if you need just one permission
- *
+ * <p/>
  * Don't forget to implement :
  * public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
  * in you activity
  */
 public class PermissionUtils {
-    private static String TAG = PermissionUtils.class.getSimpleName();
     final private static int REQUEST_CODE_ASK_PERMISSIONS = 123;
     final private static int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+    private static String TAG = PermissionUtils.class.getSimpleName();
 
     /*
     ** Public method
