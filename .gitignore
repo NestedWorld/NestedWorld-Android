@@ -76,8 +76,11 @@ proguard/
 # Log Files
 *.log
 
-# Android Studio Navigation editor temp files
+# AndroidStudio Navigation editor temp files
 .navigation/
+
+# AndroidStudio tools
+*.alloc
 
 ### Android Patch ###
 gen-external-apklibs
