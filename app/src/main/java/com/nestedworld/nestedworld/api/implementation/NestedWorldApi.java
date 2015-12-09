@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.api.implementation;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
@@ -79,7 +78,6 @@ public class NestedWorldApi {
                         .addHeader("X-User-Email", "" + UserManager.get(mContext).getCurrentAccountName())
                         .addHeader("Authorization", "Bearer " + UserManager.get(mContext).getCurrentAuthToken(mContext))
                         .build();
-                Log.d(TAG, request.url().toString());
                 return chain.proceed(request);
             }
         };
