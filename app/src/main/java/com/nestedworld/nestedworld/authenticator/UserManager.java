@@ -46,14 +46,15 @@ public class UserManager {
         return mAccount;
     }
 
-    public boolean setCurrentUser(@NonNull final Context context, @NonNull final String name, @NonNull final String password, @NonNull final String authToken, @Nullable final Bundle bundle) {
+    public boolean setCurrentUser(@NonNull final Context context, @NonNull final String name, @NonNull final String password,
+                                  @NonNull final String authToken, @Nullable final Bundle userData) {
         //check if account already exist
         Account account = getAccountByName(name);
 
         if (account == null) {
             //We have to create a new account
             account = new Account(name, Constant.ACCOUNT_TYPE);
-            if (!mAccountManager.addAccountExplicitly(account, password, bundle)) {
+            if (!mAccountManager.addAccountExplicitly(account, password, userData)) {
                 return false;
             }
             LogHelper.d(TAG, "Successfully create a new account");
@@ -68,17 +69,19 @@ public class UserManager {
     }
 
     @Nullable
-    public String getCurrentUserData(@NonNull final String key) {
-        if (mAccount == null) {
-            return null;
-        }
-        return mAccountManager.getUserData(mAccount, key);
+    public String getCurrentUserData(@NonNull final Context context) {
+        return SharedPreferenceUtils.getUserData(context);
+    }
+
+    public void setUserData(@NonNull final Context context, @NonNull final String userData) {
+        SharedPreferenceUtils.setUserData(context, userData);
     }
 
     public Boolean deleteCurrentAccount(@NonNull final Context context) {
         return deleteAccount(context, mAccount);
     }
 
+    @Nullable
     public String getCurrentAuthToken(@NonNull final Context context) {
         return SharedPreferenceUtils.getCurrentAuthToken(context);
     }
@@ -133,20 +136,24 @@ public class UserManager {
     private static class SharedPreferenceUtils {
         private final static String TAG = SharedPreferenceUtils.class.getSimpleName();
 
-        private final static String ACCOUNT_DETAIL_KEY = "com.nestedworld.account_detail";
+        private final static String USER_DATA_PREF_NAME = "com.nestedworld.user_data";
+        private final static String KEY_USER_DATA = "data";
+
+        private final static String ACCOUNT_DETAIL_PREF_NAME = "com.nestedworld.account_detail";
         private final static String KEY_ACCOUNT_NAME = "name";
         private final static String KEY_ACCOUNT_TOKEN = "token";
 
         /*
         ** Account name
          */
-        public static String getLastAccountNameConnected(@NonNull final Context context) {
-            return context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_NAME, "");
+        private static String getLastAccountNameConnected(@NonNull final Context context) {
+            return context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_NAME, "");
         }
 
-        public static void setAccountNameToPref(@NonNull final Context context, @NonNull final String name) {
+        private static void setAccountNameToPref(@NonNull final Context context, @NonNull final String name) {
             LogHelper.d(TAG, "setAccountNameToPref : " + name);
-            SharedPreferences.Editor edit = context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit();
+
+            SharedPreferences.Editor edit = context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).edit();
             edit.putString(KEY_ACCOUNT_NAME, name);
             edit.apply();
         }
@@ -154,23 +161,44 @@ public class UserManager {
         /*
         ** AuthToken
          */
-        public static String getCurrentAuthToken(@NonNull final Context context) {
-            return context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_TOKEN, "");
+        private static String getCurrentAuthToken(@NonNull final Context context) {
+            return context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_TOKEN, "");
         }
 
         public static void setAuthTokenToPref(@NonNull final Context context, @NonNull final String authToken) {
             LogHelper.d(TAG, "setAuthTokenToPref : " + authToken);
-            SharedPreferences.Editor edit = context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit();
+
+            SharedPreferences.Editor edit = context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).edit();
             edit.putString(KEY_ACCOUNT_TOKEN, authToken);
+            edit.apply();
+        }
+
+        /*
+        ** Account data
+         */
+        private static String getUserData(@NonNull final Context context) {
+            return context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_USER_DATA, "");
+        }
+
+        private static void setUserData(@NonNull final Context context, @NonNull final String userData) {
+            LogHelper.d(TAG, "setUserData : " + userData);
+
+            SharedPreferences.Editor edit = context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).edit();
+            edit.putString(KEY_USER_DATA, userData);
             edit.apply();
         }
 
         /*
         ** Utils
          */
-        public static void clearPref(@NonNull final Context context) {
+        private static void clearPref(@NonNull final Context context) {
             LogHelper.d(TAG, "clearPref");
-            context.getSharedPreferences(ACCOUNT_DETAIL_KEY, Context.MODE_PRIVATE).edit().clear().apply();
+
+            //clean the account data
+            context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
+
+            //clean the related user data
+            context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
         }
     }
 

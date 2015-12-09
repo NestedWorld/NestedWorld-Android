@@ -8,9 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
@@ -64,15 +66,18 @@ public class ProfileFragment extends BaseFragment {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        final UserManager userManager = UserManager.get(mContext);
 
-        //TODO afficher les bonnes informations (recu dans le /Users)
-        textViewGender.setText("null");
-        textViewPseudo.setText("kassisdion");
-        textViewBirthDate.setText("None");
-        textViewCity.setText("null");
-        textViewRegisteredAt.setText("2015-10-11T13:58:46.308922+00:00");
-        textViewEmail.setText("florian.faisant@gmail.com");
+        /*We retrieve the userData as the string and we decode the string*/
+        final String userData = UserManager.get(mContext).getCurrentUserData(mContext);
+        final User user = new Gson().fromJson(userData, User.class);
+
+        /*We display some information from the decoded data*/
+        textViewGender.setText(user.gender);
+        textViewPseudo.setText(user.pseudo);
+        textViewBirthDate.setText(user.birth_date);
+        textViewCity.setText(user.city);
+        textViewRegisteredAt.setText(user.registered_at);
+        textViewEmail.setText(user.email);
     }
 
     @Override

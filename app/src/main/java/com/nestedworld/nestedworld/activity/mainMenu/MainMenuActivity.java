@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
@@ -24,6 +25,7 @@ import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ToolsFragment;
+import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
@@ -109,6 +111,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         NestedWorldApi.getInstance(this).getUserInfo(new com.nestedworld.nestedworld.api.callback.Callback<User>() {
             @Override
             public void onSuccess(Response<User> response, Retrofit retrofit) {
+                /*We convert the response as a String and then we store it*/
+                final String json = new Gson().toJson(response.body());
+                UserManager.get(MainMenuActivity.this).setUserData(MainMenuActivity.this, json);
+
+                /*We display the tabs*/
                 initTabs();
                 progressView.stop();
             }
