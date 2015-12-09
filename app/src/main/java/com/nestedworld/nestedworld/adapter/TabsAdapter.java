@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
  * It's use for displaying the TABS under activity.mainMenu
  */
 public class TabsAdapter extends FragmentPagerAdapter {
+    protected final String TAG = getClass().getSimpleName();
+
     private final List<CustomTab> tabList = new ArrayList<>();
     private final Context mContext;
 
@@ -53,8 +56,19 @@ public class TabsAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        //TODO display icon
-        return tabList.get(position).getTitle();
+
+        final CustomTab tab = tabList.get(position);
+
+        Drawable drawable = ContextCompat.getDrawable(mContext, tab.getIcon());
+        Log.d(TAG, "" + drawable.getIntrinsicWidth());
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        SpannableString sb = new SpannableString("   " + tab.getTitle());
+        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+
+        sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return sb;
     }
 
     /**
