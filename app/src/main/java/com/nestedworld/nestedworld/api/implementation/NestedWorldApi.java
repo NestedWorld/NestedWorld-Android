@@ -141,10 +141,8 @@ public class NestedWorldApi {
         @GET(Constant.USER_LOGOUT)
         Call<LogoutResponse> logout();
 
-
         @POST(Constant.USER_REGISTER)
         Call<RegisterResponse> register(@Body RegisterRequest body);
-
 
         @POST(Constant.USER_SIGN_IN)
         Call<SignInResponse> signIn(@Body SignInRequest body);

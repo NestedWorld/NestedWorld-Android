@@ -113,7 +113,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             public void onSuccess(Response<UserResponse> response, Retrofit retrofit) {
                 /*We convert the response as a String and then we store it*/
 
-                final String json = new Gson().toJson(response.body().user);
+                final String json = new Gson().toJson(response.body().data);
 
                 UserManager.get(MainMenuActivity.this).setUserData(MainMenuActivity.this, json);
 

@@ -1,11 +1,13 @@
 package com.nestedworld.nestedworld.api.models.apiResponse.users;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class UserResponse {
 
     @Expose
-    public User user;
+    @SerializedName("user")
+    public User data;
 
     public class User {
         @Expose
