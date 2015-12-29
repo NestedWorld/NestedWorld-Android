@@ -9,18 +9,18 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
+import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 
 import java.util.ArrayList;
 
-public class MonsterAdapter extends ArrayAdapter<MonstersList.Monster> {
+public class MonsterAdapter extends ArrayAdapter<MonstersResponse.Monster> {
 
     private final static String TAG = MonsterAdapter.class.getSimpleName();
 
     /*
     ** Constructor
      */
-    public MonsterAdapter(@NonNull Context context, @NonNull ArrayList<MonstersList.Monster> objects) {
+    public MonsterAdapter(@NonNull Context context, @NonNull ArrayList<MonstersResponse.Monster> objects) {
         super(context, 0, objects);
     }
 
@@ -30,7 +30,7 @@ public class MonsterAdapter extends ArrayAdapter<MonstersList.Monster> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Get data
-        final MonstersList.Monster monster = getItem(position);
+        final MonstersResponse.Monster monster = getItem(position);
 
         //Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

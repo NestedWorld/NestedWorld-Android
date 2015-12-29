@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 
-public class MonstersList {
+public class MonstersResponse {
     @Expose
     public ArrayList<Monster> monsters;
 

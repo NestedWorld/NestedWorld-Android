@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.nestedworld.nestedworld.utils.log.LogHelper;
 
@@ -46,8 +47,14 @@ public class UserManager {
         return mAccount;
     }
 
-    public boolean setCurrentUser(@NonNull final Context context, @NonNull final String name, @NonNull final String password,
-                                  @NonNull final String authToken, @Nullable final Bundle userData) {
+    public boolean setCurrentUser(@NonNull final Context context,
+                                  @NonNull final String name, @NonNull final String password, @NonNull final String authToken,
+                                  @Nullable final Bundle userData) {
+        LogHelper.d(TAG, "setCurrentUser : "
+                + "\nname :" + name
+                + "\npassword : " + password
+                + "\nauthToken : " + authToken);
+
         //check if account already exist
         Account account = getAccountByName(name);
 
@@ -74,6 +81,7 @@ public class UserManager {
     }
 
     public void setUserData(@NonNull final Context context, @NonNull final String userData) {
+        Log.d(TAG, "setUserData : " + userData);
         SharedPreferenceUtils.setUserData(context, userData);
     }
 
@@ -181,8 +189,6 @@ public class UserManager {
         }
 
         private static void setUserData(@NonNull final Context context, @NonNull final String userData) {
-            LogHelper.d(TAG, "setUserData : " + userData);
-
             SharedPreferences.Editor edit = context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).edit();
             edit.putString(KEY_USER_DATA, userData);
             edit.apply();

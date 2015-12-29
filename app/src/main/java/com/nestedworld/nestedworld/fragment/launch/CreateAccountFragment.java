@@ -14,8 +14,8 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Register;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignIn;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.RegisterResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -98,14 +98,14 @@ public class CreateAccountFragment extends BaseFragment {
                 email,
                 password,
                 pseudo,
-                new com.nestedworld.nestedworld.api.callback.Callback<Register>() {
+                new com.nestedworld.nestedworld.api.callback.Callback<RegisterResponse>() {
                     @Override
-                    public void onSuccess(Response<Register> response, Retrofit retrofit) {
+                    public void onSuccess(Response<RegisterResponse> response, Retrofit retrofit) {
                         login(email, password);
                     }
 
                     @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<Register> response) {
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
                         progressView.stop();
 
                         final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_create_account), response);
@@ -120,9 +120,9 @@ public class CreateAccountFragment extends BaseFragment {
         NestedWorldApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new com.nestedworld.nestedworld.api.callback.Callback<SignIn>() {
+                new com.nestedworld.nestedworld.api.callback.Callback<SignInResponse>() {
                     @Override
-                    public void onSuccess(Response<SignIn> response, Retrofit retrofit) {
+                    public void onSuccess(Response<SignInResponse> response, Retrofit retrofit) {
                         progressView.stop();
 
                         //Store user Data
@@ -136,7 +136,7 @@ public class CreateAccountFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<SignIn> response) {
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
                         progressView.stop();
 
                         final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);

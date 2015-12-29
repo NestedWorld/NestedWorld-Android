@@ -18,7 +18,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersList;
+import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -64,9 +64,9 @@ public class MonstersFragment extends BaseFragment {
         progressView.start();
 
         NestedWorldApi.getInstance(mContext).getMonstersList(
-                new com.nestedworld.nestedworld.api.callback.Callback<MonstersList>() {
+                new com.nestedworld.nestedworld.api.callback.Callback<MonstersResponse>() {
                     @Override
-                    public void onSuccess(final Response<MonstersList> response, Retrofit retrofit) {
+                    public void onSuccess(final Response<MonstersResponse> response, Retrofit retrofit) {
                         progressView.stop();
 
                         final MonsterAdapter adapter = new MonsterAdapter(mContext, response.body().monsters);
@@ -76,7 +76,7 @@ public class MonstersFragment extends BaseFragment {
                             listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    final MonstersList.Monster selectedMonster = response.body().monsters.get(position);
+                                    final MonstersResponse.Monster selectedMonster = response.body().monsters.get(position);
                                     displayMonsterDetail(selectedMonster, view);
                                 }
                             });
@@ -84,7 +84,7 @@ public class MonstersFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersList> response) {
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersResponse> response) {
                         progressView.stop();
 
                         final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_cant_get_monsters_list), response);
@@ -97,7 +97,7 @@ public class MonstersFragment extends BaseFragment {
     /*
     ** Utils
      */
-    private void displayMonsterDetail(@NonNull MonstersList.Monster monster, @NonNull final View view) {
+    private void displayMonsterDetail(@NonNull MonstersResponse.Monster monster, @NonNull final View view) {
 
         PopupWindow popup = new PopupWindow(mContext);
         View layout = ((AppCompatActivity) mContext).getLayoutInflater().inflate(R.layout.fragment_tab_monsters_details, null);

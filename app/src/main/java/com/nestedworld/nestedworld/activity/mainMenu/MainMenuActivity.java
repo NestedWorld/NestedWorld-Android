@@ -18,13 +18,14 @@ import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.HomeFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragment.mainMenu.tabs.ToolsFragment;
+import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
@@ -107,11 +108,13 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         progressView.start();
 
 
-        NestedWorldApi.getInstance(this).getUserInfo(new com.nestedworld.nestedworld.api.callback.Callback<User>() {
+        NestedWorldApi.getInstance(this).getUserInfo(new com.nestedworld.nestedworld.api.callback.Callback<UserResponse>() {
             @Override
-            public void onSuccess(Response<User> response, Retrofit retrofit) {
+            public void onSuccess(Response<UserResponse> response, Retrofit retrofit) {
                 /*We convert the response as a String and then we store it*/
-                final String json = new Gson().toJson(response.body());
+
+                final String json = new Gson().toJson(response.body().user);
+
                 UserManager.get(MainMenuActivity.this).setUserData(MainMenuActivity.this, json);
 
                 /*We display the tabs*/
@@ -120,7 +123,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             }
 
             @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<User> response) {
+            public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
 
                 Toast.makeText(MainMenuActivity.this,
                         RetrofitErrorHandler.getErrorMessage(MainMenuActivity.this, errorKind, getString(R.string.error_update_user_info), response),

@@ -12,8 +12,8 @@ import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.Logout;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
@@ -69,7 +69,7 @@ public class ProfileFragment extends BaseFragment {
 
         /*We retrieve the userData as the string and we decode the string*/
         final String userData = UserManager.get(mContext).getCurrentUserData(mContext);
-        final User user = new Gson().fromJson(userData, User.class);
+        final UserResponse.User user = new Gson().fromJson(userData, UserResponse.User.class);
 
         /*We display some information from the decoded data*/
         textViewGender.setText(user.gender);
@@ -92,14 +92,14 @@ public class ProfileFragment extends BaseFragment {
     public void logout() {
 
         NestedWorldApi.getInstance(mContext).logout(
-                new com.nestedworld.nestedworld.api.callback.Callback<Logout>() {
+                new com.nestedworld.nestedworld.api.callback.Callback<LogoutResponse>() {
                     @Override
-                    public void onSuccess(Response<Logout> response, Retrofit retrofit) {
+                    public void onSuccess(Response<LogoutResponse> response, Retrofit retrofit) {
 
                     }
 
                     @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<Logout> response) {
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<LogoutResponse> response) {
 
                     }
                 });

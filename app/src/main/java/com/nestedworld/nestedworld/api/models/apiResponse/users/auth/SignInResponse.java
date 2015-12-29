@@ -1,9 +1,9 @@
 package com.nestedworld.nestedworld.api.models.apiResponse.users.auth;
 
-import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.User;
 
-public class Register {
+import com.google.gson.annotations.Expose;
+
+public class SignInResponse {
     @Expose
-    public User user;
+    public String token;
 }
