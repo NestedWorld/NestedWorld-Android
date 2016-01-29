@@ -55,19 +55,11 @@ public class TabsAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+        return tabList.get(position).getTitle();
+    }
 
-        final CustomTab tab = tabList.get(position);
-
-        //TODO avoid crash on low memory
-        Drawable drawable = ContextCompat.getDrawable(mContext, tab.getIcon());
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-
-        SpannableString sb = new SpannableString("   " + tab.getTitle());
-        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
-
-        sb.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return sb;
+    public int getPageIcon(int position) {
+        return tabList.get(position).getIcon();
     }
 
     /**
