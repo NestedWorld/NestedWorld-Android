@@ -1,11 +1,14 @@
 package com.nestedworld.nestedworld.utils.permission;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+
+import com.nestedworld.nestedworld.utils.log.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
  * Simple for used for 'Android M permission' simplification
  * <p/>
  * Call askForEveryPermissions() if you need multiple permission
- * Call askForPermissions() if you need just one permission
+ * Call askForPermissionsFromActivity() if you need just one permission
  * <p/>
  * Don't forget to implement :
  * public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
@@ -33,20 +36,48 @@ public class PermissionUtils {
     /*
     ** Public method
      */
-    public static void askForPermissions(@NonNull final Context context, @NonNull final List<String> permissionsName) {
+
+    //asking for multiple permissions from an appcompatActivity
+    public static void askForPermissionsFromActivity(@NonNull final Context context, @NonNull final List<String> permissionsName) {
         List<String> permissionNeeded = new ArrayList<>();
 
         for (String p : permissionsName) {
             if (!isPermissionAllow(context, p)) {
                 permissionNeeded.add(p);
+                LogHelper.d(TAG, "Asking for permission : " + p);
             }
         }
-        requestPermissions((Activity) context, permissionNeeded.toArray(new String[permissionNeeded.size()]), REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+        ActivityCompat.requestPermissions((AppCompatActivity) context, permissionNeeded.toArray(new String[permissionNeeded.size()]), REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
     }
 
-    public static void askForPermission(@NonNull final Context context, @NonNull final String permissionName) {
+    //asking for a single permissions from an appcompatActivity
+    public static void askForPermissionFromAcitivity(@NonNull final Context context, @NonNull final String permissionName) {
+        LogHelper.d(TAG, "Asking for permission : " + permissionName);
+
         if (checkSelfPermission(context, permissionName) == PackageManager.PERMISSION_DENIED) {
-            requestPermissions((Activity) context, new String[]{permissionName}, REQUEST_CODE_ASK_PERMISSIONS);
+            ActivityCompat.requestPermissions((AppCompatActivity) context, new String[]{permissionName}, REQUEST_CODE_ASK_PERMISSIONS);
+        }
+    }
+
+    //asking for multiple permissions from a v4 fragment
+    public static void askForPermissionsFromFragment(@NonNull final Context context, @NonNull final Fragment fragment, @NonNull final List<String> permissionsName) {
+        List<String> permissionNeeded = new ArrayList<>();
+
+        for (String p : permissionsName) {
+            if (!isPermissionAllow(context, p)) {
+                permissionNeeded.add(p);
+                LogHelper.d(TAG, "Asking for permission : " + p);
+            }
+        }
+        fragment.requestPermissions(permissionNeeded.toArray(new String[permissionNeeded.size()]), REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+    }
+
+    //asking for a single permissions from a v4 fragment
+    public static void askForPermissionFromFragment(@NonNull final Context context, @NonNull final Fragment fragment, @NonNull final String permissionName) {
+        LogHelper.d(TAG, "Asking for permission : " + permissionName);
+
+        if (checkSelfPermission(context, permissionName) == PackageManager.PERMISSION_DENIED) {
+            fragment.requestPermissions(new String[]{permissionName}, REQUEST_CODE_ASK_PERMISSIONS);
         }
     }
 

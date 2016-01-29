@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import android.Manifest;
+import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -25,10 +25,10 @@ import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.places.PlacesResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.nestedworld.nestedworld.utils.permission.PermissionUtils;
 import com.rey.material.widget.ProgressView;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import butterknife.Bind;
@@ -42,9 +42,9 @@ public class MapFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
 
-    private final float mUserLat = 37.49377f;
-    private final float mUserLong = 126.88321f;
-    private final int mZoom = 10;
+    private final static float mUserLat = 37.49377f;
+    private final static float mUserLong = 126.88321f;
+    private final static int mZoom = 12;
     private GoogleMap mGoogleMap;
 
     @Bind(R.id.mapView)
@@ -68,12 +68,16 @@ public class MapFragment extends BaseFragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        //check for REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS cause we've asked for 2 permission
         if (requestCode != PermissionUtils.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS) {
+            LogHelper.d(TAG, "Wrong request code");
             return;
         }
 
+        //check if the 2 permission were granted
         for (int result : grantResults) {
             if (result != PackageManager.PERMISSION_GRANTED) {
+                LogHelper.d(TAG, "Permission not granted");
                 return;
             }
         }
@@ -145,8 +149,10 @@ public class MapFragment extends BaseFragment {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            LogHelper.d(TAG, "ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permission needed");
+
             //We ask for the permission
-            PermissionUtils.askForPermissions(mContext, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
+            PermissionUtils.askForPermissionsFromFragment(mContext, this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
             return;
         }
 
