@@ -35,8 +35,8 @@ public class MapFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
 
-    private final float mUserLat = 36;
-    private final float mUserLong = 127;
+    private final float mUserLat = 37.49377f;
+    private final float mUserLong = 126.88321f;
     private final int mZoom = 10;
 
     @Bind(R.id.mapView)
@@ -69,7 +69,7 @@ public class MapFragment extends BaseFragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 googleMap.setMyLocationEnabled(true);
-                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
                 moveCamera(mUserLat, mUserLong, mZoom);
 

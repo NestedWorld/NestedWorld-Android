@@ -11,13 +11,14 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView_user"
             android:layout_width="100dip"
             android:layout_height="100dip"
             android:scaleType="fitCenter"
             android:src="@drawable/default_avatar" />
 
         <LinearLayout
+            android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -72,11 +73,11 @@
 
             <TextView
                 style="@style/TypefaceStyle.ProximaNova.semibold"
+                android:id="@+id/textView_monsterSaw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
                 android:gravity="center"
-                android:text="10"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
         </LinearLayout>
@@ -103,11 +104,11 @@
 
             <TextView
                 style="@style/TypefaceStyle.ProximaNova.semibold"
+                android:id="@+id/textView_monsterCaptured"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
                 android:gravity="center"
-                android:text="10"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
         </LinearLayout>
@@ -134,11 +135,11 @@
 
             <TextView
                 style="@style/TypefaceStyle.ProximaNova.semibold"
+                android:id="@+id/textView_areaCaptured"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
                 android:gravity="center"
-                android:text="10"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
         </LinearLayout>
@@ -165,11 +166,11 @@
 
             <TextView
                 style="@style/TypefaceStyle.ProximaNova.semibold"
+                android:id="@+id/textView_allyOnline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
                 android:gravity="center"
-                android:text="10"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
         </LinearLayout>

@@ -14,7 +14,6 @@
 
         <include layout="@layout/fragment_home_monster_list_tmp" />
 
-
     </LinearLayout>
 
 </ScrollView>
