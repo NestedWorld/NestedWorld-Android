@@ -31,6 +31,7 @@
     <string name="error_unknown">Une erreur innatendu est servenu, merci de réésayer.</string>
     <string name="error_create_account">Impossible de créer votre compte, merci de réésayer</string>
     <string name="error_login">Impossible de vous connecter, merci de réésayer</string>
+    <string name="error_place">Impossible de récuperer la liste des zones, merci de réésayer</string>
     <string name="error_logout">Impossible de vous deconnecter</string>
     <string name="error_forgot_password">Impossible de re-initialiser votre mot de passe</string>
     <string name="error_update_user_info">Impossible de récuperer vos informations, veillez vous reconnecter</string>

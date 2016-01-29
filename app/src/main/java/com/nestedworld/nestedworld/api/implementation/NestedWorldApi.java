@@ -7,6 +7,7 @@ import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.ForgotPasswo
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.SignInRequest;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.places.PlacesResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.LogoutResponse;
@@ -133,6 +134,10 @@ public class NestedWorldApi {
         mClient.getUserInfo().enqueue(callback);
     }
 
+    public void getRegions(@NonNull Callback<PlacesResponse> callback) {
+        mClient.getRegions().enqueue(callback);
+    }
+
     /**
      * API Interface which use the butterknife annotation
      */
@@ -155,5 +160,8 @@ public class NestedWorldApi {
 
         @GET(Constant.USER_INFO)
         Call<UserResponse> getUserInfo();
+
+        @GET(Constant.PLACES_LIST)
+        Call<PlacesResponse> getRegions();
     }
 }
