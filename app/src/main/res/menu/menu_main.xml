@@ -9,4 +9,16 @@
         android:title="@string/menu_action_profil"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_chat"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_action_chat"
+        android:icon="@drawable/ic_action_chat"/>
+
+    <item
+        android:id="@+id/action_fight"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_action_fight"
+        android:icon="@drawable/ic_action_sword"/>
+
 </menu>

@@ -75,6 +75,14 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             case R.id.action_settings:
                 startActivity(ProfileActivity.class);
                 return true;
+            case R.id.action_chat:
+                //TODO faire la vue et l'afficher
+                Toast.makeText(MainMenuActivity.this, "Incoming...", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.action_fight:
+                //TODO faire la vue et l'afficher
+                Toast.makeText(MainMenuActivity.this, "Incoming...", Toast.LENGTH_LONG).show();
+                return true;
             default:
                 break;
         }
