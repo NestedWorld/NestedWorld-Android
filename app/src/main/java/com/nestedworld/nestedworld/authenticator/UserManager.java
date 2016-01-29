@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.nestedworld.nestedworld.utils.log.LogHelper;
 
@@ -81,7 +80,7 @@ public class UserManager {
     }
 
     public void setUserData(@NonNull final Context context, @NonNull final String userData) {
-        Log.d(TAG, "setUserData : " + userData);
+        LogHelper.d(TAG, "setUserData : " + userData);
         SharedPreferenceUtils.setUserData(context, userData);
     }
 
