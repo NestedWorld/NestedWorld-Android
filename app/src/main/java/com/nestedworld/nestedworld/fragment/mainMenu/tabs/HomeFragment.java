@@ -16,8 +16,6 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
-import org.w3c.dom.Text;
-
 import butterknife.Bind;
 
 /**

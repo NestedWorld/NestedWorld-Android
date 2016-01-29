@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.utils.permission;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import com.nestedworld.nestedworld.utils.log.LogHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.v4.app.ActivityCompat.requestPermissions;
 import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 
 

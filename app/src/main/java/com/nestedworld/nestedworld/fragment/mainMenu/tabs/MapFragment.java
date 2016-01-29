@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
