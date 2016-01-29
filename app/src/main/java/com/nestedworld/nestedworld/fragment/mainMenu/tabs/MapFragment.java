@@ -175,14 +175,17 @@ public class MapFragment extends BaseFragment {
                 }
 
                 //now we can stop the loading animation
-                progressView.stop();
+                if (progressView != null) {
+                    progressView.stop();
+                }
             }
 
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<PlacesResponse> response) {
                 //request fail, we stop the loading animation and we display an error message
-                progressView.stop();
-
+                if (progressView != null) {
+                    progressView.stop();
+                }
                 final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_place), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }

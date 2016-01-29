@@ -67,7 +67,9 @@ public class MonstersFragment extends BaseFragment {
                 new com.nestedworld.nestedworld.api.callback.Callback<MonstersResponse>() {
                     @Override
                     public void onSuccess(final Response<MonstersResponse> response, Retrofit retrofit) {
-                        progressView.stop();
+                        if (progressView != null) {
+                            progressView.stop();
+                        }
 
                         final MonsterAdapter adapter = new MonsterAdapter(mContext, response.body().monsters);
                         // listViewMonstersList = null if we've change view before the end of the request
@@ -85,13 +87,14 @@ public class MonstersFragment extends BaseFragment {
 
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersResponse> response) {
-                        progressView.stop();
+                        if (progressView != null) {
+                            progressView.stop();
+                        }
 
                         final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_cant_get_monsters_list), response);
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
-
     }
 
     /*
