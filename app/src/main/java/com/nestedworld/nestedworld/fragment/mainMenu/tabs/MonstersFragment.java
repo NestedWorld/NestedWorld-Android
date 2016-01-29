@@ -61,7 +61,9 @@ public class MonstersFragment extends BaseFragment {
 
     @Override
     protected void initLogic(Bundle savedInstanceState) {
-        progressView.start();
+        if (progressView != null) {
+            progressView.start();
+        }
 
         NestedWorldApi.getInstance(mContext).getMonstersList(
                 new com.nestedworld.nestedworld.api.callback.Callback<MonstersResponse>() {
