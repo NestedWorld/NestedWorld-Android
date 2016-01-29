@@ -1,9 +1,11 @@
 package com.nestedworld.nestedworld.utils.permission;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,10 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
  * in you activity
  */
 public class PermissionUtils {
-    final private static int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    final private static int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
     private static String TAG = PermissionUtils.class.getSimpleName();
+
+    public final static int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    public final static int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
 
     /*
     ** Public method

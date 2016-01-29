@@ -1,8 +1,11 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
@@ -22,7 +25,11 @@ import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.places.PlacesResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.nestedworld.nestedworld.utils.permission.PermissionUtils;
 import com.rey.material.widget.ProgressView;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import butterknife.Bind;
 import retrofit.Response;
@@ -38,6 +45,7 @@ public class MapFragment extends BaseFragment {
     private final float mUserLat = 37.49377f;
     private final float mUserLong = 126.88321f;
     private final int mZoom = 10;
+    private GoogleMap mGoogleMap;
 
     @Bind(R.id.mapView)
     MapView mMapView;
@@ -55,6 +63,24 @@ public class MapFragment extends BaseFragment {
     /*
     ** Life cycle
      */
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode != PermissionUtils.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS) {
+            return;
+        }
+
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+        }
+
+        initMap();
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_tab_map;
@@ -68,38 +94,8 @@ public class MapFragment extends BaseFragment {
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                googleMap.setMyLocationEnabled(true);
-                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-                moveCamera(mUserLat, mUserLong, mZoom);
-
-                //displaying a loading animation
-                progressView.start();
-
-                //making the request for places
-                NestedWorldApi.getInstance(mContext).getRegions(new Callback<PlacesResponse>() {
-                    @Override
-                    public void onSuccess(Response<PlacesResponse> response, Retrofit retrofit) {
-                        //request success, we display nearest places
-                        for (PlacesResponse.Place place : response.body().places) {
-                            if (isPlaceDisplayable(place)) {
-                                displayMarker(place.name, BitmapDescriptorFactory.HUE_BLUE, place.latitude(), place.longitude());
-                            }
-                        }
-
-                        //now we can stop the loading animation
-                        progressView.stop();
-                    }
-
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<PlacesResponse> response) {
-                        //request fail, we stop the loading animation and we display an error message
-                        progressView.stop();
-
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_place), response);
-                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                });
+                mGoogleMap = googleMap;
+                initMap();
             }
         });
     }
@@ -144,11 +140,53 @@ public class MapFragment extends BaseFragment {
     /*
     ** Utils
      */
-    private void moveCamera(final double latitude, final double longitude, int zoom) {
-        GoogleMap googleMap = mMapView.getMap();
+    private void initMap() {
+        //we check if we have the permission to use the userPosition
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            //We ask for the permission
+            PermissionUtils.askForPermissions(mContext, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
+            return;
+        }
+
+        mGoogleMap.setMyLocationEnabled(true);
+        mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        moveCamera(mUserLat, mUserLong, mZoom);
+
+        //displaying a loading animation
+        progressView.start();
+
+        //making the request for places
+        NestedWorldApi.getInstance(mContext).getRegions(new Callback<PlacesResponse>() {
+            @Override
+            public void onSuccess(Response<PlacesResponse> response, Retrofit retrofit) {
+                //request success, we display nearest places
+                for (PlacesResponse.Place place : response.body().places) {
+                    if (isPlaceDisplayable(place)) {
+                        displayMarker(place.name, BitmapDescriptorFactory.HUE_BLUE, place.latitude(), place.longitude());
+                    }
+                }
+
+                //now we can stop the loading animation
+                progressView.stop();
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<PlacesResponse> response) {
+                //request fail, we stop the loading animation and we display an error message
+                progressView.stop();
+
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_place), response);
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void moveCamera(final double latitude, final double longitude, int zoom) {
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(zoom).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private void displayMarker(@NonNull final String markerName, final float markerColor, final double latitude, final double longitude) {
@@ -159,8 +197,7 @@ public class MapFragment extends BaseFragment {
         marker.icon(BitmapDescriptorFactory.defaultMarker(markerColor));
 
         // adding marker
-        GoogleMap googleMap = mMapView.getMap();
-        googleMap.addMarker(marker);
+        mGoogleMap.addMarker(marker);
     }
 
     private boolean isPlaceDisplayable(@NonNull final PlacesResponse.Place place) {
@@ -168,9 +205,7 @@ public class MapFragment extends BaseFragment {
         final float ratioLat = Math.abs(place.latitude() - mUserLat);
         final float ratioLong = Math.abs(place.longitude() - mUserLong);
 
-        return true;
-
         //1degree ~= 100km
-//        return (ratioLat < 1.1) && (ratioLong < 1.1);
+        return (ratioLat < 1.1) && (ratioLong < 1.1);
     }
 }
