@@ -28,7 +28,7 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 public class PermissionUtils {
     public final static int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public final static int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
-    private static String TAG = PermissionUtils.class.getSimpleName();
+    private static final String TAG = PermissionUtils.class.getSimpleName();
 
     /*
     ** Public method

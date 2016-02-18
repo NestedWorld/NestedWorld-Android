@@ -101,7 +101,6 @@ public class UserManager {
         return mAccount.name;
     }
 
-
     /*
     ** Private method
      */
@@ -109,7 +108,7 @@ public class UserManager {
         SharedPreferenceUtils.clearPref(context);
         invalidateAuthTokenFromAccount(context, account);
         if (Build.VERSION.SDK_INT >= 22) {
-            mAccountManager.removeAccountExplicitly(account);
+            return mAccountManager.removeAccountExplicitly(account);
         } else {
             mAccountManager.removeAccount(account, null, null);
         }

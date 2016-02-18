@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,15 +16,12 @@ public class TabsAdapter extends FragmentPagerAdapter {
     protected final String TAG = getClass().getSimpleName();
 
     private final List<CustomTab> tabList = new ArrayList<>();
-    private final Context mContext;
 
     /*
     ** Constructor
      */
-    public TabsAdapter(@NonNull final FragmentManager fm, @NonNull final Context context) {
+    public TabsAdapter(@NonNull final FragmentManager fm) {
         super(fm);
-
-        mContext = context;
     }
 
     /*

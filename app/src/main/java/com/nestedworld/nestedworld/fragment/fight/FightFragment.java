@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class FightFragment extends BaseFragment {
 
-    private ArrayList<ImageView> mTiles = new ArrayList<>();
+    private final ArrayList<ImageView> mTiles = new ArrayList<>();
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -56,15 +56,15 @@ public class FightFragment extends BaseFragment {
      */
     private class DrawingGestureView extends View {
         private static final float TOUCH_TOLERANCE = 4;
+        private final Paint mPaint;
+        private final Path mPath;
+        private final Paint mBitmapPaint;
+        private final Paint circlePaint;
+        private final Path circlePath;
         public int width;
         public int height;
         protected Canvas mCanvas;
-        private Paint mPaint;
         private Bitmap mBitmap;
-        private Path mPath;
-        private Paint mBitmapPaint;
-        private Paint circlePaint;
-        private Path circlePath;
         private float mX, mY;
 
         public DrawingGestureView(Context c) {

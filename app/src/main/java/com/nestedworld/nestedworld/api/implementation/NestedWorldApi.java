@@ -43,7 +43,7 @@ public class NestedWorldApi {
     /*
     ** Constructor
      */
-    public NestedWorldApi(@NonNull final Context context) {
+    private NestedWorldApi(@NonNull final Context context) {
         if (mSingleton != null) {
             return;
         }
