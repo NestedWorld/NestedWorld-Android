@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -55,12 +57,7 @@ public class MonstersFragment extends BaseFragment {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
+    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (progressView != null) {
             progressView.start();
         }

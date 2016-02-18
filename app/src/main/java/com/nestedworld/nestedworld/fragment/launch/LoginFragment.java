@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,12 +57,7 @@ public class LoginFragment extends BaseFragment {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
+    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     }
 

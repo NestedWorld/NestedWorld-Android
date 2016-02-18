@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -88,7 +90,7 @@ public class MapFragment extends BaseFragment {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
+    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();//We display the map immediately
 
@@ -101,10 +103,6 @@ public class MapFragment extends BaseFragment {
         });
     }
 
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
-
-    }
 
     @Override
     public void onResume() {

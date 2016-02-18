@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -65,8 +67,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
-
+    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /*We retrieve the userData as the string and we decode the string*/
         final String userData = UserManager.get(mContext).getCurrentUserData(mContext);
         final UserResponse.User user = new Gson().fromJson(userData, UserResponse.User.class);
@@ -80,10 +81,6 @@ public class ProfileFragment extends BaseFragment {
         textViewEmail.setText(user.email);
     }
 
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
-
-    }
 
     /*
     ** Butterknife

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
@@ -22,12 +24,7 @@ public class FightFragment extends BaseFragment {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
+    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
     }
 }

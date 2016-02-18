@@ -33,16 +33,9 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutResource();
 
     /**
-     * init the graphical part
-     * /*like putting text under Editext
+     * init the fragment, this is the equivalent of onCreateView
      */
-    protected abstract void initUI(Bundle savedInstanceState);
-
-    /**
-     * init the logical part
-     * like retrieving date from an API
-     */
-    protected abstract void initLogic(Bundle savedInstanceState);
+    protected abstract void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /*
     ** Life cycle
@@ -52,8 +45,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutResource(), container, false);
         ButterKnife.bind(this, rootView);
-        initUI(savedInstanceState);
-        initLogic(savedInstanceState);
+        init(inflater, container, savedInstanceState);
         return rootView;
     }
 
