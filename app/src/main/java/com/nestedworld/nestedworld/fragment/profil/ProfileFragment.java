@@ -61,7 +61,7 @@ public class ProfileFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_profil;
+        return R.layout.fragment_acton_profil;
     }
 
     @Override
