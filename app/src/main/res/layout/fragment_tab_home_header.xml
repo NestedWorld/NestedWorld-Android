@@ -18,9 +18,9 @@
             android:src="@drawable/default_avatar" />
 
         <LinearLayout
-            android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="8dip">
@@ -72,8 +72,8 @@
                 android:textColor="@color/white" />
 
             <TextView
-                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:id="@+id/textView_monsterSaw"
+                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
@@ -103,8 +103,8 @@
                 android:textColor="@color/white" />
 
             <TextView
-                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:id="@+id/textView_monsterCaptured"
+                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
@@ -134,8 +134,8 @@
                 android:textColor="@color/white" />
 
             <TextView
-                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:id="@+id/textView_areaCaptured"
+                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
@@ -165,8 +165,8 @@
                 android:textColor="@color/white" />
 
             <TextView
-                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:id="@+id/textView_allyOnline"
+                style="@style/TypefaceStyle.ProximaNova.semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"

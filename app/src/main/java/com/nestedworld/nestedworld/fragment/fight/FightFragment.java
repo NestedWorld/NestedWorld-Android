@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
-public class FightFragment extends BaseFragment{
+public class FightFragment extends BaseFragment {
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

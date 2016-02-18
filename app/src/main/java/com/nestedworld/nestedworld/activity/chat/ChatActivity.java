@@ -5,7 +5,6 @@ import android.os.Bundle;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.fragment.chat.ChatFragment;
-import com.nestedworld.nestedworld.fragment.fight.FightFragment;
 
 public class ChatActivity extends BaseAppCompatActivity {
     @Override

@@ -6,7 +6,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.fragment.fight.FightFragment;
 
-public class FightActivity extends BaseAppCompatActivity{
+public class FightActivity extends BaseAppCompatActivity {
 
 
     @Override

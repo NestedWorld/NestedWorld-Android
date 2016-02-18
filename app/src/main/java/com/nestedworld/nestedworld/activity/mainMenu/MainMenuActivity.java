@@ -100,7 +100,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), this);
         adapter.addFragment(getString(R.string.tab_home), new HomeFragment(), R.drawable.account_balance);
         adapter.addFragment(getString(R.string.tab_garden), new ToolsFragment(), R.drawable.ic_action_sword);
-        adapter.addFragment(getString(R.string.tab_map), new MapFragment(),R.drawable.ic_action_map);
+        adapter.addFragment(getString(R.string.tab_map), new MapFragment(), R.drawable.ic_action_map);
         adapter.addFragment(getString(R.string.tab_monster), new MonstersFragment(), R.drawable.ic_action_ghost);
         adapter.addFragment(getString(R.string.tab_shop), new ShopFragment(), R.drawable.ic_action_cart);
 
@@ -111,7 +111,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         //Display tab icon
         //We loop over the adapter instead of calling setIcon() manually
-        for (int i=0; i < adapter.getCount(); i++) {
+        for (int i = 0; i < adapter.getCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             if (tab != null) {
                 tab.setIcon(adapter.getPageIcon(i));
