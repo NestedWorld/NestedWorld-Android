@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
+import com.nestedworld.nestedworld.activity.fight.FightActivity;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
@@ -80,8 +81,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 Toast.makeText(MainMenuActivity.this, "Incoming...", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_fight:
-                //TODO faire la vue et l'afficher
-                Toast.makeText(MainMenuActivity.this, "Incoming...", Toast.LENGTH_LONG).show();
+                startActivity(FightActivity.class);
                 return true;
             default:
                 break;
