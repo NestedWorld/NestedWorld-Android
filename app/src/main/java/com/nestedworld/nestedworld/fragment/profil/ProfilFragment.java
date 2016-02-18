@@ -6,8 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -27,8 +26,8 @@ import retrofit.Retrofit;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ProfileFragment extends BaseFragment {
-    public final static String FRAGMENT_NAME = ProfileFragment.class.getSimpleName();
+public class ProfilFragment extends BaseFragment {
+    public final static String FRAGMENT_NAME = ProfilFragment.class.getSimpleName();
 
     @Bind(R.id.textView_gender)
     TextView textViewGender;
@@ -51,7 +50,7 @@ public class ProfileFragment extends BaseFragment {
 
     public static void load(@NonNull final FragmentManager fragmentManager, final boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new ProfileFragment());
+        fragmentTransaction.replace(R.id.container, new ProfilFragment());
         if (toBackStack) {
             fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         }
@@ -67,7 +66,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void init(View rootView, Bundle savedInstanceState) {
         /*We retrieve the userData as the string and we decode the string*/
         final String userData = UserManager.get(mContext).getCurrentUserData(mContext);
         final UserResponse.User user = new Gson().fromJson(userData, UserResponse.User.class);

@@ -57,7 +57,7 @@ public class MonstersFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void init(View rootView, Bundle savedInstanceState) {
         if (progressView != null) {
             progressView.start();
         }

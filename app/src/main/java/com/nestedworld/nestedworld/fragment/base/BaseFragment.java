@@ -35,7 +35,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * init the fragment, this is the equivalent of onCreateView
      */
-    protected abstract void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+    protected abstract void init(View rootView, Bundle savedInstanceState);
 
     /*
     ** Life cycle
@@ -45,7 +45,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutResource(), container, false);
         ButterKnife.bind(this, rootView);
-        init(inflater, container, savedInstanceState);
+        init(rootView, savedInstanceState);
         return rootView;
     }
 

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void init(View rootView, Bundle savedInstanceState) {
         //on affiche les informations de l'utilisateur
         //TODO metre les bonnes info
         textViewUsername.setText(UserManager.get(mContext).getCurrentAccountName());
