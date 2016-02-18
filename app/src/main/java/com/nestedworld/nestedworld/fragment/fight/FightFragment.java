@@ -57,12 +57,12 @@ public class FightFragment extends BaseFragment {
     private class DrawingGestureView extends View {
         private static final float TOUCH_TOLERANCE = 4;
         public int width;
-        public  int height;
+        public int height;
         protected Canvas mCanvas;
         private Paint mPaint;
         private Bitmap mBitmap;
         private Path mPath;
-        private Paint  mBitmapPaint;
+        private Paint mBitmapPaint;
         private Paint circlePaint;
         private Path circlePath;
         private float mX, mY;
@@ -107,8 +107,8 @@ public class FightFragment extends BaseFragment {
             super.onDraw(canvas);
 
             canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-            canvas.drawPath(mPath,  mPaint);
-            canvas.drawPath(circlePath,  circlePaint);
+            canvas.drawPath(mPath, mPaint);
+            canvas.drawPath(circlePath, circlePaint);
         }
 
         @Override
@@ -147,7 +147,7 @@ public class FightFragment extends BaseFragment {
             float dy = Math.abs(y - mY);
 
             if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-                mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
+                mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
                 mX = x;
                 mY = y;
 
@@ -158,7 +158,7 @@ public class FightFragment extends BaseFragment {
 
         private void updateTiles(float x, float y) {
             //We check if the user touch a tiles
-            for (ImageView view: mTiles) {
+            for (ImageView view : mTiles) {
                 //hit test
                 if ((x > view.getLeft() /*check left limit*/
                         && x < view.getLeft() + view.getWidth() /*check right limit*/
