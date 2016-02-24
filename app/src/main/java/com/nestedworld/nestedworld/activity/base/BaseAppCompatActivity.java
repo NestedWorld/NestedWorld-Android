@@ -29,16 +29,10 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected abstract int getLayoutResource();
 
     /**
-     * init the graphical part
-     * /*like putting text under Editext
+     * init the activity here
+     * This method is equivalent to onCreate()
      */
-    protected abstract void initUI(Bundle savedInstanceState);
-
-    /**
-     * init the logical part
-     * like retrieving date from an API
-     */
-    protected abstract void initLogic(Bundle savedInstanceState);
+    protected abstract void init(Bundle savedInstanceState);
 
     /*
     ** Life cycle
@@ -49,8 +43,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
         setContentView(getLayoutResource());
         ButterKnife.bind(this);
-        initUI(savedInstanceState);
-        initLogic(savedInstanceState);
+        init(savedInstanceState);
     }
 
     @Override

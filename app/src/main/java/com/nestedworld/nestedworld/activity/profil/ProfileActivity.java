@@ -24,14 +24,9 @@ public class ProfileActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
+    protected void init(Bundle savedInstanceState) {
         setUpToolbar();
         ProfilFragment.load(getSupportFragmentManager(), false);
-    }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
-
     }
 
     /*

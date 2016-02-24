@@ -20,12 +20,7 @@ public class ChatActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
+    protected void init(Bundle savedInstanceState) {
         setUpToolbar();
         ChatFragment.load(getSupportFragmentManager());
     }

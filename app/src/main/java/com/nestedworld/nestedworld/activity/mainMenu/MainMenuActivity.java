@@ -55,12 +55,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
+    protected void init(Bundle savedInstanceState) {
         setUpToolbar();
-    }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
         updateUserInformation();
     }
 

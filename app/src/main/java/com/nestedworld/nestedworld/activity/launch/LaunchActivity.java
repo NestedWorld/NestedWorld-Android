@@ -25,13 +25,12 @@ public class LaunchActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
+    protected void init(Bundle savedInstanceState) {
+        /*Init UI*/
         mImageViewBackground.setBackgroundResource(R.drawable.logo);
         mImageViewBackground.setVisibility(View.VISIBLE);
-    }
 
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
+        /*Init logics*/
         //choose the correct view
         if (!checkForExistingSession()) {
             //we don't have a session so we display the launch screen

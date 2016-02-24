@@ -20,12 +20,7 @@ public class FightActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void initUI(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
+    protected void init(Bundle savedInstanceState) {
         setUpToolbar();
         FightFragment.load(getSupportFragmentManager());
     }
