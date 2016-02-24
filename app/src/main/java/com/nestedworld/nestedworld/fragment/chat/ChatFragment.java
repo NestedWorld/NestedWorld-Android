@@ -4,12 +4,33 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+
 public class ChatFragment extends BaseFragment {
+
+    private ArrayAdapter<String> itemAdapter;
+
+    @Bind(R.id.editText_chat)
+    EditText editTextChat;
+
+    @Bind(R.id.listView_chat)
+    ListView listViewChat;
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -25,5 +46,29 @@ public class ChatFragment extends BaseFragment {
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
 
+        //init a string adapter for our listView
+        itemAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_expandable_list_item_1);
+        listViewChat.setAdapter(itemAdapter);
+
+        editTextChat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_NULL
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+                    //add the text on the adapter
+                    itemAdapter.add(editTextChat.getText().toString());
+
+                    //update adapter
+                    itemAdapter.notifyDataSetChanged();
+
+                    //clear editText content
+                    editTextChat.setText("");
+
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }
