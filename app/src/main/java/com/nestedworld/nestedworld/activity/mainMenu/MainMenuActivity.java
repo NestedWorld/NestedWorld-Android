@@ -97,7 +97,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     private void initTabs() {
-        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager(), this);
+        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
         adapter.addFragment(getString(R.string.tab_home), new HomeFragment(), R.drawable.account_balance);
         adapter.addFragment(getString(R.string.tab_garden), new ToolsFragment(), R.drawable.ic_action_sword);
         adapter.addFragment(getString(R.string.tab_map), new MapFragment(), R.drawable.ic_action_map);
