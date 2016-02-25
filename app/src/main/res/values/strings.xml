@@ -25,6 +25,11 @@
     <string name="tab_monster">Monstres</string>
     <string name="tab_shop">Boutique</string>
 
+    <string name="monster_name">Nom :</string>
+    <string name="monster_attaque">Attaque :</string>
+    <string name="monster_defence">Défence :</string>
+    <string name="monster_pv">Pv :</string>
+
     <string name="error_no_internet">Veillez vous connecter a internet et réesayer.</string>
     <string name="error_unexpected">Une erreur innatendu est servenu, merci de réésayer.</string>
     <string name="error_conversion">Une erreur innatendu est servenu, merci de réésayer.</string>

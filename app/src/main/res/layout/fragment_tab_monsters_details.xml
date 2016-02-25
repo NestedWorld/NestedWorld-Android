@@ -18,31 +18,77 @@
         android:orientation="vertical"
         android:padding="8dip">
 
-        <TextView
-            android:id="@+id/monsterName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/monsterHp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/monster_name"/>
+            <TextView
+                android:id="@+id/monsterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/monsterAtk"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/monster_attaque"/>
+
+            <TextView
+                android:id="@+id/monsterHp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/monsterDefense"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/monster_defence"/>
+
+            <TextView
+                android:id="@+id/monsterAtk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/app_name" />
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/monster_pv"/>
+
+            <TextView
+                android:id="@+id/monsterDefense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/app_name" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
