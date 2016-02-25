@@ -1,12 +1,16 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,10 +18,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.callback.Callback;
+import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.User;
+import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 
 import butterknife.Bind;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -58,30 +69,42 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
-        //on affiche les informations de l'utilisateur
-        //TODO metre les bonnes info
+        populateUserInfo();
+    }
+
+    /*
+    ** Utils
+     */
+    private void populateUserInfo() {
+
         if (mContext == null)
             return;
-        textViewUsername.setText(UserManager.get(mContext).getCurrentAccountName());
-        textViewUserLevel.setText("level 16");
+
+        User user = UserManager.get(mContext).getCurrentUser(mContext);
+        if (user == null)
+            return;
+
+        //on affiche les informations de l'utilisateur
+        textViewUsername.setText(user.pseudo);
+        textViewUserLevel.setText("level 16");//TODO metre les bonnes info
         textViewMonsterSaw.setText("12");
         textViewMonsterCaptured.setText("5");
         textViewAreaCaptured.setText("42");
         textViewAllyOnline.setText("12");
 
+        //On arrondie le placeHolder
+        Resources resources = getResources();
+        Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
+        roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
+
         //On affiche l'image de profil de l'utilisateur
-        //TODO récupérer l'image de profil de l'utilisateur
         Glide.with(mContext)
-                .load(R.drawable.default_avatar)
-                .asBitmap()
+                .load(user.avatar)
+                .placeholder(roundedBitmapDrawable)
+                .bitmapTransform(new CropCircleTransformation(mContext))
                 .centerCrop()
-                .into(new BitmapImageViewTarget(imageViewUser) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        imageViewUser.setImageDrawable(circularBitmapDrawable);
-                    }
-                });
+                .into(imageViewUser);
+
     }
 }
