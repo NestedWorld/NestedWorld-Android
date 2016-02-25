@@ -30,6 +30,7 @@ public class ChatFragment extends BaseFragment {
     private ArrayAdapter<String> itemAdapter;
 
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final FriendsResponse.Friend friend) {
+        //TODO avoid leak on static reference
         mFriend = friend;
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
