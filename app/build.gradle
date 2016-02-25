@@ -51,8 +51,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
 
     //Material design support
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:design:23.2.0'
     compile 'com.github.rey5137:material:1.2.2'
 
     //API
