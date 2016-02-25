@@ -9,12 +9,12 @@ public class FriendsResponse {
     public ArrayList<Friend> friends;
 
     public static class Friend {
+        @Expose
+        public String name;
+
         public Friend(String name) {
             this.name = name;
         }
-
-        @Expose
-        public String name;
 
     }
 }

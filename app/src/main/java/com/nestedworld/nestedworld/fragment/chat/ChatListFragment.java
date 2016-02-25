@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +26,11 @@ import butterknife.Bind;
 
 public class ChatListFragment extends BaseFragment {
 
-    private FriendAdapter friendAdapter;
-
     @Bind(R.id.listView_chat_list)
     ListView listViewChatList;
-
     @Bind(R.id.progressView)
     ProgressView progressView;
+    private FriendAdapter friendAdapter;
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -84,8 +80,8 @@ public class ChatListFragment extends BaseFragment {
      */
     private static class FriendAdapter extends ArrayAdapter<FriendsResponse.Friend> {
 
-        private Context context;
         private static int resource = R.layout.item_friend;
+        private Context context;
         private ArrayList<FriendsResponse.Friend> friendList;
 
         public FriendAdapter(Context context, @NonNull ArrayList<FriendsResponse.Friend> friendList) {
@@ -109,8 +105,7 @@ public class ChatListFragment extends BaseFragment {
                 friendHolder.friendName = (TextView) view.findViewById(R.id.textView_item_friend);
 
                 view.setTag(friendHolder);
-            }
-            else {
+            } else {
                 friendHolder = (FriendHolder) convertView.getTag();
                 view = convertView;
             }

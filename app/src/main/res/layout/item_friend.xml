@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <ImageView
-        android:scaleType="fitCenter"
-        android:src="@drawable/default_avatar"
+        android:id="@+id/imageView_item_friend"
         android:layout_width="50dip"
         android:layout_height="50dip"
-        android:id="@+id/imageView_item_friend" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/default_avatar" />
 
     <TextView
-        android:padding="8dip"
+        android:id="@+id/textView_item_friend"
         style="@style/TypefaceStyle.ProximaNova.light"
-        android:textColor="@color/apptheme_color"
-        android:gravity="center|start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center|start"
+        android:padding="8dip"
         android:text="@string/app_name"
-        android:id="@+id/textView_item_friend"
-        android:layout_gravity="center" />
+        android:textColor="@color/apptheme_color" />
 
 </LinearLayout>

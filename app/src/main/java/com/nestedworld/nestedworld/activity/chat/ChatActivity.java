@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.fragment.chat.ChatFragment;
 import com.nestedworld.nestedworld.fragment.chat.ChatListFragment;
 
 import butterknife.Bind;

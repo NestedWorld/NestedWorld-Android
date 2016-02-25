@@ -11,14 +11,14 @@
 
     <item
         android:id="@+id/action_chat"
-        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_chat"
         android:title="@string/menu_action_chat"
-        android:icon="@drawable/ic_action_chat"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_fight"
-        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_sword"
         android:title="@string/menu_action_fight"
-        android:icon="@drawable/ic_action_sword"/>
+        app:showAsAction="ifRoom" />
 
 </menu>

@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.fragment.chat;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -24,13 +23,11 @@ import butterknife.Bind;
 public class ChatFragment extends BaseFragment {
 
     private static FriendsResponse.Friend mFriend;
-    private ArrayAdapter<String> itemAdapter;
-
     @Bind(R.id.editText_chat)
     EditText editTextChat;
-
     @Bind(R.id.listView_chat)
     ListView listViewChat;
+    private ArrayAdapter<String> itemAdapter;
 
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final FriendsResponse.Friend friend) {
         mFriend = friend;
