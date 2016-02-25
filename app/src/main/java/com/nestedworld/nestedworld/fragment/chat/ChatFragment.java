@@ -23,12 +23,17 @@ import butterknife.Bind;
 public class ChatFragment extends BaseFragment {
 
     private static FriendsResponse.Friend mFriend;
-    @Bind(R.id.editText_chat)
-    EditText editTextChat;
-    @Bind(R.id.listView_chat)
-    ListView listViewChat;
     private ArrayAdapter<String> itemAdapter;
 
+    @Bind(R.id.editText_chat)
+    EditText editTextChat;
+
+    @Bind(R.id.listView_chat)
+    ListView listViewChat;
+
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final FriendsResponse.Friend friend) {
         //TODO avoid leak on static reference
         mFriend = friend;
@@ -38,6 +43,10 @@ public class ChatFragment extends BaseFragment {
         fragmentTransaction.commit();
     }
 
+
+    /*
+    ** Life cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_chat;
@@ -49,6 +58,9 @@ public class ChatFragment extends BaseFragment {
         initChat();
     }
 
+    /*
+    ** Utils
+     */
     private void initActionBar() {
         if (mContext == null)
             return;

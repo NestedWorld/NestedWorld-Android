@@ -16,6 +16,9 @@ public class ShopFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
 
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new HomeFragment());

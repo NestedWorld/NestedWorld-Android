@@ -46,12 +46,16 @@ public class MapFragment extends BaseFragment {
     private final static float mUserLat = 37.49377f;
     private final static float mUserLong = 126.88321f;
     private final static int mZoom = 12;
+
     @Bind(R.id.mapView)
     MapView mMapView;
     @Bind(R.id.progressView)
     ProgressView progressView;
     private GoogleMap mGoogleMap;
 
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
@@ -161,9 +165,6 @@ public class MapFragment extends BaseFragment {
         populateRegions();
     }
 
-    /*
-    ** Utils
-     */
     private void populatePlaces() {
         if (mContext == null) {
             return;

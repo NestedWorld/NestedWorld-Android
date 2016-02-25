@@ -18,6 +18,9 @@ public class LaunchFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
 
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new LaunchFragment());
@@ -41,7 +44,7 @@ public class LaunchFragment extends BaseFragment {
     }
 
     /*
-    ** ButterKnife
+    ** ButterKnife callback
      */
     @OnClick(R.id.button_login)
     public void login() {

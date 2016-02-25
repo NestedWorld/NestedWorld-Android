@@ -6,6 +6,9 @@ import com.nestedworld.nestedworld.api.models.User;
 
 import java.util.ArrayList;
 
+/**
+ * Simple model for mapping a json response
+ */
 public class FriendsResponse {
     @Expose
     public ArrayList<Friend> friends;

@@ -14,6 +14,9 @@ public class FightActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_empty_with_toolbar;

@@ -58,6 +58,9 @@ public class HomeFragment extends BaseFragment {
     @Bind(R.id.gridLayout_home_monsters)
     GridView gridView;
 
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new HomeFragment());

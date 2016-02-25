@@ -1,9 +1,11 @@
 package com.nestedworld.nestedworld.api.models.apiResponse.places.regions;
 
 import com.google.gson.annotations.Expose;
-
 import java.util.ArrayList;
 
+/**
+ * Simple model for mapping a json response
+ */
 public class RegionsResponse {
 
     @Expose

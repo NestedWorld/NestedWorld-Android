@@ -47,7 +47,6 @@ public class MonstersFragment extends BaseFragment {
 
     @Bind(R.id.listview_monsters_list)
     ListView listViewMonstersList;
-
     @Bind(R.id.progressView)
     ProgressView progressView;
 

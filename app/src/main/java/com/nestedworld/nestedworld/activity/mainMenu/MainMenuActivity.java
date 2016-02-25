@@ -42,13 +42,10 @@ import retrofit.Retrofit;
 public class MainMenuActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-
     @Bind(R.id.viewpager)
     ViewPager viewPager;
-
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
-
     @Bind(R.id.progressView)
     ProgressView progressView;
 

@@ -24,12 +24,18 @@ public class FightFragment extends BaseFragment {
 
     private final ArrayList<ImageView> mTiles = new ArrayList<>();
 
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new FightFragment());
         fragmentTransaction.commit();
     }
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_action_fight;
@@ -51,9 +57,9 @@ public class FightFragment extends BaseFragment {
         ((RelativeLayout) rootView.findViewById(R.id.relativeLayout_fight)).addView(new DrawingGestureView(mContext));
     }
 
-    /*
-    ** Custom view used for drawing path simplification
-     */
+    /**
+     ** Custom view used for drawing path simplification
+     **/
     private class DrawingGestureView extends View {
         private static final float TOUCH_TOLERANCE = 4;
         private final Paint mPaint;

@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 
+/**
+ * Simple model for mapping a json response
+ */
 public class PlacesResponse {
     @Expose
     public ArrayList<Place> places;

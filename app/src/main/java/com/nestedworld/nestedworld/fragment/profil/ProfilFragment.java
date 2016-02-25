@@ -26,27 +26,25 @@ import retrofit.Retrofit;
  * A placeholder fragment containing a simple view.
  */
 public class ProfilFragment extends BaseFragment {
+
     public final static String FRAGMENT_NAME = ProfilFragment.class.getSimpleName();
 
     @Bind(R.id.textView_gender)
     TextView textViewGender;
-
     @Bind(R.id.textView_pseudo)
     TextView textViewPseudo;
-
     @Bind(R.id.textView_birthDate)
     TextView textViewBirthDate;
-
     @Bind(R.id.textView_city)
     TextView textViewCity;
-
     @Bind(R.id.textView_registeredAt)
     TextView textViewRegisteredAt;
-
     @Bind(R.id.textView_email)
     TextView textViewEmail;
 
-
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager, final boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new ProfilFragment());
@@ -82,7 +80,7 @@ public class ProfilFragment extends BaseFragment {
     }
 
     /*
-    ** Butterknife
+    ** Butterknife callback
      */
     @OnClick(R.id.button_logout)
     public void logout() {

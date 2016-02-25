@@ -43,12 +43,18 @@ public class ChatListFragment extends BaseFragment {
     @Bind(R.id.progressView)
     ProgressView progressView;
 
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new ChatListFragment());
         fragmentTransaction.commit();
     }
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_action_chat;
@@ -98,9 +104,9 @@ public class ChatListFragment extends BaseFragment {
         });
     }
 
-    /*
-    ** Custom adapter for displaying friend on the listView
-     */
+    /**
+     ** Custom adapter for displaying friend on the listView
+     **/
     private class FriendAdapter extends ArrayAdapter<FriendsResponse.Friend> {
 
         private static final int resource = R.layout.item_friend;

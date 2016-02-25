@@ -45,6 +45,9 @@ public class CreateAccountFragment extends BaseFragment {
     @Bind(R.id.progressView)
     ProgressView progressView;
 
+    /*
+    ** Public method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
@@ -67,7 +70,7 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     /*
-    ** ButterKnife
+    ** ButterKnife callback
      */
     @OnClick(R.id.nav_back)
     public void back() {
