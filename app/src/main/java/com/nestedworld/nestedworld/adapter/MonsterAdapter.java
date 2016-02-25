@@ -15,18 +15,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.models.Monster;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 
 import java.util.ArrayList;
 
-public class MonsterAdapter extends ArrayAdapter<MonstersResponse.Monster> {
+public class MonsterAdapter extends ArrayAdapter<Monster> {
 
     private final static String TAG = MonsterAdapter.class.getSimpleName();
 
     /*
     ** Constructor
      */
-    public MonsterAdapter(@NonNull Context context, @NonNull ArrayList<MonstersResponse.Monster> objects) {
+    public MonsterAdapter(@NonNull Context context, @NonNull ArrayList<Monster> objects) {
         super(context, 0, objects);
     }
 
@@ -36,7 +37,7 @@ public class MonsterAdapter extends ArrayAdapter<MonstersResponse.Monster> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //Get user
-        final MonstersResponse.Monster monster = getItem(position);
+        final Monster monster = getItem(position);
 
         //Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,19 +12,29 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.callback.Callback;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.Monster;
 import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -51,6 +62,8 @@ public class HomeFragment extends BaseFragment {
     TextView textViewAllyOnline;
     @Bind(R.id.imageView_user)
     ImageView imageViewUser;
+    @Bind(R.id.gridLayout_home_monsters)
+    GridView gridView;
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -70,19 +83,39 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
         populateUserInfo();
+        populateMonstersList();
     }
 
     /*
     ** Utils
      */
+    private void populateMonstersList() {
+        if (mContext == null) {
+            return;
+        }
+        NestedWorldApi.getInstance(mContext).getUserMonster(new Callback<UserMonsterResponse>() {
+            @Override
+            public void onSuccess(Response<UserMonsterResponse> response, Retrofit retrofit) {
+                gridView.setAdapter(new UserMonsterAdapter(response.body().monsters));
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<UserMonsterResponse> response) {
+
+            }
+        });
+    }
+
     private void populateUserInfo() {
 
-        if (mContext == null)
+        if (mContext == null) {
             return;
+        }
 
         User user = UserManager.get(mContext).getCurrentUser(mContext);
-        if (user == null)
+        if (user == null) {
             return;
+        }
 
         //on affiche les informations de l'utilisateur
         textViewUsername.setText(user.pseudo);
@@ -105,6 +138,64 @@ public class HomeFragment extends BaseFragment {
                 .bitmapTransform(new CropCircleTransformation(mContext))
                 .centerCrop()
                 .into(imageViewUser);
+    }
 
+    /*
+    ** Adapter for userMonsters
+     */
+    public class UserMonsterAdapter extends BaseAdapter {
+
+        private ArrayList<UserMonsterResponse.UserMonsters> userMonsters;
+
+        public UserMonsterAdapter(@NonNull final ArrayList<UserMonsterResponse.UserMonsters> userMonsters) {
+            this.userMonsters = userMonsters;
+        }
+
+        @Override
+        public int getCount() {
+            return userMonsters.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return userMonsters.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return userMonsters.get(position).infos.id;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)  {
+            //Get user
+            final UserMonsterResponse.UserMonsters monster = (UserMonsterResponse.UserMonsters) getItem(position);
+
+            //Check if an existing view is being reused, otherwise inflate the view
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
+            }
+
+            //Populate the name
+            final TextView textviewName = (TextView) convertView.findViewById(R.id.textview_monster_name);
+            textviewName.setText(monster.infos.name);
+
+            //On arrondie le placeHolder
+            Resources resources = getResources();
+            Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_monster);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
+            roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
+
+            //On affiche l'image du monstre
+            final ImageView imageViewMonster = (ImageView) convertView.findViewById(R.id.imageView_monster);
+            Glide.with(getContext())
+                    .load(monster.infos.sprite)
+                    .placeholder(roundedBitmapDrawable)
+                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .centerCrop()
+                    .into(imageViewMonster);
+
+            return convertView;
+        }
     }
 }

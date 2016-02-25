@@ -15,6 +15,8 @@ import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPassw
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignInResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.friend.FriendsResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.squareup.okhttp.Interceptor;
@@ -141,10 +143,24 @@ public class NestedWorldApi {
         mClient.getRegions().enqueue(callback);
     }
 
+    public void getFriendList(@NonNull Callback<FriendsResponse> callback) {
+        mClient.getFriendList().enqueue(callback);
+    }
+
+    public void getUserMonster(@NonNull Callback<UserMonsterResponse> callback) {
+        mClient.getUserMonsters().enqueue(callback);
+    }
+
     /**
      * API Interface which use the butterknife annotation
      */
     public interface ApiInterface {
+        @GET(Constant.USER_MONSTERS)
+        Call<UserMonsterResponse> getUserMonsters();
+
+        @GET(Constant.USER_FRIENDS)
+        Call<FriendsResponse> getFriendList();
+
         @PUT(Constant.USER_INFO)
         Call<UserResponse> updateUserInfo(@Body UpdateUserRequest body);
 

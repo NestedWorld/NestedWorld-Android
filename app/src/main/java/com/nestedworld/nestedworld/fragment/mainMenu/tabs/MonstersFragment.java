@@ -18,6 +18,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.Monster;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -77,7 +78,7 @@ public class MonstersFragment extends BaseFragment {
                             listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    final MonstersResponse.Monster selectedMonster = response.body().monsters.get(position);
+                                    final Monster selectedMonster = response.body().monsters.get(position);
                                     displayMonsterDetail(selectedMonster, view);
                                 }
                             });
@@ -99,7 +100,7 @@ public class MonstersFragment extends BaseFragment {
     /*
     ** Utils
      */
-    private void displayMonsterDetail(@NonNull MonstersResponse.Monster monster, @NonNull final View view) {
+    private void displayMonsterDetail(@NonNull Monster monster, @NonNull final View view) {
 
         PopupWindow popup = new PopupWindow(mContext);
         if (mContext == null)

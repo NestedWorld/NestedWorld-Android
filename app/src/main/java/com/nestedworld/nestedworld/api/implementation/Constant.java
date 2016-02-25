@@ -8,15 +8,18 @@ public class Constant {
     private final static String API_VERSION = "v1/";
     public final static String BASE_END_POINT = BASE_URL + API_VERSION;
 
-    public static final String MONSTERS_LIST = "monsters";
+    public final static String MONSTERS_LIST = "monsters";
 
-    public static final String PLACES_LIST = "places";
+    public final static String PLACES_LIST = "places";
 
-    public static final String USER_INFO = "users/";
+    private final static  String USER_PREFIX = "users/";
+    public final static String USER_INFO = USER_PREFIX;
+    public final static String USER_FRIENDS = USER_PREFIX + "friends";
+    public final static String USER_MONSTERS = USER_PREFIX + "monsters";
 
-    private static final String AUTH_PREFIX = USER_INFO + "auth/";
-    public static final String USER_SIGN_IN = AUTH_PREFIX + "login/simple";
-    public static final String USER_REGISTER = AUTH_PREFIX + "register";
-    public static final String USER_PASSWORD = AUTH_PREFIX + "resetpassword";
-    public static final String USER_LOGOUT = AUTH_PREFIX + "logout";
+    private final static String AUTH_PREFIX = USER_INFO + "auth/";
+    public final static String USER_SIGN_IN = AUTH_PREFIX + "login/simple";
+    public final static String USER_REGISTER = AUTH_PREFIX + "register";
+    public final static String USER_PASSWORD = AUTH_PREFIX + "resetpassword";
+    public final static String USER_LOGOUT = AUTH_PREFIX + "logout";
 }
