@@ -203,7 +203,7 @@ public class MapFragment extends BaseFragment {
             return;
         }
 
-        NestedWorldApi.getInstance(mContext).getRegionsList(new Callback<RegionsResponse>() {
+        NestedWorldApi.getInstance(mContext).getRegions(new Callback<RegionsResponse>() {
             @Override
             public void onSuccess(Response<RegionsResponse> response, Retrofit retrofit) {
                 //TODO display region on map

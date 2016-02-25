@@ -132,8 +132,8 @@ public class NestedWorldApi {
         mClient.logout().enqueue(callback);
     }
 
-    public void getMonstersList(@NonNull final Callback<MonstersResponse> callback) {
-        mClient.getMonstersList().enqueue(callback);
+    public void getMonsters(@NonNull final Callback<MonstersResponse> callback) {
+        mClient.getMonsters().enqueue(callback);
     }
 
     public void getUserInfo(@NonNull final Callback<UserResponse> callback) {
@@ -144,12 +144,12 @@ public class NestedWorldApi {
         mClient.getPlaces().enqueue(callback);
     }
 
-    public void getRegionsList(@NonNull final Callback<RegionsResponse> callback) {
-        mClient.getRegionsList().enqueue(callback);
+    public void getRegions(@NonNull final Callback<RegionsResponse> callback) {
+        mClient.getRegions().enqueue(callback);
     }
 
-    public void getFriendList(@NonNull final Callback<FriendsResponse> callback) {
-        mClient.getFriendList().enqueue(callback);
+    public void getFriends(@NonNull final Callback<FriendsResponse> callback) {
+        mClient.getFriends().enqueue(callback);
     }
 
     public void getUserMonster(@NonNull final Callback<UserMonsterResponse> callback) {
@@ -168,7 +168,7 @@ public class NestedWorldApi {
         Call<UserMonsterResponse> getUserMonsters();
 
         @GET(Constant.USER_FRIENDS)
-        Call<FriendsResponse> getFriendList();
+        Call<FriendsResponse> getFriends();
 
         @PUT(Constant.USER_INFO)
         Call<UserResponse> updateUserInfo(@Body UpdateUserRequest body);
@@ -186,7 +186,7 @@ public class NestedWorldApi {
         Call<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest body);
 
         @GET(Constant.MONSTERS_LIST)
-        Call<MonstersResponse> getMonstersList();
+        Call<MonstersResponse> getMonsters();
 
         @GET(Constant.USER_INFO)
         Call<UserResponse> getUserInfo();
@@ -195,6 +195,6 @@ public class NestedWorldApi {
         Call<PlacesResponse> getPlaces();
 
         @GET(Constant.REGIONS_LIST)
-        Call<RegionsResponse> getRegionsList();
+        Call<RegionsResponse> getRegions();
     }
 }

@@ -63,7 +63,7 @@ public class MonstersFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldApi.getInstance(mContext).getMonstersList(
+        NestedWorldApi.getInstance(mContext).getMonsters(
                 new com.nestedworld.nestedworld.api.callback.Callback<MonstersResponse>() {
                     @Override
                     public void onSuccess(final Response<MonstersResponse> response, Retrofit retrofit) {

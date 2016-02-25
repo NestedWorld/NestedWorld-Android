@@ -68,7 +68,7 @@ public class ChatListFragment extends BaseFragment {
         //start loading animation
         progressView.start();
 
-        NestedWorldApi.getInstance(mContext).getFriendList(new Callback<FriendsResponse>() {
+        NestedWorldApi.getInstance(mContext).getFriends(new Callback<FriendsResponse>() {
             @Override
             public void onSuccess(Response<FriendsResponse> response, Retrofit retrofit) {
                 if (mContext == null) {
