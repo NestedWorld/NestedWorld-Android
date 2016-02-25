@@ -44,8 +44,10 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     Toolbar toolbar;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
+
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
+
     @Bind(R.id.progressView)
     ProgressView progressView;
 

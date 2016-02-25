@@ -4,8 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.callback.Callback;
+import com.nestedworld.nestedworld.api.models.apiResponse.ErrorResponse;
+import com.nestedworld.nestedworld.utils.log.LogHelper;
+
+import java.io.IOException;
 
 import retrofit.Response;
 
@@ -22,9 +27,22 @@ public class RetrofitErrorHandler {
     ** Public method
      */
     public static String getErrorMessage(@NonNull final Context context, @NonNull final Callback.KIND errorType, @NonNull final String defaultMessage, @Nullable Response response) {
-
+        //try to get error message from the response
         if (response != null) {
-            //TODO essayer de parser le body
+            try {
+                //get the response as a string
+                String serverResponse = response.errorBody().string();
+
+                //try to convert the response as an ErrorResponse
+                ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+
+                //check if we have a response
+                if (errorResponse != null && errorResponse.message != null) {
+                    return errorResponse.message;
+                }
+            } catch (IOException e) {
+                //Server issue (the server don't follow the specification)
+            }
         }
 
         switch (errorType) {

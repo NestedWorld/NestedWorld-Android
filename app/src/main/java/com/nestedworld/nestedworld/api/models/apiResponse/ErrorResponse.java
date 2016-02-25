@@ -5,10 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Simple model for mapping a json response
  */
-class RestError {
-    @SerializedName("status")
-    public int status;
-
+public class ErrorResponse {
     @SerializedName("message")
     public String message;
 }
