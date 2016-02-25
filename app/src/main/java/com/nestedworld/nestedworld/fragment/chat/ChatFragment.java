@@ -1,9 +1,12 @@
 package com.nestedworld.nestedworld.fragment.chat;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,17 +16,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.models.apiResponse.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
 public class ChatFragment extends BaseFragment {
 
+    private static FriendsResponse.Friend mFriend;
     private ArrayAdapter<String> itemAdapter;
 
     @Bind(R.id.editText_chat)
@@ -32,7 +32,9 @@ public class ChatFragment extends BaseFragment {
     @Bind(R.id.listView_chat)
     ListView listViewChat;
 
-    public static void load(@NonNull final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final FriendsResponse.Friend friend) {
+        mFriend = friend;
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new ChatFragment());
         fragmentTransaction.commit();
@@ -40,12 +42,23 @@ public class ChatFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_action_chat;
+        return R.layout.fragment_chat;
     }
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        initActionBar();
+        initChat();
+    }
 
+    private void initActionBar() {
+        ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(mFriend.name);
+        }
+    }
+
+    private void initChat() {
         //init a string adapter for our listView
         itemAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_expandable_list_item_1);
         listViewChat.setAdapter(itemAdapter);

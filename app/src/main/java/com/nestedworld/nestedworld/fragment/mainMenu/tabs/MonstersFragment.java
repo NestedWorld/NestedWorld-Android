@@ -109,7 +109,6 @@ public class MonstersFragment extends BaseFragment {
         ((TextView) layout.findViewById(R.id.monsterDefense)).setText("Defence : " + monster.defense);
         ((TextView) layout.findViewById(R.id.monsterHp)).setText("Pv : " + monster.hp);
 
-
         popup.setContentView(layout);
 
         // Set content width and height

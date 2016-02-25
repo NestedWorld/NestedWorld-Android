@@ -180,7 +180,7 @@
             <ImageView
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:src="@drawable/default_monster" />>
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -224,7 +224,7 @@
             <ImageView
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:src="@drawable/default_monster" />>
+                android:src="@drawable/default_monster" />
 
             <TextView
                 android:layout_width="wrap_content"
