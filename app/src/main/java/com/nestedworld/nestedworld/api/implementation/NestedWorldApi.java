@@ -4,12 +4,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.SignInRequest;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.places.PlacesResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.places.regions.RegionsResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.LogoutResponse;
@@ -135,24 +137,32 @@ public class NestedWorldApi {
         mClient.getMonstersList().enqueue(callback);
     }
 
-    public void getUserInfo(@NonNull Callback<UserResponse> callback) {
+    public void getUserInfo(@NonNull final Callback<UserResponse> callback) {
         mClient.getUserInfo().enqueue(callback);
     }
 
-    public void getRegions(@NonNull Callback<PlacesResponse> callback) {
-        mClient.getRegions().enqueue(callback);
+    public void getPlaces(@NonNull Callback<PlacesResponse> callback) {
+        mClient.getPlaces().enqueue(callback);
     }
 
-    public void getFriendList(@NonNull Callback<FriendsResponse> callback) {
+    public void getRegionsList(@NonNull final Callback<RegionsResponse> callback) {
+        mClient.getRegionsList().enqueue(callback);
+    }
+
+    public void getFriendList(@NonNull final Callback<FriendsResponse> callback) {
         mClient.getFriendList().enqueue(callback);
     }
 
-    public void getUserMonster(@NonNull Callback<UserMonsterResponse> callback) {
+    public void getUserMonster(@NonNull final Callback<UserMonsterResponse> callback) {
         mClient.getUserMonsters().enqueue(callback);
     }
 
+    public void updateUserInformation(@NonNull final UpdateUserRequest userInfo, @NonNull final Callback<UserResponse> callback) {
+        mClient.updateUserInfo(userInfo).enqueue(callback);
+    }
+
     /**
-     * API Interface which use the butterknife annotation
+     * API Interface which use the retrofit annotation
      */
     public interface ApiInterface {
         @GET(Constant.USER_MONSTERS)
@@ -183,6 +193,9 @@ public class NestedWorldApi {
         Call<UserResponse> getUserInfo();
 
         @GET(Constant.PLACES_LIST)
-        Call<PlacesResponse> getRegions();
+        Call<PlacesResponse> getPlaces();
+
+        @GET(Constant.REGIONS_LIST)
+        Call<RegionsResponse> getRegionsList();
     }
 }

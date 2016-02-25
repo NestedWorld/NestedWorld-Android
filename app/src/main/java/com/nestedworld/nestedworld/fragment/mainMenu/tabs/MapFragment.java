@@ -24,6 +24,7 @@ import com.nestedworld.nestedworld.api.callback.Callback;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.places.PlacesResponse;
+import com.nestedworld.nestedworld.api.models.apiResponse.places.regions.RegionsResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.nestedworld.nestedworld.utils.permission.PermissionUtils;
@@ -61,7 +62,6 @@ public class MapFragment extends BaseFragment {
     /*
     ** Life cycle
      */
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -157,11 +157,20 @@ public class MapFragment extends BaseFragment {
 
         moveCamera(mUserLat, mUserLong, mZoom);
 
-        //displaying a loading animation
-        progressView.start();
+        populatePlaces();
+        populateRegions();
+    }
 
-        //making the request for places
-        NestedWorldApi.getInstance(mContext).getRegions(new Callback<PlacesResponse>() {
+    /*
+    ** Utils
+     */
+    private void populatePlaces() {
+        if (mContext == null) {
+            return;
+        }
+
+        //retrieving places from API
+        NestedWorldApi.getInstance(mContext).getPlaces(new Callback<PlacesResponse>() {
             @Override
             public void onSuccess(Response<PlacesResponse> response, Retrofit retrofit) {
                 //request success, we display nearest places
@@ -185,6 +194,24 @@ public class MapFragment extends BaseFragment {
                 }
                 final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_place), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void populateRegions() {
+        if (mContext == null) {
+            return;
+        }
+
+        NestedWorldApi.getInstance(mContext).getRegionsList(new Callback<RegionsResponse>() {
+            @Override
+            public void onSuccess(Response<RegionsResponse> response, Retrofit retrofit) {
+                //TODO display region on map
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<RegionsResponse> response) {
+                //TODO display error message
             }
         });
     }
