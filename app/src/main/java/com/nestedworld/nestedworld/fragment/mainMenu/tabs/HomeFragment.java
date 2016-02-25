@@ -60,6 +60,8 @@ public class HomeFragment extends BaseFragment {
     protected void init(View rootView, Bundle savedInstanceState) {
         //on affiche les informations de l'utilisateur
         //TODO metre les bonnes info
+        if (mContext == null)
+            return;
         textViewUsername.setText(UserManager.get(mContext).getCurrentAccountName());
         textViewUserLevel.setText("level 16");
         textViewMonsterSaw.setText("12");

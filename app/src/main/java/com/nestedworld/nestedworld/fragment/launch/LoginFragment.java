@@ -76,6 +76,8 @@ public class LoginFragment extends BaseFragment {
         final String email = etEmail.getText().toString();
         final String password = etPassword.getText().toString();
 
+        if (mContext == null)
+            return;
         NestedWorldApi.getInstance(mContext).signIn(
                 email,
                 password,
@@ -106,6 +108,8 @@ public class LoginFragment extends BaseFragment {
     public void forgotPassword() {
         final String email = etEmail.getText().toString();
 
+        if (mContext == null)
+            return;
         NestedWorldApi.getInstance(mContext).forgotPassword(
                 email,
                 new com.nestedworld.nestedworld.api.callback.Callback<ForgotPasswordResponse>() {

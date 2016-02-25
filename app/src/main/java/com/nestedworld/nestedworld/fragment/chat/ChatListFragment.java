@@ -80,9 +80,9 @@ public class ChatListFragment extends BaseFragment {
      */
     private static class FriendAdapter extends ArrayAdapter<FriendsResponse.Friend> {
 
-        private static int resource = R.layout.item_friend;
-        private Context context;
-        private ArrayList<FriendsResponse.Friend> friendList;
+        private static final int resource = R.layout.item_friend;
+        private final Context context;
+        private final ArrayList<FriendsResponse.Friend> friendList;
 
         public FriendAdapter(Context context, @NonNull ArrayList<FriendsResponse.Friend> friendList) {
             super(context, resource, friendList);

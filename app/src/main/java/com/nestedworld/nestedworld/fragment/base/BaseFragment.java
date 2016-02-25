@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     protected final String TAG = getClass().getSimpleName();
-    protected Context mContext;
+    @Nullable protected Context mContext;
 
     /*
     ** Method that every child will have to implement
@@ -61,9 +61,15 @@ public abstract class BaseFragment extends Fragment {
         mContext = context;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
+    }
+
     /*
-    ** Utils
-     */
+        ** Utils
+         */
     public String toString() {
         return TAG;
     }

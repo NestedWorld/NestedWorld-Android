@@ -10,7 +10,7 @@ public class FriendsResponse {
 
     public static class Friend {
         @Expose
-        public String name;
+        public final String name;
 
         public Friend(String name) {
             this.name = name;

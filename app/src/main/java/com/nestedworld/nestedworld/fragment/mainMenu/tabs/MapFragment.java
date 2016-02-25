@@ -140,6 +140,8 @@ public class MapFragment extends BaseFragment {
      */
     private void initMap() {
         //we check if we have the permission to use the userPosition
+        if (mContext == null)
+            return;
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 

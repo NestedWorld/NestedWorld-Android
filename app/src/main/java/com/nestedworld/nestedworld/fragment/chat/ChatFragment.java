@@ -49,6 +49,8 @@ public class ChatFragment extends BaseFragment {
     }
 
     private void initActionBar() {
+        if (mContext == null)
+            return;
         ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mFriend.name);

@@ -68,6 +68,8 @@ public class ProfilFragment extends BaseFragment {
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
         /*We retrieve the userData as the string and we decode the string*/
+        if (mContext == null)
+            return;
         final String userData = UserManager.get(mContext).getCurrentUserData(mContext);
         final UserResponse.User user = new Gson().fromJson(userData, UserResponse.User.class);
 
@@ -86,7 +88,8 @@ public class ProfilFragment extends BaseFragment {
      */
     @OnClick(R.id.button_logout)
     public void logout() {
-
+        if (mContext == null)
+            return;
         NestedWorldApi.getInstance(mContext).logout(
                 new com.nestedworld.nestedworld.api.callback.Callback<LogoutResponse>() {
                     @Override

@@ -91,6 +91,8 @@ public class CreateAccountFragment extends BaseFragment {
     private void createAccount(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         progressView.start();
 
+        if (mContext == null)
+            return;
         NestedWorldApi.getInstance(mContext).register(
                 email,
                 password,
@@ -114,6 +116,8 @@ public class CreateAccountFragment extends BaseFragment {
 
     private void login(@NonNull final String email, @NonNull final String password) {
 
+        if (mContext == null)
+            return;
         NestedWorldApi.getInstance(mContext).signIn(
                 email,
                 password,

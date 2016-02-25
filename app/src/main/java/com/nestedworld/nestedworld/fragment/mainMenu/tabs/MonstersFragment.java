@@ -60,6 +60,8 @@ public class MonstersFragment extends BaseFragment {
             progressView.start();
         }
 
+        if (mContext == null)
+            return;
         NestedWorldApi.getInstance(mContext).getMonstersList(
                 new com.nestedworld.nestedworld.api.callback.Callback<MonstersResponse>() {
                     @Override
@@ -100,6 +102,8 @@ public class MonstersFragment extends BaseFragment {
     private void displayMonsterDetail(@NonNull MonstersResponse.Monster monster, @NonNull final View view) {
 
         PopupWindow popup = new PopupWindow(mContext);
+        if (mContext == null)
+            return;
         View layout = ((AppCompatActivity) mContext).getLayoutInflater().inflate(R.layout.fragment_tab_monsters_details, null);
 
         // Populate the popup
