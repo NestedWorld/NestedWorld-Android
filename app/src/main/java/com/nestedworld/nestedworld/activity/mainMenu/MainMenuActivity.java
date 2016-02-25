@@ -20,6 +20,7 @@ import com.nestedworld.nestedworld.activity.chat.ChatActivity;
 import com.nestedworld.nestedworld.activity.fight.FightActivity;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.activity.profil.ProfileActivity;
+import com.nestedworld.nestedworld.api.callback.Callback;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
@@ -123,26 +124,22 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     private void updateUserInformation() {
         progressView.start();
 
-        NestedWorldApi.getInstance(this).getUserInfo(new com.nestedworld.nestedworld.api.callback.Callback<UserResponse>() {
+        NestedWorldApi.getInstance(this).getUserInfo(new Callback<UserResponse>() {
             @Override
             public void onSuccess(Response<UserResponse> response, Retrofit retrofit) {
-                /*We convert the response as a String and then we store it*/
+                //store user information under userManager
+                UserManager.get(MainMenuActivity.this).setUserData(MainMenuActivity.this, response.body().user);
 
-                final String json = new Gson().toJson(response.body().user);
-
-                UserManager.get(MainMenuActivity.this).setUserData(MainMenuActivity.this, json);
-
-                /*We display the tabs*/
+                //display tabs
                 initTabs();
                 progressView.stop();
             }
 
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
-
-                Toast.makeText(MainMenuActivity.this,
-                        RetrofitErrorHandler.getErrorMessage(MainMenuActivity.this, errorKind, getString(R.string.error_update_user_info), response),
-                        Toast.LENGTH_LONG).show();
+                //display error message
+                String errorMessage = RetrofitErrorHandler.getErrorMessage(MainMenuActivity.this, errorKind, getString(R.string.error_update_user_info), response);
+                Toast.makeText(MainMenuActivity.this, errorMessage, Toast.LENGTH_LONG).show();
 
                 //remove user
                 UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);

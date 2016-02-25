@@ -82,9 +82,9 @@ public class UserManager {
         return new Gson().fromJson(userData, User.class);
     }
 
-    public void setUserData(@NonNull final Context context, @NonNull final String userData) {
-        LogHelper.d(TAG, "setUserData : " + userData);
-        SharedPreferenceUtils.setUserData(context, userData);
+    public void setUserData(@NonNull final Context context, @NonNull final User user) {
+        final String json = new Gson().toJson(user);
+        setUserData(context, json);
     }
 
     public Boolean deleteCurrentAccount(@NonNull final Context context) {
@@ -116,6 +116,11 @@ public class UserManager {
             mAccountManager.removeAccount(account, null, null);
         }
         return true;
+    }
+
+    private void setUserData(@NonNull final Context context, @NonNull final String userData) {
+        LogHelper.d(TAG, "setUserData : " + userData);
+        SharedPreferenceUtils.setUserData(context, userData);
     }
 
     @Nullable
