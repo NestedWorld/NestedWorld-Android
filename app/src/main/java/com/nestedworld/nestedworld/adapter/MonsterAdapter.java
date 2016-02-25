@@ -35,7 +35,7 @@ public class MonsterAdapter extends ArrayAdapter<MonstersResponse.Monster> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Get data
+        //Get user
         final MonstersResponse.Monster monster = getItem(position);
 
         //Check if an existing view is being reused, otherwise inflate the view

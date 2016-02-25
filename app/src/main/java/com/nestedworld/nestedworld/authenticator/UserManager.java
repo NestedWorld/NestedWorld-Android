@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
+import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.utils.log.LogHelper;
 
 /**
@@ -75,8 +77,9 @@ public class UserManager {
     }
 
     @Nullable
-    public String getCurrentUserData(@NonNull final Context context) {
-        return SharedPreferenceUtils.getUserData(context);
+    public User getCurrentUser(@NonNull final Context context) {
+        String userData = getCurrentUserData(context);
+        return new Gson().fromJson(userData, User.class);
     }
 
     public void setUserData(@NonNull final Context context, @NonNull final String userData) {
@@ -113,6 +116,11 @@ public class UserManager {
             mAccountManager.removeAccount(account, null, null);
         }
         return true;
+    }
+
+    @Nullable
+    private String getCurrentUserData(@NonNull final Context context) {
+        return SharedPreferenceUtils.getUserData(context);
     }
 
     @Nullable
@@ -180,7 +188,7 @@ public class UserManager {
         }
 
         /*
-        ** Account data
+        ** Account user
          */
         private static String getUserData(@NonNull final Context context) {
             return context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_USER_DATA, "");
@@ -198,10 +206,10 @@ public class UserManager {
         private static void clearPref(@NonNull final Context context) {
             LogHelper.d(TAG, "clearPref");
 
-            //clean the account data
+            //clean the account user
             context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
 
-            //clean the related user data
+            //clean the related user user
             context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
         }
     }

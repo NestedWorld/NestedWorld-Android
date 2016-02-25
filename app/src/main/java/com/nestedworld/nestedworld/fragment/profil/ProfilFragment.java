@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
+import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
@@ -68,18 +69,17 @@ public class ProfilFragment extends BaseFragment {
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
         /*We retrieve the userData as the string and we decode the string*/
-        if (mContext == null)
-            return;
-        final String userData = UserManager.get(mContext).getCurrentUserData(mContext);
-        final UserResponse.User user = new Gson().fromJson(userData, UserResponse.User.class);
+        if (mContext != null) {
+            final User user = UserManager.get(mContext).getCurrentUser(mContext);
 
-        /*We display some information from the decoded data*/
-        textViewGender.setText(user.gender);
-        textViewPseudo.setText(user.pseudo);
-        textViewBirthDate.setText(user.birth_date);
-        textViewCity.setText(user.city);
-        textViewRegisteredAt.setText(user.registered_at);
-        textViewEmail.setText(user.email);
+            /*We display some information from the decoded user*/
+            textViewGender.setText(user.gender);
+            textViewPseudo.setText(user.pseudo);
+            textViewBirthDate.setText(user.birth_date);
+            textViewCity.setText(user.city);
+            textViewRegisteredAt.setText(user.registered_at);
+            textViewEmail.setText(user.email);
+        }
     }
 
 

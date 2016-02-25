@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.api.implementation;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.nestedworld.nestedworld.api.models.apiRequest.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.SignInRequest;
@@ -30,6 +31,7 @@ import retrofit.Retrofit;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 
 /**
  * Simple Api containing the retrofit interface and his implementation
@@ -142,6 +144,8 @@ public class NestedWorldApi {
      * API Interface which use the butterknife annotation
      */
     public interface ApiInterface {
+        @PUT(Constant.USER_INFO)
+        Call<UserResponse> updateUserInfo(@Body UpdateUserRequest body);
 
         @GET(Constant.USER_LOGOUT)
         Call<LogoutResponse> logout();
