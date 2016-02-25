@@ -120,8 +120,8 @@ public class MonstersFragment extends BaseFragment {
 
         // Populate the popup
         ((TextView) layout.findViewById(R.id.monsterName)).setText(monster.name);
-        ((TextView) layout.findViewById(R.id.monsterAtk)).setText(monster.attack);
-        ((TextView) layout.findViewById(R.id.monsterDefense)).setText(monster.defense);
+        ((TextView) layout.findViewById(R.id.monsterAtk)).setText(String.valueOf(monster.attack));
+        ((TextView) layout.findViewById(R.id.monsterDefense)).setText(String.valueOf(monster.defense));
         ((TextView) layout.findViewById(R.id.monsterHp)).setText(monster.hp);
 
         popup.setContentView(layout);
