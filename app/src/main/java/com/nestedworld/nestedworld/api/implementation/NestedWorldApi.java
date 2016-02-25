@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.api.implementation;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.RegisterRequest;
@@ -116,8 +117,8 @@ public class NestedWorldApi {
     }
 
     public void signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<SignInResponse> callback) {
-        //TODO add the good token (and make it static)
-        mClient.signIn(new SignInRequest(email, password, "test")).enqueue(callback);
+        String app_token = mContext.getString(R.string.app_token);
+        mClient.signIn(new SignInRequest(email, password, app_token)).enqueue(callback);
     }
 
     public void forgotPassword(@NonNull final String email, @NonNull final Callback<ForgotPasswordResponse> callback) {
