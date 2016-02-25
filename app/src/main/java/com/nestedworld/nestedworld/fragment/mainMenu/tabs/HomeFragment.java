@@ -90,6 +90,7 @@ public class HomeFragment extends BaseFragment {
     ** Utils
      */
     private void populateMonstersList() {
+        //TODO afficher un spinner sur la gridview
         if (mContext == null) {
             return;
         }

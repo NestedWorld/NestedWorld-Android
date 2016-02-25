@@ -53,7 +53,7 @@ public class ChatFragment extends BaseFragment {
             return;
         ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(mFriend.name);
+            actionBar.setTitle(mFriend.info.pseudo);
         }
     }
 

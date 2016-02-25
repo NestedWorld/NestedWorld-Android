@@ -1,6 +1,8 @@
 package com.nestedworld.nestedworld.api.models.apiResponse.users.friend;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.nestedworld.nestedworld.api.models.User;
 
 import java.util.ArrayList;
 
@@ -10,11 +12,7 @@ public class FriendsResponse {
 
     public static class Friend {
         @Expose
-        public final String name;
-
-        public Friend(String name) {
-            this.name = name;
-        }
-
+        @SerializedName("user")
+        public User info;
     }
 }
