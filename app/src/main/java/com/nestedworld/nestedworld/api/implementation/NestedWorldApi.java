@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.models.User;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.api.models.apiRequest.users.auth.RegisterRequest;

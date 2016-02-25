@@ -9,12 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.User;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;

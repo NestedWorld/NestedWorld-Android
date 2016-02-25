@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,25 +10,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.callback.Callback;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.Monster;
 import com.nestedworld.nestedworld.api.models.User;
-import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
@@ -168,7 +161,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)  {
+        public View getView(int position, View convertView, ViewGroup parent) {
             //Get user
             final UserMonsterResponse.UserMonsters monster = (UserMonsterResponse.UserMonsters) getItem(position);
 

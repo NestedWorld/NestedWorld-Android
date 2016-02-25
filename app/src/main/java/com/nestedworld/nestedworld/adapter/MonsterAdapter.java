@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.models.Monster;
-import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 
 import java.util.ArrayList;
 

@@ -19,7 +19,8 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     protected final String TAG = getClass().getSimpleName();
-    @Nullable protected Context mContext;
+    @Nullable
+    protected Context mContext;
 
     /*
     ** Method that every child will have to implement
