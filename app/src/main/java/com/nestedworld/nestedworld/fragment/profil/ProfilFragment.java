@@ -69,17 +69,17 @@ public class ProfilFragment extends BaseFragment {
         /*We retrieve the userData as the string and we decode the string*/
         if (mContext != null) {
             final User user = UserManager.get(mContext).getCurrentUser(mContext);
-
+            if (user != null) {
             /*We display some information from the decoded user*/
-            textViewGender.setText(user.gender);
-            textViewPseudo.setText(user.pseudo);
-            textViewBirthDate.setText(user.birth_date);
-            textViewCity.setText(user.city);
-            textViewRegisteredAt.setText(user.registered_at);
-            textViewEmail.setText(user.email);
+                textViewGender.setText(user.gender);
+                textViewPseudo.setText(user.pseudo);
+                textViewBirthDate.setText(user.birth_date);
+                textViewCity.setText(user.city);
+                textViewRegisteredAt.setText(user.registered_at);
+                textViewEmail.setText(user.email);
+            }
         }
     }
-
 
     /*
     ** Butterknife
