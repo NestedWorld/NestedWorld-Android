@@ -104,6 +104,9 @@ public class ProfilFragment extends BaseFragment {
         //remove user
         UserManager.get(mContext).deleteCurrentAccount(mContext);
 
+        //avoid leek with the static instance
+        NestedWorldApi.reset();
+
         //go to launch screen & kill the current context
         startActivity(LaunchActivity.class);
         ((AppCompatActivity) mContext).finish();

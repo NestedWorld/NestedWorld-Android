@@ -147,6 +147,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 //remove user
                 UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);
 
+                //avoid leek with the static instance
+                NestedWorldApi.reset();
+
                 //go to launch screen & kill the current context
                 startActivity(LaunchActivity.class);
                 MainMenuActivity.this.finish();

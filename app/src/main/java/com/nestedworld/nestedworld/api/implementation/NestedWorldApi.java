@@ -67,7 +67,11 @@ public class NestedWorldApi {
         }
         return mSingleton;
     }
-    
+
+    public static void reset() {
+        mSingleton = null;
+    }
+
     /*
     ** Private method
      */
