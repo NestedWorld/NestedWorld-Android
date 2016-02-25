@@ -137,7 +137,7 @@ public class HomeFragment extends BaseFragment {
     /*
     ** Adapter for userMonsters
      */
-    public class UserMonsterAdapter extends BaseAdapter {
+    private class UserMonsterAdapter extends BaseAdapter {
 
         private ArrayList<UserMonsterResponse.UserMonsters> userMonsters;
 

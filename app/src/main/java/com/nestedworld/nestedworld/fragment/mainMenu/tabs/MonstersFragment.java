@@ -1,27 +1,38 @@
 package com.nestedworld.nestedworld.fragment.mainMenu.tabs;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.Monster;
 import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import retrofit.Response;
@@ -126,4 +137,50 @@ public class MonstersFragment extends BaseFragment {
         popup.showAsDropDown(view);
     }
 
+    /*
+    ** Custom Adapter for displayin monsters
+     */
+    private class MonsterAdapter extends ArrayAdapter<Monster> {
+        /*
+        ** Constructor
+         */
+        public MonsterAdapter(@NonNull Context context, @NonNull ArrayList<Monster> objects) {
+            super(context, 0, objects);
+        }
+
+        /*
+        ** Inherit method
+         */
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            //Get user
+            final Monster monster = getItem(position);
+
+            //Check if an existing view is being reused, otherwise inflate the view
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
+            }
+
+            //Populate the name
+            final TextView textviewName = (TextView) convertView.findViewById(R.id.textview_monster_name);
+            textviewName.setText(monster.name);
+
+            //TODO utiliser la bonne image
+            final ImageView imageViewMonster = (ImageView) convertView.findViewById(R.id.imageView_monster);
+            Glide.with(getContext())
+                    .load(R.drawable.default_monster)
+                    .asBitmap()
+                    .centerCrop()
+                    .into(new BitmapImageViewTarget(imageViewMonster) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            imageViewMonster.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+
+            return convertView;
+        }
+    }
 }
