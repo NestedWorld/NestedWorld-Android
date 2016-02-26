@@ -143,9 +143,16 @@ public class HomeFragment extends BaseFragment {
     private class UserMonsterAdapter extends BaseAdapter {
 
         private ArrayList<UserMonsterResponse.UserMonsters> userMonsters;
+        private RoundedBitmapDrawable defaultMonsterAvatar;
 
         public UserMonsterAdapter(@NonNull final ArrayList<UserMonsterResponse.UserMonsters> userMonsters) {
             this.userMonsters = userMonsters;
+
+            //On init un placeHolder
+            Resources resources = getResources();
+            Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_monster);
+            defaultMonsterAvatar = RoundedBitmapDrawableFactory.create(resources, bitmap);
+            defaultMonsterAvatar.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
         }
 
         @Override
@@ -177,17 +184,11 @@ public class HomeFragment extends BaseFragment {
             final TextView textviewName = (TextView) convertView.findViewById(R.id.textview_monster_name);
             textviewName.setText(monster.infos.name);
 
-            //On arrondie le placeHolder
-            Resources resources = getResources();
-            Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_monster);
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
-            roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
-
             //On affiche l'image du monstre
             final ImageView imageViewMonster = (ImageView) convertView.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
                     .load(monster.infos.sprite)
-                    .placeholder(roundedBitmapDrawable)
+                    .placeholder(defaultMonsterAvatar)
                     .bitmapTransform(new CropCircleTransformation(mContext))
                     .centerCrop()
                     .into(imageViewMonster);
