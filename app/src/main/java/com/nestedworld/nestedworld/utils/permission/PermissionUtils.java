@@ -14,7 +14,6 @@ import java.util.List;
 
 import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 
-
 /**
  * Simple for used for 'Android M permission' simplification
  * <p/>

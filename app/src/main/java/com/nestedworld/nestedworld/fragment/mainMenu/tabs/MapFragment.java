@@ -94,12 +94,24 @@ public class MapFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+
+        //we start the loading animation
+        if (progressView != null) {
+            progressView.start();
+        }
+
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();//We display the map immediately
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
+                //we stop the loading animation
+                if (progressView != null) {
+                    progressView.stop();
+                }
+
+                //init Map
                 mGoogleMap = googleMap;
                 initMap();
             }
@@ -180,19 +192,11 @@ public class MapFragment extends BaseFragment {
                         displayMarker(place.name, BitmapDescriptorFactory.HUE_BLUE, place.latitude(), place.longitude());
                     }
                 }
-
-                //now we can stop the loading animation
-                if (progressView != null) {
-                    progressView.stop();
-                }
             }
 
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<PlacesResponse> response) {
-                //request fail, we stop the loading animation and we display an error message
-                if (progressView != null) {
-                    progressView.stop();
-                }
+                //request fail, we display an error message
                 final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_place), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
@@ -238,6 +242,7 @@ public class MapFragment extends BaseFragment {
         final float ratioLat = Math.abs(place.latitude() - mUserLat);
         final float ratioLong = Math.abs(place.longitude() - mUserLong);
 
+        //TODO remove static distance calculation (should be done on the server)
         //1degree ~= 100km
         return (ratioLat < 1.1) && (ratioLong < 1.1);
     }
