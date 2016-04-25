@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.fragments.friends;
+package com.nestedworld.nestedworld.fragments.chat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,7 +27,6 @@ import com.nestedworld.nestedworld.api.callback.Callback;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.fragments.chat.ChatFragment;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
@@ -38,7 +37,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class FriendsFragment extends BaseFragment {
+public class ChatListFragment extends BaseFragment {
 
     @Bind(R.id.listView_chat_list)
     ListView listView;
@@ -50,7 +49,7 @@ public class FriendsFragment extends BaseFragment {
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new FriendsFragment());
+        fragmentTransaction.replace(R.id.container, new ChatListFragment());
         fragmentTransaction.commit();
     }
 
