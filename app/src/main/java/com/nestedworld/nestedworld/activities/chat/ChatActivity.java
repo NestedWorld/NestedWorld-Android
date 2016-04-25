@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.fragments.friends.FriendsFragment;
+import com.nestedworld.nestedworld.fragments.chat.ChatListFragment;
 
 import butterknife.Bind;
 
@@ -25,7 +25,7 @@ public class ChatActivity extends BaseAppCompatActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpToolbar();
-        FriendsFragment.load(getSupportFragmentManager());
+        ChatListFragment.load(getSupportFragmentManager());
     }
 
     /*
