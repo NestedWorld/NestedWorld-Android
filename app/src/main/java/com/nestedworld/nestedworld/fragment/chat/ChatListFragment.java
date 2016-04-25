@@ -27,6 +27,7 @@ import com.nestedworld.nestedworld.api.callback.Callback;
 import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragment.base.BaseFragment;
+import com.nestedworld.nestedworld.utils.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -62,10 +63,10 @@ public class ChatListFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
-        populateFriendsList();
+        retrieveFriendsList();
     }
 
-    private void populateFriendsList() {
+    private void retrieveFriendsList() {
 
         if (mContext == null) {
             return;
@@ -77,21 +78,9 @@ public class ChatListFragment extends BaseFragment {
         NestedWorldApi.getInstance(mContext).getFriends(new Callback<FriendsResponse>() {
             @Override
             public void onSuccess(Response<FriendsResponse> response, Retrofit retrofit) {
-                if (mContext == null) {
-                    return;
-                }
 
-                //init adapter for our listview
-                final FriendAdapter friendAdapter = new FriendAdapter(mContext, response.body().friends);
-                listView.setAdapter(friendAdapter);
-
-                //add listener on the listview
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ChatFragment.load(getFragmentManager(), friendAdapter.getItem(position));
-                    }
-                });
+                //TODO display a message when friends is empty
+                populateListView(response.body().friends);
 
                 //stop loading animation
                 progressView.stop();
@@ -99,13 +88,33 @@ public class ChatListFragment extends BaseFragment {
 
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<FriendsResponse> response) {
+                LogHelper.d(TAG, "cannot retrieve friends");
                 //TODO display an error message
             }
         });
     }
 
+    private void populateListView(final ArrayList<FriendsResponse.Friend> friends) {
+        if (mContext == null) {
+            return;
+        }
+
+        //init adapter for our listview
+        final FriendAdapter friendAdapter = new FriendAdapter(mContext, friends);
+        listView.setAdapter(friendAdapter);
+
+        //add listener on the listview
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ChatFragment.load(getFragmentManager(), friendAdapter.getItem(position));
+            }
+        });
+
+    }
+
     /**
-     ** Custom adapter for displaying friend on the listView
+     * * Custom adapter for displaying friend on the listView
      **/
     private class FriendAdapter extends ArrayAdapter<FriendsResponse.Friend> {
 
