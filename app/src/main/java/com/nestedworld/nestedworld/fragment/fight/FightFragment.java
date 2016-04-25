@@ -58,7 +58,7 @@ public class FightFragment extends BaseFragment {
     }
 
     /**
-     ** Custom view used for drawing path simplification
+     * * Custom view used for drawing path simplification
      **/
     private class DrawingGestureView extends View {
         private static final float TOUCH_TOLERANCE = 4;

@@ -23,13 +23,11 @@ import butterknife.Bind;
 public class ChatFragment extends BaseFragment {
 
     private static FriendsResponse.Friend mFriend;
-    private ArrayAdapter<String> itemAdapter;
-
     @Bind(R.id.editText_chat)
     EditText editTextChat;
-
     @Bind(R.id.listView_chat)
     ListView listViewChat;
+    private ArrayAdapter<String> itemAdapter;
 
     /*
     ** Public method

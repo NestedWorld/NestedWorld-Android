@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.api.models.apiResponse.places.regions;
 
 import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 
 /**

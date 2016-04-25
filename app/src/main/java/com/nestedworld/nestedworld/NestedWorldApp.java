@@ -37,9 +37,9 @@ public class NestedWorldApp extends Application {
     private void initFontOverrider() {
         LogHelper.d(TAG, "initFontOverrider");
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/ProximaNova-Reg.ttf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
+                .setDefaultFontPath("fonts/ProximaNova-Reg.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
         );
     }
 }

@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.callback.Callback;
 import com.nestedworld.nestedworld.api.models.apiResponse.ErrorResponse;
-import com.nestedworld.nestedworld.utils.log.LogHelper;
 
 import java.io.IOException;
 
