@@ -1,38 +1,57 @@
 package com.nestedworld.nestedworld.api.socket;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.telecom.Call;
 
+import com.nestedworld.nestedworld.api.socket.callback.Callback;
+import com.nestedworld.nestedworld.api.socket.runnable.PacketSender;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class NestedWorldSocketAPI {
     private static NestedWorldSocketAPI mSingleton;
     private final String TAG = getClass().getSimpleName();
     private final static String BASE_URL = "127.0.0.1";
     private final static int PORT = 2009;
-    private Context mContext;
+    private Socket mSocket;
 
     /*
     ** Constructor
      */
-    private NestedWorldSocketAPI(@NonNull final Context context) {
+    private NestedWorldSocketAPI(@NonNull final  Callback callback) {
         if (mSingleton != null) {
             return;
         }
 
-        //init API
-        init(context);
+        LogHelper.d(TAG, "Init API(socket) (end_point = " + BASE_URL + ":" + PORT + ")");
+
+        /*Init socket from another thread (avoid networkOnMainThreadException*/
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mSocket = new Socket("10.0.2.2", 2009);
+                    callback.onConnexionReady(mSingleton);
+                } catch (IOException e) {
+                    LogHelper.e(TAG, "Connexion failed");
+                    reset();
+                    callback.onConnexionFailed();
+                }
+            }
+        }).start();
     }
 
     /*
     ** Singleton
      */
-    public static NestedWorldSocketAPI getInstance(@NonNull final Context context){
+    public static void getInstance(@NonNull final Callback callback){
         if (mSingleton == null) {
-            mSingleton = new NestedWorldSocketAPI(context);
+            mSingleton = new NestedWorldSocketAPI(callback);
         }
-        return mSingleton;
-
     }
 
     /*
@@ -43,12 +62,20 @@ public class NestedWorldSocketAPI {
     }
 
     /*
-    ** Private method
+    ** Public method
      */
-    private void init(@NonNull final Context context) {
-        LogHelper.d(TAG, "Init API(socket) (end_point = " + BASE_URL + ":" + PORT + ")");
-        mContext = context;
-    }
+    public void sendMessage(@NonNull final String message) {
+        if (mSocket == null) {
+            LogHelper.d(TAG, "sendMessage: mSocket = null");
+            return;
+        }
 
+        try {
+            PrintWriter out = new PrintWriter(mSocket.getOutputStream());
+            new Thread(new PacketSender(out, message)).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
