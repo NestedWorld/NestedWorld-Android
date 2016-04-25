@@ -12,10 +12,10 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.ForgotPasswordResponse;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignInResponse;
+import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.auth.ForgotPasswordResponse;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -81,10 +81,10 @@ public class LoginFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldApi.getInstance(mContext).signIn(
+        NestedWorldHttpApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new com.nestedworld.nestedworld.api.callback.Callback<SignInResponse>() {
+                new com.nestedworld.nestedworld.api.http.callback.Callback<SignInResponse>() {
                     @Override
                     public void onSuccess(Response<SignInResponse> response, Retrofit retrofit) {
                         progressView.stop();
@@ -113,9 +113,9 @@ public class LoginFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldApi.getInstance(mContext).forgotPassword(
+        NestedWorldHttpApi.getInstance(mContext).forgotPassword(
                 email,
-                new com.nestedworld.nestedworld.api.callback.Callback<ForgotPasswordResponse>() {
+                new com.nestedworld.nestedworld.api.http.callback.Callback<ForgotPasswordResponse>() {
                     @Override
                     public void onSuccess(Response<ForgotPasswordResponse> response, Retrofit retrofit) {
                         Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();

@@ -20,11 +20,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.callback.Callback;
-import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.places.PlacesResponse;
-import com.nestedworld.nestedworld.api.models.apiResponse.places.regions.RegionsResponse;
+import com.nestedworld.nestedworld.api.http.callback.Callback;
+import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.places.PlacesResponse;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.places.regions.RegionsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.nestedworld.nestedworld.helper.permission.PermissionUtils;
@@ -183,7 +183,7 @@ public class MapFragment extends BaseFragment {
         }
 
         //retrieving places from API
-        NestedWorldApi.getInstance(mContext).getPlaces(new Callback<PlacesResponse>() {
+        NestedWorldHttpApi.getInstance(mContext).getPlaces(new Callback<PlacesResponse>() {
             @Override
             public void onSuccess(Response<PlacesResponse> response, Retrofit retrofit) {
                 //request success, we display nearest places
@@ -208,7 +208,7 @@ public class MapFragment extends BaseFragment {
             return;
         }
 
-        NestedWorldApi.getInstance(mContext).getRegions(new Callback<RegionsResponse>() {
+        NestedWorldHttpApi.getInstance(mContext).getRegions(new Callback<RegionsResponse>() {
             @Override
             public void onSuccess(Response<RegionsResponse> response, Retrofit retrofit) {
                 //TODO display region on map

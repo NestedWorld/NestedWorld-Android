@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.callback.Callback;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.User;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.monster.UserMonsterResponse;
+import com.nestedworld.nestedworld.api.http.callback.Callback;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.User;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 
@@ -90,7 +90,7 @@ public class HomeFragment extends BaseFragment {
         if (mContext == null) {
             return;
         }
-        NestedWorldApi.getInstance(mContext).getUserMonster(new Callback<UserMonsterResponse>() {
+        NestedWorldHttpApi.getInstance(mContext).getUserMonster(new Callback<UserMonsterResponse>() {
             @Override
             public void onSuccess(Response<UserMonsterResponse> response, Retrofit retrofit) {
                 gridView.setAdapter(new UserMonsterAdapter(response.body().monsters));

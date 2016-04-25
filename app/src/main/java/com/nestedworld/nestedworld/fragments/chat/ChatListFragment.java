@@ -23,9 +23,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.callback.Callback;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.friend.FriendsResponse;
+import com.nestedworld.nestedworld.api.http.callback.Callback;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.rey.material.widget.ProgressView;
@@ -75,7 +75,7 @@ public class ChatListFragment extends BaseFragment {
         //start loading animation
         progressView.start();
 
-        NestedWorldApi.getInstance(mContext).getFriends(new Callback<FriendsResponse>() {
+        NestedWorldHttpApi.getInstance(mContext).getFriends(new Callback<FriendsResponse>() {
             @Override
             public void onSuccess(Response<FriendsResponse> response, Retrofit retrofit) {
 

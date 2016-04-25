@@ -13,10 +13,10 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.RegisterResponse;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignInResponse;
+import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.auth.RegisterResponse;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -96,11 +96,11 @@ public class CreateAccountFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldApi.getInstance(mContext).register(
+        NestedWorldHttpApi.getInstance(mContext).register(
                 email,
                 password,
                 pseudo,
-                new com.nestedworld.nestedworld.api.callback.Callback<RegisterResponse>() {
+                new com.nestedworld.nestedworld.api.http.callback.Callback<RegisterResponse>() {
                     @Override
                     public void onSuccess(Response<RegisterResponse> response, Retrofit retrofit) {
                         login(email, password);
@@ -121,10 +121,10 @@ public class CreateAccountFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldApi.getInstance(mContext).signIn(
+        NestedWorldHttpApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new com.nestedworld.nestedworld.api.callback.Callback<SignInResponse>() {
+                new com.nestedworld.nestedworld.api.http.callback.Callback<SignInResponse>() {
                     @Override
                     public void onSuccess(Response<SignInResponse> response, Retrofit retrofit) {
                         progressView.stop();

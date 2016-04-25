@@ -19,10 +19,10 @@ import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
 import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
 import com.nestedworld.nestedworld.activities.profil.ProfileActivity;
-import com.nestedworld.nestedworld.api.callback.Callback;
-import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.UserResponse;
+import com.nestedworld.nestedworld.api.http.callback.Callback;
+import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.UserResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.HomeFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
@@ -122,7 +122,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     private void updateUserInformation() {
         progressView.start();
 
-        NestedWorldApi.getInstance(this).getUserInfo(new Callback<UserResponse>() {
+        NestedWorldHttpApi.getInstance(this).getUserInfo(new Callback<UserResponse>() {
             @Override
             public void onSuccess(Response<UserResponse> response, Retrofit retrofit) {
                 //store user information under userManager
@@ -143,7 +143,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);
 
                 //avoid leek with the static instance
-                NestedWorldApi.reset();
+                NestedWorldHttpApi.reset();
 
                 //go to launch screen & kill the current context
                 startActivity(LaunchActivity.class);

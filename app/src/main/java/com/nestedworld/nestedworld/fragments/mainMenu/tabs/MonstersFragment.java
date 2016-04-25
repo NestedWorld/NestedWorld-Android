@@ -25,10 +25,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.Monster;
-import com.nestedworld.nestedworld.api.models.apiResponse.monsters.MonstersResponse;
+import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.Monster;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -73,8 +73,8 @@ public class MonstersFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldApi.getInstance(mContext).getMonsters(
-                new com.nestedworld.nestedworld.api.callback.Callback<MonstersResponse>() {
+        NestedWorldHttpApi.getInstance(mContext).getMonsters(
+                new com.nestedworld.nestedworld.api.http.callback.Callback<MonstersResponse>() {
                     @Override
                     public void onSuccess(final Response<MonstersResponse> response, Retrofit retrofit) {
                         if (progressView != null) {

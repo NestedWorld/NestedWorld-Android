@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
-import com.nestedworld.nestedworld.api.implementation.NestedWorldApi;
-import com.nestedworld.nestedworld.api.models.User;
-import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.LogoutResponse;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.User;
+import com.nestedworld.nestedworld.api.http.models.apiResponse.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 
@@ -86,8 +86,8 @@ public class ProfilFragment extends BaseFragment {
     public void logout() {
         if (mContext == null)
             return;
-        NestedWorldApi.getInstance(mContext).logout(
-                new com.nestedworld.nestedworld.api.callback.Callback<LogoutResponse>() {
+        NestedWorldHttpApi.getInstance(mContext).logout(
+                new com.nestedworld.nestedworld.api.http.callback.Callback<LogoutResponse>() {
                     @Override
                     public void onSuccess(Response<LogoutResponse> response, Retrofit retrofit) {
 
@@ -103,7 +103,7 @@ public class ProfilFragment extends BaseFragment {
         UserManager.get(mContext).deleteCurrentAccount(mContext);
 
         //avoid leek with the static instance
-        NestedWorldApi.reset();
+        NestedWorldHttpApi.reset();
 
         //go to launch screen & kill the current context
         startActivity(LaunchActivity.class);
