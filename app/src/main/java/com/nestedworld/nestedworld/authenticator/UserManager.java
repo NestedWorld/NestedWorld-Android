@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.nestedworld.nestedworld.api.models.User;
-import com.nestedworld.nestedworld.utils.log.LogHelper;
+import com.nestedworld.nestedworld.helper.log.LogHelper;
 
 /**
  * AccountManager abstraction

@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.nestedworld.nestedworld.utils.log.LogHelper;
+import com.nestedworld.nestedworld.helper.log.LogHelper;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

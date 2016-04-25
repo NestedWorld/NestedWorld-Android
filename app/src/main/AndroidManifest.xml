@@ -32,7 +32,7 @@
 
         <!-- Acitivty -->
         <activity
-            android:name=".activity.launch.LaunchActivity"
+            android:name=".activities.launch.LaunchActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -45,27 +45,27 @@
         </activity>
 
         <activity
-            android:name=".activity.mainMenu.MainMenuActivity"
+            android:name=".activities.mainMenu.MainMenuActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activity.profil.ProfileActivity"
+            android:name=".activities.profil.ProfileActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".activity.mainMenu.MainMenuActivity"
+            android:parentActivityName=".activities.mainMenu.MainMenuActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <activity android:name=".activity.fight.FightActivity"
+        <activity android:name=".activities.fight.FightActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".activity.mainMenu.MainMenuActivity"
+            android:parentActivityName=".activities.mainMenu.MainMenuActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <activity android:name=".activity.chat.ChatActivity"
+        <activity android:name=".activities.chat.ChatActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".activity.mainMenu.MainMenuActivity"
+            android:parentActivityName=".activities.mainMenu.MainMenuActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 

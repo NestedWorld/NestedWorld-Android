@@ -19,7 +19,7 @@ import com.nestedworld.nestedworld.api.models.apiResponse.users.auth.SignInRespo
 import com.nestedworld.nestedworld.api.models.apiResponse.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.api.models.apiResponse.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
-import com.nestedworld.nestedworld.utils.log.LogHelper;
+import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;

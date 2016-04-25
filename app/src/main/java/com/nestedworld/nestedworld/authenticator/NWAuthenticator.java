@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.nestedworld.nestedworld.activity.launch.LaunchActivity;
+import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
 
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 
