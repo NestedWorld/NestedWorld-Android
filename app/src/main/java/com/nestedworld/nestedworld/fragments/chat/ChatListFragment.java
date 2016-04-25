@@ -100,7 +100,7 @@ public class ChatListFragment extends BaseFragment {
         }
 
         //init adapter for our listview
-        final FriendAdapter friendAdapter = new FriendAdapter(mContext, friends);
+        final FriendsAdapter friendAdapter = new FriendsAdapter(mContext, friends);
         listView.setAdapter(friendAdapter);
 
         //add listener on the listview
@@ -116,12 +116,12 @@ public class ChatListFragment extends BaseFragment {
     /**
      * * Custom adapter for displaying friend on the listView
      **/
-    private class FriendAdapter extends ArrayAdapter<FriendsResponse.Friend> {
+    private class FriendsAdapter extends ArrayAdapter<FriendsResponse.Friend> {
 
         private static final int resource = R.layout.item_friend;
         private final Context mContext;
 
-        public FriendAdapter(@NonNull final Context context, @NonNull final ArrayList<FriendsResponse.Friend> friendList) {
+        public FriendsAdapter(@NonNull final Context context, @NonNull final ArrayList<FriendsResponse.Friend> friendList) {
             super(context, resource, friendList);
             this.mContext = context;
         }
