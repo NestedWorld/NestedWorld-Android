@@ -5,14 +5,38 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.FleeRequest;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoCaptureRequest;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoReplaceRequest;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.rey.material.widget.ProgressView;
+
+import butterknife.Bind;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class ShopFragment extends BaseFragment {
+
+    @Bind(R.id.button_flee)
+    Button buttonFlee;
+    @Bind(R.id.button_capture)
+    Button buttonCapture;
+    @Bind(R.id.button_replace)
+    Button buttonReplace;
+    @Bind(R.id.button_attack)
+    Button buttonAttack;
+    @Bind(R.id.progressView)
+    ProgressView progressView;
+
+    private NestedWorldSocketAPI mNestedWorldSocketApi;
 
     public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
 
@@ -36,6 +60,75 @@ public class ShopFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        progressView.start();
+        NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+            @Override
+            public void OnConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+                progressView.stop();
+                mNestedWorldSocketApi = nestedWorldSocketAPI;
+                initButton();
+            }
 
+            @Override
+            public void OnConnectionLost() {
+                mNestedWorldSocketApi = null;
+                Toast.makeText(mContext, "Connection lost", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void initButton() {
+        buttonFlee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNestedWorldSocketApi != null) {
+                    FleeRequest data = new FleeRequest();
+                    if (mContext != null) {
+                        mNestedWorldSocketApi.combatRequest(mContext, data);
+                    }
+                }
+            }
+        });
+
+        buttonCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNestedWorldSocketApi != null) {
+                    MonsterKoCaptureRequest data = new MonsterKoCaptureRequest();
+                    data.capture = true;
+                    data.name = "pokemon name";
+                    if (mContext != null) {
+                        mNestedWorldSocketApi.combatRequest(mContext, data);
+                    }
+                }
+            }
+        });
+
+        buttonReplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNestedWorldSocketApi != null) {
+                    MonsterKoReplaceRequest data = new MonsterKoReplaceRequest();
+                    data.userMonsterId = 15;
+                    if (mContext != null) {
+                        mNestedWorldSocketApi.combatRequest(mContext, data);
+                    }
+                }
+            }
+        });
+
+        buttonAttack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNestedWorldSocketApi != null) {
+                    SendAttackRequest data = new SendAttackRequest();
+                    data.attack = 10;
+                    data.target = 45;
+                    if (mContext != null) {
+                        mNestedWorldSocketApi.combatRequest(mContext, data);
+                    }
+                }
+            }
+        });
     }
 }
