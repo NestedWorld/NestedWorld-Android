@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.fragments.fight;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -10,11 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.socket.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
+import com.nestedworld.nestedworld.api.socket.models.Combat;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -53,28 +58,40 @@ public class FightFragment extends BaseFragment {
         progressView.start();
 
         /*Init the socket*/
-        NestedWorldSocketAPI.getInstance(new com.nestedworld.nestedworld.api.socket.callback.Callback() {
+        NestedWorldSocketAPI.getInstance(new ConnectionListener() {
             @Override
-            public void onConnexionReady(NestedWorldSocketAPI nestedWorldSocketAPI) {
+            public void OnConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
                 /*Socket successfully init*/
                 mNestedWorldSocketAPI = nestedWorldSocketAPI;
 
-                /*Init the custom view*/
-                initDrawingGestureView(rootView);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        /*Init the custom view*/
+                        initDrawingGestureView(rootView);
 
-                /*Stop the loading animation*/
-                progressView.stop();
+                        /*Stop the loading animation*/
+                        if (progressView != null) {
+                            progressView.stop();
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onConnexionFailed() {
+            public void OnConnectionLost() {
                 /*Socket initialisation failed*/
-                /*Stop the loading animation display an error message*/
-                progressView.stop();
-                Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        /*Stop the loading animation and display an error message*/
+                        progressView.stop();
+                        Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
 
-                /*Stop the activity (can't run without connection)*/
-                getActivity().finish();
+                        /*Stop the activity (can't run without connection)*/
+                        getActivity().finish();
+                    }
+                });
             }
         });
     }
@@ -109,7 +126,7 @@ public class FightFragment extends BaseFragment {
         drawingGestureView.setmOnFinishMoveListener(new OnFinishMoveListener() {
             @Override
             public void onFinish() {
-                mNestedWorldSocketAPI.sendMessage(mPositions.toString());
+                mNestedWorldSocketAPI.sendAttack(mPositions.toString());
                 mPositions.clear();
             }
         });
