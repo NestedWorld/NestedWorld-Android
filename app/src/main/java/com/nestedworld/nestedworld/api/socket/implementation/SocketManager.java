@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.api.socket.implementation;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
@@ -10,7 +11,10 @@ import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -23,8 +27,8 @@ public class SocketManager implements Runnable {
     private Socket socket;
     private Thread thread;/* Stores the thread used to listen for incoming data. */
     private LinkedList<SocketListener> listeners; /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
-    private MessagePacker messagePacker;
-    private MessageUnpacker messageUnpacker;
+    private MessagePacker messagePacker;/*input stream reader.*/
+    private MessageUnpacker messageUnpacker;/*output stream writer.*/
 
     /*
     ** Constructor
@@ -89,9 +93,13 @@ public class SocketManager implements Runnable {
                     thread.start();
                 } catch (IOException e) {
                     socket = null;
+                    messagePacker = null;
+                    messageUnpacker = null;
 
                     /*Display some log*/
                     LogHelper.e(TAG, "Connection failed");
+
+                    e.printStackTrace();
 
                     /*Send notification*/
                     notifySocketDisconnected();
@@ -106,11 +114,15 @@ public class SocketManager implements Runnable {
         }
         try {
             socket.close();
+            messagePacker.close();
+            messageUnpacker.close();
             LogHelper.d(TAG, "Socked closed");
         } catch (IOException e) {
             LogHelper.e(TAG, "Can't close socket");
         }
         socket = null;
+        messagePacker = null;
+        messageUnpacker = null;
         notifySocketDisconnected();
     }
 
@@ -122,9 +134,11 @@ public class SocketManager implements Runnable {
     @Override
     public void run() {
         try {
+            LogHelper.d(TAG, "Listening on socket...");
             while (true) {
                 String message = messageUnpacker.unpackValue().toString();
                 notifyMessageReceived(message);
+                LogHelper.d(TAG, "message:" + message);
             }
 
         } catch (IOException | MessageInsufficientBufferException e) {
