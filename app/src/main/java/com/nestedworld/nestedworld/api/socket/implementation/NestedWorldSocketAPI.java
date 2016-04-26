@@ -1,8 +1,6 @@
 package com.nestedworld.nestedworld.api.socket.implementation;
 
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
@@ -11,15 +9,6 @@ public class NestedWorldSocketAPI {
 
     private static NestedWorldSocketAPI mSingleton;
     private final SocketManager mSocketManager;
-
-    /*
-    ** Singleton
-     */
-    public static void getInstance(@NonNull ConnectionListener connectionListener) {
-        if (mSingleton == null) {
-            new NestedWorldSocketAPI(connectionListener);
-        }
-    }
 
     /*
     ** Constructor
@@ -51,6 +40,15 @@ public class NestedWorldSocketAPI {
             }
         });
         mSocketManager.connect();
+    }
+
+    /*
+    ** Singleton
+     */
+    public static void getInstance(@NonNull ConnectionListener connectionListener) {
+        if (mSingleton == null) {
+            new NestedWorldSocketAPI(connectionListener);
+        }
     }
 
     /*

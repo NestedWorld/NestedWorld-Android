@@ -1,9 +1,6 @@
 package com.nestedworld.nestedworld.api.socket.implementation;
 
-import android.os.AsyncTask;
-import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
@@ -13,10 +10,7 @@ import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -102,7 +96,8 @@ public class SocketManager implements Runnable {
                     /*Send notification*/
                     notifySocketDisconnected();
                 }
-            }}).start();
+            }
+        }).start();
     }
 
     public synchronized void disconnect() {

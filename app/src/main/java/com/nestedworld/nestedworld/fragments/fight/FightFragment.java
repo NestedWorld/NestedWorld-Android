@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.fragments.fight;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -13,13 +12,10 @@ import android.widget.Toast;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
-import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
-import com.nestedworld.nestedworld.api.socket.models.Combat;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -30,9 +26,9 @@ import butterknife.Bind;
 
 public class FightFragment extends BaseFragment {
 
+    private final ArrayList<Integer> mPositions = new ArrayList<>();
     @Bind(R.id.progressView)
     ProgressView progressView;
-    private final ArrayList<Integer> mPositions = new ArrayList<>();
     private NestedWorldSocketAPI mNestedWorldSocketAPI;
 
     /*
