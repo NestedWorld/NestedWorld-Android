@@ -20,14 +20,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.apiResponse.users.friend.FriendsResponse;
-import com.nestedworld.nestedworld.api.socket.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.rey.material.widget.ProgressView;

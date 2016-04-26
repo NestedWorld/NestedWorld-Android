@@ -5,5 +5,6 @@ import com.nestedworld.nestedworld.api.socket.NestedWorldSocketAPI;
 
 public interface Callback {
     void onConnexionReady(NestedWorldSocketAPI nestedWorldSocketAPI);
+
     void onConnexionFailed();
 }

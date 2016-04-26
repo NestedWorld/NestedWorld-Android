@@ -1,8 +1,6 @@
 package com.nestedworld.nestedworld.api.socket;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.telecom.Call;
 
 import com.nestedworld.nestedworld.api.socket.callback.Callback;
 import com.nestedworld.nestedworld.api.socket.runnable.PacketSender;
@@ -13,16 +11,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class NestedWorldSocketAPI {
-    private static NestedWorldSocketAPI mSingleton;
-    private final String TAG = getClass().getSimpleName();
     private final static String BASE_URL = "127.0.0.1";
     private final static int PORT = 2009;
+    private static NestedWorldSocketAPI mSingleton;
+    private final String TAG = getClass().getSimpleName();
     private Socket mSocket;
 
     /*
     ** Constructor
      */
-    private NestedWorldSocketAPI(@NonNull final  Callback callback) {
+    private NestedWorldSocketAPI(@NonNull final Callback callback) {
         if (mSingleton != null) {
             return;
         }
@@ -48,7 +46,7 @@ public class NestedWorldSocketAPI {
     /*
     ** Singleton
      */
-    public static void getInstance(@NonNull final Callback callback){
+    public static void getInstance(@NonNull final Callback callback) {
         if (mSingleton == null) {
             mSingleton = new NestedWorldSocketAPI(callback);
         }

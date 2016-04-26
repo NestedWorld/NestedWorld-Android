@@ -36,8 +36,10 @@ public class DrawingGestureView extends View {
     private Bitmap mBitmap;
     private float mX, mY;
     private List<ImageView> mTiles = new ArrayList<>();
-    @Nullable private DrawingGestureListener mOnTileTouchListener = null;
-    @Nullable private OnFinishMoveListener mOnFinishMoveListener = null;
+    @Nullable
+    private DrawingGestureListener mOnTileTouchListener = null;
+    @Nullable
+    private OnFinishMoveListener mOnFinishMoveListener = null;
 
     public DrawingGestureView(@NonNull Context c) {
         super(c);
