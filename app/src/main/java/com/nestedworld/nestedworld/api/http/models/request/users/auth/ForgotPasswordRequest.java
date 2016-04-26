@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.api.http.models.apiRequest.users.auth;
+package com.nestedworld.nestedworld.api.http.models.request.users.auth;
 
 public class ForgotPasswordRequest {
     final String email;

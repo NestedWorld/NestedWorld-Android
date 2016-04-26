@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.api.http.models.apiResponse.users.auth;
+package com.nestedworld.nestedworld.api.http.models.response.users.auth;
 
 import com.google.gson.annotations.Expose;
 

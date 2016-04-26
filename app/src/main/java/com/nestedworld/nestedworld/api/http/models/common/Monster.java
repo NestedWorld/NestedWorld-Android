@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.api.http.models;
+package com.nestedworld.nestedworld.api.http.models.common;
 
 import com.google.gson.annotations.Expose;
 

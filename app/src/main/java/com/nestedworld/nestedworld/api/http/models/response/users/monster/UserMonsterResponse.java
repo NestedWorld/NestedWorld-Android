@@ -1,7 +1,7 @@
-package com.nestedworld.nestedworld.api.http.models.apiResponse.users.monster;
+package com.nestedworld.nestedworld.api.http.models.response.users.monster;
 
 import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.api.http.models.Monster;
+import com.nestedworld.nestedworld.api.http.models.common.Monster;
 
 import java.util.ArrayList;
 

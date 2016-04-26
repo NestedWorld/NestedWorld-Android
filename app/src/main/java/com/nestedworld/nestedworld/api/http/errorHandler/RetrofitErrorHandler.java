@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.Gson;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.http.callback.Callback;
-import com.nestedworld.nestedworld.api.http.models.apiResponse.ErrorResponse;
+import com.nestedworld.nestedworld.api.http.models.response.ErrorResponse;
 
 import java.io.IOException;
 

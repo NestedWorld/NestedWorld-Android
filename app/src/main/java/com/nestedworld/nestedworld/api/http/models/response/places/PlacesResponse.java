@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.api.http.models.apiResponse.places;
+package com.nestedworld.nestedworld.api.http.models.response.places;
 
 import com.google.gson.annotations.Expose;
 

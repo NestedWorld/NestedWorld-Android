@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.User;
-import com.nestedworld.nestedworld.api.http.models.apiResponse.users.auth.LogoutResponse;
+import com.nestedworld.nestedworld.api.http.models.common.User;
+import com.nestedworld.nestedworld.api.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 

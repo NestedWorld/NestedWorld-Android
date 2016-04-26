@@ -22,8 +22,8 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.User;
-import com.nestedworld.nestedworld.api.http.models.apiResponse.users.monster.UserMonsterResponse;
+import com.nestedworld.nestedworld.api.http.models.common.User;
+import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 

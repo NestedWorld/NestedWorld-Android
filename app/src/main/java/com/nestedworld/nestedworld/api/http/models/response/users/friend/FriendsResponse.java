@@ -1,8 +1,8 @@
-package com.nestedworld.nestedworld.api.http.models.apiResponse.users.friend;
+package com.nestedworld.nestedworld.api.http.models.response.users.friend;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.api.http.models.User;
+import com.nestedworld.nestedworld.api.http.models.common.User;
 
 import java.util.ArrayList;
 

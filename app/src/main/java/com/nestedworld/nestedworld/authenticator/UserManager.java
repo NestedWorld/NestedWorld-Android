@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.nestedworld.nestedworld.api.http.models.User;
+import com.nestedworld.nestedworld.api.http.models.common.User;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 
 /**
