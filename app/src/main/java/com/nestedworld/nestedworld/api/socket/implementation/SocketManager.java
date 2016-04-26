@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.api.socket.implementation;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
@@ -10,11 +9,10 @@ import org.msgpack.core.MessageInsufficientBufferException;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
+import org.msgpack.value.MapValue;
+import org.msgpack.value.ValueFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -147,11 +145,10 @@ public class SocketManager implements Runnable {
         }
     }
 
-    public synchronized void send(@NonNull String message) {
+    public synchronized void send(@NonNull MapValue message) {
         LogHelper.d(TAG, "Sending: " + message);
         try {
-            messagePacker.packRawStringHeader(message.length());
-            messagePacker.writePayload(message.getBytes());
+            messagePacker.packValue(message);
             messagePacker.flush();
         } catch (IOException e) {
             LogHelper.d(TAG, "Can't send message");

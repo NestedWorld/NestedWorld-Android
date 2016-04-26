@@ -4,12 +4,18 @@ import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
+import com.nestedworld.nestedworld.api.socket.models.Combat;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
+
+import org.msgpack.core.MessagePack;
+import org.msgpack.core.MessagePacker;
+import org.msgpack.value.Value;
+import org.msgpack.value.ValueFactory;
 
 public class NestedWorldSocketAPI {
 
-    private final String TAG = getClass().getSimpleName();
     private static NestedWorldSocketAPI mSingleton;
+    private final String TAG = getClass().getSimpleName();
     private final SocketManager mSocketManager;
 
     /*
@@ -67,8 +73,8 @@ public class NestedWorldSocketAPI {
     /*
     ** Public method
      */
-    public void sendAttack(@NonNull String string) {
-        mSocketManager.send(string);
+    public void sendAttack(@NonNull Combat.SendAttack data) {
+        mSocketManager.send(data.serialise().build());
     }
 }
 
