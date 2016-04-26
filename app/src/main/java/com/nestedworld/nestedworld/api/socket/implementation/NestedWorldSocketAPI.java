@@ -87,5 +87,11 @@ public class NestedWorldSocketAPI {
         addAuthStateToMapValue(context, mapBuilder);
         mSocketManager.send(mapBuilder.build());
     }
+
+    public void chatRequest(@NonNull Context context, @NonNull DefaultModel data) {
+        ValueFactory.MapBuilder mapBuilder = data.serialise();
+        addAuthStateToMapValue(context, mapBuilder);
+        mSocketManager.send(mapBuilder.build());
+    }
 }
 
