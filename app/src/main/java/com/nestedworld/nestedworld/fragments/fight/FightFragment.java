@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.socket.NestedWorldSocketAPI;
@@ -14,13 +15,18 @@ import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureV
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.Bind;
+
 public class FightFragment extends BaseFragment {
 
+    @Bind(R.id.progressView)
+    ProgressView progressView;
     private final ArrayList<Integer> mPositions = new ArrayList<>();
     private NestedWorldSocketAPI mNestedWorldSocketAPI;
 
@@ -42,21 +48,33 @@ public class FightFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
-        initSocket();
-        initDrawingGestureView(rootView);
-    }
+    protected void init(final View rootView, Bundle savedInstanceState) {
+        /*start a loading animation*/
+        progressView.start();
 
-    private void initSocket() {
+        /*Init the socket*/
         NestedWorldSocketAPI.getInstance(new com.nestedworld.nestedworld.api.socket.callback.Callback() {
             @Override
             public void onConnexionReady(NestedWorldSocketAPI nestedWorldSocketAPI) {
+                /*Socket successfully init*/
                 mNestedWorldSocketAPI = nestedWorldSocketAPI;
+
+                /*Init the custom view*/
+                initDrawingGestureView(rootView);
+
+                /*Stop the loading animation*/
+                progressView.stop();
             }
 
             @Override
             public void onConnexionFailed() {
-                //TODO display and error message
+                /*Socket initialisation failed*/
+                /*Stop the loading animation display an error message*/
+                progressView.stop();
+                Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
+
+                /*Stop the activity (can't run without connection)*/
+                getActivity().finish();
             }
         });
     }
