@@ -5,7 +5,7 @@ import com.nestedworld.nestedworld.api.socket.models.DefaultModel;
 import org.msgpack.value.ValueFactory;
 
 public class MonsterKoReplaceRequest implements DefaultModel {
-    int userMonsterId;
+    public int userMonsterId;
 
     @Override
     public ValueFactory.MapBuilder serialise() {

@@ -5,8 +5,8 @@ import com.nestedworld.nestedworld.api.socket.models.DefaultModel;
 import org.msgpack.value.ValueFactory;
 
 public class MonsterKoCaptureRequest implements DefaultModel {
-    Boolean capture;
-    String name;
+    public Boolean capture;
+    public String name;
 
     @Override
     public ValueFactory.MapBuilder serialise() {
