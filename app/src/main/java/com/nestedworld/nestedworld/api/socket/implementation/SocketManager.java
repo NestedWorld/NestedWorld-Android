@@ -136,7 +136,7 @@ public class SocketManager implements Runnable {
             while (true) {
                 String message = messageUnpacker.unpackValue().toString();
                 notifyMessageReceived(message);
-                LogHelper.d(TAG, "message:" + message);
+                LogHelper.d(TAG, "receive message:" + message);
             }
 
         } catch (IOException | MessageInsufficientBufferException e) {
