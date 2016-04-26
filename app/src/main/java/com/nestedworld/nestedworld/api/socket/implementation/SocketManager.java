@@ -147,6 +147,7 @@ public class SocketManager implements Runnable {
 
     public synchronized void send(@NonNull MapValue message) {
         LogHelper.d(TAG, "Sending: " + message);
+
         try {
             messagePacker.packValue(message);
             messagePacker.flush();

@@ -1,15 +1,18 @@
 package com.nestedworld.nestedworld.api.socket.implementation;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
-import com.nestedworld.nestedworld.api.socket.models.Combat;
+import com.nestedworld.nestedworld.api.socket.models.DefaultModel;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.FleeRequest;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoCaptureRequest;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoReplaceRequest;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.SendAttackRequest;
+import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 
-import org.msgpack.core.MessagePack;
-import org.msgpack.core.MessagePacker;
-import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
 public class NestedWorldSocketAPI {
@@ -73,8 +76,15 @@ public class NestedWorldSocketAPI {
     /*
     ** Public method
      */
-    public void sendAttack(@NonNull Combat.SendAttack data) {
-        mSocketManager.send(data.serialise().build());
+    private void addAuthStateToMapValue(@NonNull Context context, @NonNull ValueFactory.MapBuilder mapBuilder) {
+        String token = UserManager.get(context).getCurrentAuthToken(context);
+        mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token == null ? "" : token));
+    }
+
+    public void combatRequest(@NonNull Context context, @NonNull DefaultModel data) {
+        ValueFactory.MapBuilder mapBuilder = data.serialise();
+        addAuthStateToMapValue(context, mapBuilder);
+        mSocketManager.send(mapBuilder.build());
     }
 }
 

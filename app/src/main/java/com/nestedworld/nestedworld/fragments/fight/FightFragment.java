@@ -12,12 +12,11 @@ import android.widget.Toast;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
-import com.nestedworld.nestedworld.api.socket.models.Combat;
+import com.nestedworld.nestedworld.api.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -124,7 +123,7 @@ public class FightFragment extends BaseFragment {
         drawingGestureView.setmOnFinishMoveListener(new OnFinishMoveListener() {
             @Override
             public void onFinish() {
-                Combat.SendAttack data = new Combat.SendAttack();
+                SendAttackRequest data = new SendAttackRequest();
 
                 String buf = "";
                 for (int i : mPositions) {
@@ -133,7 +132,8 @@ public class FightFragment extends BaseFragment {
 
                 data.target = 10;
                 data.attack = Integer.parseInt(buf);
-                mNestedWorldSocketAPI.sendAttack(data);
+
+                mNestedWorldSocketAPI.combatRequest(mContext, data);
                 mPositions.clear();
             }
         });
