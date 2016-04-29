@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.api.socket.implementation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
@@ -10,7 +12,6 @@ import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
 import org.msgpack.value.MapValue;
-import org.msgpack.value.ValueFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -23,7 +24,7 @@ public class SocketManager implements Runnable {
     private int port;
     private int timeOut;
     private Socket socket;
-    private Thread thread;/* Stores the thread used to listen for incoming data. */
+    private Thread listeningThread;/* Stores the Thread used to listen for incoming data. */
     private LinkedList<SocketListener> listeners; /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private MessagePacker messagePacker;/*input stream reader.*/
     private MessageUnpacker messageUnpacker;/*output stream writer.*/
@@ -36,7 +37,7 @@ public class SocketManager implements Runnable {
         this.port = port;
 
         this.socket = null;
-        this.thread = new Thread(this);
+        this.listeningThread = new Thread(this);
         this.listeners = new LinkedList<>();
 
         this.messagePacker = null;
@@ -87,8 +88,8 @@ public class SocketManager implements Runnable {
                     /*Send notification*/
                     notifySocketConnected();
 
-                    /*Init reading thread*/
-                    thread.start();
+                    /*Init reading listeningThread*/
+                    listeningThread.start();
                 } catch (IOException e) {
                     socket = null;
                     messagePacker = null;
@@ -162,26 +163,46 @@ public class SocketManager implements Runnable {
     ** Utils
      */
     private void notifySocketConnected() {
-        for (SocketListener listener : listeners) {
-            listener.onSocketConnected(SocketListener.SocketEvent.SOCKET_CONNECTED);
+        for (final SocketListener listener : listeners) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onSocketConnected(SocketListener.SocketEvent.SOCKET_CONNECTED);
+                }
+            });
         }
     }
 
     private void notifySocketDisconnected() {
-        for (SocketListener listener : listeners) {
-            listener.onSocketDisconnected(SocketListener.SocketEvent.SOCKET_DISCONNECTED);
+        for (final SocketListener listener : listeners) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onSocketDisconnected(SocketListener.SocketEvent.SOCKET_DISCONNECTED);
+                }
+            });
         }
     }
 
     private void notifyMessageSent() {
-        for (SocketListener listener : listeners) {
-            listener.onMessageSent(SocketListener.SocketEvent.SOCKET_MESSAGE_SENT);
+        for (final SocketListener listener : listeners) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onMessageSent(SocketListener.SocketEvent.SOCKET_MESSAGE_SENT);
+                }
+            });
         }
     }
 
-    private void notifyMessageReceived(@NonNull String message) {
-        for (SocketListener listener : listeners) {
-            listener.onMessageReceived(SocketListener.SocketEvent.SOCKET_MESSAGE_RECEIVED, message);
+    private void notifyMessageReceived(@NonNull final String message) {
+        for (final SocketListener listener : listeners) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onMessageReceived(SocketListener.SocketEvent.SOCKET_MESSAGE_RECEIVED, message);
+                }
+            });
         }
     }
 }
