@@ -82,8 +82,12 @@ public class FightFragment extends BaseFragment {
                     @Override
                     public void run() {
                         /*Stop the loading animation and display an error message*/
-                        progressView.stop();
-                        Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
+                        if (progressView != null) {
+                            progressView.stop();
+                        }
+                        if (mContext != null) {
+                            Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
+                        }
 
                         /*Stop the activity (can't run without connection)*/
                         getActivity().finish();
@@ -120,7 +124,7 @@ public class FightFragment extends BaseFragment {
                 }
             }
         });
-        drawingGestureView.setmOnFinishMoveListener(new OnFinishMoveListener() {
+        drawingGestureView.setOnFinishMoveListener(new OnFinishMoveListener() {
             @Override
             public void onFinish() {
                 SendAttackRequest data = new SendAttackRequest();

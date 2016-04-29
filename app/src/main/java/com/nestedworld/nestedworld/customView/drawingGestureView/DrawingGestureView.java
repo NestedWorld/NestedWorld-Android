@@ -69,7 +69,7 @@ public class DrawingGestureView extends View {
         mOnTileTouchListener = listener;
     }
 
-    public void setmOnFinishMoveListener(@NonNull OnFinishMoveListener listener) {
+    public void setOnFinishMoveListener(@NonNull OnFinishMoveListener listener) {
         mOnFinishMoveListener = listener;
     }
 
