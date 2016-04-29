@@ -1,44 +1,47 @@
 package com.nestedworld.nestedworld.activities.launch;
 
 import android.os.Bundle;
-import android.view.View;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
+import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
+import com.nestedworld.nestedworld.api.http.callback.Callback;
+import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.api.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
-import com.nestedworld.nestedworld.fragments.launch.LaunchFragment;
+import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
+import retrofit.Response;
+import retrofit.Retrofit;
 
-public class LaunchActivity extends BaseAppCompatActivity {
-    @Bind(R.id.default_background)
-    ImageView mImageViewBackground;
+public class LaunchActivity extends BaseAppCompatActivity{
+    @Bind(R.id.imageView_logo_launch)
+    ImageView imageView;
 
-    /*
-    ** Life cycle
-     */
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_empty;
+        return R.layout.activity_launch;
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        /*Init UI*/
-        mImageViewBackground.setBackgroundResource(R.drawable.logo);
-        mImageViewBackground.setVisibility(View.VISIBLE);
-
-        /*Init logics*/
-        //choose the correct view
+        //choose the correct activity
         if (!checkForExistingSession()) {
-            //we don't have a session so we display the launch screen
-            LaunchFragment.load(this.getSupportFragmentManager(), false);
-        } else {
-            //We have a session so we go to the main menu
-            startActivity(MainMenuActivity.class);
+            //we don't have a session
+            //So we start the registration activity & kill current activity
+            startActivity(RegistrationActivity.class);
             finish();
+        } else {
+            //We have a session so we try to update the user information
+            updateUserInformation();
         }
     }
 
@@ -48,4 +51,38 @@ public class LaunchActivity extends BaseAppCompatActivity {
     private boolean checkForExistingSession() {
         return (UserManager.get(this).getCurrentAccount() != null);
     }
+
+    private void updateUserInformation() {
+        imageView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
+
+        NestedWorldHttpApi.getInstance(this).getUserInfo(new Callback<UserResponse>() {
+            @Override
+            public void onSuccess(Response<UserResponse> response, Retrofit retrofit) {
+                //store user information under userManager
+                UserManager.get(LaunchActivity.this).setUserData(LaunchActivity.this, response.body().user);
+
+                //start the mainActivity & kill current activity
+                startActivity(MainMenuActivity.class);
+                LaunchActivity.this.finish();
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
+                //display error message
+                String errorMessage = RetrofitErrorHandler.getErrorMessage(LaunchActivity.this, errorKind, getString(R.string.error_update_user_info), response);
+                Toast.makeText(LaunchActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+
+                //remove user
+                UserManager.get(LaunchActivity.this).deleteCurrentAccount(LaunchActivity.this);
+
+                //avoid leek with the static instance
+                NestedWorldHttpApi.reset();
+
+                //go to launch screen & kill current activity
+                startActivity(RegistrationActivity.class);
+                LaunchActivity.this.finish();
+            }
+        });
+    }
+
 }

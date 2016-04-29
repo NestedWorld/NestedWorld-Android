@@ -17,7 +17,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
-import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
+import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.activities.profil.ProfileActivity;
 import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
@@ -43,12 +43,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     Toolbar toolbar;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
-
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
-
-    @Bind(R.id.progressView)
-    ProgressView progressView;
 
     /*
     ** Life cycle
@@ -61,7 +57,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpToolbar();
-        updateUserInformation();
+        initTabs();
     }
 
     @Override
@@ -117,39 +113,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 tab.setIcon(adapter.getPageIcon(i));
             }
         }
-    }
-
-    private void updateUserInformation() {
-        progressView.start();
-
-        NestedWorldHttpApi.getInstance(this).getUserInfo(new Callback<UserResponse>() {
-            @Override
-            public void onSuccess(Response<UserResponse> response, Retrofit retrofit) {
-                //store user information under userManager
-                UserManager.get(MainMenuActivity.this).setUserData(MainMenuActivity.this, response.body().user);
-
-                //display tabs
-                initTabs();
-                progressView.stop();
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
-                //display error message
-                String errorMessage = RetrofitErrorHandler.getErrorMessage(MainMenuActivity.this, errorKind, getString(R.string.error_update_user_info), response);
-                Toast.makeText(MainMenuActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-
-                //remove user
-                UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);
-
-                //avoid leek with the static instance
-                NestedWorldHttpApi.reset();
-
-                //go to launch screen & kill the current context
-                startActivity(LaunchActivity.class);
-                MainMenuActivity.this.finish();
-            }
-        });
     }
 
     /**

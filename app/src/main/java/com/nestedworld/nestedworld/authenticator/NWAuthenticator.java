@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
+import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 
@@ -46,7 +46,7 @@ class NWAuthenticator extends AbstractAccountAuthenticator {
 
         // We're going to use a LoginActivity to talk to the user (mContext
         // we'll have noted on construction).
-        final Intent intent = new Intent(mContext, LaunchActivity.class);
+        final Intent intent = new Intent(mContext, RegistrationActivity.class);
 
         // We can configure that activity however we wish via the Intent
         // We'll set ARG_IS_ADDING_NEW_ACCOUNT so the Activity knows to ask for the account name as well

@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.fragments.launch;
+package com.nestedworld.nestedworld.fragments.registration;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

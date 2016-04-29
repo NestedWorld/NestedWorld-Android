@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
+import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.common.User;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.LogoutResponse;
@@ -106,7 +106,7 @@ public class ProfilFragment extends BaseFragment {
         NestedWorldHttpApi.reset();
 
         //go to launch screen & kill the current context
-        startActivity(LaunchActivity.class);
+        startActivity(RegistrationActivity.class);
         ((AppCompatActivity) mContext).finish();
     }
 }

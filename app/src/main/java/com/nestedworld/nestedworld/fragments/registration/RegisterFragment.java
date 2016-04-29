@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.fragments.launch;
+package com.nestedworld.nestedworld.fragments.registration;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +14,7 @@ import butterknife.OnClick;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class LaunchFragment extends BaseFragment {
+public class RegisterFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
 
@@ -23,7 +23,7 @@ public class LaunchFragment extends BaseFragment {
      */
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new LaunchFragment());
+        fragmentTransaction.replace(R.id.container, new RegisterFragment());
         if (toBackStack) {
             fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         }
@@ -35,7 +35,7 @@ public class LaunchFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_launch;
+        return R.layout.fragment_register;
     }
 
     @Override
