@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -61,24 +62,23 @@ public class FightFragment extends BaseFragment {
                 /*Socket successfully init*/
                 mNestedWorldSocketAPI = nestedWorldSocketAPI;
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        /*Init the custom view*/
-                        initDrawingGestureView(rootView);
+                /*Init the custom view*/
+                initDrawingGestureView(rootView);
 
-                        /*Stop the loading animation*/
-                        if (progressView != null) {
-                            progressView.stop();
-                        }
-                    }
-                });
+                /*Stop the loading animation*/
+                if (progressView != null) {
+                    progressView.stop();
+                }
             }
 
             @Override
             public void OnConnectionLost() {
+                if (mContext == null) {
+                    return;
+                }
+
                 /*Socket initialisation failed*/
-                getActivity().runOnUiThread(new Runnable() {
+                ((AppCompatActivity) mContext).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         /*Stop the loading animation and display an error message*/
