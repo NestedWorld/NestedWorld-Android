@@ -59,7 +59,9 @@ public class NestedWorldSocketAPI {
         if (mSingleton == null) {
             new NestedWorldSocketAPI(connectionListener);
         }
-        connectionListener.OnConnectionReady(mSingleton);
+        else {
+            connectionListener.OnConnectionReady(mSingleton);
+        }
     }
 
     /*
