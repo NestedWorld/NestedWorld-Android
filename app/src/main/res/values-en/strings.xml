@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="editText_pseudo">Saisisez votre pseudo</string>
     <string name="editText_email">Saisissez votre adresse email</string>
     <string name="editText_email_invalid">Votre email est invalide !</string>
 
     <string name="editText_password">Mot de passe</string>
     <string name="editText_password_invalid">Votre mot de passe est trop court !</string>
+    <string name="editText_pseudo_invalid">Votre pseudo ne peut être vide !</string>
 
     <string name="text_inscription">Inscription</string>
     <string name="text_login_short">Connexion</string>
@@ -18,13 +19,38 @@
     <string name="tab_monster_name">Mes monstres</string>
     <string name="tab_city_name">Ma ville</string>
 
+    <string name="tab_home">Home</string>
+    <string name="tab_garden">Jardin</string>
+    <string name="tab_map">Map</string>
+    <string name="tab_monster">Monstres</string>
+    <string name="tab_shop">Boutique</string>
+
+    <string name="monster_name">Nom :</string>
+    <string name="monster_attaque">Attaque :</string>
+    <string name="monster_defence">Défence :</string>
+    <string name="monster_pv">Pv :</string>
+
     <string name="error_no_internet">Veillez vous connecter a internet et réesayer.</string>
     <string name="error_unexpected">Une erreur innatendu est servenu, merci de réésayer.</string>
     <string name="error_conversion">Une erreur innatendu est servenu, merci de réésayer.</string>
     <string name="error_unknown">Une erreur innatendu est servenu, merci de réésayer.</string>
     <string name="error_create_account">Impossible de créer votre compte, merci de réésayer</string>
+    <string name="error_login">Impossible de vous connecter, merci de réésayer</string>
+    <string name="error_place">Impossible de récuperer la liste des zones, merci de réésayer</string>
+    <string name="error_logout">Impossible de vous deconnecter</string>
+    <string name="error_forgot_password">Impossible de re-initialiser votre mot de passe</string>
+    <string name="error_update_user_info">Impossible de récuperer vos informations, veillez vous reconnecter</string>
+    <string name="error_cant_get_monsters_list">Impossible de récupérer la lsite des monstres, merci de réésayer</string>
 
     <string name="password_send">Vous allez recevoir un mail d\'ici peu.</string>
 
+    <string name="edittext_chat_description">chat</string>
+
+
     <string name="menu_action_profil">Profil</string>
+    <string name="menu_action_chat">Chat</string>
+    <string name="menu_action_fight">fight</string>
+
+    <string name="action_settings">Settings</string>
+
 </resources>

@@ -144,8 +144,8 @@ public class HomeFragment extends BaseFragment {
      */
     private class UserMonsterAdapter extends BaseAdapter {
 
-        private ArrayList<UserMonsterResponse.UserMonsters> userMonsters;
-        private RoundedBitmapDrawable defaultMonsterAvatar;
+        private final ArrayList<UserMonsterResponse.UserMonsters> userMonsters;
+        private final RoundedBitmapDrawable defaultMonsterAvatar;
 
         public UserMonsterAdapter(@NonNull final ArrayList<UserMonsterResponse.UserMonsters> userMonsters) {
             this.userMonsters = userMonsters;

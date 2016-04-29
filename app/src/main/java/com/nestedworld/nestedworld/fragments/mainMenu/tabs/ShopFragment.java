@@ -28,6 +28,7 @@ import butterknife.Bind;
  */
 public class ShopFragment extends BaseFragment {
 
+    public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
     @Bind(R.id.button_flee)
     Button buttonFlee;
     @Bind(R.id.button_capture)
@@ -36,20 +37,15 @@ public class ShopFragment extends BaseFragment {
     Button buttonReplace;
     @Bind(R.id.button_attack)
     Button buttonAttack;
-
     @Bind(R.id.button_join)
     Button buttonJoin;
     @Bind(R.id.button_part)
     Button buttonPart;
     @Bind(R.id.button_send_message)
     Button buttonSendMessage;
-
     @Bind(R.id.progressView)
     ProgressView progressView;
-
     private NestedWorldSocketAPI mNestedWorldSocketApi;
-
-    public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
 
     /*
     ** Public method

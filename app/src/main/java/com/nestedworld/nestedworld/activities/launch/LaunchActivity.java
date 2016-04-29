@@ -16,13 +16,12 @@ import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
-import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class LaunchActivity extends BaseAppCompatActivity{
+public class LaunchActivity extends BaseAppCompatActivity {
     @Bind(R.id.imageView_logo_launch)
     ImageView imageView;
 

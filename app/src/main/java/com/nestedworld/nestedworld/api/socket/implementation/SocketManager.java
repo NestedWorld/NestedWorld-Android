@@ -20,12 +20,12 @@ import java.util.LinkedList;
 
 public class SocketManager implements Runnable {
     private final String TAG = getClass().getSimpleName();
-    private String hostname;
-    private int port;
+    private final String hostname;
+    private final int port;
+    private final Thread listeningThread;/* Stores the Thread used to listen for incoming data. */
+    private final LinkedList<SocketListener> listeners; /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private int timeOut;
     private Socket socket;
-    private Thread listeningThread;/* Stores the Thread used to listen for incoming data. */
-    private LinkedList<SocketListener> listeners; /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private MessagePacker messagePacker;/*input stream reader.*/
     private MessageUnpacker messageUnpacker;/*output stream writer.*/
 

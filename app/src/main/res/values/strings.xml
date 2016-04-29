@@ -20,6 +20,10 @@
     <string name="text_cgu">En cliquant sur \'inscription\' vous acceptez les Conditions générales d\'utilisation.</string>
     <string name="text_forgot_password">Mot de passe oublié ?</string>
 
+    <string name="tab_village_name">Mon village</string>
+    <string name="tab_monster_name">Mes monstres</string>
+    <string name="tab_city_name">Ma ville</string>
+
     <string name="tab_home">Home</string>
     <string name="tab_garden">Jardin</string>
     <string name="tab_map">Map</string>
@@ -44,6 +48,9 @@
     <string name="error_cant_get_monsters_list">Impossible de récupérer la lsite des monstres, merci de réésayer</string>
 
     <string name="password_send">Vous allez recevoir un mail d\'ici peu.</string>
+
+    <string name="edittext_chat_description">chat</string>
+
 
     <string name="menu_action_profil">Profil</string>
     <string name="menu_action_chat">Chat</string>

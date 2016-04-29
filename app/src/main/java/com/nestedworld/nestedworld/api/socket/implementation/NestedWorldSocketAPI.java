@@ -6,10 +6,6 @@ import android.support.annotation.NonNull;
 import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.api.socket.models.DefaultModel;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.FleeRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoCaptureRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoReplaceRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 

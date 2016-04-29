@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/desc"
-        android:scaleType="centerCrop" />
+        android:scaleType="fitCenter" />
 
     <FrameLayout
         android:id="@+id/container"

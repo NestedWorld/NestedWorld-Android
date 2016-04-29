@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.activities.mainMenu;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,32 +10,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
-import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.activities.profil.ProfileActivity;
-import com.nestedworld.nestedworld.api.http.callback.Callback;
-import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.response.users.UserResponse;
-import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.HomeFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
-import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
