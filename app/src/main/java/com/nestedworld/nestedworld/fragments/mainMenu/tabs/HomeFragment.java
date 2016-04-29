@@ -93,7 +93,9 @@ public class HomeFragment extends BaseFragment {
         NestedWorldHttpApi.getInstance(mContext).getUserMonster(new Callback<UserMonsterResponse>() {
             @Override
             public void onSuccess(Response<UserMonsterResponse> response, Retrofit retrofit) {
-                gridView.setAdapter(new UserMonsterAdapter(response.body().monsters));
+                if (gridView != null) {
+                    gridView.setAdapter(new UserMonsterAdapter(response.body().monsters));
+                }
             }
 
             @Override
