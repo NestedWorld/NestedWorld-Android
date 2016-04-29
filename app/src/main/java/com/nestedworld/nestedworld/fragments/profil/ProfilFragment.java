@@ -14,6 +14,7 @@ import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.common.User;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.LogoutResponse;
+import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 
@@ -59,7 +60,7 @@ public class ProfilFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_acton_profil;
+        return R.layout.fragment_action_profil;
     }
 
     @Override
@@ -104,6 +105,7 @@ public class ProfilFragment extends BaseFragment {
 
         //avoid leek with the static instance
         NestedWorldHttpApi.reset();
+        NestedWorldSocketAPI.reset();
 
         //go to launch screen & kill the current context
         startActivity(RegistrationActivity.class);
