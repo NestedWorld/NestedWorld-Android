@@ -31,8 +31,7 @@
             <TextView
                 android:id="@+id/monsterName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -49,8 +48,7 @@
             <TextView
                 android:id="@+id/monsterHp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -67,8 +65,7 @@
             <TextView
                 android:id="@+id/monsterAtk"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -86,8 +83,7 @@
                 android:id="@+id/monsterDefense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/app_name" />
+                android:layout_gravity="center_vertical" />
 
         </LinearLayout>
 

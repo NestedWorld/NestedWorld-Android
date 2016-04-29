@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dip"
-            android:text="@string/app_name"
             android:textColor="@color/apptheme_color" />
 
         <TextView
@@ -30,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dip"
-            android:text="@string/app_name"
             android:textColor="@color/apptheme_color" />
 
 
