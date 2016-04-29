@@ -26,7 +26,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/monster_name"/>
+                android:text="@string/monster_name" />
+
             <TextView
                 android:id="@+id/monsterName"
                 android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/monster_attaque"/>
+                android:text="@string/monster_attaque" />
 
             <TextView
                 android:id="@+id/monsterHp"
@@ -61,7 +62,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/monster_defence"/>
+                android:text="@string/monster_defence" />
 
             <TextView
                 android:id="@+id/monsterAtk"
@@ -79,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/monster_pv"/>
+                android:text="@string/monster_pv" />
 
             <TextView
                 android:id="@+id/monsterDefense"

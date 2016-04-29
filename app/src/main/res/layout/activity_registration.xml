@@ -6,12 +6,12 @@
     android:fitsSystemWindows="true">
 
     <ImageView
-        android:src="@drawable/logo"
         android:id="@+id/default_background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/desc"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo" />
 
     <FrameLayout
         android:id="@+id/container"

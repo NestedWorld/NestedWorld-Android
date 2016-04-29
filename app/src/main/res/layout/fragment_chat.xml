@@ -11,11 +11,11 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:hint="@string/edittext_chat_description"
         android:id="@+id/editText_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:hint="@string/edittext_chat_description"
         android:inputType="text" />
 </RelativeLayout>
