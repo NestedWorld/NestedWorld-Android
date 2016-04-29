@@ -110,7 +110,7 @@ public class UserManager {
     private Boolean deleteAccount(@NonNull final Context context, @NonNull final Account account) {
         SharedPreferenceUtils.clearPref(context);
         invalidateAuthTokenFromAccount(context, account);
-        if (Build.VERSION.SDK_INT >= 22) {
+        if (Build.VERSION.SDK_INT < 22) {
             return mAccountManager.removeAccountExplicitly(account);
         } else {
             mAccountManager.removeAccount(account, null, null);

@@ -26,27 +26,27 @@ public class NestedWorldSocketAPI {
         LogHelper.d(TAG, "Waiting for a new connection...");
         mSocketManager.addSocketListener(new SocketListener() {
             @Override
-            public void onSocketConnected(@NonNull SocketEvent socketEvent) {
+            public void onSocketConnected() {
                 LogHelper.d(TAG, "Successfully Fully got a connection");
                 mSingleton = NestedWorldSocketAPI.this;
                 connectionListener.OnConnectionReady(mSingleton);
             }
 
             @Override
-            public void onSocketDisconnected(@NonNull SocketEvent socketEvent) {
+            public void onSocketDisconnected() {
                 LogHelper.e(TAG, "Connection failed");
                 reset();
                 connectionListener.OnConnectionLost();
             }
 
             @Override
-            public void onMessageSent(@NonNull SocketEvent socketEven) {
+            public void onMessageSent() {
 
             }
 
             @Override
-            public void onMessageReceived(@NonNull SocketEvent socketEvent, String message) {
-
+            public void onMessageReceived(String message) {
+                //TODO parse content and call listener
             }
         });
         mSocketManager.connect();

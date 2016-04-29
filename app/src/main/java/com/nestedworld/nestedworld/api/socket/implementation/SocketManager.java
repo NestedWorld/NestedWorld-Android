@@ -167,7 +167,7 @@ public class SocketManager implements Runnable {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onSocketConnected(SocketListener.SocketEvent.SOCKET_CONNECTED);
+                    listener.onSocketConnected();
                 }
             });
         }
@@ -178,7 +178,7 @@ public class SocketManager implements Runnable {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onSocketDisconnected(SocketListener.SocketEvent.SOCKET_DISCONNECTED);
+                    listener.onSocketDisconnected();
                 }
             });
         }
@@ -189,7 +189,7 @@ public class SocketManager implements Runnable {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onMessageSent(SocketListener.SocketEvent.SOCKET_MESSAGE_SENT);
+                    listener.onMessageSent();
                 }
             });
         }
@@ -200,7 +200,7 @@ public class SocketManager implements Runnable {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onMessageReceived(SocketListener.SocketEvent.SOCKET_MESSAGE_RECEIVED, message);
+                    listener.onMessageReceived(message);
                 }
             });
         }
