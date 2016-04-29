@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
+import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.RegisterResponse;
@@ -127,12 +127,13 @@ public class CreateAccountFragment extends BaseFragment {
                 new com.nestedworld.nestedworld.api.http.callback.Callback<SignInResponse>() {
                     @Override
                     public void onSuccess(Response<SignInResponse> response, Retrofit retrofit) {
-                        progressView.stop();
+                        if (mContext == null) {
+                            return;
+                        }
 
-                        //Store user Data
                         if (UserManager.get(mContext).setCurrentUser(mContext, email, password, response.body().token, null)) {
                             //display MainMenu and then stop le launchMenu
-                            startActivity(MainMenuActivity.class);
+                            startActivity(LaunchActivity.class);
                             ((FragmentActivity) mContext).finish();
                         } else {
                             Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
@@ -141,17 +142,21 @@ public class CreateAccountFragment extends BaseFragment {
 
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
-                        progressView.stop();
+                        if (progressView != null) {
+                            progressView.stop();
+                        }
 
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
-                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                        if (mContext != null) {
+                            final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
+                            Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
         );
     }
 
     /*
-    ** InputChecker
+    ** Utils
      */
     private boolean checkInput(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         if (!checkEmailFormat(email)) {

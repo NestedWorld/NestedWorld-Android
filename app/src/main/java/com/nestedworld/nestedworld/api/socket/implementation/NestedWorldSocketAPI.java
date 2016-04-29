@@ -35,7 +35,7 @@ public class NestedWorldSocketAPI {
             @Override
             public void onSocketDisconnected() {
                 LogHelper.e(TAG, "Connection failed");
-                reset();
+                mSingleton = null;
                 connectionListener.OnConnectionLost();
             }
 
@@ -66,13 +66,12 @@ public class NestedWorldSocketAPI {
     /*
     ** Avoid leek when log out
      */
-    public void reset() {
+    public static void reset() {
         mSingleton = null;
-        mSocketManager.disconnect();
     }
 
     /*
-    ** Public method
+    ** Private method
      */
     private void addAuthStateToMapValue(@NonNull Context context, @NonNull ValueFactory.MapBuilder mapBuilder) {
         String token = UserManager.get(context).getCurrentAuthToken(context);

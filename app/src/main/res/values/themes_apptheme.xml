@@ -9,4 +9,8 @@
         <item name="colorButtonNormal">@color/apptheme_color</item>
     </style>
 
+    <style name="AppTheme.Launcher" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/logo_launch</item>
+    </style>
+
 </resources>

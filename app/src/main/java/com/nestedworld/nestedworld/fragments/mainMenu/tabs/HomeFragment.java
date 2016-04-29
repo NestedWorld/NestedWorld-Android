@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,16 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.common.User;
 import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
+import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 
@@ -113,7 +117,15 @@ public class HomeFragment extends BaseFragment {
 
         User user = UserManager.get(mContext).getCurrentUser(mContext);
         if (user == null) {
-            return;
+            //avoid leek with the static instance
+            NestedWorldHttpApi.reset();
+            NestedWorldSocketAPI.reset();
+
+            Toast.makeText(mContext, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
+
+            //go to launch screen & kill the current context
+            startActivity(RegistrationActivity.class);
+            ((AppCompatActivity) mContext).finish();
         }
 
         //on affiche les informations de l'utilisateur

@@ -52,9 +52,9 @@ public class UserManager {
                                   @NonNull final String name, @NonNull final String password, @NonNull final String authToken,
                                   @Nullable final Bundle userData) {
         LogHelper.d(TAG, "setCurrentUser : "
-                + "\nname :" + name
-                + "\npassword : " + password
-                + "\nauthToken : " + authToken);
+                + " name=" + name
+                + " password=" + password
+                + " authToken=" + authToken);
 
         //check if account already exist
         Account account = getAccountByName(name);
