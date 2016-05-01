@@ -102,12 +102,11 @@ public class NestedWorldHttpApi {
         };
 
         // We declare the client and we add our interceptors …
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(httpHeaderInterceptor)
+                .addInterceptor(httpLoggingInterceptor)// we add logging interceptor as last httpHeaderInterceptor
+                .build();
 
-        client.interceptors().add(httpHeaderInterceptor);
-
-        // we add logging interceptor as last httpHeaderInterceptor
-        client.interceptors().add(httpLoggingInterceptor);
 
         // Init retrofit
         Retrofit retrofit = new Retrofit.Builder()
