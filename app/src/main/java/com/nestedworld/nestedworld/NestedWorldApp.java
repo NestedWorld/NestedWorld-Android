@@ -23,6 +23,7 @@ public class NestedWorldApp extends Application {
     public void onCreate() {
         super.onCreate();
         initFontOverrider();
+        initMakitoo();
     }
 
     @Override
@@ -41,5 +42,12 @@ public class NestedWorldApp extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+    }
+
+    private void initMakitoo() {
+        com.makitoo.MakitooAndroid.init(this,
+                "https://dashboard.makitoo.com/rest",
+                "nestedworld-f8ec7157-20e9-4def-9639-626f4a59afc6",  // Application ID
+                "f4jp4lacquitob5re1v8bd8jgj");  // Application TOKEN
     }
 }
