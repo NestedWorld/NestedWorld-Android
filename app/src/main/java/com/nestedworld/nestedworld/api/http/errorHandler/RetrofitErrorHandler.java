@@ -11,7 +11,7 @@ import com.nestedworld.nestedworld.api.http.models.response.ErrorResponse;
 
 import java.io.IOException;
 
-import retrofit.Response;
+import retrofit2.Response;
 
 /**
  * Simple RetrofitError parser

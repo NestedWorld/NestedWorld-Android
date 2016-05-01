@@ -4,22 +4,22 @@ import android.accounts.NetworkErrorException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Response;
 
-public abstract class Callback<T> implements retrofit.Callback<T> {
+public abstract class Callback<T> implements retrofit2.Callback<T> {
 
     @Override
-    public void onResponse(Response<T> response, Retrofit retrofit) {
-        if (response.isSuccess()) {
-            onSuccess(response, retrofit);
+    public void onResponse(Call<T> call, Response<T> response) {
+        if (response.isSuccessful()) {
+            onSuccess(response);
         } else {
             onError(KIND.SERVER, response);
         }
     }
 
     @Override
-    public void onFailure(Throwable t) {
+    public void onFailure(Call<T> call, Throwable t) {
         if (t instanceof NetworkErrorException) {
             onError(KIND.NETWORK, null);
         } else {
@@ -27,7 +27,7 @@ public abstract class Callback<T> implements retrofit.Callback<T> {
         }
     }
 
-    public abstract void onSuccess(Response<T> response, Retrofit retrofit);
+    public abstract void onSuccess(Response<T> response);
 
     public abstract void onError(@NonNull final KIND errorKind, @Nullable Response<T> response);
 
@@ -36,4 +36,5 @@ public abstract class Callback<T> implements retrofit.Callback<T> {
         UNEXPECTED,
         SERVER,
     }
+
 }

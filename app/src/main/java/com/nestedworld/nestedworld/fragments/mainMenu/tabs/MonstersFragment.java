@@ -35,8 +35,7 @@ import com.rey.material.widget.ProgressView;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -76,7 +75,7 @@ public class MonstersFragment extends BaseFragment {
         NestedWorldHttpApi.getInstance(mContext).getMonsters(
                 new com.nestedworld.nestedworld.api.http.callback.Callback<MonstersResponse>() {
                     @Override
-                    public void onSuccess(final Response<MonstersResponse> response, Retrofit retrofit) {
+                    public void onSuccess(final Response<MonstersResponse> response) {
                         if (progressView != null) {
                             progressView.stop();
                         }

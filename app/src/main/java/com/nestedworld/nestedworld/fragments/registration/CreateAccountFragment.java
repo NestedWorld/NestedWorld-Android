@@ -23,8 +23,7 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
 
 import static com.nestedworld.nestedworld.helper.input.InputChecker.checkEmailFormat;
 import static com.nestedworld.nestedworld.helper.input.InputChecker.checkPasswordFormat;
@@ -102,7 +101,7 @@ public class CreateAccountFragment extends BaseFragment {
                 pseudo,
                 new com.nestedworld.nestedworld.api.http.callback.Callback<RegisterResponse>() {
                     @Override
-                    public void onSuccess(Response<RegisterResponse> response, Retrofit retrofit) {
+                    public void onSuccess(Response<RegisterResponse> response) {
                         login(email, password);
                     }
 
@@ -126,7 +125,7 @@ public class CreateAccountFragment extends BaseFragment {
                 password,
                 new com.nestedworld.nestedworld.api.http.callback.Callback<SignInResponse>() {
                     @Override
-                    public void onSuccess(Response<SignInResponse> response, Retrofit retrofit) {
+                    public void onSuccess(Response<SignInResponse> response) {
                         if (mContext == null) {
                             return;
                         }

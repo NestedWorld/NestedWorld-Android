@@ -33,8 +33,7 @@ import com.rey.material.widget.ProgressView;
 import java.util.Arrays;
 
 import butterknife.Bind;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -185,7 +184,7 @@ public class MapFragment extends BaseFragment {
         //retrieving places from API
         NestedWorldHttpApi.getInstance(mContext).getPlaces(new Callback<PlacesResponse>() {
             @Override
-            public void onSuccess(Response<PlacesResponse> response, Retrofit retrofit) {
+            public void onSuccess(Response<PlacesResponse> response) {
                 //request success, we display nearest places
                 for (PlacesResponse.Place place : response.body().places) {
                     if (isPlaceDisplayable(place)) {
@@ -210,7 +209,7 @@ public class MapFragment extends BaseFragment {
 
         NestedWorldHttpApi.getInstance(mContext).getRegions(new Callback<RegionsResponse>() {
             @Override
-            public void onSuccess(Response<RegionsResponse> response, Retrofit retrofit) {
+            public void onSuccess(Response<RegionsResponse> response) {
                 //TODO display region on map
             }
 

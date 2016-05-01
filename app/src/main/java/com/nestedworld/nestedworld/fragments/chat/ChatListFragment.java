@@ -34,8 +34,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
 
 public class ChatListFragment extends BaseFragment {
 
@@ -77,7 +76,7 @@ public class ChatListFragment extends BaseFragment {
 
         NestedWorldHttpApi.getInstance(mContext).getFriends(new Callback<FriendsResponse>() {
             @Override
-            public void onSuccess(Response<FriendsResponse> response, Retrofit retrofit) {
+            public void onSuccess(Response<FriendsResponse> response) {
 
                 //TODO display a message when friends is empty
                 populateListView(response.body().friends);

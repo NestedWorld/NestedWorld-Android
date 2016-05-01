@@ -22,8 +22,7 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -86,7 +85,7 @@ public class LoginFragment extends BaseFragment {
                 password,
                 new com.nestedworld.nestedworld.api.http.callback.Callback<SignInResponse>() {
                     @Override
-                    public void onSuccess(Response<SignInResponse> response, Retrofit retrofit) {
+                    public void onSuccess(Response<SignInResponse> response) {
                         progressView.stop();
 
                         if (UserManager.get(mContext).setCurrentUser(mContext, email, password, response.body().token, null)) {
@@ -117,7 +116,7 @@ public class LoginFragment extends BaseFragment {
                 email,
                 new com.nestedworld.nestedworld.api.http.callback.Callback<ForgotPasswordResponse>() {
                     @Override
-                    public void onSuccess(Response<ForgotPasswordResponse> response, Retrofit retrofit) {
+                    public void onSuccess(Response<ForgotPasswordResponse> response) {
                         Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
                     }
 

@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
@@ -120,7 +120,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     private void updateUserInformation() {
         NestedWorldHttpApi.getInstance(this).getUserInfo(new Callback<UserResponse>() {
             @Override
-            public void onSuccess(Response<UserResponse> response, Retrofit retrofit) {
+            public void onSuccess(Response<UserResponse> response) {
                 //store user information under userManager
                 UserManager.get(MainMenuActivity.this).setUserData(MainMenuActivity.this, response.body().user);
                 progressView.stop();

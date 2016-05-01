@@ -35,8 +35,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -96,7 +95,7 @@ public class HomeFragment extends BaseFragment {
         }
         NestedWorldHttpApi.getInstance(mContext).getUserMonster(new Callback<UserMonsterResponse>() {
             @Override
-            public void onSuccess(Response<UserMonsterResponse> response, Retrofit retrofit) {
+            public void onSuccess(Response<UserMonsterResponse> response) {
                 if (gridView != null) {
                     gridView.setAdapter(new UserMonsterAdapter(response.body().monsters));
                 }

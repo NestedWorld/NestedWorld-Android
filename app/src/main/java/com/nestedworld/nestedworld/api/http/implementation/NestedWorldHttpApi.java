@@ -20,22 +20,22 @@ import com.nestedworld.nestedworld.api.http.models.response.users.friend.Friends
 import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
 import java.io.IOException;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 /**
  * Simple Api containing the retrofit interface and his implementation

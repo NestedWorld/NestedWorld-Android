@@ -20,8 +20,7 @@ import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -90,7 +89,7 @@ public class ProfilFragment extends BaseFragment {
         NestedWorldHttpApi.getInstance(mContext).logout(
                 new com.nestedworld.nestedworld.api.http.callback.Callback<LogoutResponse>() {
                     @Override
-                    public void onSuccess(Response<LogoutResponse> response, Retrofit retrofit) {
+                    public void onSuccess(Response<LogoutResponse> response) {
 
                     }
 
