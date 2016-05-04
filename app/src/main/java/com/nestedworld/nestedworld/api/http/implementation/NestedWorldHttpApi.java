@@ -176,6 +176,9 @@ public class NestedWorldHttpApi {
         @GET(HttpEndPoint.USER_FRIENDS)
         Call<FriendsResponse> getFriends();
 
+        @PUT(HttpEndPoint.USER_FRIENDS)
+        Call<FriendsResponse> addFriend(@Body FriendsResponse.Friend body);
+
         @PUT(HttpEndPoint.USER_INFO)
         Call<UserResponse> updateUserInfo(@Body UpdateUserRequest body);
 
