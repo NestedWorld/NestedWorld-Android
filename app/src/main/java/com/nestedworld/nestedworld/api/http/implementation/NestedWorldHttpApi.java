@@ -36,6 +36,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Url;
 
 /**
  * Simple Api containing the retrofit interface and his implementation
@@ -154,6 +155,10 @@ public class NestedWorldHttpApi {
         mClient.getRegions().enqueue(callback);
     }
 
+    public void getRegionDetails(@NonNull final RegionsResponse.Region region, @NonNull final Callback<RegionsResponse.Region> callback) {
+        mClient.getRegionDetail(region.url).enqueue(callback);
+    }
+
     public void getFriends(@NonNull final Callback<FriendsResponse> callback) {
         mClient.getFriends().enqueue(callback);
     }
@@ -205,5 +210,8 @@ public class NestedWorldHttpApi {
 
         @GET(HttpEndPoint.REGIONS_LIST)
         Call<RegionsResponse> getRegions();
+
+        @GET
+        Call<RegionsResponse.Region> getRegionDetail(@Url String endPoint);
     }
 }
