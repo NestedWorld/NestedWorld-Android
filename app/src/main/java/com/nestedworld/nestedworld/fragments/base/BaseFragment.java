@@ -69,8 +69,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /*
-        ** Utils
-         */
+    ** Utils
+     */
     public String toString() {
         return TAG;
     }

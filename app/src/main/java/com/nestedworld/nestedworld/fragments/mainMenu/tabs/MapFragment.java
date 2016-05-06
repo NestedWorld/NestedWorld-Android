@@ -117,7 +117,6 @@ public class MapFragment extends BaseFragment {
         });
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -220,6 +219,9 @@ public class MapFragment extends BaseFragment {
         });
     }
 
+    /*
+    ** Utils
+     */
     private void moveCamera(final double latitude, final double longitude, int zoom) {
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(zoom).build();
         mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
