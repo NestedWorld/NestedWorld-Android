@@ -1,4 +1,5 @@
 # NestedWorld
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hyperium/hyper/master/LICENSE)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d3d9ec320f2a4f17acfa66097961561a)](https://www.codacy.com/app/kassisdion/NestedWorld-Android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=NestedWorld/NestedWorld-Android&amp;utm_campaign=Badge_Grade)
 
