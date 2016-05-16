@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.api.http.implementation;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.http.models.request.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.api.http.models.request.users.auth.ForgotPasswordRequest;
@@ -111,11 +112,15 @@ public class NestedWorldHttpApi {
                 .addInterceptor(httpLoggingInterceptor)// we add logging interceptor as last httpHeaderInterceptor
                 .build();
 
+        // Create the converterFactory
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+        GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(builder.create());
 
         // Init retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(HttpEndPoint.BASE_END_POINT)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(gsonConverterFactory)
                 .client(client)
                 .build();
 
