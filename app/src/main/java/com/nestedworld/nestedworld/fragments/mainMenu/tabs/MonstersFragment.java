@@ -135,8 +135,8 @@ public class MonstersFragment extends BaseFragment {
         popup.showAsDropDown(view);
     }
 
-    /*
-    ** Custom Adapter for displaying monsters
+    /**
+     * Custom Adapter for displaying monsters
      */
     private class MonsterAdapter extends ArrayAdapter<Monster> {
         /*

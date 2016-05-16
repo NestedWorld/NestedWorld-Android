@@ -129,7 +129,7 @@ public class FightFragment extends BaseFragment {
             public void onFinish() {
                 SendAttackRequest data = new SendAttackRequest();
 
-                String buf = "";
+                String buf = "0";
                 for (int i : mPositions) {
                     buf += i;
                 }
