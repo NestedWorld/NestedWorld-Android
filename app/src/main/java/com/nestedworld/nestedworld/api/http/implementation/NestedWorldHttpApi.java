@@ -10,6 +10,7 @@ import com.nestedworld.nestedworld.api.http.models.request.users.auth.RegisterRe
 import com.nestedworld.nestedworld.api.http.models.request.users.auth.SignInRequest;
 import com.nestedworld.nestedworld.api.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.api.http.models.response.places.PlacesResponse;
+import com.nestedworld.nestedworld.api.http.models.response.places.regions.RegionResponse;
 import com.nestedworld.nestedworld.api.http.models.response.places.regions.RegionsResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.ForgotPasswordResponse;
@@ -20,6 +21,8 @@ import com.nestedworld.nestedworld.api.http.models.response.users.friend.Friends
 import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
+import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.models.Region;
 
 import java.io.IOException;
 
@@ -155,7 +158,7 @@ public class NestedWorldHttpApi {
         mClient.getRegions().enqueue(callback);
     }
 
-    public void getRegionDetails(@NonNull final RegionsResponse.Region region, @NonNull final Callback<RegionsResponse.Region> callback) {
+    public void getRegionDetails(@NonNull final Region region, @NonNull final Callback<RegionResponse> callback) {
         mClient.getRegionDetail(region.url).enqueue(callback);
     }
 
@@ -182,7 +185,7 @@ public class NestedWorldHttpApi {
         Call<FriendsResponse> getFriends();
 
         @PUT(HttpEndPoint.USER_FRIENDS)
-        Call<FriendsResponse> addFriend(@Body FriendsResponse.Friend body);
+        Call<FriendsResponse> addFriend(@Body Friend body);
 
         @PUT(HttpEndPoint.USER_INFO)
         Call<UserResponse> updateUserInfo(@Body UpdateUserRequest body);
@@ -212,6 +215,6 @@ public class NestedWorldHttpApi {
         Call<RegionsResponse> getRegions();
 
         @GET
-        Call<RegionsResponse.Region> getRegionDetail(@Url String endPoint);
+        Call<RegionResponse> getRegionDetail(@Url String endPoint);
     }
 }

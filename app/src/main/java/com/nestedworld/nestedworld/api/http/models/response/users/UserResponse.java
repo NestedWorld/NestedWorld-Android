@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.api.http.models.response.users;
 
 import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.api.http.models.common.User;
+import com.nestedworld.nestedworld.models.User;
 
 /**
  * Simple model for mapping a json response

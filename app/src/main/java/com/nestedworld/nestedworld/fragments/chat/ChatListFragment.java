@@ -28,6 +28,7 @@ import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
+import com.nestedworld.nestedworld.models.Friend;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class ChatListFragment extends BaseFragment {
         });
     }
 
-    private void populateListView(final ArrayList<FriendsResponse.Friend> friends) {
+    private void populateListView(final ArrayList<Friend> friends) {
         if (mContext == null) {
             return;
         }
@@ -117,12 +118,12 @@ public class ChatListFragment extends BaseFragment {
     /**
      * * Custom adapter for displaying friend on the listView
      **/
-    private class FriendsAdapter extends ArrayAdapter<FriendsResponse.Friend> {
+    private class FriendsAdapter extends ArrayAdapter<Friend> {
 
         private static final int resource = R.layout.item_friend;
         private final Context mContext;
 
-        public FriendsAdapter(@NonNull final Context context, @NonNull final ArrayList<FriendsResponse.Friend> friendList) {
+        public FriendsAdapter(@NonNull final Context context, @NonNull final ArrayList<Friend> friendList) {
             super(context, resource, friendList);
             this.mContext = context;
         }
@@ -148,7 +149,7 @@ public class ChatListFragment extends BaseFragment {
             }
 
             //get the currentFriend
-            FriendsResponse.Friend currentFriend = getItem(position);
+            Friend currentFriend = getItem(position);
 
             //display the friend name
             friendHolder.friendName.setText(currentFriend.info.pseudo);

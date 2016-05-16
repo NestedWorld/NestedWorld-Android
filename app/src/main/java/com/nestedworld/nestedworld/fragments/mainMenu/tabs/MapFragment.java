@@ -31,10 +31,13 @@ import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.places.PlacesResponse;
+import com.nestedworld.nestedworld.api.http.models.response.places.regions.RegionResponse;
 import com.nestedworld.nestedworld.api.http.models.response.places.regions.RegionsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.nestedworld.nestedworld.helper.permission.PermissionUtils;
+import com.nestedworld.nestedworld.models.Place;
+import com.nestedworld.nestedworld.models.Region;
 import com.rey.material.widget.ProgressView;
 
 import java.util.Arrays;
@@ -251,7 +254,7 @@ public class MapFragment extends BaseFragment {
             NestedWorldHttpApi.getInstance(mContext).getRegions(new Callback<RegionsResponse>() {
                 @Override
                 public void onSuccess(Response<RegionsResponse> response) {
-                    for (RegionsResponse.Region region : response.body().regions) {
+                    for (Region region : response.body().regions) {
                         retrieveAndPopulateRegion(region);
                     }
                 }
@@ -265,23 +268,21 @@ public class MapFragment extends BaseFragment {
             });
         }
 
-        private void retrieveAndPopulateRegion(@NonNull final RegionsResponse.Region region) {
+        private void retrieveAndPopulateRegion(@NonNull final Region region) {
 
-            NestedWorldHttpApi.getInstance(mContext).getRegionDetails(region, new retrofit2.Callback<RegionsResponse.Region>() {
+            NestedWorldHttpApi.getInstance(mContext).getRegionDetails(region, new Callback<RegionResponse>() {
                 @Override
-                public void onResponse(Call<RegionsResponse.Region> call, Response<RegionsResponse.Region> response) {
-                    if (isRegionDisplayable(response.body())) {
+                public void onSuccess(Response<RegionResponse> response) {
+                    if (isRegionDisplayable(response.body().region)) {
                         displayRegion(region, Color.BLACK);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<RegionsResponse.Region> call, Throwable t) {
+                public void onError(@NonNull KIND errorKind, @Nullable Response<RegionResponse> response) {
                     //TODO display error message
                 }
             });
-
-
         }
 
 
@@ -291,7 +292,7 @@ public class MapFragment extends BaseFragment {
                 @Override
                 public void onSuccess(Response<PlacesResponse> response) {
                     //request success, we display nearest places
-                    for (PlacesResponse.Place place : response.body().places) {
+                    for (Place place : response.body().places) {
                         if (isPlaceDisplayable(place)) {
                             displayMarker(place.name, BitmapDescriptorFactory.HUE_BLUE, place.latitude(), place.longitude());
                         }
@@ -321,7 +322,7 @@ public class MapFragment extends BaseFragment {
             mGoogleMap.addMarker(marker);
         }
 
-        private void displayRegion(@NonNull final RegionsResponse.Region region, final int color) {
+        private void displayRegion(@NonNull final Region region, final int color) {
 
             // Instantiates a new Polyline object and adds points to define a rectangle
             PolygonOptions rectOptions = new PolygonOptions();
@@ -337,7 +338,7 @@ public class MapFragment extends BaseFragment {
             mGoogleMap.addPolygon(rectOptions);
         }
 
-        private boolean isPlaceDisplayable(@NonNull final PlacesResponse.Place place) {
+        private boolean isPlaceDisplayable(@NonNull final Place place) {
             //we calculate the position between the user and the place
             final float ratioLat = Math.abs(place.latitude() - (float) mGoogleMap.getCameraPosition().target.latitude);
             final float ratioLong = Math.abs(place.longitude() - (float) mGoogleMap.getCameraPosition().target.longitude);
@@ -348,7 +349,7 @@ public class MapFragment extends BaseFragment {
             return (ratioLat < 1.1) && (ratioLong < 1.1);
         }
 
-        private boolean isRegionDisplayable(@NonNull final RegionsResponse.Region region) {
+        private boolean isRegionDisplayable(@NonNull final Region region) {
             return false;
         }
     }

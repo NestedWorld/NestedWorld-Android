@@ -20,8 +20,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.http.models.common.Monster;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.Monster;
 
 import java.util.ArrayList;
 import java.util.List;

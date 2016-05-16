@@ -25,11 +25,12 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.common.User;
 import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.models.UserMonster;
 
 import java.util.ArrayList;
 
@@ -155,10 +156,10 @@ public class HomeFragment extends BaseFragment {
      */
     private class UserMonsterAdapter extends BaseAdapter {
 
-        private final ArrayList<UserMonsterResponse.UserMonsters> userMonsters;
+        private final ArrayList<UserMonster> userMonsters;
         private final RoundedBitmapDrawable defaultMonsterAvatar;
 
-        public UserMonsterAdapter(@NonNull final ArrayList<UserMonsterResponse.UserMonsters> userMonsters) {
+        public UserMonsterAdapter(@NonNull final ArrayList<UserMonster> userMonsters) {
             this.userMonsters = userMonsters;
 
             //On init un placeHolder
@@ -186,7 +187,7 @@ public class HomeFragment extends BaseFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             //Get user
-            final UserMonsterResponse.UserMonsters monster = (UserMonsterResponse.UserMonsters) getItem(position);
+            final UserMonster monster = (UserMonster) getItem(position);
 
             //Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {

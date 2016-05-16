@@ -17,12 +17,13 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.Friend;
 
 import butterknife.Bind;
 
 public class ChatFragment extends BaseFragment {
 
-    private static FriendsResponse.Friend mFriend;
+    private static Friend mFriend;
     @Bind(R.id.editText_chat)
     EditText editTextChat;
     @Bind(R.id.listView_chat)
@@ -32,7 +33,7 @@ public class ChatFragment extends BaseFragment {
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final FriendsResponse.Friend friend) {
+    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Friend friend) {
         //TODO avoid leak on static reference
         mFriend = friend;
 

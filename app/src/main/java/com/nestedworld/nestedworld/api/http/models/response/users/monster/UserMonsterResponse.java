@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.api.http.models.response.users.monster;
 
 import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.api.http.models.common.Monster;
+import com.nestedworld.nestedworld.models.UserMonster;
 
 import java.util.ArrayList;
 
@@ -10,13 +10,5 @@ import java.util.ArrayList;
  */
 public class UserMonsterResponse {
     @Expose
-    public ArrayList<UserMonsters> monsters;
-
-    public static class UserMonsters {
-        @Expose
-        public Monster infos;
-
-        @Expose
-        public String surname;
-    }
+    public ArrayList<UserMonster> monsters;
 }

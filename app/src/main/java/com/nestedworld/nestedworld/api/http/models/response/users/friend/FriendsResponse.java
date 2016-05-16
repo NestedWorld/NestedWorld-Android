@@ -2,7 +2,8 @@ package com.nestedworld.nestedworld.api.http.models.response.users.friend;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.api.http.models.common.User;
+import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.models.User;
 
 import java.util.ArrayList;
 
@@ -12,10 +13,4 @@ import java.util.ArrayList;
 public class FriendsResponse {
     @Expose
     public ArrayList<Friend> friends;
-
-    public static class Friend {
-        @Expose
-        @SerializedName("user")
-        public User info;
-    }
 }

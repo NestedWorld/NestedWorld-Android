@@ -27,9 +27,9 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.common.Monster;
 import com.nestedworld.nestedworld.api.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.Monster;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
