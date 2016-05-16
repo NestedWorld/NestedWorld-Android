@@ -181,7 +181,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public long getItemId(int position) {
-            return userMonsters.get(position).infos.id;
+            return userMonsters.get(position).infos.monsterId;
         }
 
         @Override

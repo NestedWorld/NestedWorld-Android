@@ -1,10 +1,11 @@
 package com.nestedworld.nestedworld.models;
 
 import com.google.gson.annotations.Expose;
+import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 
-public class Place {
+public class Place extends SugarRecord {
     @Expose
     public String url;
 
@@ -26,6 +27,11 @@ public class Place {
             return position.get(0);
         }
         return 0.0f;
+    }
+
+    //Empty constructor for SugarRecord
+    public Place() {
+
     }
 
     //Generated

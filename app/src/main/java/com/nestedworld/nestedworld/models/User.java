@@ -1,8 +1,9 @@
 package com.nestedworld.nestedworld.models;
 
 import com.google.gson.annotations.Expose;
+import com.orm.SugarRecord;
 
-public class User {
+public class User extends SugarRecord {
     @Expose
     public String birth_date;
 
@@ -29,6 +30,11 @@ public class User {
 
     @Expose
     public String gender;
+
+    //Empty constructor for SugarRecord
+    public User() {
+
+    }
 
     //Generated method
     @Override

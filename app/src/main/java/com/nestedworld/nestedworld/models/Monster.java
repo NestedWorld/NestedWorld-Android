@@ -1,10 +1,13 @@
 package com.nestedworld.nestedworld.models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
-public class Monster {
+public class Monster extends SugarRecord {
     @Expose
-    public int id;
+    @SerializedName("id")
+    public int monsterId;
 
     @Expose
     public String hp;
@@ -21,11 +24,16 @@ public class Monster {
     @Expose
     public String sprite;
 
+    //Empty constructor for SugarRecord
+    public Monster(){
+
+    }
+
     //Generated
     @Override
     public String toString() {
         return "Monster{" +
-                "id=" + id +
+                "monsterId=" + monsterId +
                 ", hp='" + hp + '\'' +
                 ", defense=" + defense +
                 ", attack=" + attack +
