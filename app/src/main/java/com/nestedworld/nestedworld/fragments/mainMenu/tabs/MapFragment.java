@@ -179,7 +179,12 @@ public class MapFragment extends BaseFragment {
             LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
 
-            Location userLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+            Location userLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
+            if (userLocation == null) {
+                //TODO change static string to R reference
+                Toast.makeText(mContext, "Can't retrieve your position", Toast.LENGTH_LONG).show();
+                return;
+            }
 
             //We center the map on the userLocation
             mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -281,6 +286,7 @@ public class MapFragment extends BaseFragment {
                 @Override
                 public void onError(@NonNull KIND errorKind, @Nullable Response<RegionResponse> response) {
                     //TODO display error message
+
                 }
             });
         }
