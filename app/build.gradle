@@ -52,7 +52,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
 
     //ORM
-    compile 'com.github.satyan:sugar:1.4'
+    compile 'com.github.satyan:sugar:1.5'
 
     //MessagePack (real time API)
     compile 'org.msgpack:msgpack-core:0.8.6'
