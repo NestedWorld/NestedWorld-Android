@@ -182,8 +182,6 @@ public class MapFragment extends BaseFragment {
 
             Location userLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
             if (userLocation == null) {
-                ((Activity)mContext).finish();
-                //TODO change static string to R reference
                 Toast.makeText(mContext, "Can't retrieve your position", Toast.LENGTH_LONG).show();
                 return;
             }
