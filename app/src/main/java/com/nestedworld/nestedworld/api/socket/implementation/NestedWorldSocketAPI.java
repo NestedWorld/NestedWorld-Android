@@ -11,7 +11,7 @@ import com.nestedworld.nestedworld.helper.log.LogHelper;
 
 import org.msgpack.value.ValueFactory;
 
-public class NestedWorldSocketAPI {
+public final class NestedWorldSocketAPI {
 
     private static NestedWorldSocketAPI mSingleton;
     private final String TAG = getClass().getSimpleName();

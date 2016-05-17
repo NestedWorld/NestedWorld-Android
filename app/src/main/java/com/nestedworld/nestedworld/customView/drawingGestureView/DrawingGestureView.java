@@ -106,7 +106,7 @@ public class DrawingGestureView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                init_path(x, y);
+                initPath(x, y);
                 invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -128,7 +128,7 @@ public class DrawingGestureView extends View {
         return true;
     }
 
-    private void init_path(float x, float y) {
+    private void initPath(float x, float y) {
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;

@@ -209,7 +209,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
      * Custom FragmentPagerAdapter
      * It's use for displaying the TABS under activity.mainMenu
      */
-    private class TabsAdapter extends FragmentPagerAdapter {
+    private static class TabsAdapter extends FragmentPagerAdapter {
         protected final String TAG = getClass().getSimpleName();
 
         private final List<CustomTab> tabList = new ArrayList<>();

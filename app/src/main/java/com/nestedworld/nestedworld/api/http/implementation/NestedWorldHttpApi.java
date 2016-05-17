@@ -45,7 +45,7 @@ import retrofit2.http.Url;
 /**
  * Simple Api containing the retrofit interface and his implementation
  */
-public class NestedWorldHttpApi {
+public final class NestedWorldHttpApi {
     private static NestedWorldHttpApi mSingleton;
     private final String TAG = getClass().getSimpleName();
     private ApiInterface mClient;

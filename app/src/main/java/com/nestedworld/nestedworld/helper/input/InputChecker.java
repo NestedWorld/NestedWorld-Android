@@ -8,6 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputChecker {
+
+    public final int SHORTEST_PASSWORD_LENGTH = 6;
+
     public static boolean checkEmailFormat(@NonNull final String email) {
         boolean isValid = false;
 
@@ -22,6 +25,6 @@ public class InputChecker {
     }
 
     public static boolean checkPasswordFormat(@NonNull final String password) {
-        return !TextUtils.isEmpty(password) && password.length() >= 6;
+        return !TextUtils.isEmpty(password) && password.length() >= SHORTEST_PASSWORD_LENGTH;
     }
 }

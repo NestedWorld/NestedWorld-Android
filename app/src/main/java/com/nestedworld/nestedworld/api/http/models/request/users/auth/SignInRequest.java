@@ -12,9 +12,9 @@ public class SignInRequest {
     @Expose
     final String app_token;
 
-    public SignInRequest(String email, String password, String app_token) {
+    public SignInRequest(String email, String password, String appToken) {
         this.email = email;
         this.password = password;
-        this.app_token = app_token;
+        this.app_token = appToken;
     }
 }

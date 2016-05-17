@@ -191,7 +191,7 @@ public class MapFragment extends BaseFragment {
             nestedWorldMap.moveCamera(userLocation.getLatitude(), userLocation.getLongitude(), 12);
             nestedWorldMap.build(new NestedWorldMap.OnMapReadyListener() {
                 @Override
-                public void OnMapReady() {
+                public void onMapReady() {
                     //We stop the loading animation
                     progressView.stop();
                 }
@@ -205,7 +205,7 @@ public class MapFragment extends BaseFragment {
         private final Context mContext;
 
         public interface OnMapReadyListener {
-            void OnMapReady();
+            void onMapReady();
         }
 
         public NestedWorldMap(@NonNull final Context context, @NonNull final GoogleMap googleMap) {

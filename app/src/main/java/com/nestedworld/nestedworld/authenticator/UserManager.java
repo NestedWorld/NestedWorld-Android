@@ -17,7 +17,7 @@ import com.orm.query.Select;
  * AccountManager abstraction
  * /!\ this implementation only allow one account per application (it's a personal choice) /!\
  */
-public class UserManager {
+public final class UserManager {
     //singleton
     private static UserManager mUserManager = null;
 
@@ -106,7 +106,7 @@ public class UserManager {
 
     public Boolean deleteCurrentAccount(@NonNull final Context context) {
         if (mAccount == null) {
-            return null;
+            return false;
         }
         return deleteAccount(context, mAccount);
     }

@@ -87,7 +87,7 @@ public class ChatListFragment extends BaseFragment {
     /**
      * * Custom adapter for displaying friend on the listView
      **/
-    private class FriendsAdapter extends ArrayAdapter<Friend> {
+    private static class FriendsAdapter extends ArrayAdapter<Friend> {
 
         private static final int resource = R.layout.item_friend;
         private final Context mContext;
