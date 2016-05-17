@@ -25,7 +25,7 @@ public class UserManager {
 
     //private properties
     private final AccountManager mAccountManager;
-    private Account mAccount;
+    @Nullable private Account mAccount;
 
     /*
     ** Constructor
@@ -92,6 +92,9 @@ public class UserManager {
 
     @Nullable
     public User getUserEntity() {
+        if (mAccount == null) {
+            return null;
+        }
         return Select.from(User.class).where(Condition.prop("email").eq(mAccount.name)).first();
     }
 
@@ -101,6 +104,9 @@ public class UserManager {
     }
 
     public Boolean deleteCurrentAccount(@NonNull final Context context) {
+        if (mAccount == null) {
+            return null;
+        }
         return deleteAccount(context, mAccount);
     }
 
