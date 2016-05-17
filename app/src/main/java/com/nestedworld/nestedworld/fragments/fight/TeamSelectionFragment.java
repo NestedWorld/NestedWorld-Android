@@ -79,16 +79,12 @@ public class TeamSelectionFragment extends BaseFragment {
         private Context mContext;
 
         public MonsterPagerAdapter(@NonNull Context context, @NonNull ArrayList<Monster> monsters) {
-            Log.e(TAG, "INIT PAGER");
             mMonsters = monsters;
             mContext = context;
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-
-            Log.e(TAG, "GET ITEM FROM : " + position);
-
             //Create the view
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_monster, container, false);
 
