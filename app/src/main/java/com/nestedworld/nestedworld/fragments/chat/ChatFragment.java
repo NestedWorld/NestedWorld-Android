@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Friend;
 

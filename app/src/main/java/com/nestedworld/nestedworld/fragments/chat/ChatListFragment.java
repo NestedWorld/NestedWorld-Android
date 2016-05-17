@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -23,21 +22,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.http.callback.Callback;
-import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.nestedworld.nestedworld.models.Friend;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import retrofit2.Response;
 
 public class ChatListFragment extends BaseFragment {
 

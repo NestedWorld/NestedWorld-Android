@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
 import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.models.request.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.api.http.models.request.users.auth.ForgotPasswordRequest;

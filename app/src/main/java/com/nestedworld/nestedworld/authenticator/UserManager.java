@@ -5,11 +5,9 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.gson.Gson;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.nestedworld.nestedworld.models.User;
 import com.orm.query.Condition;
@@ -25,7 +23,8 @@ public class UserManager {
 
     //private properties
     private final AccountManager mAccountManager;
-    @Nullable private Account mAccount;
+    @Nullable
+    private Account mAccount;
 
     /*
     ** Constructor
@@ -39,6 +38,7 @@ public class UserManager {
     ** singleton
      */
     private static UserManager mUserManager = null;
+
     public static UserManager get(@NonNull final Context context) {
         if (mUserManager == null) {
             mUserManager = new UserManager(context);
@@ -55,13 +55,13 @@ public class UserManager {
     ** public method
      */
     public String getCurrentAccountName() {
-        if (mAccount == null)  {
+        if (mAccount == null) {
             return "";
         }
         return mAccount.name;
     }
 
-    public boolean newAccount(@NonNull final Context context,@NonNull final String name,
+    public boolean newAccount(@NonNull final Context context, @NonNull final String name,
                               @NonNull final String password, @NonNull final String authToken) {
 
         LogHelper.d(TAG, "newAccount : "

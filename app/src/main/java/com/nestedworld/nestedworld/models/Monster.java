@@ -25,7 +25,7 @@ public class Monster extends SugarRecord {
     public String sprite;
 
     //Empty constructor for SugarRecord
-    public Monster(){
+    public Monster() {
 
     }
 

@@ -10,7 +10,6 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,7 @@ public class TeamSelectionFragment extends BaseFragment {
         }
 
         ArrayList<Monster> list = new ArrayList<>();
-        for (int i=0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             Monster monster = new Monster();
             monster.name = "Coucou je suis le monstre: " + i;
 

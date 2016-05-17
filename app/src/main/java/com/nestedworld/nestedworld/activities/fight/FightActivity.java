@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.fragments.fight.FightFragment;
 import com.nestedworld.nestedworld.fragments.fight.TeamSelectionFragment;
 
 import butterknife.Bind;

@@ -1,9 +1,6 @@
 package com.nestedworld.nestedworld.models;
 
-import android.util.Log;
-
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 import com.orm.query.Condition;
 import com.orm.query.Select;

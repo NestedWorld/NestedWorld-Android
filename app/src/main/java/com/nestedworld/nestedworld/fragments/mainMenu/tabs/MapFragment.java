@@ -1,11 +1,9 @@
 package com.nestedworld.nestedworld.fragments.mainMenu.tabs;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -47,7 +45,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import retrofit2.Call;
 import retrofit2.Response;
 
 /**
@@ -206,6 +203,7 @@ public class MapFragment extends BaseFragment {
 
         private GoogleMap mGoogleMap;
         private final Context mContext;
+
         public interface OnMapReady {
             void OnMapReady();
         }
