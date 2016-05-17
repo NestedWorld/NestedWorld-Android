@@ -189,10 +189,10 @@ public class MapFragment extends BaseFragment {
 
             NestedWorldMap nestedWorldMap = new NestedWorldMap(mContext, mGoogleMap);
             nestedWorldMap.moveCamera(userLocation.getLatitude(), userLocation.getLongitude(), 12);
-            nestedWorldMap.build(new NestedWorldMap.OnMapReady() {
+            nestedWorldMap.build(new NestedWorldMap.OnMapReadyListener() {
                 @Override
                 public void OnMapReady() {
-                    //We stop the laoding animation
+                    //We stop the loading animation
                     progressView.stop();
                 }
             });
@@ -201,10 +201,10 @@ public class MapFragment extends BaseFragment {
 
     private static class NestedWorldMap {
 
-        private GoogleMap mGoogleMap;
+        private final GoogleMap mGoogleMap;
         private final Context mContext;
 
-        public interface OnMapReady {
+        public interface OnMapReadyListener {
             void OnMapReady();
         }
 
@@ -216,7 +216,7 @@ public class MapFragment extends BaseFragment {
         /*
         * Public method
          */
-        public void build(@NonNull final OnMapReady onMapInitialize) {
+        public void build(@NonNull final OnMapReadyListener onMapInitialize) {
             ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2, 1, TimeUnit.MINUTES, new SynchronousQueue<Runnable>());
 
             executor.execute(new Runnable() {

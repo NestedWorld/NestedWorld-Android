@@ -122,9 +122,11 @@ public class HomeFragment extends BaseFragment {
             //go to launch screen & kill the current context
             startActivity(RegistrationActivity.class);
             ((AppCompatActivity) mContext).finish();
+
+            return;
         }
 
-        //on affiche les informations de l'utilisateur
+        //Display user information
         textViewUsername.setText(user.pseudo);
         textViewUserLevel.setText("level 16");//TODO metre les bonnes info
         textViewMonsterSaw.setText("12");
@@ -132,13 +134,13 @@ public class HomeFragment extends BaseFragment {
         textViewAreaCaptured.setText("42");
         textViewAllyOnline.setText("12");
 
-        //On arrondie le placeHolder
+        //Make placeHolder rounded
         Resources resources = getResources();
         Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
         roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
 
-        //On affiche l'image de profil de l'utilisateur
+        //Display user picture
         Glide.with(mContext)
                 .load(user.avatar)
                 .placeholder(roundedBitmapDrawable)
@@ -158,7 +160,7 @@ public class HomeFragment extends BaseFragment {
         public UserMonsterAdapter(@NonNull final List<UserMonster> userMonsters) {
             this.userMonsters = userMonsters;
 
-            //On init un placeHolder
+            //Init placeHolder
             Resources resources = getResources();
             Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_monster);
             defaultMonsterAvatar = RoundedBitmapDrawableFactory.create(resources, bitmap);
@@ -194,7 +196,7 @@ public class HomeFragment extends BaseFragment {
             final TextView textviewName = (TextView) convertView.findViewById(R.id.textview_monster_name);
             textviewName.setText(monster.info().name);
 
-            //On affiche l'image du monstre
+            //Display monster picture
             final ImageView imageViewMonster = (ImageView) convertView.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
                     .load(monster.info().sprite)

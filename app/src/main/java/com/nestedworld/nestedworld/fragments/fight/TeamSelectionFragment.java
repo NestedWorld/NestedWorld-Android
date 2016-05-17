@@ -59,7 +59,7 @@ public class TeamSelectionFragment extends BaseFragment {
         ArrayList<Monster> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Monster monster = new Monster();
-            monster.name = "Coucou je suis le monstre: " + i;
+            monster.name = getString(R.string.app_name) + i;
 
             list.add(monster);
         }
@@ -75,7 +75,7 @@ public class TeamSelectionFragment extends BaseFragment {
 
         private final String TAG = MonsterPagerAdapter.class.getSimpleName();
         private final List<Monster> mMonsters;
-        private Context mContext;
+        private final Context mContext;
 
         public MonsterPagerAdapter(@NonNull Context context, @NonNull ArrayList<Monster> monsters) {
             mMonsters = monsters;

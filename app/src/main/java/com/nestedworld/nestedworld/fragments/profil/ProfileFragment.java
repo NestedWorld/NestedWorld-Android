@@ -25,9 +25,9 @@ import retrofit2.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ProfilFragment extends BaseFragment {
+public class ProfileFragment extends BaseFragment {
 
-    public final static String FRAGMENT_NAME = ProfilFragment.class.getSimpleName();
+    public final static String FRAGMENT_NAME = ProfileFragment.class.getSimpleName();
 
     @Bind(R.id.textView_gender)
     TextView textViewGender;
@@ -47,7 +47,7 @@ public class ProfilFragment extends BaseFragment {
      */
     public static void load(@NonNull final FragmentManager fragmentManager, final boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new ProfilFragment());
+        fragmentTransaction.replace(R.id.container, new ProfileFragment());
         if (toBackStack) {
             fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         }

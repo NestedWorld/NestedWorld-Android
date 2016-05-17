@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.fragments.profil.ProfilFragment;
+import com.nestedworld.nestedworld.fragments.profil.ProfileFragment;
 
 import butterknife.Bind;
 
@@ -26,7 +26,7 @@ public class ProfileActivity extends BaseAppCompatActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpToolbar();
-        ProfilFragment.load(getSupportFragmentManager(), false);
+        ProfileFragment.load(getSupportFragmentManager(), false);
     }
 
     /*

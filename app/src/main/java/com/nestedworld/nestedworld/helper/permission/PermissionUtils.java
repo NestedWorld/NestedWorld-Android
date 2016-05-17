@@ -47,7 +47,7 @@ public class PermissionUtils {
     }
 
     //asking for a single permissions from an appcompatActivity
-    public static void askForPermissionFromAcitivity(@NonNull final Context context, @NonNull final String permissionName) {
+    public static void askForPermissionFromActivity(@NonNull final Context context, @NonNull final String permissionName) {
         LogHelper.d(TAG, "Asking for permission : " + permissionName);
 
         if (checkSelfPermission(context, permissionName) == PackageManager.PERMISSION_DENIED) {
