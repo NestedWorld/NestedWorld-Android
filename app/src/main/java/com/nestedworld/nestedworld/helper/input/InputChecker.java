@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class InputChecker {
 
-    public final int SHORTEST_PASSWORD_LENGTH = 6;
+    public final static int SHORTEST_PASSWORD_LENGTH = 6;
 
     public static boolean checkEmailFormat(@NonNull final String email) {
         boolean isValid = false;
