@@ -66,7 +66,7 @@ public class ProfilFragment extends BaseFragment {
     protected void init(View rootView, Bundle savedInstanceState) {
         /*We retrieve the userData as the string and we decode the string*/
         if (mContext != null) {
-            final User user = UserManager.get(mContext).getCurrentUser(mContext);
+            final User user = UserManager.get(mContext).getUserEntity();
             if (user != null) {
             /*We display some information from the decoded user*/
                 textViewGender.setText(user.gender);

@@ -30,9 +30,11 @@ import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Monster;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import retrofit2.Response;
@@ -69,47 +71,35 @@ public class MonstersFragment extends BaseFragment {
         if (progressView != null) {
             progressView.start();
         }
-
-        if (mContext == null)
-            return;
-        NestedWorldHttpApi.getInstance(mContext).getMonsters(
-                new com.nestedworld.nestedworld.api.http.callback.Callback<MonstersResponse>() {
-                    @Override
-                    public void onSuccess(final Response<MonstersResponse> response) {
-                        if (progressView != null) {
-                            progressView.stop();
-                        }
-
-                        final MonsterAdapter adapter = new MonsterAdapter(mContext, response.body().monsters);
-                        // listViewMonstersList = null if we've change view before the end of the request
-                        if (listViewMonstersList != null) {
-                            listViewMonstersList.setAdapter(adapter);
-                            listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    final Monster selectedMonster = response.body().monsters.get(position);
-                                    displayMonsterDetail(selectedMonster, view);
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersResponse> response) {
-                        if (progressView != null) {
-                            progressView.stop();
-                        }
-
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_cant_get_monsters_list), response);
-                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                });
+        populateMonsters();
     }
 
     /*
     ** Utils
      */
-    private void displayMonsterDetail(@NonNull Monster monster, @NonNull final View view) {
+    private void populateMonsters() {
+        //Retrieve monsters from ORM
+        final List<Monster> monsters = Select.from(Monster.class).list();
+
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //create adapter
+        final MonsterAdapter adapter = new MonsterAdapter(mContext, monsters);
+
+        listViewMonstersList.setAdapter(adapter);
+        listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Monster selectedMonster = monsters.get(position);
+                populateMonsterDetail(selectedMonster, view);
+            }
+        });
+    }
+
+    private void populateMonsterDetail(@NonNull Monster monster, @NonNull final View view) {
 
         PopupWindow popup = new PopupWindow(mContext);
         if (mContext == null)
@@ -142,7 +132,7 @@ public class MonstersFragment extends BaseFragment {
         /*
         ** Constructor
          */
-        public MonsterAdapter(@NonNull Context context, @NonNull ArrayList<Monster> objects) {
+        public MonsterAdapter(@NonNull Context context, @NonNull List<Monster> objects) {
             super(context, 0, objects);
         }
 

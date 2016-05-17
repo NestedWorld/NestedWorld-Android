@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -23,20 +22,19 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
-import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.authenticator.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.models.UserMonster;
+import com.orm.query.Select;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -94,19 +92,9 @@ public class HomeFragment extends BaseFragment {
         if (mContext == null) {
             return;
         }
-        NestedWorldHttpApi.getInstance(mContext).getUserMonster(new Callback<UserMonsterResponse>() {
-            @Override
-            public void onSuccess(Response<UserMonsterResponse> response) {
-                if (gridView != null) {
-                    gridView.setAdapter(new UserMonsterAdapter(response.body().monsters));
-                }
-            }
 
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<UserMonsterResponse> response) {
-
-            }
-        });
+        List<UserMonster> monsters = Select.from(UserMonster.class).list();
+        gridView.setAdapter(new UserMonsterAdapter(monsters));
     }
 
     private void populateUserInfo() {
@@ -115,7 +103,7 @@ public class HomeFragment extends BaseFragment {
             return;
         }
 
-        User user = UserManager.get(mContext).getCurrentUser(mContext);
+        User user = UserManager.get(mContext).getUserEntity();
         if (user == null) {
             //avoid leek with the static instance
             NestedWorldHttpApi.reset();
@@ -156,10 +144,10 @@ public class HomeFragment extends BaseFragment {
      */
     private class UserMonsterAdapter extends BaseAdapter {
 
-        private final ArrayList<UserMonster> userMonsters;
+        private final List<UserMonster> userMonsters;
         private final RoundedBitmapDrawable defaultMonsterAvatar;
 
-        public UserMonsterAdapter(@NonNull final ArrayList<UserMonster> userMonsters) {
+        public UserMonsterAdapter(@NonNull final List<UserMonster> userMonsters) {
             this.userMonsters = userMonsters;
 
             //On init un placeHolder

@@ -1,10 +1,10 @@
 package com.nestedworld.nestedworld;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.nestedworld.nestedworld.helper.log.LogHelper;
+import com.orm.SugarApp;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -12,7 +12,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Application implementation
  * it allow the crash logger to be launch at the very start of the application
  */
-public class NestedWorldApp extends Application {
+public class NestedWorldApp extends SugarApp {
 
     private final static String TAG = NestedWorldApp.class.getSimpleName();
 

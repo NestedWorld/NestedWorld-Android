@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
+import com.nestedworld.nestedworld.api.http.callback.Callback;
 import com.nestedworld.nestedworld.api.http.models.request.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.api.http.models.request.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.api.http.models.request.users.auth.RegisterRequest;
@@ -33,7 +35,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
@@ -99,7 +100,7 @@ public class NestedWorldHttpApi {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
-                        .addHeader("X-User-Email", "" + UserManager.get(mContext).getCurrentAccountName())
+                        .addHeader("X-User-Email", UserManager.get(mContext).getCurrentAccountName())
                         .addHeader("Authorization", "Bearer " + UserManager.get(mContext).getCurrentAuthToken(mContext))
                         .build();
                 return chain.proceed(request);

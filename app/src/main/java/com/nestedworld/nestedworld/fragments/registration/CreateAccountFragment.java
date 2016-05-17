@@ -1,9 +1,9 @@
 package com.nestedworld.nestedworld.fragments.registration;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
+import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.RegisterResponse;
@@ -102,6 +102,7 @@ public class CreateAccountFragment extends BaseFragment {
                 new com.nestedworld.nestedworld.api.http.callback.Callback<RegisterResponse>() {
                     @Override
                     public void onSuccess(Response<RegisterResponse> response) {
+                        //Account successfully created, we can log in
                         login(email, password);
                     }
 
@@ -130,10 +131,10 @@ public class CreateAccountFragment extends BaseFragment {
                             return;
                         }
 
-                        if (UserManager.get(mContext).setCurrentUser(mContext, email, password, response.body().token, null)) {
-                            //display MainMenu and then stop le launchMenu
-                            startActivity(LaunchActivity.class);
-                            ((FragmentActivity) mContext).finish();
+                        if (UserManager.get(mContext).newAccount(mContext, email, password, response.body().token)) {
+                            //display MainMenu and stop this activity
+                            startActivity(MainMenuActivity.class);
+                            ((Activity) mContext).finish();
                         } else {
                             Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
                         }

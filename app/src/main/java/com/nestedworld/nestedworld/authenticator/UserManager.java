@@ -12,6 +12,8 @@ import android.support.annotation.Nullable;
 import com.google.gson.Gson;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.nestedworld.nestedworld.models.User;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 /**
  * AccountManager abstraction
@@ -36,22 +38,33 @@ public class UserManager {
     /*
     ** singleton
      */
+    private static UserManager mUserManager = null;
     public static UserManager get(@NonNull final Context context) {
-        return (new UserManager(context));
+        if (mUserManager == null) {
+            mUserManager = new UserManager(context);
+        }
+        return mUserManager;
+    }
+
+    //Call for leek avoidance
+    public static void reset() {
+        mUserManager = null;
     }
 
     /*
     ** public method
      */
-    @Nullable
-    public Account getCurrentAccount() {
-        return mAccount;
+    public String getCurrentAccountName() {
+        if (mAccount == null)  {
+            return "";
+        }
+        return mAccount.name;
     }
 
-    public boolean setCurrentUser(@NonNull final Context context,
-                                  @NonNull final String name, @NonNull final String password, @NonNull final String authToken,
-                                  @Nullable final Bundle userData) {
-        LogHelper.d(TAG, "setCurrentUser : "
+    public boolean newAccount(@NonNull final Context context,@NonNull final String name,
+                              @NonNull final String password, @NonNull final String authToken) {
+
+        LogHelper.d(TAG, "newAccount : "
                 + " name=" + name
                 + " password=" + password
                 + " authToken=" + authToken);
@@ -62,7 +75,8 @@ public class UserManager {
         if (account == null) {
             //We have to create a new account
             account = new Account(name, Constant.ACCOUNT_TYPE);
-            if (!mAccountManager.addAccountExplicitly(account, password, userData)) {
+            if (!mAccountManager.addAccountExplicitly(account, password, null)) {
+                LogHelper.d(TAG, "Can't create account");
                 return false;
             }
             LogHelper.d(TAG, "Successfully create a new account");
@@ -77,18 +91,8 @@ public class UserManager {
     }
 
     @Nullable
-    public User getCurrentUser(@NonNull final Context context) {
-        String userData = getCurrentUserData(context);
-        return new Gson().fromJson(userData, User.class);
-    }
-
-    public void setUserData(@NonNull final Context context, @NonNull final User user) {
-        final String json = new Gson().toJson(user);
-        setUserData(context, json);
-    }
-
-    public Boolean deleteCurrentAccount(@NonNull final Context context) {
-        return deleteAccount(context, mAccount);
+    public User getUserEntity() {
+        return Select.from(User.class).where(Condition.prop("email").eq(mAccount.name)).first();
     }
 
     @Nullable
@@ -96,12 +100,8 @@ public class UserManager {
         return SharedPreferenceUtils.getCurrentAuthToken(context);
     }
 
-    @Nullable
-    public String getCurrentAccountName() {
-        if (mAccount == null) {
-            return null;
-        }
-        return mAccount.name;
+    public Boolean deleteCurrentAccount(@NonNull final Context context) {
+        return deleteAccount(context, mAccount);
     }
 
     /*
@@ -116,16 +116,6 @@ public class UserManager {
             mAccountManager.removeAccount(account, null, null);
         }
         return true;
-    }
-
-    private void setUserData(@NonNull final Context context, @NonNull final String userData) {
-        LogHelper.d(TAG, "setUserData : " + userData);
-        SharedPreferenceUtils.setUserData(context, userData);
-    }
-
-    @Nullable
-    private String getCurrentUserData(@NonNull final Context context) {
-        return SharedPreferenceUtils.getUserData(context);
     }
 
     @Nullable
@@ -156,7 +146,6 @@ public class UserManager {
         private final static String TAG = SharedPreferenceUtils.class.getSimpleName();
 
         private final static String USER_DATA_PREF_NAME = "com.nestedworld.user_data";
-        private final static String KEY_USER_DATA = "data";
 
         private final static String ACCOUNT_DETAIL_PREF_NAME = "com.nestedworld.account_detail";
         private final static String KEY_ACCOUNT_NAME = "name";
@@ -193,19 +182,6 @@ public class UserManager {
         }
 
         /*
-        ** Account user
-         */
-        private static String getUserData(@NonNull final Context context) {
-            return context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_USER_DATA, "");
-        }
-
-        private static void setUserData(@NonNull final Context context, @NonNull final String userData) {
-            SharedPreferences.Editor edit = context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).edit();
-            edit.putString(KEY_USER_DATA, userData);
-            edit.apply();
-        }
-
-        /*
         ** Utils
          */
         private static void clearPref(@NonNull final Context context) {
@@ -218,5 +194,4 @@ public class UserManager {
             context.getSharedPreferences(USER_DATA_PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
         }
     }
-
 }

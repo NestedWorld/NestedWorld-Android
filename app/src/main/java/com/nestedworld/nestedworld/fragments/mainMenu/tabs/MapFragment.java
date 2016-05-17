@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.fragments.mainMenu.tabs;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -181,6 +182,7 @@ public class MapFragment extends BaseFragment {
 
             Location userLocation = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
             if (userLocation == null) {
+                ((Activity)mContext).finish();
                 //TODO change static string to R reference
                 Toast.makeText(mContext, "Can't retrieve your position", Toast.LENGTH_LONG).show();
                 return;

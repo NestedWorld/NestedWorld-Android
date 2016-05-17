@@ -10,6 +10,9 @@ public class Friend extends SugarRecord {
     public User info;
 
     //Empty constructor for SugarRecord
+    public Friend() {
+
+    }
 
     //Generated
     @Override

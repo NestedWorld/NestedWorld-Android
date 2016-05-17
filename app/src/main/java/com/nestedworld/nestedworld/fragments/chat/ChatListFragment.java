@@ -29,9 +29,11 @@ import com.nestedworld.nestedworld.api.http.models.response.users.friend.Friends
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.nestedworld.nestedworld.models.Friend;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -63,40 +65,14 @@ public class ChatListFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
-        retrieveFriendsList();
+        populateFriendList();
     }
 
-    private void retrieveFriendsList() {
+    private void populateFriendList() {
 
-        if (mContext == null) {
-            return;
-        }
+        List<Friend> friends = Select.from(Friend.class).list();
 
-        //start loading animation
-        progressView.start();
-
-        NestedWorldHttpApi.getInstance(mContext).getFriends(new Callback<FriendsResponse>() {
-            @Override
-            public void onSuccess(Response<FriendsResponse> response) {
-
-                //TODO display a message when friends is empty
-                populateListView(response.body().friends);
-
-                //stop loading animation
-                if (progressView != null) {
-                    progressView.stop();
-                }
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<FriendsResponse> response) {
-                LogHelper.d(TAG, "cannot retrieve friends");
-                //TODO display an error message
-            }
-        });
-    }
-
-    private void populateListView(final ArrayList<Friend> friends) {
+        //check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
@@ -123,7 +99,7 @@ public class ChatListFragment extends BaseFragment {
         private static final int resource = R.layout.item_friend;
         private final Context mContext;
 
-        public FriendsAdapter(@NonNull final Context context, @NonNull final ArrayList<Friend> friendList) {
+        public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
             super(context, resource, friendList);
             this.mContext = context;
         }
