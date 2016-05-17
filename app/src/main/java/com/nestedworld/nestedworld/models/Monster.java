@@ -7,7 +7,7 @@ import com.orm.SugarRecord;
 public class Monster extends SugarRecord {
     @Expose
     @SerializedName("id")
-    public int monsterId;
+    public int monster_id;
 
     @Expose
     public String hp;
@@ -32,8 +32,9 @@ public class Monster extends SugarRecord {
     //Generated
     @Override
     public String toString() {
+
         return "Monster{" +
-                "monsterId=" + monsterId +
+                "monsterId=" + monster_id +
                 ", hp='" + hp + '\'' +
                 ", defense=" + defense +
                 ", attack=" + attack +

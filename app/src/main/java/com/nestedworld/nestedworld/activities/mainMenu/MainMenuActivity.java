@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -31,6 +32,11 @@ import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
+import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.models.Monster;
+import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.models.UserMonster;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -143,33 +149,47 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         nestedWorldHttpApi.getUserInfo(new Callback<UserResponse>() {
             @Override
             public void onSuccess(Response<UserResponse> response) {
+                User.deleteAll(User.class);
+                response.body().user.save();
                 nestedWorldHttpApi.getFriends(new Callback<FriendsResponse>() {
                     @Override
                     public void onSuccess(Response<FriendsResponse> response) {
+                        Friend.deleteAll(Friend.class);
+                        for (Friend friend : response.body().friends) {
+                            friend.save();
+                        }
                         nestedWorldHttpApi.getMonsters(new Callback<MonstersResponse>() {
                             @Override
                             public void onSuccess(Response<MonstersResponse> response) {
+                                Monster.deleteAll(Monster.class);
+                                for (Monster monster : response.body().monsters) {
+                                    monster.save();
+                                }
                                 nestedWorldHttpApi.getUserMonster(new Callback<UserMonsterResponse>() {
                                     @Override
                                     public void onSuccess(Response<UserMonsterResponse> response) {
+                                        UserMonster.deleteAll(UserMonster.class);
+
+                                        for (UserMonster userMonster : response.body().monsters) {
+                                            userMonster.fkmonster = userMonster.infos.monster_id;
+                                            userMonster.save();
+                                        }
+
                                         progressView.stop();
                                         initTabs();
                                     }
-
                                     @Override
                                     public void onError(@NonNull KIND errorKind, @Nullable Response<UserMonsterResponse> response) {
                                         onUpdateDatabaseError();
                                     }
                                 });
                             }
-
                             @Override
                             public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersResponse> response) {
                                 onUpdateDatabaseError();
                             }
                         });
                     }
-
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<FriendsResponse> response) {
                         onUpdateDatabaseError();

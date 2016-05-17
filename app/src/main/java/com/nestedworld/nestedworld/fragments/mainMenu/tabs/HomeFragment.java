@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,10 +89,17 @@ public class HomeFragment extends BaseFragment {
     ** Utils
      */
     private void populateMonstersList() {
-        //TODO afficher un spinner sur la gridview
         if (mContext == null) {
             return;
         }
+
+        for (Monster monster : Select.from(Monster.class).list()) {
+            Log.e("INFO", monster.toString());
+        }
+        for (UserMonster monster : Select.from(UserMonster.class).list()) {
+            Log.e("INFO", monster.toString());
+        }
+
 
         List<UserMonster> monsters = Select.from(UserMonster.class).list();
         gridView.setAdapter(new UserMonsterAdapter(monsters));
@@ -169,7 +177,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public long getItemId(int position) {
-            return userMonsters.get(position).infos.monsterId;
+            return userMonsters.get(position).info().monster_id;
         }
 
         @Override
@@ -184,12 +192,12 @@ public class HomeFragment extends BaseFragment {
 
             //Populate the name
             final TextView textviewName = (TextView) convertView.findViewById(R.id.textview_monster_name);
-            textviewName.setText(monster.infos.name);
+            textviewName.setText(monster.info().name);
 
             //On affiche l'image du monstre
             final ImageView imageViewMonster = (ImageView) convertView.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
-                    .load(monster.infos.sprite)
+                    .load(monster.info().sprite)
                     .placeholder(defaultMonsterAvatar)
                     .bitmapTransform(new CropCircleTransformation(mContext))
                     .centerCrop()
