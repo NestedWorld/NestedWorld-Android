@@ -6,7 +6,7 @@ import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAP
 
 public abstract class ConnectionListener {
 
-    public abstract void OnConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI);
+    public abstract void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI);
 
-    public abstract void OnConnectionLost();
+    public abstract void onConnectionLost();
 }

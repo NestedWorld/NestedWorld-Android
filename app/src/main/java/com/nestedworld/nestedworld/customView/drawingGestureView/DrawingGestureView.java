@@ -122,6 +122,8 @@ public class DrawingGestureView extends View {
                 clearDrawing();
                 clearTilesBackground();
                 break;
+            default:
+                break;
         }
         return true;
     }

@@ -3,6 +3,12 @@ package com.nestedworld.nestedworld.models;
 import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 
+/**
+ * Simple model for :
+ * - mapping a json response with Gson anotation
+ * - mapping a sql table with SugarORM
+ * /!\ Keep the default constructor empty (see sugarOrm doc)
+ */
 public class User extends SugarRecord {
     @Expose
     public String birth_date;
@@ -33,7 +39,7 @@ public class User extends SugarRecord {
 
     //Empty constructor for SugarRecord
     public User() {
-
+        //keep empty
     }
 
     //Generated method

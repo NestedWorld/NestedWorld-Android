@@ -184,20 +184,23 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
+            View view = convertView;
+
             //Get user
             final UserMonster monster = (UserMonster) getItem(position);
 
             //Check if an existing view is being reused, otherwise inflate the view
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
+            if (view == null) {
+                view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
             }
 
             //Populate the name
-            final TextView textviewName = (TextView) convertView.findViewById(R.id.textview_monster_name);
+            final TextView textviewName = (TextView) view.findViewById(R.id.textview_monster_name);
             textviewName.setText(monster.info().name);
 
             //Display monster picture
-            final ImageView imageViewMonster = (ImageView) convertView.findViewById(R.id.imageView_monster);
+            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
                     .load(monster.info().sprite)
                     .placeholder(defaultMonsterAvatar)
@@ -205,7 +208,7 @@ public class HomeFragment extends BaseFragment {
                     .centerCrop()
                     .into(imageViewMonster);
 
-            return convertView;
+            return view;
         }
     }
 }

@@ -90,12 +90,12 @@ public class ProfileFragment extends BaseFragment {
                 new com.nestedworld.nestedworld.api.http.callback.Callback<LogoutResponse>() {
                     @Override
                     public void onSuccess(Response<LogoutResponse> response) {
-
+                        //Server has accept our logout
                     }
 
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<LogoutResponse> response) {
-
+                        //Server refuse our logout
                     }
                 });
 

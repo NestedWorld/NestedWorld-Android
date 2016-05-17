@@ -49,6 +49,8 @@ public class RetrofitErrorHandler {
                 return getNetworkError(context);
             case SERVER:
                 return getUnexpectedError(context);
+            default:
+                break;
         }
         return defaultMessage;
     }

@@ -58,7 +58,7 @@ public class FightFragment extends BaseFragment {
         /*Init the socket*/
         NestedWorldSocketAPI.getInstance(new ConnectionListener() {
             @Override
-            public void OnConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+            public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
                 /*Socket successfully init*/
                 mNestedWorldSocketAPI = nestedWorldSocketAPI;
 
@@ -72,7 +72,7 @@ public class FightFragment extends BaseFragment {
             }
 
             @Override
-            public void OnConnectionLost() {
+            public void onConnectionLost() {
                 if (mContext == null) {
                     return;
                 }

@@ -18,13 +18,16 @@ import com.orm.query.Select;
  * /!\ this implementation only allow one account per application (it's a personal choice) /!\
  */
 public class UserManager {
+    //singleton
+    private static UserManager mUserManager = null;
+
     //private static field
     private final static String TAG = UserManager.class.getSimpleName();
 
     //private properties
     private final AccountManager mAccountManager;
     @Nullable
-    private Account mAccount;
+    private Account mAccount = null;
 
     /*
     ** Constructor
@@ -37,8 +40,6 @@ public class UserManager {
     /*
     ** singleton
      */
-    private static UserManager mUserManager = null;
-
     public static UserManager get(@NonNull final Context context) {
         if (mUserManager == null) {
             mUserManager = new UserManager(context);

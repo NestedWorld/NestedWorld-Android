@@ -70,7 +70,7 @@ public class ShopFragment extends BaseFragment {
         progressView.start();
         NestedWorldSocketAPI.getInstance(new ConnectionListener() {
             @Override
-            public void OnConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+            public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
                 progressView.stop();
                 mNestedWorldSocketApi = nestedWorldSocketAPI;
                 initFightButton();
@@ -78,7 +78,7 @@ public class ShopFragment extends BaseFragment {
             }
 
             @Override
-            public void OnConnectionLost() {
+            public void onConnectionLost() {
                 mNestedWorldSocketApi = null;
                 Toast.makeText(mContext, "Connection lost", Toast.LENGTH_LONG).show();
             }

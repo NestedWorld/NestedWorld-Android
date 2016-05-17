@@ -4,10 +4,16 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
+/**
+ * Simple model for :
+ * - mapping a json response with Gson anotation
+ * - mapping a sql table with SugarORM
+ * /!\ Keep the default constructor empty (see sugarOrm doc)
+ */
 public class Monster extends SugarRecord {
     @Expose
     @SerializedName("id")
-    public int monster_id;
+    public int monster_id;// the sql table will be called monsterid (see sugarOrm doc)
 
     @Expose
     public String hp;
@@ -26,7 +32,7 @@ public class Monster extends SugarRecord {
 
     //Empty constructor for SugarRecord
     public Monster() {
-
+        //Keep empty
     }
 
     //Generated

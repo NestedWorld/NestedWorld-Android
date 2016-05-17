@@ -51,6 +51,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+            default:
+                break;
         }
         return (super.onOptionsItemSelected(menuItem));
     }

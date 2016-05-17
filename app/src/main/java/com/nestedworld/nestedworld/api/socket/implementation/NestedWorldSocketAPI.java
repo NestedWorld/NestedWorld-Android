@@ -29,19 +29,19 @@ public class NestedWorldSocketAPI {
             public void onSocketConnected() {
                 LogHelper.d(TAG, "Successfully Fully got a connection");
                 mSingleton = NestedWorldSocketAPI.this;
-                connectionListener.OnConnectionReady(mSingleton);
+                connectionListener.onConnectionReady(mSingleton);
             }
 
             @Override
             public void onSocketDisconnected() {
                 LogHelper.e(TAG, "Connection failed");
                 mSingleton = null;
-                connectionListener.OnConnectionLost();
+                connectionListener.onConnectionLost();
             }
 
             @Override
             public void onMessageSent() {
-
+                //A message has been send, should call some listener
             }
 
             @Override
@@ -59,7 +59,7 @@ public class NestedWorldSocketAPI {
         if (mSingleton == null) {
             new NestedWorldSocketAPI(connectionListener);
         } else {
-            connectionListener.OnConnectionReady(mSingleton);
+            connectionListener.onConnectionReady(mSingleton);
         }
     }
 

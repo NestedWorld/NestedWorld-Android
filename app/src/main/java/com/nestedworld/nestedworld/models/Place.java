@@ -5,6 +5,12 @@ import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 
+/**
+ * Simple model for :
+ * - mapping a json response with Gson anotation
+ * - mapping a sql table with SugarORM
+ * /!\ Keep the default constructor empty (see sugarOrm doc)
+ */
 public class Place extends SugarRecord {
     @Expose
     public String url;
@@ -31,7 +37,7 @@ public class Place extends SugarRecord {
 
     //Empty constructor for SugarRecord
     public Place() {
-
+        //keep empty
     }
 
     //Generated
