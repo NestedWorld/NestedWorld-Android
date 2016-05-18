@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.api.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.api.socket.models.DefaultModel;
-import com.nestedworld.nestedworld.authenticator.UserManager;
+import com.nestedworld.nestedworld.helper.user.UserManager;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 
 import org.msgpack.value.ValueFactory;
@@ -74,7 +74,7 @@ public final class NestedWorldSocketAPI {
     ** Private method
      */
     private void addAuthStateToMapValue(@NonNull Context context, @NonNull ValueFactory.MapBuilder mapBuilder) {
-        String token = UserManager.get(context).getCurrentAuthToken(context);
+        String token = UserManager.get().getCurrentAuthToken(context);
         mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token == null ? "" : token));
     }
 

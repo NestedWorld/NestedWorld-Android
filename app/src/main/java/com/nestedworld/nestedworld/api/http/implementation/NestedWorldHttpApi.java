@@ -21,7 +21,7 @@ import com.nestedworld.nestedworld.api.http.models.response.users.auth.RegisterR
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
-import com.nestedworld.nestedworld.authenticator.UserManager;
+import com.nestedworld.nestedworld.helper.user.UserManager;
 import com.nestedworld.nestedworld.helper.log.LogHelper;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.Region;
@@ -99,8 +99,8 @@ public final class NestedWorldHttpApi {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
-                        .addHeader("X-User-Email", UserManager.get(mContext).getCurrentAccountName())
-                        .addHeader("Authorization", "Bearer " + UserManager.get(mContext).getCurrentAuthToken(mContext))
+                        .addHeader("X-User-Email", UserManager.get().getUserEmail(mContext))
+                        .addHeader("Authorization", "Bearer " + UserManager.get().getCurrentAuthToken(mContext))
                         .build();
                 return chain.proceed(request);
             }

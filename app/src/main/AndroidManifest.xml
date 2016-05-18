@@ -4,8 +4,6 @@
 
     <!-- To access APIs: -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- v -->
-
-    <!-- for new relic -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- v -->
 
     <!-- Account manager-->
@@ -75,19 +73,6 @@
             android:parentActivityName=".activities.mainMenu.MainMenuActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
-
-        <!-- Account Authenticator-->
-        <service
-            android:name=".authenticator.NWAuthenticatorService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
-        </service>
 
         <!-- Meta data-->
         <meta-data

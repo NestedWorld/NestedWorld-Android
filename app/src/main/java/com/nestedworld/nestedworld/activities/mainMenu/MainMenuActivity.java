@@ -25,7 +25,7 @@ import com.nestedworld.nestedworld.api.http.models.response.monsters.MonstersRes
 import com.nestedworld.nestedworld.api.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.monster.UserMonsterResponse;
-import com.nestedworld.nestedworld.authenticator.UserManager;
+import com.nestedworld.nestedworld.helper.user.UserManager;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.HomeFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
@@ -131,7 +131,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         Toast.makeText(MainMenuActivity.this, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
 
         //remove user
-        UserManager.get(MainMenuActivity.this).deleteCurrentAccount(MainMenuActivity.this);
+        UserManager.get().deleteCurrentUser(MainMenuActivity.this);
 
         //avoid leek with the static instance
         NestedWorldHttpApi.reset();

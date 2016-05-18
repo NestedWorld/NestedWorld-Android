@@ -16,7 +16,7 @@ import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.SignInResponse;
-import com.nestedworld.nestedworld.authenticator.UserManager;
+import com.nestedworld.nestedworld.helper.user.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -88,7 +88,7 @@ public class LoginFragment extends BaseFragment {
                     public void onSuccess(Response<SignInResponse> response) {
                         progressView.stop();
 
-                        if (UserManager.get(mContext).newAccount(mContext, email, password, response.body().token)) {
+                        if (UserManager.get().newUser(mContext, email, password, response.body().token)) {
                             //display the mainMenu and stop the launchActivity
                             startActivity(MainMenuActivity.class);
                             ((FragmentActivity) mContext).finish();

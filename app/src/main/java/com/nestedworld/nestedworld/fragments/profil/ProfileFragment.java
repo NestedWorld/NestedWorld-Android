@@ -14,7 +14,7 @@ import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.authenticator.UserManager;
+import com.nestedworld.nestedworld.helper.user.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.User;
 
@@ -66,7 +66,7 @@ public class ProfileFragment extends BaseFragment {
     protected void init(View rootView, Bundle savedInstanceState) {
         /*We retrieve the userData as the string and we decode the string*/
         if (mContext != null) {
-            final User user = UserManager.get(mContext).getUserEntity();
+            final User user = UserManager.get().getUser(mContext);
             if (user != null) {
             /*We display some information from the decoded user*/
                 textViewGender.setText(user.gender);
@@ -100,7 +100,7 @@ public class ProfileFragment extends BaseFragment {
                 });
 
         //remove user
-        UserManager.get(mContext).deleteCurrentAccount(mContext);
+        UserManager.get().deleteCurrentUser(mContext);
 
         //avoid leek with the static instance
         NestedWorldHttpApi.reset();

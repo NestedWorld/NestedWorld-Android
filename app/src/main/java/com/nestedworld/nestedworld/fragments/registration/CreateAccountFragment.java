@@ -17,7 +17,7 @@ import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.api.http.models.response.users.auth.SignInResponse;
-import com.nestedworld.nestedworld.authenticator.UserManager;
+import com.nestedworld.nestedworld.helper.user.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -131,7 +131,7 @@ public class CreateAccountFragment extends BaseFragment {
                             return;
                         }
 
-                        if (UserManager.get(mContext).newAccount(mContext, email, password, response.body().token)) {
+                        if (UserManager.get().newUser(mContext, email, password, response.body().token)) {
                             //display MainMenu and stop this activity
                             startActivity(MainMenuActivity.class);
                             ((Activity) mContext).finish();

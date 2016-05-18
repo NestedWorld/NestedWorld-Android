@@ -1,10 +1,7 @@
-package com.nestedworld.nestedworld.authenticator;
+package com.nestedworld.nestedworld.helper.user;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -24,66 +21,34 @@ public final class UserManager {
     //private static field
     private final static String TAG = UserManager.class.getSimpleName();
 
-    //private properties
-    private final AccountManager mAccountManager;
-    @Nullable
-    private Account mAccount = null;
-
     /*
     ** Constructor
      */
-    private UserManager(@NonNull final Context context) {
-        mAccountManager = AccountManager.get(context);
-        mAccount = getAccountByName(SharedPreferenceUtils.getLastAccountNameConnected(context));
+    private UserManager() {
     }
 
     /*
     ** singleton
      */
-    public static UserManager get(@NonNull final Context context) {
+    public static UserManager get() {
         if (mUserManager == null) {
-            mUserManager = new UserManager(context);
+            mUserManager = new UserManager();
         }
         return mUserManager;
-    }
-
-    //Call for leek avoidance
-    public static void reset() {
-        mUserManager = null;
     }
 
     /*
     ** public method
      */
-    public String getCurrentAccountName() {
-        if (mAccount == null) {
-            return "";
-        }
-        return mAccount.name;
-    }
+    public boolean newUser(@NonNull final Context context, @NonNull final String name,
+                           @NonNull final String password, @NonNull final String authToken) {
 
-    public boolean newAccount(@NonNull final Context context, @NonNull final String name,
-                              @NonNull final String password, @NonNull final String authToken) {
-
-        LogHelper.d(TAG, "newAccount : "
+        //Display some log
+        LogHelper.d(TAG, "newUser : "
                 + " name=" + name
                 + " password=" + password
                 + " authToken=" + authToken);
 
-        //check if account already exist
-        Account account = getAccountByName(name);
-
-        if (account == null) {
-            //We have to create a new account
-            account = new Account(name, Constant.ACCOUNT_TYPE);
-            if (!mAccountManager.addAccountExplicitly(account, password, null)) {
-                LogHelper.d(TAG, "Can't create account");
-                return false;
-            }
-            LogHelper.d(TAG, "Successfully create a new account");
-        }
-
-        mAccount = account;
         //store name/authToken to sharedPreference
         SharedPreferenceUtils.setAuthTokenToPref(context, authToken);
         SharedPreferenceUtils.setAccountNameToPref(context, name);
@@ -91,59 +56,25 @@ public final class UserManager {
         return true;
     }
 
+    public void deleteCurrentUser(@NonNull final Context context) {
+        //Clear user information
+        SharedPreferenceUtils.clearPref(context);
+    }
+
     @Nullable
-    public User getUserEntity() {
-        if (mAccount == null) {
-            return null;
-        }
-        return Select.from(User.class).where(Condition.prop("email").eq(mAccount.name)).first();
+    public User getUser(@NonNull final Context context) {
+        String currentAccountName = SharedPreferenceUtils.getLastAccountNameConnected(context);
+        return Select.from(User.class).where(Condition.prop("email").eq(currentAccountName)).first();
+    }
+
+    @Nullable
+    public String getUserEmail(@NonNull final Context context) {
+        return SharedPreferenceUtils.getLastAccountNameConnected(context);
     }
 
     @Nullable
     public String getCurrentAuthToken(@NonNull final Context context) {
         return SharedPreferenceUtils.getCurrentAuthToken(context);
-    }
-
-    public Boolean deleteCurrentAccount(@NonNull final Context context) {
-        if (mAccount == null) {
-            return false;
-        }
-        return deleteAccount(context, mAccount);
-    }
-
-    /*
-    ** Private method
-     */
-    private Boolean deleteAccount(@NonNull final Context context, @NonNull final Account account) {
-        SharedPreferenceUtils.clearPref(context);
-        invalidateAuthTokenFromAccount(context, account);
-        if (Build.VERSION.SDK_INT < 22) {
-            return mAccountManager.removeAccountExplicitly(account);
-        } else {
-            mAccountManager.removeAccount(account, null, null);
-        }
-        return true;
-    }
-
-    @Nullable
-    private Account getAccountByName(@NonNull final String accountName) {
-        Account[] accounts = mAccountManager.getAccountsByType(Constant.ACCOUNT_TYPE);
-        if (accounts.length == 0) {
-            LogHelper.d(TAG, "No registered account");
-        }
-        for (Account account : accounts) {
-            if (account.name.equalsIgnoreCase(accountName)) {
-                LogHelper.d(TAG, "Successfully found an account (last_registered = " + accountName + ")");
-                return account;
-            }
-        }
-        LogHelper.d(TAG, "No account found (last_registered = " + accountName + ")");
-        return null;
-    }
-
-
-    private void invalidateAuthTokenFromAccount(@NonNull final Context context, @NonNull final Account account) {
-        mAccountManager.invalidateAuthToken(account.type, SharedPreferenceUtils.getCurrentAuthToken(context));
     }
 
     /*
@@ -161,6 +92,7 @@ public final class UserManager {
         /*
         ** Account name
          */
+        @Nullable
         private static String getLastAccountNameConnected(@NonNull final Context context) {
             return context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_NAME, "");
         }
@@ -176,6 +108,7 @@ public final class UserManager {
         /*
         ** AuthToken
          */
+        @Nullable
         private static String getCurrentAuthToken(@NonNull final Context context) {
             return context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_TOKEN, "");
         }
