@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.nestedworld.nestedworld.helper.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.orm.SugarApp;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;

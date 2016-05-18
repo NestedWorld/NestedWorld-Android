@@ -8,7 +8,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
-import com.nestedworld.nestedworld.helper.user.UserManager;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
 
 import butterknife.Bind;
 

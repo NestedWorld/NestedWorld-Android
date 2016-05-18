@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
-import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.response.users.auth.LogoutResponse;
-import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.helper.user.UserManager;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.User;
 
@@ -87,7 +87,7 @@ public class ProfileFragment extends BaseFragment {
         if (mContext == null)
             return;
         NestedWorldHttpApi.getInstance(mContext).logout(
-                new com.nestedworld.nestedworld.api.http.callback.Callback<LogoutResponse>() {
+                new com.nestedworld.nestedworld.network.http.callback.Callback<LogoutResponse>() {
                     @Override
                     public void onSuccess(Response<LogoutResponse> response) {
                         //Server has accept our logout

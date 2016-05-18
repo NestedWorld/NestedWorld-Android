@@ -12,11 +12,11 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.response.users.auth.ForgotPasswordResponse;
-import com.nestedworld.nestedworld.api.http.models.response.users.auth.SignInResponse;
-import com.nestedworld.nestedworld.helper.user.UserManager;
+import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -83,7 +83,7 @@ public class LoginFragment extends BaseFragment {
         NestedWorldHttpApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new com.nestedworld.nestedworld.api.http.callback.Callback<SignInResponse>() {
+                new com.nestedworld.nestedworld.network.http.callback.Callback<SignInResponse>() {
                     @Override
                     public void onSuccess(Response<SignInResponse> response) {
                         progressView.stop();
@@ -114,7 +114,7 @@ public class LoginFragment extends BaseFragment {
             return;
         NestedWorldHttpApi.getInstance(mContext).forgotPassword(
                 email,
-                new com.nestedworld.nestedworld.api.http.callback.Callback<ForgotPasswordResponse>() {
+                new com.nestedworld.nestedworld.network.http.callback.Callback<ForgotPasswordResponse>() {
                     @Override
                     public void onSuccess(Response<ForgotPasswordResponse> response) {
                         //check if fragment hasn't been detach

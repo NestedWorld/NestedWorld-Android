@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.api.http.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.api.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.api.http.models.response.users.auth.RegisterResponse;
-import com.nestedworld.nestedworld.api.http.models.response.users.auth.SignInResponse;
-import com.nestedworld.nestedworld.helper.user.UserManager;
+import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -25,8 +25,8 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-import static com.nestedworld.nestedworld.helper.input.InputChecker.checkEmailFormat;
-import static com.nestedworld.nestedworld.helper.input.InputChecker.checkPasswordFormat;
+import static com.nestedworld.nestedworld.helpers.input.InputChecker.checkEmailFormat;
+import static com.nestedworld.nestedworld.helpers.input.InputChecker.checkPasswordFormat;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -99,7 +99,7 @@ public class CreateAccountFragment extends BaseFragment {
                 email,
                 password,
                 pseudo,
-                new com.nestedworld.nestedworld.api.http.callback.Callback<RegisterResponse>() {
+                new com.nestedworld.nestedworld.network.http.callback.Callback<RegisterResponse>() {
                     @Override
                     public void onSuccess(Response<RegisterResponse> response) {
                         //Account successfully created, we can log in
@@ -124,7 +124,7 @@ public class CreateAccountFragment extends BaseFragment {
         NestedWorldHttpApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new com.nestedworld.nestedworld.api.http.callback.Callback<SignInResponse>() {
+                new com.nestedworld.nestedworld.network.http.callback.Callback<SignInResponse>() {
                     @Override
                     public void onSuccess(Response<SignInResponse> response) {
                         if (mContext == null) {

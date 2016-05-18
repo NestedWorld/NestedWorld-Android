@@ -9,15 +9,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.api.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.api.socket.listener.ConnectionListener;
-import com.nestedworld.nestedworld.api.socket.models.request.chat.JoinChannelRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.chat.PartChannelRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.chat.SendMessageRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.FleeRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoCaptureRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.MonsterKoReplaceRequest;
-import com.nestedworld.nestedworld.api.socket.models.request.combat.SendAttackRequest;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.request.chat.JoinChannelRequest;
+import com.nestedworld.nestedworld.network.socket.models.request.chat.PartChannelRequest;
+import com.nestedworld.nestedworld.network.socket.models.request.chat.SendMessageRequest;
+import com.nestedworld.nestedworld.network.socket.models.request.combat.FleeRequest;
+import com.nestedworld.nestedworld.network.socket.models.request.combat.MonsterKoCaptureRequest;
+import com.nestedworld.nestedworld.network.socket.models.request.combat.MonsterKoReplaceRequest;
+import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
