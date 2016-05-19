@@ -10,6 +10,8 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +21,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.models.Monster;
+import com.nestedworld.nestedworld.models.UserMonster;
+import com.orm.query.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -31,6 +34,8 @@ public class TeamSelectionFragment extends BaseFragment {
 
     @Bind(R.id.viewpager)
     ViewPager viewPager;
+    @Bind(R.id.ViewPagerArrowIndicator)
+    ViewPagerWithIndicator viewPagerArrowIndicator;
 
     /*
     ** Public method
@@ -51,34 +56,51 @@ public class TeamSelectionFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        changeActionBarName();
+        populateUserMonster();
+    }
+
+    /*
+    ** Utils
+     */
+    private void changeActionBarName() {
         //check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        ArrayList<Monster> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Monster monster = new Monster();
-            monster.name = getString(R.string.app_name) + i;
+        if (mContext instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+            if (actionBar != null) {
+                //TODO replace static string by R reference
+                actionBar.setTitle("Team selection");
+            }
+        }
+    }
 
-            list.add(monster);
+    private void populateUserMonster() {
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
         }
 
-        MonsterPagerAdapter monsterPagerAdapter = new MonsterPagerAdapter(mContext, list);
+        List<UserMonster> userMonsters = Select.from(UserMonster.class).list();
+
+        UserMonsterPagerAdapter monsterPagerAdapter = new UserMonsterPagerAdapter(mContext, userMonsters);
         viewPager.setAdapter(monsterPagerAdapter);
+        viewPagerArrowIndicator.setViewPager(viewPager);
     }
 
     /**
-     * Simple pager Adapter
+     * Simple pager Adapter for displaying our monster
      */
-    private static class MonsterPagerAdapter extends PagerAdapter {
+    private static class UserMonsterPagerAdapter extends PagerAdapter {
 
-        private final String TAG = MonsterPagerAdapter.class.getSimpleName();
-        private final List<Monster> mMonsters;
+        private final List<UserMonster> mUserMonsters;
         private final Context mContext;
 
-        public MonsterPagerAdapter(@NonNull Context context, @NonNull ArrayList<Monster> monsters) {
-            mMonsters = monsters;
+        public UserMonsterPagerAdapter(@NonNull Context context, @NonNull List<UserMonster> userMonsters) {
+            mUserMonsters = userMonsters;
             mContext = context;
         }
 
@@ -88,10 +110,10 @@ public class TeamSelectionFragment extends BaseFragment {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_monster, container, false);
 
             //Retrieve the monster we'll display
-            Monster monster = mMonsters.get(position);
+            UserMonster monster = mUserMonsters.get(position);
 
             //Complete the view with the monster name
-            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monster.name);
+            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monster.info().name);
 
             //Complete the view with the monster picture
             //TODO use good image
@@ -120,7 +142,7 @@ public class TeamSelectionFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return mMonsters.size();
+            return mUserMonsters.size();
         }
 
         @Override
@@ -130,8 +152,7 @@ public class TeamSelectionFragment extends BaseFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mMonsters.get(position).name;
+            return mUserMonsters.get(position).info().name;
         }
     }
-
 }
