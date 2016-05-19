@@ -1,11 +1,11 @@
 package com.nestedworld.nestedworld.network.socket.listener;
 
-public abstract class SocketListener {
-    public abstract void onSocketConnected();
+public interface SocketListener {
+    void onSocketConnected();
 
-    public abstract void onSocketDisconnected();
+    void onSocketDisconnected();
 
-    public abstract void onMessageSent();
+    void onMessageSent();
 
-    public abstract void onMessageReceived(String message);
+    void onMessageReceived(String message);
 }

@@ -1,6 +1,8 @@
 package com.nestedworld.nestedworld.network.socket.implementation;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
@@ -11,45 +13,42 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import org.msgpack.value.ValueFactory;
 
-public final class NestedWorldSocketAPI {
+public final class NestedWorldSocketAPI implements SocketListener {
 
+    //Singleton
     private static NestedWorldSocketAPI mSingleton;
+
+    //Static field
+    private final static int TIME_OUT = 10000;
+    private final static String HOST = "eip.kokakiwi.net";
+    private final static int PORT = 6464;
+
+    //Private field
     private final String TAG = getClass().getSimpleName();
     private final SocketManager mSocketManager;
+    private final ConnectionListener mConnectionListener;
 
     /*
     ** Constructor
      */
     private NestedWorldSocketAPI(@NonNull final ConnectionListener connectionListener) {
-        mSocketManager = new SocketManager("eip.kokakiwi.net", 6464);
-        mSocketManager.setTimeOut(10000);
-        LogHelper.d(TAG, "Waiting for a new connection...");
-        mSocketManager.addSocketListener(new SocketListener() {
-            @Override
-            public void onSocketConnected() {
-                LogHelper.d(TAG, "Successfully Fully got a connection");
-                mSingleton = NestedWorldSocketAPI.this;
-                connectionListener.onConnectionReady(mSingleton);
-            }
+        //Init private field
+        mConnectionListener = connectionListener;
 
-            @Override
-            public void onSocketDisconnected() {
-                LogHelper.e(TAG, "Connection failed");
-                mSingleton = null;
-                connectionListener.onConnectionLost();
-            }
+        //Init the socket
+        mSocketManager = new SocketManager(HOST, PORT);
+        mSocketManager.setTimeOut(TIME_OUT);
+        mSocketManager.addSocketListener(this);
 
-            @Override
-            public void onMessageSent() {
-                //A message has been send, should call some listener
-            }
+        LogHelper.d(TAG, "Waiting for connection...");
 
+        //Connect() require networking so we call it inside a thread
+        new Thread(new Runnable() {
             @Override
-            public void onMessageReceived(String message) {
-                //TODO parse content and call listener
+            public void run() {
+                mSocketManager.connect();
             }
-        });
-        mSocketManager.connect();
+        }).start();
     }
 
     /*
@@ -71,11 +70,56 @@ public final class NestedWorldSocketAPI {
     }
 
     /*
+    ** SocketListener implementation
+     */
+    @Override
+    public void onSocketConnected() {
+        LogHelper.d(TAG, "Successfully got a connection");
+
+        //Connection success, we can init the singleton
+        mSingleton = NestedWorldSocketAPI.this;
+
+        //Call the listener inside the main thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                mConnectionListener.onConnectionReady(mSingleton);
+            }
+        });
+    }
+
+    @Override
+    public void onSocketDisconnected() {
+        LogHelper.e(TAG, "Connection failed");
+        mSingleton = null;
+
+        //Call the listener inside the main thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                mConnectionListener.onConnectionLost();
+            }
+        });
+    }
+
+    @Override
+    public void onMessageSent() {
+        LogHelper.d(TAG, "Message sent");
+        //A message has been send, should call some listener
+    }
+
+    @Override
+    public void onMessageReceived(String message) {
+        LogHelper.d(TAG, "Message received");
+        //TODO parse content and call listener
+    }
+
+    /*
     ** Private method
      */
     private void addAuthStateToMapValue(@NonNull Context context, @NonNull ValueFactory.MapBuilder mapBuilder) {
         String token = UserManager.get().getCurrentAuthToken(context);
-        mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token == null ? "" : token));
+        mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token));
     }
 
     public void combatRequest(@NonNull Context context, @NonNull DefaultModel data) {
