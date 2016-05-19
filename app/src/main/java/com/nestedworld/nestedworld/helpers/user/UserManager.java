@@ -67,12 +67,10 @@ public final class UserManager {
         return Select.from(User.class).where(Condition.prop("email").eq(currentAccountName)).first();
     }
 
-    @Nullable
     public String getUserEmail(@NonNull final Context context) {
         return SharedPreferenceUtils.getLastAccountNameConnected(context);
     }
 
-    @Nullable
     public String getCurrentAuthToken(@NonNull final Context context) {
         return SharedPreferenceUtils.getCurrentAuthToken(context);
     }
@@ -92,7 +90,6 @@ public final class UserManager {
         /*
         ** Account name
          */
-        @Nullable
         private static String getLastAccountNameConnected(@NonNull final Context context) {
             return context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_NAME, "");
         }
@@ -108,7 +105,6 @@ public final class UserManager {
         /*
         ** AuthToken
          */
-        @Nullable
         private static String getCurrentAuthToken(@NonNull final Context context) {
             return context.getSharedPreferences(ACCOUNT_DETAIL_PREF_NAME, Context.MODE_PRIVATE).getString(KEY_ACCOUNT_TOKEN, "");
         }
