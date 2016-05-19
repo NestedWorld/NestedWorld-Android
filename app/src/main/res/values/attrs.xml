@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Style for the customWidget-->
+    <!-- Style for the custom font-->
     <declare-styleable name="TypefaceStyle">
         <attr name="typeface" format="string" />
+    </declare-styleable>
+
+    <!--Style for monsterSelector-->
+    <declare-styleable name="ViewPagerArrowIndicator">
+        <attr name="left_arrow" format="integer" />
+        <attr name="right_arow" format="integer" />
     </declare-styleable>
 </resources>
