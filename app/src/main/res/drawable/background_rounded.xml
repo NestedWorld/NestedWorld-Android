@@ -4,6 +4,9 @@
 
     <solid android:color="@color/apptheme_color" />
 
+    <stroke
+        android:width="3dp"
+        android:color="@color/apptheme_color" />
     <size
         android:width="120dp"
         android:height="120dp" />
