@@ -13,11 +13,11 @@
         app:right_arrow.drawable="@drawable/ic_arrow_right"
         app:round.size="20dip">
 
-        <com.nestedworld.nestedworld.customView.wrapcontentViewPager.WrapContentViewPager
+        <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"/>
+        
     </com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator>
 
 </LinearLayout>
