@@ -141,68 +141,70 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     private void updateDataBase() {
-        progressView.start();
-        final NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(this);
+        initTabs();
 
-        nestedWorldHttpApi.getUserInfo(new Callback<UserResponse>() {
-            @Override
-            public void onSuccess(Response<UserResponse> response) {
-                User.deleteAll(User.class);
-                response.body().user.save();
-                nestedWorldHttpApi.getFriends(new Callback<FriendsResponse>() {
-                    @Override
-                    public void onSuccess(Response<FriendsResponse> response) {
-                        Friend.deleteAll(Friend.class);
-                        for (Friend friend : response.body().friends) {
-                            friend.save();
-                        }
-                        nestedWorldHttpApi.getMonsters(new Callback<MonstersResponse>() {
-                            @Override
-                            public void onSuccess(Response<MonstersResponse> response) {
-                                Monster.deleteAll(Monster.class);
-                                for (Monster monster : response.body().monsters) {
-                                    monster.save();
-                                }
-                                nestedWorldHttpApi.getUserMonster(new Callback<UserMonsterResponse>() {
-                                    @Override
-                                    public void onSuccess(Response<UserMonsterResponse> response) {
-                                        UserMonster.deleteAll(UserMonster.class);
-
-                                        for (UserMonster userMonster : response.body().monsters) {
-                                            userMonster.fkmonster = userMonster.infos.monster_id;
-                                            userMonster.save();
-                                        }
-
-                                        progressView.stop();
-                                        initTabs();
-                                    }
-
-                                    @Override
-                                    public void onError(@NonNull KIND errorKind, @Nullable Response<UserMonsterResponse> response) {
-                                        onUpdateDatabaseError();
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersResponse> response) {
-                                onUpdateDatabaseError();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<FriendsResponse> response) {
-                        onUpdateDatabaseError();
-                    }
-                });
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
-                onUpdateDatabaseError();
-            }
-        });
+//        progressView.start();
+//        final NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(this);
+//
+//        nestedWorldHttpApi.getUserInfo(new Callback<UserResponse>() {
+//            @Override
+//            public void onSuccess(Response<UserResponse> response) {
+//                User.deleteAll(User.class);
+//                response.body().user.save();
+//                nestedWorldHttpApi.getFriends(new Callback<FriendsResponse>() {
+//                    @Override
+//                    public void onSuccess(Response<FriendsResponse> response) {
+//                        Friend.deleteAll(Friend.class);
+//                        for (Friend friend : response.body().friends) {
+//                            friend.save();
+//                        }
+//                        nestedWorldHttpApi.getMonsters(new Callback<MonstersResponse>() {
+//                            @Override
+//                            public void onSuccess(Response<MonstersResponse> response) {
+//                                Monster.deleteAll(Monster.class);
+//                                for (Monster monster : response.body().monsters) {
+//                                    monster.save();
+//                                }
+//                                nestedWorldHttpApi.getUserMonster(new Callback<UserMonsterResponse>() {
+//                                    @Override
+//                                    public void onSuccess(Response<UserMonsterResponse> response) {
+//                                        UserMonster.deleteAll(UserMonster.class);
+//
+//                                        for (UserMonster userMonster : response.body().monsters) {
+//                                            userMonster.fkmonster = userMonster.infos.monster_id;
+//                                            userMonster.save();
+//                                        }
+//
+//                                        progressView.stop();
+//                                        initTabs();
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(@NonNull KIND errorKind, @Nullable Response<UserMonsterResponse> response) {
+//                                        onUpdateDatabaseError();
+//                                    }
+//                                });
+//                            }
+//
+//                            @Override
+//                            public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersResponse> response) {
+//                                onUpdateDatabaseError();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull KIND errorKind, @Nullable Response<FriendsResponse> response) {
+//                        onUpdateDatabaseError();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
+//                onUpdateDatabaseError();
+//            }
+//        });
     }
 
     /**
