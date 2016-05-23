@@ -68,7 +68,7 @@ public class ProfileFragment extends BaseFragment {
         if (mContext != null) {
             final User user = UserManager.get().getUser(mContext);
             if (user != null) {
-            /*We display some information from the decoded user*/
+                /*We display some information from the decoded user*/
                 textViewGender.setText(user.gender);
                 textViewPseudo.setText(user.pseudo);
                 textViewBirthDate.setText(user.birth_date);
