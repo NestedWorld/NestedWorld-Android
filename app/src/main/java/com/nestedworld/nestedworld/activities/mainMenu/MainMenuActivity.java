@@ -1,8 +1,9 @@
 package com.nestedworld.nestedworld.activities.mainMenu;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,29 +20,25 @@ import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
 import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
 import com.nestedworld.nestedworld.activities.profil.ProfileActivity;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.EntityUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
-import com.nestedworld.nestedworld.network.http.models.response.users.UserResponse;
-import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.HomeFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
-import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.Monster;
-import com.nestedworld.nestedworld.models.User;
-import com.nestedworld.nestedworld.models.UserMonster;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
-import retrofit2.Response;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
@@ -65,6 +62,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     protected void init(Bundle savedInstanceState) {
         setUpToolbar();
 
+        progressView.start();
         updateDataBase();
     }
 
@@ -93,13 +91,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    /*
-    ** Utils
-     */
-    private void setUpToolbar() {
-        setSupportActionBar(toolbar);
-    }
-
     private void initTabs() {
         final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
         adapter.addFragment(getString(R.string.tab_home), new HomeFragment(), R.drawable.account_balance);
@@ -121,90 +112,72 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 tab.setIcon(adapter.getPageIcon(i));
             }
         }
-    }
 
-    private void onUpdateDatabaseError() {
-        //stop loading animation
         progressView.stop();
-
-        //display error message
-        Toast.makeText(MainMenuActivity.this, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
-
-        //remove user
-        UserManager.get().deleteCurrentUser(MainMenuActivity.this);
-
-        //avoid leek with the static instance
-        NestedWorldHttpApi.reset();
-
-        //Go to launch screen
-        startActivity(LaunchActivity.class);
     }
+
+    private void setUpToolbar() {
+        setSupportActionBar(toolbar);
+    }
+
+
+    /**
+     * Simple asyncTask implementation for updating the database
+     */
 
     private void updateDataBase() {
-        initTabs();
+        final AtomicInteger taskEnded = new AtomicInteger(0);
+        final List<Thread> tasks = new ArrayList<>();
+        final EntityUpdater.onEntityUpdated callback = new EntityUpdater.onEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                if (taskEnded.incrementAndGet() == tasks.size()) {
+                    initTabs();
+                }
+            }
 
-//        progressView.start();
-//        final NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(this);
-//
-//        nestedWorldHttpApi.getUserInfo(new Callback<UserResponse>() {
-//            @Override
-//            public void onSuccess(Response<UserResponse> response) {
-//                User.deleteAll(User.class);
-//                response.body().user.save();
-//                nestedWorldHttpApi.getFriends(new Callback<FriendsResponse>() {
-//                    @Override
-//                    public void onSuccess(Response<FriendsResponse> response) {
-//                        Friend.deleteAll(Friend.class);
-//                        for (Friend friend : response.body().friends) {
-//                            friend.save();
-//                        }
-//                        nestedWorldHttpApi.getMonsters(new Callback<MonstersResponse>() {
-//                            @Override
-//                            public void onSuccess(Response<MonstersResponse> response) {
-//                                Monster.deleteAll(Monster.class);
-//                                for (Monster monster : response.body().monsters) {
-//                                    monster.save();
-//                                }
-//                                nestedWorldHttpApi.getUserMonster(new Callback<UserMonsterResponse>() {
-//                                    @Override
-//                                    public void onSuccess(Response<UserMonsterResponse> response) {
-//                                        UserMonster.deleteAll(UserMonster.class);
-//
-//                                        for (UserMonster userMonster : response.body().monsters) {
-//                                            userMonster.fkmonster = userMonster.infos.monster_id;
-//                                            userMonster.save();
-//                                        }
-//
-//                                        progressView.stop();
-//                                        initTabs();
-//                                    }
-//
-//                                    @Override
-//                                    public void onError(@NonNull KIND errorKind, @Nullable Response<UserMonsterResponse> response) {
-//                                        onUpdateDatabaseError();
-//                                    }
-//                                });
-//                            }
-//
-//                            @Override
-//                            public void onError(@NonNull KIND errorKind, @Nullable Response<MonstersResponse> response) {
-//                                onUpdateDatabaseError();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(@NonNull KIND errorKind, @Nullable Response<FriendsResponse> response) {
-//                        onUpdateDatabaseError();
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
-//                onUpdateDatabaseError();
-//            }
-//        });
+            @Override
+            public void onError() {
+                //Stop every thread
+                for (Thread t : tasks) {
+                    t.interrupt();
+                }
+
+                //stop loading animation
+                progressView.stop();
+
+                //display error message
+                Toast.makeText(MainMenuActivity.this, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
+
+                //remove user
+                UserManager.get().deleteCurrentUser(MainMenuActivity.this);
+
+                //Go to launch screen
+                startActivity(LaunchActivity.class);
+            }
+        };
+
+        tasks.add(new UserUpdater(MainMenuActivity.this, callback));
+        tasks.add(new FriendsUpdater(MainMenuActivity.this, callback));
+        tasks.add(new MonsterUpdater(MainMenuActivity.this, new EntityUpdater.onEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                Thread thread = new UserMonsterUpdater(MainMenuActivity.this, callback);
+                tasks.add(thread);
+                thread.start();
+
+                callback.onSuccess();
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        }));
+
+        for (Thread t : tasks) {
+            t.start();
+        }
     }
 
     /**
