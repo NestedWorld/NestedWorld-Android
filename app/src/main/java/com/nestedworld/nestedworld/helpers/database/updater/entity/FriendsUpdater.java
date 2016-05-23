@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.helpers.database.updater.entity;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -25,9 +24,7 @@ public class FriendsUpdater extends EntityUpdater {
             public void onSuccess(Response<FriendsResponse> response) {
 
                 Friend.deleteAll(Friend.class);
-                for (Friend friend : response.body().friends) {
-                    friend.save();
-                }
+                Friend.saveInTx(response.body().friends);
 
                 onFinish(true);
             }

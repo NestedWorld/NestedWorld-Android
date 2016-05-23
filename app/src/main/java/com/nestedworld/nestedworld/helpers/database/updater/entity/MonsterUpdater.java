@@ -1,8 +1,6 @@
 package com.nestedworld.nestedworld.helpers.database.updater.entity;
 
-
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -26,10 +24,7 @@ public class MonsterUpdater extends EntityUpdater {
             public void onSuccess(Response<MonstersResponse> response) {
 
                 Monster.deleteAll(Monster.class);
-
-                for (Monster monster : response.body().monsters) {
-                    monster.save();
-                }
+                Monster.saveInTx(response.body().monsters);
 
                 onFinish(true);
             }
