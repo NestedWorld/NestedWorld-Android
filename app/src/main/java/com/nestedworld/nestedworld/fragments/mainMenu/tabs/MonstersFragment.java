@@ -61,9 +61,6 @@ public class MonstersFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
-        if (progressView != null) {
-            progressView.start();
-        }
         populateMonsters();
     }
 
