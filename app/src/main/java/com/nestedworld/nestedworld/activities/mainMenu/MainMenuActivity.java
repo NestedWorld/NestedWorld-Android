@@ -1,8 +1,6 @@
 package com.nestedworld.nestedworld.activities.mainMenu;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,18 +18,17 @@ import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
 import com.nestedworld.nestedworld.activities.launch.LaunchActivity;
 import com.nestedworld.nestedworld.activities.profil.ProfileActivity;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.EntityUpdater;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.HomeFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.EntityUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;

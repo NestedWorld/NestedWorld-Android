@@ -141,8 +141,8 @@ public class ChatListFragment extends BaseFragment {
         }
 
         private class FriendHolder {
-            ImageView friendPicture;
-            TextView friendName;
+            public ImageView friendPicture;
+            public TextView friendName;
         }
     }
 }

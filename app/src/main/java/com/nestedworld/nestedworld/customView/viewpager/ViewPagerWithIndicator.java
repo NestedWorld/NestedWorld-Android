@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 
 import com.nestedworld.nestedworld.R;
 
-public class ViewPagerWithIndicator extends LinearLayout  {
+public class ViewPagerWithIndicator extends LinearLayout {
 
     private Boolean mArrowEnable;
     private int mArrowWidth;
@@ -49,18 +49,18 @@ public class ViewPagerWithIndicator extends LinearLayout  {
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ViewPagerWithIndicator, 0, 0);
         try {
-            mArrowEnable = a.getBoolean(R.styleable.ViewPagerWithIndicator_arrow_enable,  true);
+            mArrowEnable = a.getBoolean(R.styleable.ViewPagerWithIndicator_arrow_enable, true);
             if (mArrowEnable) {
-                mArrowWidth = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_arrow_width,  ViewGroup.LayoutParams.WRAP_CONTENT);
+                mArrowWidth = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_arrow_width, ViewGroup.LayoutParams.WRAP_CONTENT);
                 mArrowHeight = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_arrow_height, ViewGroup.LayoutParams.WRAP_CONTENT);
-                mRightArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_right_arrow_drawable,  R.drawable.ic_arrow_right);
-                mLeftArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_left_arrow_drawable,  R.drawable.ic_arrow_left);
+                mRightArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_right_arrow_drawable, R.drawable.ic_arrow_right);
+                mLeftArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_left_arrow_drawable, R.drawable.ic_arrow_left);
             }
 
             mRoundEnable = a.getBoolean(R.styleable.ViewPagerWithIndicator_round_enable, true);
             if (mRoundEnable) {
-                mRoundSize = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_round_size,  ViewGroup.LayoutParams.WRAP_CONTENT);
-                mRoundDrawable = a.getDimensionPixelSize(R.styleable.ViewPagerWithIndicator_round_drawable,  R.drawable.background_rounded);
+                mRoundSize = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_round_size, ViewGroup.LayoutParams.WRAP_CONTENT);
+                mRoundDrawable = a.getDimensionPixelSize(R.styleable.ViewPagerWithIndicator_round_drawable, R.drawable.background_rounded);
                 mRoundDefaultColor = a.getColor(R.styleable.ViewPagerWithIndicator_round_color_default, Color.TRANSPARENT);
                 mRoundSelectedColor = a.getColor(R.styleable.ViewPagerWithIndicator_round_color_selected, Color.BLUE);
             }
@@ -167,7 +167,7 @@ public class ViewPagerWithIndicator extends LinearLayout  {
     private void populateView() {
         if (mArrowEnable) {
             //Populate arrow+viewPager container
-            ((ViewGroup)mViewPager.getParent()).removeView(mViewPager);
+            ((ViewGroup) mViewPager.getParent()).removeView(mViewPager);
             ((LayoutParams) mViewPager.getLayoutParams()).weight = 1;
 
             arrowContainer.addView(mLeftArrow);
@@ -181,7 +181,7 @@ public class ViewPagerWithIndicator extends LinearLayout  {
             //populate roundedIndicator container
             LayoutParams params = new LayoutParams(mRoundSize, mRoundSize);
 
-            for (int i=0; i < mViewPager.getAdapter().getCount(); i++) {
+            for (int i = 0; i < mViewPager.getAdapter().getCount(); i++) {
                 ImageView roundIndicator = new ImageView(getContext());
                 roundIndicator.setBackgroundResource(mRoundDrawable);
                 roundIndicator.setLayoutParams(params);
@@ -211,7 +211,7 @@ public class ViewPagerWithIndicator extends LinearLayout  {
 
     private void updateRoundIndicator() {
         //TODO avoid loop over every element (store last updated)
-        for (int i=0; i < mViewPager.getAdapter().getCount(); i++) {
+        for (int i = 0; i < mViewPager.getAdapter().getCount(); i++) {
             View view = roundedIndicatorContainer.getChildAt(i);
             GradientDrawable background = (GradientDrawable) view.getBackground();
             background.setColor(i == mViewPager.getCurrentItem() ? mRoundSelectedColor : mRoundDefaultColor);

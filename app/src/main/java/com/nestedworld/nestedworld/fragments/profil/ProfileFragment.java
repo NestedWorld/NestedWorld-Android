@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
+import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
-import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.models.User;
 
 import butterknife.Bind;
 import butterknife.OnClick;

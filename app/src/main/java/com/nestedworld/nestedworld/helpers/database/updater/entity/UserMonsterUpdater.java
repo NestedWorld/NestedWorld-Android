@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.helpers.database.updater.entity;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 

@@ -4,8 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
 
 import org.msgpack.core.MessageInsufficientBufferException;
 import org.msgpack.core.MessagePack;
@@ -16,7 +16,6 @@ import org.msgpack.value.MapValue;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.LinkedList;
 
 public class SocketManager implements Runnable {

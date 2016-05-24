@@ -3,59 +3,35 @@ package com.nestedworld.nestedworld.fragments.mainMenu.tabs;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.helpers.map.NestedWorldMap;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
-import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionsResponse;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.map.NestedWorldMap;
 import com.nestedworld.nestedworld.helpers.permission.PermissionUtils;
-import com.nestedworld.nestedworld.models.Place;
-import com.nestedworld.nestedworld.models.Region;
 import com.rey.material.widget.ProgressView;
 
-import java.security.Provider;
 import java.util.Arrays;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
-import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MapFragment extends BaseFragment implements LocationListener{
+public class MapFragment extends BaseFragment implements LocationListener {
 
     public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
 

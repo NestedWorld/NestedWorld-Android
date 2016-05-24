@@ -119,8 +119,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         if (mSelectedMonster.contains(mUserMonsters.get(viewPager.getCurrentItem()))) {
             button_select_monster.setBackgroundResource(R.drawable.ic_action_arrow_bottom_red);
             button_select_monster.setClickable(false);
-        }
-        else {
+        } else {
             button_select_monster.setBackgroundResource(R.drawable.ic_action_arrow_bottom_blue);
             button_select_monster.setClickable(true);
         }

@@ -5,11 +5,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.network.socket.models.DefaultModel;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import org.msgpack.value.ValueFactory;
 

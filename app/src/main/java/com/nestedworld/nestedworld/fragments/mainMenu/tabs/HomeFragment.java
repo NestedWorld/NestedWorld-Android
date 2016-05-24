@@ -22,12 +22,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.models.UserMonster;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.orm.query.Select;
 
 import java.util.List;

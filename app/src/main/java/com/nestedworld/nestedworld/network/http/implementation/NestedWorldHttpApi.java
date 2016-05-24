@@ -5,6 +5,10 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.models.Region;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.models.request.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.ForgotPasswordRequest;
@@ -21,10 +25,6 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Regis
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.Region;
 
 import java.io.IOException;
 
