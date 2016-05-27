@@ -94,7 +94,7 @@ public final class NestedWorldHttpApi {
 
         // Define a request interceptor for displaying some log
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         // Define a request interception for adding some custom headers
         Interceptor httpHeaderInterceptor = new Interceptor() {
