@@ -14,7 +14,8 @@ import android.widget.Toast;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
@@ -99,7 +100,7 @@ public class CreateAccountFragment extends BaseFragment {
                 email,
                 password,
                 pseudo,
-                new com.nestedworld.nestedworld.network.http.callback.Callback<RegisterResponse>() {
+                new Callback<RegisterResponse>() {
                     @Override
                     public void onSuccess(Response<RegisterResponse> response) {
                         //Account successfully created, we can log in
@@ -124,20 +125,19 @@ public class CreateAccountFragment extends BaseFragment {
         NestedWorldHttpApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new com.nestedworld.nestedworld.network.http.callback.Callback<SignInResponse>() {
+                new Callback<SignInResponse>() {
                     @Override
                     public void onSuccess(Response<SignInResponse> response) {
                         if (mContext == null) {
                             return;
                         }
 
-                        if (UserManager.get().newUser(mContext, email, password, response.body().token)) {
-                            //display MainMenu and stop this activity
-                            startActivity(MainMenuActivity.class);
-                            ((Activity) mContext).finish();
-                        } else {
-                            Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
-                        }
+                        //Create a new session
+                        SessionManager.get().newSession(email, password, response.body().token);
+
+                        //display MainMenu and stop this activity
+                        startActivity(MainMenuActivity.class);
+                        ((Activity) mContext).finish();
                     }
 
                     @Override

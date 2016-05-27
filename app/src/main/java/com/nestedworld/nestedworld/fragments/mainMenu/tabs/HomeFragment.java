@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.fragments.mainMenu.tabs;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,7 +24,8 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.models.UserMonster;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -84,7 +86,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     /*
-    ** Utils
+    ** Private method
      */
     private void populateMonstersList() {
         if (mContext == null) {
@@ -96,23 +98,17 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void populateUserInfo() {
-
-        if (mContext == null) {
+        //Retrieve the session
+        Session session = SessionManager.get().getSession();
+        if (session == null) {
+            onFatalError();
             return;
         }
 
-        User user = UserManager.get().getUser(mContext);
+        //Retrieve the user
+        User user = session.getUser();
         if (user == null) {
-            //avoid leek with the static instance
-            NestedWorldHttpApi.reset();
-            NestedWorldSocketAPI.reset();
-
-            Toast.makeText(mContext, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
-
-            //go to launch screen & kill the current context
-            startActivity(RegistrationActivity.class);
-            ((AppCompatActivity) mContext).finish();
-
+            onFatalError();
             return;
         }
 

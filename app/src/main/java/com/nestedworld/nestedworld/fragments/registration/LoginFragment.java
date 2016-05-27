@@ -13,7 +13,8 @@ import android.widget.Toast;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
@@ -83,18 +84,17 @@ public class LoginFragment extends BaseFragment {
         NestedWorldHttpApi.getInstance(mContext).signIn(
                 email,
                 password,
-                new com.nestedworld.nestedworld.network.http.callback.Callback<SignInResponse>() {
+                new Callback<SignInResponse>() {
                     @Override
                     public void onSuccess(Response<SignInResponse> response) {
                         progressView.stop();
 
-                        if (UserManager.get().newUser(mContext, email, password, response.body().token)) {
-                            //display the mainMenu and stop the launchActivity
-                            startActivity(MainMenuActivity.class);
-                            ((FragmentActivity) mContext).finish();
-                        } else {
-                            Toast.makeText(mContext, R.string.error_create_account, Toast.LENGTH_LONG).show();
-                        }
+                        //Create a new session
+                        SessionManager.get().newSession(email, password, response.body().token);
+
+                        //display the mainMenu and stop the launchActivity
+                        startActivity(MainMenuActivity.class);
+                        ((FragmentActivity) mContext).finish();
                     }
 
                     @Override
@@ -114,7 +114,7 @@ public class LoginFragment extends BaseFragment {
             return;
         NestedWorldHttpApi.getInstance(mContext).forgotPassword(
                 email,
-                new com.nestedworld.nestedworld.network.http.callback.Callback<ForgotPasswordResponse>() {
+                new Callback<ForgotPasswordResponse>() {
                     @Override
                     public void onSuccess(Response<ForgotPasswordResponse> response) {
                         //check if fragment hasn't been detach

@@ -137,7 +137,7 @@ public class FightFragment extends BaseFragment {
                 data.target = 10;
                 data.attack = Integer.parseInt(buf);
 
-                mNestedWorldSocketAPI.combatRequest(mContext, data);
+                mNestedWorldSocketAPI.combatRequest(data);
                 mPositions.clear();
             }
         });

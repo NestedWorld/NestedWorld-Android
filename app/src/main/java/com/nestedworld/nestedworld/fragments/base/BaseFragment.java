@@ -5,9 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 
 import butterknife.ButterKnife;
 
@@ -75,19 +82,28 @@ public abstract class BaseFragment extends Fragment {
         return TAG;
     }
 
-    protected void startActivity(Class clazz, Bundle bundle) {
-        try {
-            final Intent intent = new Intent(mContext, clazz);
-            if (bundle != null) {
-                intent.putExtras(bundle);
-            }
-            startActivity(intent);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    protected void onFatalError() {
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
         }
+
+        //avoid leek with the static instance
+        NestedWorldHttpApi.reset();
+        NestedWorldSocketAPI.reset();
+
+        Toast.makeText(mContext, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
+
+        //go to launch screen & kill the current context
+        Intent intent = new Intent(mContext, RegistrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+
+        ((AppCompatActivity) mContext).finish();
     }
 
     protected void startActivity(Class clazz) {
-        startActivity(clazz, null);
+        final Intent intent = new Intent(mContext, clazz);
+        startActivity(intent);
     }
 }

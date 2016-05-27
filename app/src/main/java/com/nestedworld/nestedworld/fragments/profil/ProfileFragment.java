@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.fragments.profil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,11 +9,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.activities.mainMenu.MainMenuActivity;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
@@ -64,20 +68,29 @@ public class ProfileFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
-        /*We retrieve the userData as the string and we decode the string*/
-        if (mContext != null) {
-            final User user = UserManager.get().getUser(mContext);
-            if (user != null) {
-                /*We display some information from the decoded user*/
-                textViewGender.setText(user.gender);
-                textViewPseudo.setText(user.pseudo);
-                textViewBirthDate.setText(user.birth_date);
-                textViewCity.setText(user.city);
-                textViewRegisteredAt.setText(user.registered_at);
-                textViewEmail.setText(user.email);
-            }
+        //Retrieve the session
+        Session session = SessionManager.get().getSession();
+        if (session == null) {
+            onFatalError();
+            return;
         }
+
+        //Retrieve the user
+        User user = session.getUser();
+        if (user == null) {
+            onFatalError();
+            return;
+        }
+
+        /*We display some information*/
+        textViewGender.setText(user.gender);
+        textViewPseudo.setText(user.pseudo);
+        textViewBirthDate.setText(user.birth_date);
+        textViewCity.setText(user.city);
+        textViewRegisteredAt.setText(user.registered_at);
+        textViewEmail.setText(user.email);
     }
+
 
     /*
     ** Butterknife callback
@@ -100,14 +113,15 @@ public class ProfileFragment extends BaseFragment {
                 });
 
         //remove user
-        UserManager.get().deleteCurrentUser(mContext);
+        SessionManager.get().deleteSession();
 
         //avoid leek with the static instance
         NestedWorldHttpApi.reset();
         NestedWorldSocketAPI.reset();
 
         //go to launch screen & kill the current context
-        startActivity(RegistrationActivity.class);
-        ((AppCompatActivity) mContext).finish();
+        Intent intent = new Intent(mContext, RegistrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

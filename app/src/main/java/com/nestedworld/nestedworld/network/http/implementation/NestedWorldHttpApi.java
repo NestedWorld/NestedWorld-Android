@@ -6,9 +6,11 @@ import android.support.annotation.NonNull;
 import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.Region;
+import com.nestedworld.nestedworld.models.Session;
+import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.models.request.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.ForgotPasswordRequest;
@@ -92,17 +94,22 @@ public final class NestedWorldHttpApi {
 
         // Define a request interceptor for displaying some log
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
         // Define a request interception for adding some custom headers
         Interceptor httpHeaderInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder()
-                        .addHeader("X-User-Email", UserManager.get().getUserEmail(mContext))
-                        .addHeader("Authorization", "Bearer " + UserManager.get().getCurrentAuthToken(mContext))
-                        .build();
-                return chain.proceed(request);
+
+                Request.Builder requestBuilder = chain.request().newBuilder();
+
+                Session session = SessionManager.get().getSession();
+                if (session != null) {
+                    requestBuilder.addHeader("X-User-Email", session.email);
+                    requestBuilder.addHeader("Authorization", session.authToken);
+                }
+
+                return chain.proceed(requestBuilder.build());
             }
         };
 
@@ -130,53 +137,72 @@ public final class NestedWorldHttpApi {
     /**
      * Interface implementation
      */
-    public void register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo, @NonNull final Callback<RegisterResponse> callback) {
-        mClient.register(new RegisterRequest(email, password, pseudo)).enqueue(callback);
+    public Call<RegisterResponse> register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo, @NonNull final Callback<RegisterResponse> callback) {
+        Call<RegisterResponse> request = mClient.register(new RegisterRequest(email, password, pseudo));
+        request.enqueue(callback);
+        return request;
     }
 
-    public void signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<SignInResponse> callback) {
+    public Call<SignInResponse> signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<SignInResponse> callback) {
         String app_token = mContext.getString(R.string.app_token);
-        mClient.signIn(new SignInRequest(email, password, app_token)).enqueue(callback);
+
+        Call<SignInResponse> request = mClient.signIn(new SignInRequest(email, password, app_token));
+        request.enqueue(callback);
+        return request;
     }
 
-    public void forgotPassword(@NonNull final String email, @NonNull final Callback<ForgotPasswordResponse> callback) {
-        mClient.forgotPassword(new ForgotPasswordRequest(email)).enqueue(callback);
+    public Call<ForgotPasswordResponse> forgotPassword(@NonNull final String email, @NonNull final Callback<ForgotPasswordResponse> callback) {
+        Call<ForgotPasswordResponse> request = mClient.forgotPassword(new ForgotPasswordRequest(email));
+        request.enqueue(callback);
+        return request;
     }
 
-    public void logout(@NonNull final Callback<LogoutResponse> callback) {
-        mClient.logout().enqueue(callback);
+    public Call<LogoutResponse> logout(@NonNull final Callback<LogoutResponse> callback) {
+        Call<LogoutResponse> request = mClient.logout();
+        request.enqueue(callback);
+        return request;
     }
 
-    public void getMonsters(@NonNull final Callback<MonstersResponse> callback) {
-        mClient.getMonsters().enqueue(callback);
+    public Call<MonstersResponse> getMonsters(@NonNull final Callback<MonstersResponse> callback) {
+        Call<MonstersResponse> request = mClient.getMonsters();
+        request.enqueue(callback);
+        return request;
     }
 
-    public void getUserInfo(@NonNull final Callback<UserResponse> callback) {
-        mClient.getUserInfo().enqueue(callback);
+    public Call<UserResponse> getUserInfo(@NonNull final Callback<UserResponse> callback) {
+        Call<UserResponse> request = mClient.getUserInfo();
+        request.enqueue(callback);
+        return request;
     }
 
-    public void getPlaces(@NonNull Callback<PlacesResponse> callback) {
-        mClient.getPlaces().enqueue(callback);
+    public Call<PlacesResponse> getPlaces(@NonNull Callback<PlacesResponse> callback) {
+        Call<PlacesResponse> request = mClient.getPlaces();
+        request.enqueue(callback);
+        return request;
     }
 
-    public void getRegions(@NonNull final Callback<RegionsResponse> callback) {
-        mClient.getRegions().enqueue(callback);
+    public Call<RegionsResponse> getRegions(@NonNull final Callback<RegionsResponse> callback) {
+        Call<RegionsResponse> request = mClient.getRegions();
+        request.enqueue(callback);
+        return request;
     }
 
-    public void getRegionDetails(@NonNull final Region region, @NonNull final Callback<RegionResponse> callback) {
-        mClient.getRegionDetail(region.url).enqueue(callback);
+    public Call<RegionResponse> getRegionDetails(@NonNull final Region region, @NonNull final Callback<RegionResponse> callback) {
+        Call<RegionResponse> request = mClient.getRegionDetail(region.url);
+        request.enqueue(callback);
+        return request;
     }
 
-    public void getFriends(@NonNull final Callback<FriendsResponse> callback) {
-        mClient.getFriends().enqueue(callback);
+    public Call<FriendsResponse> getFriends(@NonNull final Callback<FriendsResponse> callback) {
+        Call<FriendsResponse> request = mClient.getFriends();
+        request.enqueue(callback);
+        return request;
     }
 
-    public void getUserMonster(@NonNull final Callback<UserMonsterResponse> callback) {
-        mClient.getUserMonsters().enqueue(callback);
-    }
-
-    public void updateUserInformation(@NonNull final UpdateUserRequest userInfo, @NonNull final Callback<UserResponse> callback) {
-        mClient.updateUserInfo(userInfo).enqueue(callback);
+    public Call<UserMonsterResponse> getUserMonster(@NonNull final Callback<UserMonsterResponse> callback) {
+        Call<UserMonsterResponse> request = mClient.getUserMonsters();
+        request.enqueue(callback);
+        return request;
     }
 
     /**
@@ -188,12 +214,6 @@ public final class NestedWorldHttpApi {
 
         @GET(HttpEndPoint.USER_FRIENDS)
         Call<FriendsResponse> getFriends();
-
-        @PUT(HttpEndPoint.USER_FRIENDS)
-        Call<FriendsResponse> addFriend(@Body Friend body);
-
-        @PUT(HttpEndPoint.USER_INFO)
-        Call<UserResponse> updateUserInfo(@Body UpdateUserRequest body);
 
         @GET(HttpEndPoint.USER_LOGOUT)
         Call<LogoutResponse> logout();

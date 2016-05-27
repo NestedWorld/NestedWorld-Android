@@ -6,7 +6,8 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.network.socket.models.DefaultModel;
@@ -117,20 +118,24 @@ public final class NestedWorldSocketAPI implements SocketListener {
     /*
     ** Private method
      */
-    private void addAuthStateToMapValue(@NonNull Context context, @NonNull ValueFactory.MapBuilder mapBuilder) {
-        String token = UserManager.get().getCurrentAuthToken(context);
-        mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token));
+    private void addAuthStateToMapValue(@NonNull ValueFactory.MapBuilder mapBuilder) {
+        Session session = SessionManager.get().getSession();
+        if (session == null) {
+            return;
+        }
+
+        mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(session.authToken));
     }
 
-    public void combatRequest(@NonNull Context context, @NonNull DefaultModel data) {
+    public void combatRequest(@NonNull DefaultModel data) {
         ValueFactory.MapBuilder mapBuilder = data.serialise();
-        addAuthStateToMapValue(context, mapBuilder);
+        addAuthStateToMapValue(mapBuilder);
         mSocketManager.send(mapBuilder.build());
     }
 
-    public void chatRequest(@NonNull Context context, @NonNull DefaultModel data) {
+    public void chatRequest(@NonNull DefaultModel data) {
         ValueFactory.MapBuilder mapBuilder = data.serialise();
-        addAuthStateToMapValue(context, mapBuilder);
+        addAuthStateToMapValue(mapBuilder);
         mSocketManager.send(mapBuilder.build());
     }
 }

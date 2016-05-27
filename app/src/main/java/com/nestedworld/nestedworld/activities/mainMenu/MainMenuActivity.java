@@ -28,11 +28,12 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdate
 import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
-import com.nestedworld.nestedworld.helpers.user.UserManager;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
@@ -121,7 +122,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     /**
      * Simple asyncTask implementation for updating the database
      */
-
     private void updateDataBase() {
         final AtomicInteger taskEnded = new AtomicInteger(0);
         final List<Thread> tasks = new ArrayList<>();
@@ -147,10 +147,13 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 Toast.makeText(MainMenuActivity.this, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
 
                 //remove user
-                UserManager.get().deleteCurrentUser(MainMenuActivity.this);
+                SessionManager.get().deleteSession();
 
                 //Go to launch screen
                 startActivity(LaunchActivity.class);
+
+                ///Finish current activity
+                finish();
             }
         };
 
