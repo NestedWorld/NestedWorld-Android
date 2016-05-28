@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
+import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 
@@ -91,6 +92,9 @@ public abstract class BaseFragment extends Fragment {
         //avoid leek with the static instance
         NestedWorldHttpApi.reset();
         NestedWorldSocketAPI.reset();
+
+        //clean session
+        SessionManager.get().deleteSession();
 
         Toast.makeText(mContext, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
 
