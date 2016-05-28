@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
@@ -101,6 +102,7 @@ public class HomeFragment extends BaseFragment {
         //Retrieve the session
         Session session = SessionManager.get().getSession();
         if (session == null) {
+            LogHelper.d(TAG, "No Session");
             onFatalError();
             return;
         }
@@ -108,6 +110,7 @@ public class HomeFragment extends BaseFragment {
         //Retrieve the user
         User user = session.getUser();
         if (user == null) {
+            LogHelper.d(TAG, "No User");
             onFatalError();
             return;
         }

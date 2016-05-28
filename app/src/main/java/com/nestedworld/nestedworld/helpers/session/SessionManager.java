@@ -12,6 +12,9 @@ import com.nestedworld.nestedworld.models.User;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * /!\ this implementation only allow one session per application (it's a personal choice) /!\
  */
@@ -59,14 +62,24 @@ public final class SessionManager {
 
         //Save the new session
         session.save();
-
-        Log.e(TAG + "get: ", getSession().toString());
     }
 
     public void deleteSession() {
         //Display some log
-        LogHelper.d(TAG, "DeleteOldSession");
-        Session.deleteAll(Session.class);
+        LogHelper.d(TAG, "deleteSession()");
+
+        //Delete the user linked to the session
+        Session session = getSession();
+        if (session != null) {
+            User user = session.getUser();
+            if (user != null) {
+                LogHelper.d(TAG, "delete user: " + user.toString());
+                user.delete();
+            }
+
+            LogHelper.d(TAG, "DeleteOldSession : " + session.toString());
+            session.delete();
+        }
     }
 
     @Nullable
