@@ -23,12 +23,16 @@ public class UserMonsterUpdater extends EntityUpdater {
             @Override
             public void onSuccess(Response<UserMonsterResponse> response) {
 
+                //Delete old entity
                 UserMonster.deleteAll(UserMonster.class);
 
+                //Update foreign key
                 for (UserMonster userMonster : response.body().monsters) {
                     userMonster.fkmonster = userMonster.infos.monster_id;
-                    userMonster.save();
                 }
+
+                //Save entity
+                UserMonster.saveInTx(response.body().monsters);
 
                 onFinish(true);
             }

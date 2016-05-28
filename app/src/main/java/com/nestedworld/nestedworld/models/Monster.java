@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
+import com.orm.dsl.Unique;
 
 /**
  * Simple model for :
@@ -13,7 +14,8 @@ import com.orm.SugarRecord;
 public class Monster extends SugarRecord {
     @Expose
     @SerializedName("id")
-    public int monster_id;// the sql table will be called monsterid (see sugarOrm doc)
+    @Unique
+    public Long monster_id;// the sql table will be called monsterid (see sugarOrm doc)
 
     @Expose
     public String hp;
@@ -25,6 +27,7 @@ public class Monster extends SugarRecord {
     public int attack;
 
     @Expose
+    @Unique
     public String name;
 
     @Expose

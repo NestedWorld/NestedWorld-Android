@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.models;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 import com.orm.query.Condition;
@@ -30,8 +32,9 @@ public class UserMonster extends SugarRecord {
         //Keep empty
     }
 
-    public int fkmonster;//key for Monster<->UserMonster relationship
+    public Long fkmonster;//key for Monster<->UserMonster relationship
 
+    @Nullable
     public Monster info() {
         return Select.from(Monster.class).where(Condition.prop("monsterid").eq(fkmonster)).first();
     }

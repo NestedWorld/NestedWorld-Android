@@ -121,7 +121,7 @@ public class ChatListFragment extends BaseFragment {
             Friend currentFriend = getItem(position);
 
             //display the friend name
-            friendHolder.friendName.setText(currentFriend.info.pseudo);
+            friendHolder.friendName.setText(currentFriend.info().pseudo);
 
             //display a rounded placeHolder for friend's avatar
             Resources resources = mContext.getResources();
@@ -131,7 +131,7 @@ public class ChatListFragment extends BaseFragment {
 
             //display friend's avatar
             Glide.with(mContext)
-                    .load(currentFriend.info.avatar)
+                    .load(currentFriend.info().avatar)
                     .placeholder(roundedBitmapDrawable)
                     .bitmapTransform(new CropCircleTransformation(mContext))
                     .centerCrop()

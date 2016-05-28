@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.models;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
@@ -17,10 +19,11 @@ public class Friend extends SugarRecord {
     @SerializedName("user")
     public User info;
 
-    public int fkfriend;//key for User<->Friend relationship
+    public Long fkfuser;//key for User<->Friend relationship
 
+    @Nullable
     public User info() {
-        return Select.from(User.class).where(Condition.prop("monsterid").eq(fkfriend)).first();
+        return Friend.findById(User.class, fkfuser);
     }
 
     //Empty constructor for SugarRecord
@@ -33,6 +36,7 @@ public class Friend extends SugarRecord {
     public String toString() {
         return "Friend{" +
                 "info=" + info +
+                ", fkfuser=" + fkfuser +
                 '}';
     }
 }
