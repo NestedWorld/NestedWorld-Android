@@ -1,19 +1,12 @@
 package com.nestedworld.nestedworld.helpers.session;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
-import com.orm.query.Condition;
 import com.orm.query.Select;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * /!\ this implementation only allow one session per application (it's a personal choice) /!\

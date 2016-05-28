@@ -7,12 +7,9 @@ import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
-import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.Region;
 import com.nestedworld.nestedworld.models.Session;
-import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
-import com.nestedworld.nestedworld.network.http.models.request.users.UpdateUserRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignInRequest;
@@ -41,7 +38,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Url;
 
 /**

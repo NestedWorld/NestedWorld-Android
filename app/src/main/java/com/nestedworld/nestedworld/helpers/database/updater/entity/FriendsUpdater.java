@@ -11,9 +11,6 @@ import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
 
-import java.util.Iterator;
-import java.util.List;
-
 import retrofit2.Response;
 
 public class FriendsUpdater extends EntityUpdater {

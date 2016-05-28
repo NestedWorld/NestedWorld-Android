@@ -10,6 +10,7 @@ public abstract class EntityUpdater extends Thread {
 
     public interface onEntityUpdated {
         void onSuccess();
+
         void onError();
     }
 
@@ -49,8 +50,7 @@ public abstract class EntityUpdater extends Thread {
     public void onFinish(@NonNull final Boolean status) {
         if (status) {
             mCallback.onSuccess();
-        }
-        else {
+        } else {
             mCallback.onError();
         }
     }
