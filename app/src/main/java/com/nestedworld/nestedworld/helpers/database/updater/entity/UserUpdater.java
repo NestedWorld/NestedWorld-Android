@@ -4,34 +4,33 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.UserResponse;
 
+import retrofit2.Call;
 import retrofit2.Response;
 
-public class UserUpdater extends EntityUpdater {
+public class UserUpdater extends EntityUpdater<UserResponse> {
 
-    public UserUpdater(@NonNull Context context, @NonNull onEntityUpdated callback) {
+    public UserUpdater(@NonNull Context context, @NonNull OnEntityUpdated callback) {
         super(context, callback);
     }
 
+    @NonNull
     @Override
-    public void update() {
-        NestedWorldHttpApi.getInstance(getContext()).getUserInfo(new Callback<UserResponse>() {
-            @Override
-            public void onSuccess(Response<UserResponse> response) {
-                User.deleteAll(User.class);
-                response.body().user.save();
+    public Call<UserResponse> getRequest() {
+        return NestedWorldHttpApi.getInstance(getContext()).getUserInfo();
+    }
 
-                onFinish(true);
-            }
+    @Override
+    public void updateEntity(@NonNull Response<UserResponse> response) {
+        //Delete old entity
+        User.deleteAll(User.class);
 
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<UserResponse> response) {
-                onFinish(false);
-            }
-        });
+        //Save entity
+        response.body().user.save();
     }
 }

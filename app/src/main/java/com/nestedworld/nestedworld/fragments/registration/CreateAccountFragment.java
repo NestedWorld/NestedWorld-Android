@@ -96,63 +96,57 @@ public class CreateAccountFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldHttpApi.getInstance(mContext).register(
-                email,
-                password,
-                pseudo,
-                new Callback<RegisterResponse>() {
-                    @Override
-                    public void onSuccess(Response<RegisterResponse> response) {
-                        //Account successfully created, we can log in
-                        login(email, password);
-                    }
 
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
-                        progressView.stop();
 
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_create_account), response);
-                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
+        NestedWorldHttpApi.getInstance(mContext).register(email, password, pseudo).enqueue(new Callback<RegisterResponse>() {
+            @Override
+            public void onSuccess(Response<RegisterResponse> response) {
+                //Account successfully created, we can log in
+                login(email, password);
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
+                progressView.stop();
+
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_create_account), response);
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void login(@NonNull final String email, @NonNull final String password) {
 
         if (mContext == null)
             return;
-        NestedWorldHttpApi.getInstance(mContext).signIn(
-                email,
-                password,
-                new Callback<SignInResponse>() {
-                    @Override
-                    public void onSuccess(Response<SignInResponse> response) {
-                        if (mContext == null) {
-                            return;
-                        }
 
-                        //Create a new session
-                        SessionManager.get().newSession(email, password, response.body().token);
-
-                        //display MainMenu and stop this activity
-                        startActivity(MainMenuActivity.class);
-                        ((Activity) mContext).finish();
-                    }
-
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
-                        if (progressView != null) {
-                            progressView.stop();
-                        }
-
-                        if (mContext != null) {
-                            final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
-                            Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-                        }
-                    }
+        NestedWorldHttpApi.getInstance(mContext).signIn(email, password).enqueue(new Callback<SignInResponse>() {
+            @Override
+            public void onSuccess(Response<SignInResponse> response) {
+                if (mContext == null) {
+                    return;
                 }
-        );
+
+                //Create a new session
+                SessionManager.get().newSession(email, password, response.body().token);
+
+                //display MainMenu and stop this activity
+                startActivity(MainMenuActivity.class);
+                ((Activity) mContext).finish();
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
+                if (progressView != null) {
+                    progressView.stop();
+                }
+
+                if (mContext != null) {
+                    final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
+                    Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     /*

@@ -133,72 +133,50 @@ public final class NestedWorldHttpApi {
     /**
      * Interface implementation
      */
-    public Call<RegisterResponse> register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo, @NonNull final Callback<RegisterResponse> callback) {
-        Call<RegisterResponse> request = mClient.register(new RegisterRequest(email, password, pseudo));
-        request.enqueue(callback);
-        return request;
+    public Call<RegisterResponse> register(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
+        return mClient.register(new RegisterRequest(email, password, pseudo));
     }
 
-    public Call<SignInResponse> signIn(@NonNull final String email, @NonNull final String password, @NonNull final Callback<SignInResponse> callback) {
+    public Call<SignInResponse> signIn(@NonNull final String email, @NonNull final String password) {
         String app_token = mContext.getString(R.string.app_token);
 
-        Call<SignInResponse> request = mClient.signIn(new SignInRequest(email, password, app_token));
-        request.enqueue(callback);
-        return request;
+        return mClient.signIn(new SignInRequest(email, password, app_token));
     }
 
-    public Call<ForgotPasswordResponse> forgotPassword(@NonNull final String email, @NonNull final Callback<ForgotPasswordResponse> callback) {
-        Call<ForgotPasswordResponse> request = mClient.forgotPassword(new ForgotPasswordRequest(email));
-        request.enqueue(callback);
-        return request;
+    public Call<ForgotPasswordResponse> forgotPassword(@NonNull final String email) {
+        return mClient.forgotPassword(new ForgotPasswordRequest(email));
     }
 
-    public Call<LogoutResponse> logout(@NonNull final Callback<LogoutResponse> callback) {
-        Call<LogoutResponse> request = mClient.logout();
-        request.enqueue(callback);
-        return request;
+    public Call<LogoutResponse> logout() {
+        return mClient.logout();
     }
 
-    public Call<MonstersResponse> getMonsters(@NonNull final Callback<MonstersResponse> callback) {
-        Call<MonstersResponse> request = mClient.getMonsters();
-        request.enqueue(callback);
-        return request;
+    public Call<MonstersResponse> getMonsters() {
+        return mClient.getMonsters();
     }
 
-    public Call<UserResponse> getUserInfo(@NonNull final Callback<UserResponse> callback) {
-        Call<UserResponse> request = mClient.getUserInfo();
-        request.enqueue(callback);
-        return request;
+    public Call<UserResponse> getUserInfo() {
+        return mClient.getUserInfo();
     }
 
-    public Call<PlacesResponse> getPlaces(@NonNull Callback<PlacesResponse> callback) {
-        Call<PlacesResponse> request = mClient.getPlaces();
-        request.enqueue(callback);
-        return request;
+    public Call<PlacesResponse> getPlaces() {
+        return mClient.getPlaces();
     }
 
-    public Call<RegionsResponse> getRegions(@NonNull final Callback<RegionsResponse> callback) {
-        Call<RegionsResponse> request = mClient.getRegions();
-        request.enqueue(callback);
-        return request;
+    public Call<RegionsResponse> getRegions() {
+        return mClient.getRegions();
     }
 
-    public Call<RegionResponse> getRegionDetails(@NonNull final Region region, @NonNull final Callback<RegionResponse> callback) {
-        Call<RegionResponse> request = mClient.getRegionDetail(region.url);
-        request.enqueue(callback);
-        return request;
+    public Call<RegionResponse> getRegionDetails(@NonNull final Region region) {
+        return mClient.getRegionDetail(region.url);
     }
 
-    public Call<FriendsResponse> getFriends(@NonNull final Callback<FriendsResponse> callback) {
-        Call<FriendsResponse> request = mClient.getFriends();
-        request.enqueue(callback);
-        return request;
+    public Call<FriendsResponse> getFriends() {
+        return mClient.getFriends();
     }
 
-    public Call<UserMonsterResponse> getUserMonster(@NonNull final Callback<UserMonsterResponse> callback) {
-        Call<UserMonsterResponse> request = mClient.getUserMonsters();
-        request.enqueue(callback);
-        return request;
+    public Call<UserMonsterResponse> getUserMonster() {
+        return mClient.getUserMonsters();
     }
 
     /**

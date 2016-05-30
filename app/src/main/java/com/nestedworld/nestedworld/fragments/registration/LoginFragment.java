@@ -81,29 +81,28 @@ public class LoginFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldHttpApi.getInstance(mContext).signIn(
-                email,
-                password,
-                new Callback<SignInResponse>() {
-                    @Override
-                    public void onSuccess(Response<SignInResponse> response) {
-                        progressView.stop();
 
-                        //Create a new session
-                        SessionManager.get().newSession(email, password, response.body().token);
+        NestedWorldHttpApi.getInstance(mContext).signIn(email, password).enqueue(new Callback<SignInResponse>() {
+            @Override
+            public void onSuccess(Response<SignInResponse> response) {
+                progressView.stop();
 
-                        //display the mainMenu and stop the launchActivity
-                        startActivity(MainMenuActivity.class);
-                        ((FragmentActivity) mContext).finish();
-                    }
+                //Create a new session
+                SessionManager.get().newSession(email, password, response.body().token);
 
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
-                        progressView.stop();
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
-                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                });
+                //display the mainMenu and stop the launchActivity
+                startActivity(MainMenuActivity.class);
+                ((FragmentActivity) mContext).finish();
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
+                progressView.stop();
+
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @OnClick(R.id.textView_forgotPassword)
@@ -112,30 +111,28 @@ public class LoginFragment extends BaseFragment {
 
         if (mContext == null)
             return;
-        NestedWorldHttpApi.getInstance(mContext).forgotPassword(
-                email,
-                new Callback<ForgotPasswordResponse>() {
-                    @Override
-                    public void onSuccess(Response<ForgotPasswordResponse> response) {
-                        //check if fragment hasn't been detach
-                        if (mContext == null) {
-                            return;
-                        }
 
-                        Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<ForgotPasswordResponse> response) {
-                        //check if fragment hasn't been detach
-                        if (mContext == null) {
-                            return;
-                        }
-
-                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_forgot_password), response);
-                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-                    }
+        NestedWorldHttpApi.getInstance(mContext).forgotPassword(email).enqueue(new Callback<ForgotPasswordResponse>() {
+            @Override
+            public void onSuccess(Response<ForgotPasswordResponse> response) {
+                //check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
                 }
-        );
+
+                Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<ForgotPasswordResponse> response) {
+                //check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_forgot_password), response);
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

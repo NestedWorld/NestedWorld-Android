@@ -23,6 +23,7 @@ import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
+import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.EntityUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
@@ -124,7 +125,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     private void updateDataBase() {
         final AtomicInteger taskEnded = new AtomicInteger(0);
         final List<Thread> tasks = new ArrayList<>();
-        final EntityUpdater.onEntityUpdated callback = new EntityUpdater.onEntityUpdated() {
+        final OnEntityUpdated callback = new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 if (taskEnded.incrementAndGet() == tasks.size()) {
@@ -133,7 +134,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             }
 
             @Override
-            public void onError() {
+            public void onError(KIND kind) {
                 //Stop every thread
                 for (Thread t : tasks) {
                     t.interrupt();
@@ -158,7 +159,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         tasks.add(new UserUpdater(MainMenuActivity.this, callback));
         tasks.add(new FriendsUpdater(MainMenuActivity.this, callback));
-        tasks.add(new MonsterUpdater(MainMenuActivity.this, new EntityUpdater.onEntityUpdated() {
+        tasks.add(new MonsterUpdater(MainMenuActivity.this, new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 Thread thread = new UserMonsterUpdater(MainMenuActivity.this, callback);
@@ -169,8 +170,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             }
 
             @Override
-            public void onError() {
-                callback.onError();
+            public void onError(KIND errorKind) {
+                callback.onError(errorKind);
             }
         }));
 

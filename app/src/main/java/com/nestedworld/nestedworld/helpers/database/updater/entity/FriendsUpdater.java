@@ -2,51 +2,38 @@ package com.nestedworld.nestedworld.helpers.database.updater.entity;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.User;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
 
+import retrofit2.Call;
 import retrofit2.Response;
 
-public class FriendsUpdater extends EntityUpdater {
+public class FriendsUpdater extends EntityUpdater<FriendsResponse> {
 
-    public FriendsUpdater(@NonNull Context context, @NonNull onEntityUpdated callback) {
+    public FriendsUpdater(@NonNull Context context, @NonNull OnEntityUpdated callback) {
         super(context, callback);
     }
 
+    @NonNull
     @Override
-    public void update() {
-        NestedWorldHttpApi.getInstance(getContext()).getFriends(new Callback<FriendsResponse>() {
-            @Override
-            public void onSuccess(Response<FriendsResponse> response) {
+    public Call<FriendsResponse> getRequest() {
+        return NestedWorldHttpApi.getInstance(getContext()).getFriends();
+    }
 
-                Friend.deleteAll(Friend.class);
+    @Override
+    public void updateEntity(@NonNull Response<FriendsResponse> response) {
+        //Delete old entity
+        Friend.deleteAll(Friend.class);
 
-                for (Friend friend : response.body().friends) {
-                    friend.fkfuser = friend.info.save();
-                    friend.save();
-                }
+        //Update foreign key
+        for (Friend friend : response.body().friends) {
+            friend.fkfuser = friend.info.save();
+        }
 
-                for (Friend friend : Friend.listAll(Friend.class)) {
-                    LogHelper.e("Friend: ", friend.toString());
-                }
-
-                for (User user : User.listAll(User.class)) {
-                    LogHelper.e("User: ", user.toString());
-                }
-
-                onFinish(true);
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<FriendsResponse> response) {
-                onFinish(false);
-            }
-        });
+        //Save entity
+        Friend.saveInTx(response.body().friends);
     }
 }

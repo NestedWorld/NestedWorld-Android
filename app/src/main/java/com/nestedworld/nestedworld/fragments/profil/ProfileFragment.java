@@ -16,6 +16,7 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
@@ -99,18 +100,17 @@ public class ProfileFragment extends BaseFragment {
     public void logout() {
         if (mContext == null)
             return;
-        NestedWorldHttpApi.getInstance(mContext).logout(
-                new com.nestedworld.nestedworld.network.http.callback.Callback<LogoutResponse>() {
-                    @Override
-                    public void onSuccess(Response<LogoutResponse> response) {
-                        //Server has accept our logout
-                    }
+        NestedWorldHttpApi.getInstance(mContext).logout().enqueue(new Callback<LogoutResponse>() {
+            @Override
+            public void onSuccess(Response<LogoutResponse> response) {
+                //Logout success
+            }
 
-                    @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<LogoutResponse> response) {
-                        //Server refuse our logout
-                    }
-                });
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<LogoutResponse> response) {
+                //Logout failed
+            }
+        });
 
         //remove user
         SessionManager.get().deleteSession();

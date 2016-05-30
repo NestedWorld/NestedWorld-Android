@@ -55,7 +55,6 @@ public class User extends SugarRecord {
                 ", city='" + city + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", gender='" + gender + '\'' +
-                ", getId()='" + getId() + '\'' +
                 '}';
     }
 }
