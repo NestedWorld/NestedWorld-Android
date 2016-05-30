@@ -3,7 +3,9 @@ package com.nestedworld.nestedworld.activities.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
@@ -50,12 +52,17 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
-                break;
+                Log.e(TAG, ""+ getSupportFragmentManager().getBackStackEntryCount());
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                }
+                else {
+                    super.onBackPressed();
+                }
+                return true;
             default:
-                break;
+                return (super.onOptionsItemSelected(menuItem));
         }
-        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override
