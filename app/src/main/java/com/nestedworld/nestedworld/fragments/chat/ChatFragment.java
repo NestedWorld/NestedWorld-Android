@@ -16,31 +16,35 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.fragments.fight.TeamSelectionFragment;
 import com.nestedworld.nestedworld.models.Friend;
 
 import butterknife.Bind;
 
 public class ChatFragment extends BaseFragment {
 
-    private static Friend mFriend;
     @Bind(R.id.editText_chat)
     EditText editTextChat;
     @Bind(R.id.listView_chat)
     ListView listViewChat;
     private ArrayAdapter<String> itemAdapter;
+    private static Friend mFriend;
 
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Friend friend) {
-        //TODO avoid leak on static reference
-        mFriend = friend;
+        Bundle bundle = new Bundle();
+        bundle.putLong("FRIEND_ID", friend.getId());
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new ChatFragment());
-        fragmentTransaction.commit();
+        ChatFragment fragment = new ChatFragment();
+        fragment.setArguments(bundle);
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
-
 
     /*
     ** Life cycle
@@ -52,6 +56,9 @@ public class ChatFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+
+        mFriend = Friend.findById(Friend.class, getArguments().getLong("FRIEND_ID"));
+
         initActionBar();
         initChat();
     }
@@ -60,8 +67,10 @@ public class ChatFragment extends BaseFragment {
     ** Utils
      */
     private void initActionBar() {
+        //Check if fragment hasn't been detach
         if (mContext == null)
             return;
+
         ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mFriend.info().pseudo);

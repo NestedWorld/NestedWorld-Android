@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
     protected Context mContext;
 
     /*
-    ** Method that every child will have to implement
+    ** Method every child will have to implement
      */
 
     /**
