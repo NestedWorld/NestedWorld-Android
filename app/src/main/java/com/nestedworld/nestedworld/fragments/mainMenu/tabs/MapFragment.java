@@ -61,6 +61,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+
         //we start the loading animation
         if (progressView != null) {
             progressView.start();
@@ -161,21 +162,23 @@ public class MapFragment extends BaseFragment implements LocationListener {
         // Acquire a reference to the system Location Manager
         LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
-        //If the provider is already enable
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-
-            //onProviderEnabled() will not be called so we call it
-            onProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            //init location fix
-            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (lastLocation != null) {
-                onLocationChanged(lastLocation);
-            }
-        }
-
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        for (String provider : locationManager.getProviders(false)) {
+
+            if (locationManager.isProviderEnabled(provider)) {
+                //onProviderEnabled() will not be called if the provider is already enable so we call it
+                onProviderEnabled(LocationManager.GPS_PROVIDER);
+
+                //get location fix
+                Location lastLocation = locationManager.getLastKnownLocation(provider);
+                if (lastLocation != null) {
+                    //Update the NestedWorldMap
+                    onLocationChanged(lastLocation);
+                }
+            }
+
+            locationManager.requestLocationUpdates(provider, 0, 0, this);
+        }
 
         //Center the googleMap map on the userLocation
         mMap.getGoogleMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -186,39 +189,41 @@ public class MapFragment extends BaseFragment implements LocationListener {
     ** Location listener
      */
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(@NonNull final Location location) {
         LogHelper.d(TAG, "location changed");
-        mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
+
+        //Check if fragment hasn't been destroy
+        if (mContext == null || progressView == null) {
+            return;
+        }
+
+        progressView.start();
+
+        mMap.build(new NestedWorldMap.OnMapReadyListener() {
+            @Override
+            public void onMapReady() {
+                LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
+                mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
+
+                //We stop the loading animation
+                progressView.stop();
+            }
+        });
 
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        LogHelper.d(TAG, "status changed");
+        LogHelper.d(TAG, "status changed: " + provider);
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        LogHelper.d(TAG, "provider enable");
-
-        mMap.build(new NestedWorldMap.OnMapReadyListener() {
-            @Override
-            public void onMapReady() {
-                //We stop the loading animation
-                progressView.stop();
-            }
-        });
+        LogHelper.d(TAG, "provider enable: " + provider);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        LogHelper.d(TAG, "provider disable");
-
-        progressView.start();
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-        Toast.makeText(mContext, "Can't retrieve your position", Toast.LENGTH_LONG).show();
+        LogHelper.d(TAG, "provider disable:" + provider);
     }
 }
