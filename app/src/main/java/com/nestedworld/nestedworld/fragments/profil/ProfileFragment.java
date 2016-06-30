@@ -98,8 +98,13 @@ public class ProfileFragment extends BaseFragment {
      */
     @OnClick(R.id.button_logout)
     public void logout() {
+        //Check if fragment hasn't been detach
         if (mContext == null)
             return;
+
+        //TODO drop sql table
+
+        /*Send logout request*/
         NestedWorldHttpApi.getInstance(mContext).logout().enqueue(new Callback<LogoutResponse>() {
             @Override
             public void onSuccess(Response<LogoutResponse> response) {
