@@ -33,6 +33,12 @@ public class Monster extends SugarRecord {
     @Expose
     public String sprite;
 
+    @Expose
+    public String type;
+
+    @Expose
+    public String speed;
+
     //Empty constructor for SugarRecord
     public Monster() {
         //Keep empty
