@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.network.socket.listener;
 
+import org.msgpack.value.ImmutableValue;
+
 public interface SocketListener {
     void onSocketConnected();
 
@@ -7,5 +9,5 @@ public interface SocketListener {
 
     void onMessageSent();
 
-    void onMessageReceived(String message);
+    void onMessageReceived(ImmutableValue message);
 }

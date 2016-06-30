@@ -103,6 +103,8 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         mSelectedMonster.add(mUserMonsters.get(viewPager.getCurrentItem()));
 
         button_go_fight.setText("" + mSelectedMonster.size() + "/5");
+
+        //If we've selected enough monster, we enable the button
         if (mSelectedMonster.size() == 5) {
             button_select_monster.setOnClickListener(null);
             button_go_fight.setText("GO !");
@@ -145,7 +147,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        //DO What you want
     }
 
     @Override
@@ -155,7 +157,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        //DO What you want
     }
 
     /**

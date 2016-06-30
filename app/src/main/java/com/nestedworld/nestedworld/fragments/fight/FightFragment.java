@@ -20,9 +20,13 @@ import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.rey.material.widget.ProgressView;
 
+import org.msgpack.value.Value;
+import org.msgpack.value.ValueFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 
@@ -62,37 +66,48 @@ public class FightFragment extends BaseFragment {
                 /*Socket successfully init*/
                 mNestedWorldSocketAPI = nestedWorldSocketAPI;
 
-                /*Init the custom view*/
-                initDrawingGestureView(rootView);
-
-                /*Stop the loading animation*/
-                if (progressView != null) {
-                    progressView.stop();
-                }
+                /*Need to auth*/
+                mNestedWorldSocketAPI.authRequest("AUTH_REQUEST");
             }
 
             @Override
             public void onConnectionLost() {
+                //Check if fragment hasn't been detach
                 if (mContext == null) {
                     return;
                 }
 
-                /*Socket initialisation failed*/
-                ((AppCompatActivity) mContext).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        /*Stop the loading animation and display an error message*/
-                        if (progressView != null) {
-                            progressView.stop();
-                        }
-                        if (mContext != null) {
-                            Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
-                        }
+                /*Stop the loading animation and display an error message*/
+                if (progressView != null) {
+                    progressView.stop();
+                }
 
-                        /*Stop the activity (can't run without connection)*/
-                        getActivity().finish();
+                /*Display an error message*/
+                //TODO use string from xml
+                Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
+
+                /*Stop the activity (can't run without connection)*/
+                getActivity().finish();
+            }
+
+            @Override
+            public void onMessageReceived(@NonNull String requestId, @NonNull Map<Value, Value> content) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                if (requestId.equals("AUTH_REQUEST")) {
+                    if (content.get(ValueFactory.newString("result")).asStringValue().asString().equals("success")) {
+                        /*Stop the loading animation*/
+                        progressView.stop();
+
+                        /*Init the custom view (for sending attack)*/
+                        initDrawingGestureView(rootView);
                     }
-                });
+
+                }
+
             }
         });
     }

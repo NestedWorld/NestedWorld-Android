@@ -11,6 +11,7 @@ import org.msgpack.core.MessageInsufficientBufferException;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
+import org.msgpack.value.ImmutableValue;
 import org.msgpack.value.MapValue;
 
 import java.io.IOException;
@@ -138,7 +139,8 @@ public class SocketManager implements Runnable {
         try {
             LogHelper.d(TAG, "Listening on socket...");
             while (true) {
-                String message = messageUnpacker.unpackValue().toString();
+                ImmutableValue message = messageUnpacker.unpackValue();
+
                 notifyMessageReceived(message);
                 LogHelper.d(TAG, "receive message:" + message);
             }
@@ -165,6 +167,7 @@ public class SocketManager implements Runnable {
     /*
     ** Utils
      */
+    //Thread safe (callback in main thread)
     private void notifySocketConnected() {
         for (final SocketListener listener : listeners) {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -176,19 +179,24 @@ public class SocketManager implements Runnable {
         }
     }
 
+    //Thread unsafe (callback in current thread)
     private void notifySocketDisconnected() {
         for (final SocketListener listener : listeners) {
             listener.onSocketDisconnected();
         }
     }
 
+    //Thread unsafe (callback in current thread)
     private void notifyMessageSent() {
         for (final SocketListener listener : listeners) {
             listener.onMessageSent();
         }
     }
 
-    private void notifyMessageReceived(@NonNull final String message) {
+    //Thread unsafe (callback in current thread)
+    private void notifyMessageReceived(@NonNull final ImmutableValue message) {
+        LogHelper.d(TAG, "Message receive: " + message.toString());
+
         for (final SocketListener listener : listeners) {
             listener.onMessageReceived(message);
         }
