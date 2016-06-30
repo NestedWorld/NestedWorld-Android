@@ -25,10 +25,10 @@
     <string name="tab_city_name">Ma ville</string>
 
     <string name="tab_home">Home</string>
-    <string name="tab_garden">Jardin</string>
+    <string name="tab_garden">Garden</string>
     <string name="tab_map">Map</string>
-    <string name="tab_monster">Monstres</string>
-    <string name="tab_shop">Boutique</string>
+    <string name="tab_monster">Monster</string>
+    <string name="tab_shop">Shop</string>
 
     <string name="monster_name">Nom :</string>
     <string name="monster_attaque">Attaque :</string>
