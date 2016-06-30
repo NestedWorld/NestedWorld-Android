@@ -102,8 +102,6 @@ public class ProfileFragment extends BaseFragment {
         if (mContext == null)
             return;
 
-        //TODO drop sql table
-
         /*Send logout request*/
         NestedWorldHttpApi.getInstance(mContext).logout().enqueue(new Callback<LogoutResponse>() {
             @Override
