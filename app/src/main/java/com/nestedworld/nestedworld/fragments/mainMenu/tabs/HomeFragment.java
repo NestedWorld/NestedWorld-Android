@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
@@ -15,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.vision.text.Line;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -138,16 +141,9 @@ public class HomeFragment extends BaseFragment {
     private class UserMonsterAdapter extends BaseAdapter {
 
         private final List<UserMonster> userMonsters;
-        private final RoundedBitmapDrawable defaultMonsterAvatar;
 
         public UserMonsterAdapter(@NonNull final List<UserMonster> userMonsters) {
             this.userMonsters = userMonsters;
-
-            //Init placeHolder
-            Resources resources = getResources();
-            Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_monster);
-            defaultMonsterAvatar = RoundedBitmapDrawableFactory.create(resources, bitmap);
-            defaultMonsterAvatar.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
         }
 
         @Override
@@ -168,6 +164,11 @@ public class HomeFragment extends BaseFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+            //Check if fragment hasn't been detach
+            if (mContext == null) {
+                return null;
+            }
+
             View view = convertView;
 
             //Get user
@@ -178,18 +179,50 @@ public class HomeFragment extends BaseFragment {
                 view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
             }
 
-            //Populate the name
+            //Populate name & lvl
             final TextView textviewName = (TextView) view.findViewById(R.id.textview_monster_name);
+            final TextView textViewLvl = (TextView) view.findViewById(R.id.textview_monster_description);
+
             textviewName.setText(monster.info().name);
+            textViewLvl.setText(monster.level == null ? "lvl 0" : monster.level);
+
 
             //Display monster picture
-            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
+            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);;
             Glide.with(getContext())
                     .load(monster.info().sprite)
-                    .placeholder(defaultMonsterAvatar)
-                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .placeholder(R.drawable.default_monster)
                     .centerCrop()
                     .into(imageViewMonster);
+
+            /*Add color shape around monster picture*/
+            final LinearLayout linearLayoutShape = (LinearLayout) view.findViewById(R.id.imageView_monster_shape);
+
+            if (monster.info().type == null) {
+                linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.apptheme_color));
+            }
+            else {
+                switch (monster.info().type) {
+                    case "water":
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_blue_light));
+                        break;
+                    case "fire":
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_red_light));
+                        break;
+                    case "earth":
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.DarkKhaki));
+                        break;
+                    case "electric":
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_orange_light));
+                        break;
+                    case "plant":
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_green_light));
+                        break;
+                    default:
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.apptheme_color));
+                        break;
+                }
+            }
 
             return view;
         }

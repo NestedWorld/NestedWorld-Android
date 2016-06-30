@@ -41,8 +41,6 @@ public class MonstersFragment extends BaseFragment {
 
     @Bind(R.id.listview_monsters_list)
     ListView listViewMonstersList;
-    @Bind(R.id.progressView)
-    ProgressView progressView;
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -146,20 +144,12 @@ public class MonstersFragment extends BaseFragment {
             final TextView textviewName = (TextView) view.findViewById(R.id.textview_monster_name);
             textviewName.setText(monster.name);
 
-            //TODO utiliser la bonne image
             final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
-                    .load(R.drawable.default_monster)
-                    .asBitmap()
+                    .load(monster.sprite)
+                    .placeholder(R.drawable.default_monster)
                     .centerCrop()
-                    .into(new BitmapImageViewTarget(imageViewMonster) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
-                            circularBitmapDrawable.setCircular(true);
-                            imageViewMonster.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+                    .into(imageViewMonster);
 
             return view;
         }

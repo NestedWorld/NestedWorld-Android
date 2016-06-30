@@ -5,12 +5,22 @@
     android:orientation="horizontal"
     android:padding="8dip">
 
-    <ImageView
-        android:id="@+id/imageView_monster"
-        android:layout_width="58dip"
-        android:layout_height="58dip"
-        android:layout_gravity="center"
-        android:src="@drawable/default_monster" />
+    <LinearLayout
+        android:id="@+id/imageView_monster_shape"
+        android:padding="3dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_monster"
+            android:layout_width="58dip"
+            android:layout_height="58dip"
+            android:layout_gravity="center"
+            android:src="@drawable/default_monster" />
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -30,7 +40,6 @@
             android:layout_height="wrap_content"
             android:padding="8dip"
             android:textColor="@color/apptheme_color" />
-
 
     </LinearLayout>
 
