@@ -71,4 +71,23 @@
         android:layout_width="58dip"
         android:layout_height="58dip" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_help_outline"/>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/teamSelection_msg_hint"/>
+
+    </LinearLayout>
+
+
 </LinearLayout>
