@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
+import com.orm.query.Select;
 
 /**
  * Simple model for :
@@ -21,7 +22,10 @@ public class Friend extends SugarRecord {
 
     @Nullable
     public User info() {
-        return Friend.findById(User.class, fkfuser);
+        if (info == null) {
+            info = Friend.findById(User.class, fkfuser);
+        }
+        return info;
     }
 
     //Empty constructor for SugarRecord
@@ -36,5 +40,19 @@ public class Friend extends SugarRecord {
                 "info=" + info +
                 ", fkfuser=" + fkfuser +
                 '}';
+    }
+
+    //Utils
+    public static int getNumberOfAllyOnline() {
+        int allyOnline = 0;
+        for (Friend friend : Select.from(Friend.class).list()) {
+            User friendInfo = friend.info;
+            if (friendInfo != null) {
+                if (friendInfo.is_connected) {
+                    allyOnline++;
+                }
+            }
+        }
+        return allyOnline;
     }
 }

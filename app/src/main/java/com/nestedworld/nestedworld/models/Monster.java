@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.nestedworld.nestedworld.R;
 import com.orm.SugarRecord;
 import com.orm.dsl.Unique;
 
@@ -56,5 +57,23 @@ public class Monster extends SugarRecord {
                 ", name='" + name + '\'' +
                 ", sprite='" + sprite + '\'' +
                 '}';
+    }
+
+    //Utils
+    public int getColorResource() {
+        switch (type) {
+            case "water":
+                return R.color.holo_blue_light;
+            case "fire":
+                return R.color.holo_red_light;
+            case "earth":
+                return R.color.DarkKhaki;
+            case "electric":
+                return R.color.holo_orange_light;
+            case "plant":
+                return R.color.holo_green_light;
+            default:
+                return R.color.black;
+        }
     }
 }
