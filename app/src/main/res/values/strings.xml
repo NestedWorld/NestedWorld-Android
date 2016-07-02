@@ -20,7 +20,8 @@
     <string name="error_request_user">Cannot retrieve your data.</string>
     <string name="error_request_monster">Cannot retrieve monsters.</string>
 
-    <!--Registration activity-->
+    <!--Registration-->
+    <string name="registration_msg_punchLine">catch them all and became the champion !</string>
     <string name="registration_editText_pseudo">Pseudo</string>
     <string name="registration_editText_email">Email</string>
     <string name="registration_editText_password">Password</string>
@@ -32,24 +33,63 @@
     <string name="registration_msg_forgotPassword">Forgot password ?</string>
     <string name="registration_msg_passwordSend">You will receive an email soon.</string>
 
+    <!--Profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_msg_gender">Gender : %s</string>
+    <string name="profile_msg_pseudo">Pseudo : %s</string>
+    <string name="profile_msg_birthDay">Birthday : %s</string>
+    <string name="profile_msg_city">City : %s</string>
+    <string name="profile_msg_registeredAt">Registered at : %s</string>
+    <string name="profile_msg_email">Email : %s</string>
+    <string name="profile_msg_background">Background: %s</string>
+    <string name="profile_msg_level">Level: %s</string>
+    <string name="profile_msg_avatar">Avatar: %s</string>
+    <string name="profile_msg_logout">Log out</string>
+
     <!--MainMenu-->
     <string name="mainMenu_title_tab_home">Home</string>
     <string name="mainMenu_title_tab_inventory">Inventory</string>
     <string name="mainMenu_title_tab_map">Map</string>
     <string name="mainMenu_title_tab_monster">Monster</string>
     <string name="mainMenu_title_tab_shop">Shop</string>
-    <string name="mainMenu_action_profil">Profil</string>
     <string name="mainMenu_action_chat">Chat</string>
     <string name="mainMenu_action_fight">fight</string>
     <string name="mainMenu_action_settings">Settings</string>
 
-    <!--MainMenu.tab.monster-->
-    <string name="tabMonster_msg_monsterName">Name :</string>
-    <string name="tabMonster_msg_monsterAttack">Attack :</string>
-    <string name="tabMonster_msg_monsterDefence">Defense :</string>
-    <string name="tabMonster_msg_monsterPv">Hp :</string>
+    <!--MainMenu.tab.monsters-->
+    <string name="tabMonster_msg_monsterName">Name : %s</string>
+    <string name="tabMonster_msg_monsterAttack">Attack : %d</string>
+    <string name="tabMonster_msg_monsterDefence">Defense : %d</string>
+    <string name="tabMonster_msg_monsterHp">Hp : %s</string>
+
+    <!--MainMenu.tab.home-->
+    <string name="tabHome_title_creditsNumber">Credits</string>
+    <string name="tabHome_title_monsterCaptured">Monster captured</string>
+    <string name="tabHome_title_areaCaptured">Area captured</string>
+    <string name="tabHome_title_allyOnline">Area captured</string>
+    <string name="tabHome_msg_creditsNumber">Credits</string>
+    <string name="tabHome_msg_allyOnline">%d</string>
+    <string name="tabHome_msg_monsterCaptured">%d</string>
+
+    <!--MainMenu.tab.home.monsterList-->
+    <string name="tabHome_title_monsterList">Your monster</string>
+    <string name="tabHome_msg_monsterLvl">lvl %d</string>
+    <string name="tabHome_msg_userLvl">lvl %d</string>
+
+    <!--Fight.teamSelection-->
+    <string name="teamSelection_title">Team selection</string>
+    <string name="teamSelection_msg_progress">%d / 4</string>
+    <string name="teamSelection_msg_startFight">Go !</string>
+    <string name="teamSelection_msg_monsterName">Name: %s</string>
+    <string name="teamSelection_msg_monsterLvl">lvl: %s</string>
+    <string name="teamSelection_msg_monsterAttack">Attack %d</string>
+    <string name="teamSelection_msg_monsterDefence">Defence: %d</string>
+    <string name="teamSelection_msg_monsterHp">Hp: %s</string>
+
+    <!--Fight.combat-->
+    <string name="fight_msg_monsterLife">Life</string>
 
     <!--Chat-->
-    <string name="chat_title">chat</string>
+    <string name="chat_title">Chat</string>
 
 </resources>
