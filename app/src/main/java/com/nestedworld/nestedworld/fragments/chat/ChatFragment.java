@@ -3,7 +3,6 @@ package com.nestedworld.nestedworld.fragments.chat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -16,8 +15,8 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.fragments.fight.TeamSelectionFragment;
 import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.models.User;
 
 import butterknife.Bind;
 
@@ -73,7 +72,12 @@ public class ChatFragment extends BaseFragment {
 
         ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(mFriend.info().pseudo);
+            User friendInfo = mFriend.info;
+            if (friendInfo != null) {
+                actionBar.setTitle(friendInfo.pseudo);
+            } else {
+                actionBar.setTitle(getResources().getString(R.string.chat_title));
+            }
         }
     }
 
