@@ -20,6 +20,9 @@ public class User extends SugarRecord {
     public String is_active;
 
     @Expose
+    public Long level;
+
+    @Expose
     public String pseudo;
 
     @Expose
