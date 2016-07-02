@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.models.response.ErrorResponse;
@@ -32,12 +33,15 @@ public class RetrofitErrorHandler {
                 //get the response as a string
                 String serverResponse = response.errorBody().string();
 
-                //try to convert the response as an ErrorResponse
-                ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
-
-                //check if we have a response
-                if (errorResponse != null && errorResponse.message != null) {
-                    return errorResponse.message;
+                try {
+                    //try to convert the response as an ErrorResponse
+                    ErrorResponse errorResponse = new Gson().fromJson(serverResponse, ErrorResponse.class);
+                    //check if we have a response
+                    if (errorResponse != null && errorResponse.message != null) {
+                        return errorResponse.message;
+                    }
+                }catch (JsonSyntaxException ignored) {
+                    //The response cannot be cast as an errorResponse
                 }
             } catch (IOException e) {
                 //Server issue (the server don't follow the specification)
