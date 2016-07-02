@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dip"
             android:gravity="center"
-            android:text="Attrapez les tous et devenez le champion!"
+            android:text="@string/registration_msg_punchLine"
             android:textColor="@color/black"
             android:textSize="22sp" />
 

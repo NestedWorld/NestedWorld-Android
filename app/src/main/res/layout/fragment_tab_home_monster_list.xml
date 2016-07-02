@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dip"
-        android:text="Your monster"
+        android:text="@string/tabHome_title_monsterList"
         android:textColor="@color/apptheme_color" />
 
     <GridView

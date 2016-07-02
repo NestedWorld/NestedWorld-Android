@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tablerow_selected_monster">
+
         <ImageView
             android:layout_width="58dip"
             android:layout_height="58dip"
@@ -50,18 +51,17 @@
             android:layout_width="58dip"
             android:layout_height="58dip"
             android:background="@drawable/places_ic_clear"/>
+
         <ImageView
             android:layout_width="58dip"
             android:layout_height="58dip"
             android:background="@drawable/places_ic_clear"/>
+
         <ImageView
             android:layout_width="58dip"
             android:layout_height="58dip"
             android:background="@drawable/places_ic_clear"/>
-        <ImageView
-            android:layout_width="58dip"
-            android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear"/>
+
     </TableRow>
 
     <Button

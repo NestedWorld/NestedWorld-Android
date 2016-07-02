@@ -40,7 +40,7 @@ public class ProfileActivity extends BaseAppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //customise the actionBar
-            actionBar.setTitle(getString(R.string.mainMenu_action_profil));
+            actionBar.setTitle(getString(R.string.profile_title));
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }

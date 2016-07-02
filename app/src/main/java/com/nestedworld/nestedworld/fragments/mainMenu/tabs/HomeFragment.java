@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +23,8 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.models.UserMonster;
@@ -108,12 +109,18 @@ public class HomeFragment extends BaseFragment {
         }
 
         //Display user information
+        Resources res = getResources();
+        textViewUserLevel.setText(String.format(res.getString(R.string.tabHome_msg_userLvl),
+                user.level));
+        textViewAllyOnline.setText(String.format(res.getString(R.string.tabHome_msg_allyOnline),
+                Friend.getNumberOfAllyOnline()));
         textViewUsername.setText(user.pseudo);
-        textViewUserLevel.setText("lvl " + user.level);//TODO dynamic xml reference
-        textViewMonsterCaptured.setText("" + Select.from(UserMonster.class).list().size());
-        textViewCreditsNumber.setText("12");//TODO display correct information
-        textViewAreaCaptured.setText("42");//TODO display correct information
-        textViewAllyOnline.setText("12");//TODO display correct information (check ally status)
+        textViewMonsterCaptured.setText(String.format(res.getString(R.string.tabHome_msg_monsterCaptured),
+                Select.from(UserMonster.class).list().size()));
+
+        //TODO display credits and areaCaptured
+//        textViewCreditsNumber.setText("12");
+//        textViewAreaCaptured.setText("42");
 
         //Make placeHolder rounded
         Resources resources = getResources();
@@ -153,7 +160,7 @@ public class HomeFragment extends BaseFragment {
 
         @Override
         public long getItemId(int position) {
-            return userMonsters.get(position).info().monster_id;
+            return userMonsters.get(position).getId();
         }
 
         @Override
@@ -166,8 +173,13 @@ public class HomeFragment extends BaseFragment {
 
             View view = convertView;
 
-            //Get user
+            //Get current monster
             final UserMonster monster = (UserMonster) getItem(position);
+            final Monster monsterInfo = monster.info();
+
+            if (monsterInfo == null) {
+                return null;
+            }
 
             //Check if an existing view is being reused, otherwise inflate the view
             if (view == null) {
@@ -175,50 +187,19 @@ public class HomeFragment extends BaseFragment {
             }
 
             //Populate name & lvl
-            final TextView textviewName = (TextView) view.findViewById(R.id.textview_monster_name);
-            final TextView textViewLvl = (TextView) view.findViewById(R.id.textview_monster_description);
-
-            //TODO use string from xml
-            textviewName.setText(monster.info().name);
-            textViewLvl.setText("lvl " + monster.level);
-
+            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monsterInfo.name);
+            ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(getResources().getString(R.string.tabHome_msg_monsterLvl), monster.level));
 
             //Display monster picture
-            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);;
+            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
-                    .load(monster.info().sprite)
+                    .load(monsterInfo.sprite)
                     .placeholder(R.drawable.default_monster)
                     .centerCrop()
                     .into(imageViewMonster);
 
-            /*Add color shape around monster picture*/
-            final LinearLayout linearLayoutShape = (LinearLayout) view.findViewById(R.id.imageView_monster_shape);
-
-            if (monster.info().type == null) {
-                linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.apptheme_color));
-            }
-            else {
-                switch (monster.info().type) {
-                    case "water":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_blue_light));
-                        break;
-                    case "fire":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_red_light));
-                        break;
-                    case "earth":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.DarkKhaki));
-                        break;
-                    case "electric":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_orange_light));
-                        break;
-                    case "plant":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_green_light));
-                        break;
-                    default:
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
-                        break;
-                }
-            }
+            //Add color shape around monster picture
+            view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getColorResource()));
 
             return view;
         }

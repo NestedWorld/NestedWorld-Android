@@ -1,14 +1,11 @@
 package com.nestedworld.nestedworld.fragments.mainMenu.tabs;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +14,15 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Monster;
 import com.orm.query.Select;
-import com.rey.material.widget.ProgressView;
 
 import java.util.List;
 
@@ -91,17 +85,22 @@ public class MonstersFragment extends BaseFragment {
 
     private void populateMonsterDetail(@NonNull Monster monster, @NonNull final View view) {
 
+        //Create a popup for displaying monster information
         PopupWindow popup = new PopupWindow(mContext);
-        if (mContext == null)
+
+        if (mContext == null) {
             return;
+        }
+        //Create inflater
         View layout = ((AppCompatActivity) mContext).getLayoutInflater().inflate(R.layout.fragment_tab_monsters_details, null);
 
-        // Populate the popup
-        ((TextView) layout.findViewById(R.id.monsterName)).setText(monster.name);
-        ((TextView) layout.findViewById(R.id.monsterAtk)).setText(String.valueOf(monster.attack));
-        ((TextView) layout.findViewById(R.id.monsterDefense)).setText(String.valueOf(monster.defense));
-        ((TextView) layout.findViewById(R.id.monsterHp)).setText(monster.hp);
+        //Populate inflater
+        ((TextView) layout.findViewById(R.id.textView_monsterName)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterName), monster.name));
+        ((TextView) layout.findViewById(R.id.textView_monsterAttack)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), monster.attack));
+        ((TextView) layout.findViewById(R.id.textView_monsterDefence)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), monster.defense));
+        ((TextView) layout.findViewById(R.id.textView_monsterHp)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), monster.hp));
 
+        //Populate popup with inflater
         popup.setContentView(layout);
 
         // Set content width and height
@@ -139,7 +138,7 @@ public class MonstersFragment extends BaseFragment {
 
             View view = convertView;
 
-            //Get user
+            //Get current monster
             final Monster monster = getItem(position);
 
             //Check if an existing view is being reused, otherwise inflate the view
@@ -147,11 +146,11 @@ public class MonstersFragment extends BaseFragment {
                 view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
             }
 
-            //Populate the name
-            final TextView textviewName = (TextView) view.findViewById(R.id.textview_monster_name);
-            textviewName.setText(monster.name);
+            //Populate name & lvl
+            final TextView textViewName = (TextView) view.findViewById(R.id.textview_monster_name);
+            textViewName.setText(monster.name);
 
-            /*Populate picture*/
+            //Display monster picture
             final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
                     .load(monster.sprite)
@@ -159,34 +158,8 @@ public class MonstersFragment extends BaseFragment {
                     .centerCrop()
                     .into(imageViewMonster);
 
-            /*Add color shape to the picture*/
-            final LinearLayout linearLayoutShape = (LinearLayout) view.findViewById(R.id.imageView_monster_shape);
-
-            if (monster.type == null) {
-                linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.apptheme_color));
-            }
-            else {
-                switch (monster.type) {
-                    case "water":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_blue_light));
-                        break;
-                    case "fire":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_red_light));
-                        break;
-                    case "earth":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.DarkKhaki));
-                        break;
-                    case "electric":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_orange_light));
-                        break;
-                    case "plant":
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_green_light));
-                        break;
-                    default:
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
-                        break;
-                }
-            }
+            //Add color shape around monster picture
+            view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getColorResource()));
 
             return view;
         }

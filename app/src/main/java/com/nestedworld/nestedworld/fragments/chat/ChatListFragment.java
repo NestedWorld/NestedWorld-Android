@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.models.User;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
@@ -70,11 +71,11 @@ public class ChatListFragment extends BaseFragment {
             return;
         }
 
-        //init adapter for our listview
+        //init adapter for our listView
         final FriendsAdapter friendAdapter = new FriendsAdapter(mContext, friends);
         listView.setAdapter(friendAdapter);
 
-        //add listener on the listview
+        //add listener on the listView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -119,9 +120,14 @@ public class ChatListFragment extends BaseFragment {
 
             //get the currentFriend
             Friend currentFriend = getItem(position);
+            User currentFriendInfo = currentFriend.info();
+
+            if (currentFriendInfo == null) {
+                return null;
+            }
 
             //display the friend name
-            friendHolder.friendName.setText(currentFriend.info().pseudo);
+            friendHolder.friendName.setText(currentFriendInfo.pseudo);
 
             //display a rounded placeHolder for friend's avatar
             Resources resources = mContext.getResources();
@@ -131,7 +137,7 @@ public class ChatListFragment extends BaseFragment {
 
             //display friend's avatar
             Glide.with(mContext)
-                    .load(currentFriend.info().avatar)
+                    .load(currentFriendInfo.avatar)
                     .placeholder(roundedBitmapDrawable)
                     .bitmapTransform(new CropCircleTransformation(mContext))
                     .centerCrop()

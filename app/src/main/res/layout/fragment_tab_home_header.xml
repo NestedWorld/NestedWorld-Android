@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Credits"
+                android:text="@string/tabHome_title_creditsNumber"
                 android:textColor="@color/white" />
 
             <TextView
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Monster captured"
+                android:text="@string/tabHome_title_monsterCaptured"
                 android:textColor="@color/white" />
 
             <TextView
@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Area captured"
+                android:text="@string/tabHome_title_areaCaptured"
                 android:textColor="@color/white" />
 
             <TextView
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Ally online"
+                android:text="@string/tabHome_title_allyOnline"
                 android:textColor="@color/white" />
 
             <TextView
