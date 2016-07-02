@@ -3,7 +3,6 @@ package com.nestedworld.nestedworld.network.socket.implementation;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
@@ -12,14 +11,11 @@ import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.network.socket.models.DefaultModel;
 
-import org.msgpack.value.ImmutableMapValue;
 import org.msgpack.value.ImmutableValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 public final class NestedWorldSocketAPI implements SocketListener {
 
