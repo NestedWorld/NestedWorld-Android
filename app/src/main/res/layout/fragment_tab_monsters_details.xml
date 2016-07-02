@@ -18,24 +18,28 @@
         android:padding="8dip">
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_monsterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tabMonster_msg_monsterName" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_monsterAttack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tabMonster_msg_monsterAttack" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_monsterDefence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tabMonster_msg_monsterDefence" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_monsterHp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

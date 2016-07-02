@@ -12,46 +12,55 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_pseudo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_birthDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_registeredAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_backgroundUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_avatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
