@@ -99,7 +99,7 @@ public class LoginFragment extends BaseFragment {
             public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
                 progressView.stop();
 
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
@@ -120,7 +120,7 @@ public class LoginFragment extends BaseFragment {
                     return;
                 }
 
-                Toast.makeText(mContext, getString(R.string.password_send), Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, getString(R.string.registration_msg_passwordSend), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -130,7 +130,7 @@ public class LoginFragment extends BaseFragment {
                     return;
                 }
 
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_forgot_password), response);
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_forgotPassword), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });

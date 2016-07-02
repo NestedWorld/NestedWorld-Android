@@ -39,7 +39,7 @@ public class FightActivity extends BaseAppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //customise the actionBar
-            actionBar.setTitle(getString(R.string.menu_action_fight));
+            actionBar.setTitle(getString(R.string.mainMenu_action_fight));
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }

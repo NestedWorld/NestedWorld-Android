@@ -102,7 +102,7 @@ public class NestedWorldMap {
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<RegionsResponse> response) {
                 //request fail, we display an error message
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, mContext.getString(R.string.error_place), response);
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, mContext.getString(R.string.error_request_place), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
@@ -142,7 +142,7 @@ public class NestedWorldMap {
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<PlacesResponse> response) {
                 //request fail, we display an error message
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, mContext.getString(R.string.error_place), response);
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, mContext.getString(R.string.error_request_place), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });

@@ -96,7 +96,7 @@ public abstract class BaseFragment extends Fragment {
         //clean session
         SessionManager.get().deleteSession();
 
-        Toast.makeText(mContext, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
         //go to launch screen & kill the current context
         Intent intent = new Intent(mContext, RegistrationActivity.class);

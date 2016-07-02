@@ -16,6 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:hint="@string/edittext_chat_description"
+        android:hint="@string/chat_title"
         android:inputType="text" />
 </RelativeLayout>

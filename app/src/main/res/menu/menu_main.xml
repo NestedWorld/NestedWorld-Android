@@ -6,19 +6,19 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/menu_action_profil"
+        android:title="@string/mainMenu_action_profil"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_chat"
         android:icon="@drawable/ic_action_chat"
-        android:title="@string/menu_action_chat"
+        android:title="@string/mainMenu_action_chat"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_fight"
         android:icon="@drawable/ic_action_sword"
-        android:title="@string/menu_action_fight"
+        android:title="@string/mainMenu_action_fight"
         app:showAsAction="ifRoom" />
 
 </menu>

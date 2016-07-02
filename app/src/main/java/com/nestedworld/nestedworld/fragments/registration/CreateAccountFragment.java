@@ -109,7 +109,7 @@ public class CreateAccountFragment extends BaseFragment {
             public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
                 progressView.stop();
 
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_create_account), response);
+                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_createAccount), response);
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
@@ -142,7 +142,7 @@ public class CreateAccountFragment extends BaseFragment {
                 }
 
                 if (mContext != null) {
-                    final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_login), response);
+                    final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
                     Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
@@ -154,13 +154,13 @@ public class CreateAccountFragment extends BaseFragment {
      */
     private boolean checkInput(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         if (!checkEmailFormat(email)) {
-            etEmail.setError(getString(R.string.editText_email_invalid));
+            etEmail.setError(getString(R.string.error_emailInvalid));
             return false;
         } else if (!checkPasswordFormat(password)) {
-            etPassword.setError(getString(R.string.editText_password_invalid));
+            etPassword.setError(getString(R.string.error_passwordTooShort));
             return false;
         } else if (TextUtils.isEmpty(pseudo)) {
-            etPseudo.setError(getString(R.string.editText_pseudo_invalid));
+            etPseudo.setError(getString(R.string.error_pseudoEmpty));
             return false;
         }
         return true;

@@ -24,7 +24,6 @@ import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.EntityUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
@@ -91,11 +90,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private void initTabs() {
         final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
-        adapter.addFragment(getString(R.string.tab_home), new HomeFragment(), R.drawable.account_balance);
-        adapter.addFragment(getString(R.string.tab_garden), new ToolsFragment(), R.drawable.ic_action_sword);
-        adapter.addFragment(getString(R.string.tab_map), new MapFragment(), R.drawable.ic_action_map);
-        adapter.addFragment(getString(R.string.tab_monster), new MonstersFragment(), R.drawable.ic_action_ghost);
-        adapter.addFragment(getString(R.string.tab_shop), new ShopFragment(), R.drawable.ic_action_cart);
+        adapter.addFragment(getString(R.string.mainMenu_title_tab_home), new HomeFragment(), R.drawable.account_balance);
+        adapter.addFragment(getString(R.string.mainMenu_title_tab_monster), new MonstersFragment(), R.drawable.ic_action_ghost);
+        adapter.addFragment(getString(R.string.mainMenu_title_tab_map), new MapFragment(), R.drawable.ic_action_map);
+        adapter.addFragment(getString(R.string.mainMenu_title_tab_inventory), new ToolsFragment(), R.drawable.ic_action_sword);
+        adapter.addFragment(getString(R.string.mainMenu_title_tab_shop), new ShopFragment(), R.drawable.ic_action_cart);
 
         viewPager.setAdapter(adapter);
 
@@ -144,7 +143,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 progressView.stop();
 
                 //display error message
-                Toast.makeText(MainMenuActivity.this, getString(R.string.error_update_user_info), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
                 //remove user
                 SessionManager.get().deleteSession();

@@ -4,58 +4,52 @@
     <string name="app_name" translatable="false">NestedWorld</string>
     <string name="desc" translatable="false">desc</string>
 
-    <string name="editText_pseudo">Saisisez votre pseudo</string>
-    <string name="editText_email">Saisissez votre adresse email</string>
-    <string name="editText_email_invalid">Votre email est invalide !</string>
+    <!--Error message-->
+    <string name="error_emailInvalid">Invalid email !</string>
+    <string name="error_passwordTooShort">Password too short !</string>
+    <string name="error_pseudoEmpty">Empty pseudo !</string>
+    <string name="error_no_internet">Network error.</string>
+    <string name="error_conversion">Unexpected error.</string>
+    <string name="error_createAccount">Can\'t create your account</string>
 
-    <string name="editText_password">Mot de passe</string>
-    <string name="editText_password_invalid">Votre mot de passe est trop court !</string>
-    <string name="editText_pseudo_invalid">Votre pseudo ne peut être vide !</string>
+    <!--Error message (request failed)-->
+    <string name="error_request_login">Cannot login.</string>
+    <string name="error_request_place">Cannot retrieve places.</string>
+    <string name="error_request_logout">Cannot logout.</string>
+    <string name="error_request_forgotPassword">Cannot reset your password.</string>
+    <string name="error_request_user">Cannot retrieve your data.</string>
+    <string name="error_request_monster">Cannot retrieve monsters.</string>
 
-    <string name="text_inscription">Inscription</string>
-    <string name="text_login_short">Connexion</string>
-    <string name="text_login_full">Connectez-vous à votre espace personnel</string>
+    <!--Registration activity-->
+    <string name="registration_editText_pseudo">Pseudo</string>
+    <string name="registration_editText_email">Email</string>
+    <string name="registration_editText_password">Password</string>
+    <string name="registration_msg_inscription">Registration</string>
+    <string name="registration_msg_login">Log in</string>
+    <string name="registration_msg_login_full">Login to access your personal account</string>
+    <string name="registration_msg_joinUs">Join us !</string>
+    <string name="registration_msg_cgu">By clicking \'Registration\' you accept the therm of use.</string>
+    <string name="registration_msg_forgotPassword">Forgot password ?</string>
+    <string name="registration_msg_passwordSend">You will receive an email soon.</string>
 
-    <string name="text_join_us">Rejoignez nous !</string>
-    <string name="text_cgu">En cliquant sur \'inscription\' vous acceptez les Conditions générales d\'utilisation.</string>
-    <string name="text_forgot_password">Mot de passe oublié ?</string>
+    <!--MainMenu-->
+    <string name="mainMenu_title_tab_home">Home</string>
+    <string name="mainMenu_title_tab_inventory">Inventory</string>
+    <string name="mainMenu_title_tab_map">Map</string>
+    <string name="mainMenu_title_tab_monster">Monster</string>
+    <string name="mainMenu_title_tab_shop">Shop</string>
+    <string name="mainMenu_action_profil">Profil</string>
+    <string name="mainMenu_action_chat">Chat</string>
+    <string name="mainMenu_action_fight">fight</string>
+    <string name="mainMenu_action_settings">Settings</string>
 
-    <string name="tab_village_name">Mon village</string>
-    <string name="tab_monster_name">Mes monstres</string>
-    <string name="tab_city_name">Ma ville</string>
+    <!--MainMenu.tab.monster-->
+    <string name="tabMonster_msg_monsterName">Name :</string>
+    <string name="tabMonster_msg_monsterAttack">Attack :</string>
+    <string name="tabMonster_msg_monsterDefence">Defense :</string>
+    <string name="tabMonster_msg_monsterPv">Hp :</string>
 
-    <string name="tab_home">Home</string>
-    <string name="tab_garden">Garden</string>
-    <string name="tab_map">Map</string>
-    <string name="tab_monster">Monster</string>
-    <string name="tab_shop">Shop</string>
-
-    <string name="monster_name">Nom :</string>
-    <string name="monster_attaque">Attaque :</string>
-    <string name="monster_defence">Défence :</string>
-    <string name="monster_pv">Pv :</string>
-
-    <string name="error_no_internet">Veillez vous connecter a internet et réesayer.</string>
-    <string name="error_unexpected">Une erreur innatendu est servenu, merci de réésayer.</string>
-    <string name="error_conversion">Une erreur innatendu est servenu, merci de réésayer.</string>
-    <string name="error_unknown">Une erreur innatendu est servenu, merci de réésayer.</string>
-    <string name="error_create_account">Impossible de créer votre compte, merci de réésayer</string>
-    <string name="error_login">Impossible de vous connecter, merci de réésayer</string>
-    <string name="error_place">Impossible de récuperer la liste des zones, merci de réésayer</string>
-    <string name="error_logout">Impossible de vous deconnecter</string>
-    <string name="error_forgot_password">Impossible de re-initialiser votre mot de passe</string>
-    <string name="error_update_user_info">Impossible de récuperer vos informations, veillez vous reconnecter</string>
-    <string name="error_cant_get_monsters_list">Impossible de récupérer la lsite des monstres, merci de réésayer</string>
-
-    <string name="password_send">Vous allez recevoir un mail d\'ici peu.</string>
-
-    <string name="edittext_chat_description">chat</string>
-
-
-    <string name="menu_action_profil">Profil</string>
-    <string name="menu_action_chat">Chat</string>
-    <string name="menu_action_fight">fight</string>
-
-    <string name="action_settings">Settings</string>
+    <!--Chat-->
+    <string name="chat_title">chat</string>
 
 </resources>

@@ -39,7 +39,7 @@ public class ChatActivity extends BaseAppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //customise the actionBar
-            actionBar.setTitle(getString(R.string.menu_action_chat));
+            actionBar.setTitle(getString(R.string.mainMenu_action_chat));
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
