@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.vision.text.Line;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -46,8 +45,8 @@ public class HomeFragment extends BaseFragment {
     TextView textViewUsername;
     @Bind(R.id.textView_userLevel)
     TextView textViewUserLevel;
-    @Bind(R.id.textView_monsterSaw)
-    TextView textViewMonsterSaw;
+    @Bind(R.id.textView_creditsNumber)
+    TextView textViewCreditsNumber;
     @Bind(R.id.textView_monsterCaptured)
     TextView textViewMonsterCaptured;
     @Bind(R.id.textView_areaCaptured)
@@ -87,10 +86,6 @@ public class HomeFragment extends BaseFragment {
     ** Private method
      */
     private void populateMonstersList() {
-        if (mContext == null) {
-            return;
-        }
-
         List<UserMonster> monsters = Select.from(UserMonster.class).list();
         gridView.setAdapter(new UserMonsterAdapter(monsters));
     }
@@ -114,11 +109,11 @@ public class HomeFragment extends BaseFragment {
 
         //Display user information
         textViewUsername.setText(user.pseudo);
-        textViewUserLevel.setText("level 16");//TODO metre les bonnes info
-        textViewMonsterSaw.setText("12");
-        textViewMonsterCaptured.setText("5");
-        textViewAreaCaptured.setText("42");
-        textViewAllyOnline.setText("12");
+        textViewUserLevel.setText("lvl " + user.level);//TODO dynamic xml reference
+        textViewMonsterCaptured.setText("" + Select.from(UserMonster.class).list().size());
+        textViewCreditsNumber.setText("12");//TODO display correct information
+        textViewAreaCaptured.setText("42");//TODO display correct information
+        textViewAllyOnline.setText("12");//TODO display correct information (check ally status)
 
         //Make placeHolder rounded
         Resources resources = getResources();
