@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -58,6 +57,11 @@ public class FightFragment extends BaseFragment {
 
     @Override
     protected void init(final View rootView, Bundle savedInstanceState) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         /*Update toolbar title*/
         ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
