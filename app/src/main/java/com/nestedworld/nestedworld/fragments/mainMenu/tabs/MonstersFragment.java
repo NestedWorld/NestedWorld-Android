@@ -183,7 +183,7 @@ public class MonstersFragment extends BaseFragment {
                         linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_green_light));
                         break;
                     default:
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.apptheme_color));
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
                         break;
                 }
             }

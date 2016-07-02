@@ -183,8 +183,9 @@ public class HomeFragment extends BaseFragment {
             final TextView textviewName = (TextView) view.findViewById(R.id.textview_monster_name);
             final TextView textViewLvl = (TextView) view.findViewById(R.id.textview_monster_description);
 
+            //TODO use string from xml
             textviewName.setText(monster.info().name);
-            textViewLvl.setText(monster.level == null ? "lvl 0" : monster.level);
+            textViewLvl.setText("lvl " + monster.level);
 
 
             //Display monster picture
@@ -219,7 +220,7 @@ public class HomeFragment extends BaseFragment {
                         linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.holo_green_light));
                         break;
                     default:
-                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.apptheme_color));
+                        linearLayoutShape.setBackgroundColor(ContextCompat.getColor(mContext, R.color.black));
                         break;
                 }
             }
