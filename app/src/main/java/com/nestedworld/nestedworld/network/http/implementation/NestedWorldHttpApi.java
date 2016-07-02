@@ -9,7 +9,6 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Region;
 import com.nestedworld.nestedworld.models.Session;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignInRequest;
@@ -189,7 +188,7 @@ public final class NestedWorldHttpApi {
         @GET(HttpEndPoint.USER_FRIENDS)
         Call<FriendsResponse> getFriends();
 
-        @GET(HttpEndPoint.USER_LOGOUT)
+        @POST(HttpEndPoint.USER_LOGOUT)
         Call<LogoutResponse> logout();
 
         @POST(HttpEndPoint.USER_REGISTER)
