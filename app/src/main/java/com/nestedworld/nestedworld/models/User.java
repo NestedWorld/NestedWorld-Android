@@ -40,6 +40,9 @@ public class User extends SugarRecord {
     @Expose
     public String gender;
 
+    @Expose
+    public Boolean is_connected;
+
     //Empty constructor for SugarRecord
     public User() {
         //keep empty
