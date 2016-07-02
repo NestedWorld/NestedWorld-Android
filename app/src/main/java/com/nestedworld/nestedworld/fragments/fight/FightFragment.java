@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -56,6 +58,12 @@ public class FightFragment extends BaseFragment {
 
     @Override
     protected void init(final View rootView, Bundle savedInstanceState) {
+        /*Update toolbar title*/
+        ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Fight");
+        }
+
         /*start a loading animation*/
         progressView.start();
 
@@ -105,9 +113,7 @@ public class FightFragment extends BaseFragment {
                         /*Init the custom view (for sending attack)*/
                         initDrawingGestureView(rootView);
                     }
-
                 }
-
             }
         });
     }
@@ -158,7 +164,7 @@ public class FightFragment extends BaseFragment {
         });
 
         /*Add the custom view under the rootView*/
-        ((RelativeLayout) rootView.findViewById(R.id.relativeLayout_fight)).addView(drawingGestureView);
+        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(drawingGestureView);
     }
 
 }

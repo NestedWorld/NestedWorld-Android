@@ -152,11 +152,12 @@ public class DrawingGestureView extends View {
     private void updateTiles(float x, float y) {
         //We check if the user touch a tiles
         for (ImageView view : mTiles) {
+
             //hit test
             if ((x > view.getLeft() /*check left limit*/
-                    && x < view.getLeft() + view.getWidth() /*check right limit*/
+                    && x < (view.getLeft() + view.getWidth()) /*check right limit*/
                     && y > view.getTop() /*check top limit*/
-                    && y < view.getY() + view.getHeight()/*check bottom limit*/)) {
+                    && y < (view.getY() + view.getHeight())/*check bottom limit*/)) {
 
                 //if he touch, we change the tile background color and we call the listener
                 view.setBackgroundResource(R.drawable.background_rounded);

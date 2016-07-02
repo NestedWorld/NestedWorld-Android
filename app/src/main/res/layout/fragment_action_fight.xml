@@ -4,7 +4,28 @@
     android:id="@+id/relativeLayout_fight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#f0f0f0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/fragment_action_fight_player" />
+
+        <include
+            android:id="@+id/layout_fight_body"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            layout="@layout/fragment_action_fight_body" />
+
+        <include
+            layout="@layout/fragment_action_fight_player" />
+
+    </LinearLayout>
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progressView"
@@ -15,90 +36,5 @@
         app:pv_circular="true"
         app:pv_progressMode="indeterminate"
         app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
-
-    <ImageView
-        android:id="@+id/imageView_center"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_action_ghost"
-        android:visibility="invisible" />
-
-    <ImageView
-        android:id="@+id/imageView_top"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_above="@+id/imageView_center"
-        android:layout_alignStart="@+id/imageView_center"
-        android:layout_marginBottom="56dp"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_bottom"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_alignStart="@+id/imageView_center"
-        android:layout_below="@+id/imageView_center"
-        android:layout_marginTop="56dp"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_right"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_alignTop="@+id/imageView_center"
-        android:layout_marginStart="56dp"
-        android:layout_toEndOf="@+id/imageView_center"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_left"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_alignTop="@+id/imageView_center"
-        android:layout_marginEnd="56dp"
-        android:layout_toStartOf="@+id/imageView_center"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_top_left"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_above="@+id/imageView_left"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="28dp"
-        android:layout_toStartOf="@+id/imageView_top"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_top_right"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_above="@+id/imageView_right"
-        android:layout_marginBottom="26dp"
-        android:layout_marginStart="26dp"
-        android:layout_toEndOf="@+id/imageView_top"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_bottom_right"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_below="@+id/imageView_right"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/imageView_bottom"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_bottom_left"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_below="@+id/imageView_left"
-        android:layout_marginEnd="26dp"
-        android:layout_marginTop="26dp"
-        android:layout_toStartOf="@+id/imageView_bottom"
-        android:src="@drawable/ic_action_ghost" />
 
 </RelativeLayout>
