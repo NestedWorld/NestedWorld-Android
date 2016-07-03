@@ -7,6 +7,7 @@
         <item name="colorPrimary">@color/apptheme_color</item>
         <item name="colorPrimaryDark">@color/apptheme_color_dark</item>
         <item name="colorButtonNormal">@color/apptheme_color</item>
+        <item name="android:buttonStyle">@style/button</item>
     </style>
 
     <style name="AppTheme.Launcher" parent="AppTheme">

@@ -8,6 +8,7 @@
     android:padding="8dip">
 
     <TextView
+        android:textSize="18sp"
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

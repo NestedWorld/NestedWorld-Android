@@ -31,14 +31,16 @@
             android:id="@+id/textview_monster_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color" />
+            android:textColor="@color/apptheme_color"
+            android:textSize="14sp"/>
 
         <TextView
             style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_lvl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color" />
+            android:textColor="@color/apptheme_color"
+            android:textSize="14sp"/>
 
     </LinearLayout>
 
@@ -49,6 +51,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:textSize="14sp"
             style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_hp"
             android:layout_width="wrap_content"
@@ -56,6 +59,7 @@
             android:textColor="@color/apptheme_color" />
 
         <TextView
+            android:textSize="14sp"
             style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_attack"
             android:layout_width="wrap_content"
@@ -63,6 +67,7 @@
             android:textColor="@color/apptheme_color" />
 
         <TextView
+            android:textSize="14sp"
             style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_defense"
             android:layout_width="wrap_content"
