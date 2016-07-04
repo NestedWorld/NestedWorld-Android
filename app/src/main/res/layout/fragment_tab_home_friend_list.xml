@@ -17,6 +17,6 @@
         android:layout_gravity="end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tabHome_msg_addFriend"/>
+        android:text="@string/tabHome_msg_addFriend" />
 
 </LinearLayout>

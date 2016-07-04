@@ -21,7 +21,7 @@
         <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator>
 
@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:layout_width="58dip"
         android:layout_height="58dip"
-        android:background="@drawable/ic_action_arrow_bottom_blue"/>
+        android:background="@drawable/ic_action_arrow_bottom_blue" />
 
     <TableRow
         android:padding="8dip"
@@ -45,22 +45,22 @@
         <ImageView
             android:layout_width="58dip"
             android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear"/>
+            android:background="@drawable/places_ic_clear" />
 
         <ImageView
             android:layout_width="58dip"
             android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear"/>
+            android:background="@drawable/places_ic_clear" />
 
         <ImageView
             android:layout_width="58dip"
             android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear"/>
+            android:background="@drawable/places_ic_clear" />
 
         <ImageView
             android:layout_width="58dip"
             android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear"/>
+            android:background="@drawable/places_ic_clear" />
 
     </TableRow>
 
@@ -81,13 +81,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_help_outline"/>
+            android:src="@drawable/ic_help_outline" />
 
         <TextView
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/teamSelection_msg_hint"/>
+            android:text="@string/teamSelection_msg_hint" />
 
     </LinearLayout>
 

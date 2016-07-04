@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tabMonster_msg_monsterHp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -31,6 +31,7 @@ public abstract class EntityUpdater<T> extends Thread {
      */
     @NonNull
     public abstract Call<T> getRequest();
+
     public abstract void updateEntity(@NonNull Response<T> response);
 
     /*
@@ -44,8 +45,7 @@ public abstract class EntityUpdater<T> extends Thread {
             if (response != null && response.isSuccessful()) {
                 updateEntity(response);
                 onSuccess();
-            }
-            else {
+            } else {
                 onError(OnEntityUpdated.KIND.SERVER);
             }
         } catch (IOException e) {

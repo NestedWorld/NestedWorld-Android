@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.fragments.mainMenu.tabs.home.HomeFragment;
 
 /**
  * A placeholder fragment containing a simple view.

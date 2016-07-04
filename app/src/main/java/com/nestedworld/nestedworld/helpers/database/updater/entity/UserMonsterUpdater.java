@@ -20,7 +20,7 @@ public class UserMonsterUpdater extends EntityUpdater<UserMonsterResponse> {
     @NonNull
     @Override
     public Call<UserMonsterResponse> getRequest() {
-        return  NestedWorldHttpApi.getInstance(getContext()).getUserMonster();
+        return NestedWorldHttpApi.getInstance(getContext()).getUserMonster();
     }
 
     @Override

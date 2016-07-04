@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
@@ -51,11 +50,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                Log.e(TAG, ""+ getSupportFragmentManager().getBackStackEntryCount());
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
-                }
-                else {
+                } else {
                     super.onBackPressed();
                 }
                 return true;

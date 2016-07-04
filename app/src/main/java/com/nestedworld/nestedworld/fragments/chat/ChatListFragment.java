@@ -82,7 +82,6 @@ public class ChatListFragment extends BaseFragment {
                 ChatFragment.load(getFragmentManager(), friendAdapter.getItem(position));
             }
         });
-
     }
 
     /**

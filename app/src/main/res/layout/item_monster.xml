@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <TextView
             style="@style/TypefaceStyle.ProximaNova"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 

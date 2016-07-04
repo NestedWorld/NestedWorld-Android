@@ -40,7 +40,7 @@ public class RetrofitErrorHandler {
                     if (errorResponse != null && errorResponse.message != null) {
                         return errorResponse.message;
                     }
-                }catch (JsonSyntaxException ignored) {
+                } catch (JsonSyntaxException ignored) {
                     //The response cannot be cast as an errorResponse
                 }
             } catch (IOException e) {

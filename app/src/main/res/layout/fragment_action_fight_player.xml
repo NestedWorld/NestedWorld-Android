@@ -33,7 +33,6 @@
 
     </LinearLayout>
 
-    <include
-        layout="@layout/item_monster" />
+    <include layout="@layout/item_monster" />
 
 </LinearLayout>
