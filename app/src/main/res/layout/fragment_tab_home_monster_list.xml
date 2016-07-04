@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridLayout_home_monsters"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dip"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="8dip">
+    android:numColumns="auto_fit"
+    android:stretchMode="columnWidth">
 
-    <TextView
-        android:textSize="18sp"
-        style="@style/TypefaceStyle.ProximaNova.bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dip"
-        android:text="@string/tabHome_title_monsterList"
-        android:textColor="@color/apptheme_color" />
-
-    <GridView
-        android:id="@+id/gridLayout_home_monsters"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth">
-
-    </GridView>
-
-</LinearLayout>
+</GridView>

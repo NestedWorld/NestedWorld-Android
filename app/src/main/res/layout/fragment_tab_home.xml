@@ -6,6 +6,6 @@
 
     <include layout="@layout/fragment_tab_home_header" />
 
-    <include layout="@layout/fragment_tab_home_monster_list" />
+    <include layout="@layout/fragment_tab_home_body" />
 
 </LinearLayout>

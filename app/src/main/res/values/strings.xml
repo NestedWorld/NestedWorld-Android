@@ -76,6 +76,10 @@
     <string name="tabHome_msg_monsterLvl">lvl %d</string>
     <string name="tabHome_msg_userLvl">lvl %d</string>
 
+    <!--MainMenu.tab.home.friendList-->
+    <string name="tabHome_title_friendList">Your friend</string>
+    <string name="tabHome_msg_addFriend">Add</string>
+
     <!--Fight.teamSelection-->
     <string name="teamSelection_msg_hint">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
     <string name="teamSelection_title">Team selection</string>

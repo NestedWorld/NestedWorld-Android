@@ -1,35 +1,40 @@
-package com.nestedworld.nestedworld.fragments.mainMenu.tabs;
+package com.nestedworld.nestedworld.fragments.mainMenu.tabs.home;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.view.LayoutInflater;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MapFragment;
+import com.nestedworld.nestedworld.fragments.mainMenu.tabs.MonstersFragment;
+import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
+import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.models.UserMonster;
 import com.orm.query.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -56,8 +61,10 @@ public class HomeFragment extends BaseFragment {
     TextView textViewAllyOnline;
     @Bind(R.id.imageView_user)
     ImageView imageViewUser;
-    @Bind(R.id.gridLayout_home_monsters)
-    GridView gridView;
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
+    @Bind(R.id.sliding_tabs)
+    TabLayout tabLayout;
 
     /*
     ** Public method
@@ -79,17 +86,29 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        initTabs();
         populateUserInfo();
-        populateMonstersList();
     }
 
     /*
     ** Private method
      */
-    private void populateMonstersList() {
-        List<UserMonster> monsters = Select.from(UserMonster.class).list();
-        gridView.setAdapter(new UserMonsterAdapter(monsters));
+    private void initTabs() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        final TabsAdapter adapter = new TabsAdapter(getChildFragmentManager());
+        adapter.addFragment(getString(R.string.tabHome_title_monsterList), new HomeMonsterFragment());
+        adapter.addFragment(getString(R.string.tabHome_title_friendList), new HomeFriendFragment());
+
+        viewPager.setAdapter(adapter);
+
+        //Add view pager to the tabLayout
+        tabLayout.setupWithViewPager(viewPager);
     }
+
 
     private void populateUserInfo() {
         //Retrieve the session
@@ -119,8 +138,8 @@ public class HomeFragment extends BaseFragment {
                 Select.from(UserMonster.class).list().size()));
 
         //TODO display credits and areaCaptured
-//        textViewCreditsNumber.setText("12");
-//        textViewAreaCaptured.setText("42");
+        textViewCreditsNumber.setText("0");
+        textViewAreaCaptured.setText("0");
 
         //Make placeHolder rounded
         Resources resources = getResources();
@@ -137,71 +156,66 @@ public class HomeFragment extends BaseFragment {
                 .into(imageViewUser);
     }
 
-    /*
-    ** Adapter for userMonsters
+    /**
+     * Custom FragmentPagerAdapter
+     * It's use for displaying the TABS
      */
-    private class UserMonsterAdapter extends BaseAdapter {
+    private static class TabsAdapter extends FragmentPagerAdapter {
+        protected final String TAG = getClass().getSimpleName();
 
-        private final List<UserMonster> userMonsters;
+        private final List<CustomTab> tabList = new ArrayList<>();
 
-        public UserMonsterAdapter(@NonNull final List<UserMonster> userMonsters) {
-            this.userMonsters = userMonsters;
+        /*
+        ** Constructor
+         */
+        public TabsAdapter(@NonNull final FragmentManager fm) {
+            super(fm);
+        }
+
+        /*
+        ** Public method
+         */
+        public void addFragment(@NonNull final String title, @NonNull final Fragment fragment) {
+            tabList.add(new CustomTab(title, fragment));
+        }
+
+        /*
+        ** Parents method
+         */
+        @Override
+        public Fragment getItem(int position) {
+            return tabList.get(position).getFragment();
         }
 
         @Override
         public int getCount() {
-            return userMonsters.size();
+            return tabList.size();
         }
 
         @Override
-        public Object getItem(int position) {
-            return userMonsters.get(position);
+        public CharSequence getPageTitle(int position) {
+            return tabList.get(position).getTitle();
         }
 
-        @Override
-        public long getItemId(int position) {
-            return userMonsters.get(position).getId();
-        }
+        /**
+         * Custom class for easy tab management
+         */
+        public class CustomTab {
+            private final Fragment mFragment;
+            private String mTitle = "";
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            //Check if fragment hasn't been detach
-            if (mContext == null) {
-                return null;
+            public CustomTab(@NonNull final String title, @NonNull final Fragment fragment) {
+                mTitle = title;
+                mFragment = fragment;
             }
 
-            View view = convertView;
-
-            //Get current monster
-            final UserMonster monster = (UserMonster) getItem(position);
-            final Monster monsterInfo = monster.info();
-
-            if (monsterInfo == null) {
-                return null;
+            public Fragment getFragment() {
+                return mFragment;
             }
 
-            //Check if an existing view is being reused, otherwise inflate the view
-            if (view == null) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
+            public String getTitle() {
+                return mTitle;
             }
-
-            //Populate name & lvl
-            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monsterInfo.name);
-            ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(getResources().getString(R.string.tabHome_msg_monsterLvl), monster.level));
-
-            //Display monster picture
-            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
-            Glide.with(getContext())
-                    .load(monsterInfo.sprite)
-                    .placeholder(R.drawable.default_monster)
-                    .centerCrop()
-                    .into(imageViewMonster);
-
-            //Add color shape around monster picture
-            view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getColorResource()));
-
-            return view;
         }
     }
 }
