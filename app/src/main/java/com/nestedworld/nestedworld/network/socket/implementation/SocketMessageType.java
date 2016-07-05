@@ -29,7 +29,10 @@ public class SocketMessageType {
         TYPE_COMBAT_SEND_ATTACK,
         TYPE_COMBAT_MONSTER_KO_CAPTURE,
         TYPE_COMBAT_MONSTER_KO_REPLACE,
-        TYPE_COMBAT_FLEE
+        TYPE_COMBAT_FLEE,
+
+        //Client and Server
+        TYPE_RESULT
     }
 
     public static final BiMap<MessageKind, String> messageType = new BiMap<MessageKind, String>(){
@@ -66,13 +69,19 @@ public class SocketMessageType {
             //Chat
             put(MessageKind.TYPE_CHAT_JOIN_CHANNEL, "chat:join-channel");
             put(MessageKind.TYPE_CHAT_PART_CHANNEL, "chat:part-channel");
-            put(MessageKind.TYPE_GEO_PLACES_CAPTURED, "chat:send-message");
+            put(MessageKind.TYPE_CHAT_SEND_MESSAGE, "chat:send-message");
+
 
             //Combat
             put(MessageKind.TYPE_COMBAT_SEND_ATTACK, "combat:send-attack");
             put(MessageKind.TYPE_COMBAT_MONSTER_KO_CAPTURE, "combat:monster-ko:capture");
             put(MessageKind.TYPE_COMBAT_MONSTER_KO_REPLACE, "combat:monster-ko:replace");
             put(MessageKind.TYPE_COMBAT_FLEE, "combat:flee");
+
+            /*
+            ** Message send by app and by client
+             */
+            put(MessageKind.TYPE_RESULT, "result");
         }
     };
 }
