@@ -1,10 +1,10 @@
 package com.nestedworld.nestedworld.network.socket.models.request.combat;
 
-import com.nestedworld.nestedworld.network.socket.models.DefaultModel;
+import com.nestedworld.nestedworld.network.socket.models.request.DefaultRequest;
 
 import org.msgpack.value.ValueFactory;
 
-public class SendAttackRequest implements DefaultModel {
+public class SendAttackRequest implements DefaultRequest {
     public int target;
     public int attack;
 

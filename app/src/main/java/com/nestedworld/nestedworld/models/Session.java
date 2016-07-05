@@ -7,6 +7,12 @@ import com.orm.dsl.Unique;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+/**
+ * Simple model for :
+ * - mapping a json response with Gson anotation
+ * - mapping a sql table with SugarORM
+ * /!\ Keep the default constructor empty (see sugarOrm doc)
+ */
 public class Session extends SugarRecord {
     @Unique
     public String authToken;
