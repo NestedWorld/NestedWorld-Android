@@ -10,12 +10,14 @@ import org.msgpack.value.ValueFactory;
 import java.util.Map;
 import java.util.Objects;
 
-public class ResultRequest implements DefaultRequest{
+public class ResultRequest implements DefaultRequest {
 
-    private Map<Value, Value> data;
+    private final Map<Value, Value> data;
+    private final boolean success;
 
-    public ResultRequest(@NonNull final Map<Value, Value> data) {
+    public ResultRequest(@NonNull final Map<Value, Value> data, final boolean success) {
         this.data = data;
+        this.success = success;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class ResultRequest implements DefaultRequest{
         }
 
         mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString("result"));
-
+        mapBuilder.put(ValueFactory.newString("result"), ValueFactory.newString(success ? "success" : "error"));
 
         return mapBuilder;
     }

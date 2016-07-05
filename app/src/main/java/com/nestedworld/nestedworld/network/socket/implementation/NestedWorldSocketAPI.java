@@ -77,8 +77,24 @@ public final class NestedWorldSocketAPI implements SocketListener {
     ** Public method
      */
     public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind) {
-        //Send a message with the corresponding key
-        sendMessage(data.serialise(), SocketMessageType.messageType.getMap().get(messageKind));
+        //Send a message with generic id (from messageType)
+        sendRequest(data, messageKind, SocketMessageType.messageType.getMap().get(messageKind));
+    }
+
+    public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
+        //Send a message with the given id
+        sendMessage(data.serialise(), messageKind, requestId);
+    }
+
+    private void sendMessage(@NonNull final ValueFactory.MapBuilder mapBuilder, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
+        //Add id field
+        mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
+
+        //Add type field
+        mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString(SocketMessageType.messageType.getMap().get(messageKind)));
+
+        //Send message
+        mSocketManager.send(mapBuilder.build());
     }
 
     /*
@@ -90,16 +106,10 @@ public final class NestedWorldSocketAPI implements SocketListener {
             String token = session.authToken;
 
             ValueFactory.MapBuilder mapBuilder = ValueFactory.newMapBuilder();
-            mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString("authenticate"));
             mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token));
 
-            sendMessage(mapBuilder, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
+            sendMessage(mapBuilder, SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
         }
-    }
-
-    private void sendMessage(@NonNull final ValueFactory.MapBuilder mapBuilder, @NonNull final String requestId) {
-        mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
-        mSocketManager.send(mapBuilder.build());
     }
 
     private void parseSocketMessage(@NonNull final Map<Value, Value> message) {

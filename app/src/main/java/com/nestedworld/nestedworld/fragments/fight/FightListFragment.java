@@ -133,7 +133,7 @@ public class FightListFragment extends BaseFragment {
             fightHolder.buttonAccept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TeamSelectionFragment.load(((AppCompatActivity)mContext).getSupportFragmentManager());
+                    TeamSelectionFragment.load(((AppCompatActivity)mContext).getSupportFragmentManager(), currentCombat);
                 }
             });
 
@@ -148,7 +148,8 @@ public class FightListFragment extends BaseFragment {
                             ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
                             map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
 
-                            nestedWorldSocketAPI.sendRequest(new ResultRequest(map.build().map()), SocketMessageType.MessageKind.TYPE_RESULT);
+                            ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                            nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, currentCombat.combat_id);
                         }
 
                         @Override

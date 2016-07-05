@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.UserMonster;
 import com.orm.query.Select;
@@ -52,7 +53,9 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager, Combat currentCombat) {
+        //TODO add currentCombat in fragment param
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new TeamSelectionFragment());
         fragmentTransaction.commit();
@@ -112,6 +115,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             button_go_fight.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //TODO send resultRequest
                     FightFragment.load(getFragmentManager());
                 }
             });
