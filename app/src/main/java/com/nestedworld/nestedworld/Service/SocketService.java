@@ -11,6 +11,7 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 
 import org.msgpack.value.Value;
 
@@ -60,7 +61,10 @@ public class SocketService extends Service {
 
             @Override
             public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-                //TODO parse kind
+                if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE) {
+                    AvailableMessage availableMessage = new AvailableMessage();
+                    availableMessage.unSerialise(content);
+                }
             }
         });
 

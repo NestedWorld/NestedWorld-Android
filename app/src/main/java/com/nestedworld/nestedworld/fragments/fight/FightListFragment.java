@@ -1,0 +1,150 @@
+package com.nestedworld.nestedworld.fragments.fight;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.Combat;
+import com.orm.query.Select;
+
+import java.util.List;
+
+import butterknife.Bind;
+
+public class FightListFragment extends BaseFragment {
+
+    @Bind(R.id.listView_fightList)
+    ListView listView;
+
+    public static void load(@NonNull final FragmentManager fragmentManager) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, new FightListFragment());
+        fragmentTransaction.commit();
+    }
+
+    /*
+    ** Life cycle
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_fight_list;
+    }
+
+    @Override
+    protected void init(View rootView, Bundle savedInstanceState) {
+        changeActionBarName();
+        populateFightList();
+    }
+
+    /*
+    ** Private method
+     */
+    private void populateFightList() {
+
+        List<Combat> combats = Select.from(Combat.class).list();
+
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //init adapter for our listView
+        final FightAdapter friendAdapter = new FightAdapter(mContext, combats);
+        listView.setAdapter(friendAdapter);
+    }
+
+    private void changeActionBarName() {
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (mContext instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(getResources().getString(R.string.fightList_title));
+            }
+        }
+    }
+
+    /**
+     * * Custom adapter for displaying fight on the listView
+     **/
+    private static class FightAdapter extends ArrayAdapter<Combat> {
+
+        private static final int resource = R.layout.item_fight;
+        private final Context mContext;
+
+        public FightAdapter(@NonNull final Context context, @NonNull final List<Combat> combatList) {
+            super(context, resource, combatList);
+            this.mContext = context;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View view;
+            FightHolder fightHolder;
+
+            if (convertView == null) {
+                LayoutInflater layoutInflater = ((Activity) mContext).getLayoutInflater();
+                view = layoutInflater.inflate(resource, parent, false);
+
+                fightHolder = new FightHolder();
+                fightHolder.textViewFightDescription = (TextView) view.findViewById(R.id.textView_item_fight_dsc);
+                fightHolder.buttonAccept = (Button) view.findViewById(R.id.button_item_fight_accept);
+                fightHolder.buttonRefuse = (Button) view.findViewById(R.id.button_item_fight_refuse);
+
+                view.setTag(fightHolder);
+            } else {
+                fightHolder = (FightHolder) convertView.getTag();
+                view = convertView;
+            }
+
+            //get the currentCombat
+            final Combat currentCombat = getItem(position);
+
+            //display the combat information
+            fightHolder.textViewFightDescription.setText(currentCombat.origin);
+
+            //set callback
+            fightHolder.buttonAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TeamSelectionFragment.load(((AppCompatActivity)mContext).getSupportFragmentManager());
+                }
+            });
+
+            fightHolder.buttonRefuse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    currentCombat.delete();
+                    remove(currentCombat);
+                }
+            });
+
+            return view;
+        }
+
+        private class FightHolder {
+            public TextView textViewFightDescription;
+            public Button buttonAccept;
+            public Button buttonRefuse;
+        }
+    }
+
+}

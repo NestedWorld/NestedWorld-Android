@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.fragments.fight.TeamSelectionFragment;
+import com.nestedworld.nestedworld.fragments.fight.FightListFragment;
 
 import butterknife.Bind;
 
@@ -25,7 +25,7 @@ public class FightActivity extends BaseAppCompatActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpToolbar();
-        TeamSelectionFragment.load(getSupportFragmentManager());
+        FightListFragment.load(getSupportFragmentManager());
     }
 
     /*

@@ -84,7 +84,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     /*
     ** Private method
      */
-    private void authRequest(@NonNull String requestId) {
+    private void authRequest() {
         Session session = SessionManager.get().getSession();
         if (session != null) {
             String token = session.authToken;
@@ -93,7 +93,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
             mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString("authenticate"));
             mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token));
 
-            sendMessage(mapBuilder, requestId);
+            sendMessage(mapBuilder, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
         }
     }
 
@@ -133,7 +133,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
                 return;
             }
         }
-        LogHelper.d(TAG, "Can't parse message");
+        LogHelper.d(TAG, "Can't parse message: " + message);
     }
 
     private void parseAuthMessage(@NonNull final Map<Value, Value> message) {
@@ -167,7 +167,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         mSingleton = NestedWorldSocketAPI.this;
 
         //Auth the connection
-        authRequest("AUTH_REQUEST");
+        authRequest();
     }
 
     @Override
