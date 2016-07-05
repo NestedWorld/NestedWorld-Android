@@ -3,17 +3,17 @@ package com.nestedworld.nestedworld.network.socket.listener;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 
 import org.msgpack.value.Value;
 
 import java.util.Map;
 
-public abstract class ConnectionListener {
+public interface ConnectionListener {
 
-    public abstract void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI);
+    void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI);
 
-    public abstract void onConnectionLost();
+    void onConnectionLost();
 
-    public abstract void onMessageReceived(@NonNull String messageId, @NonNull Map<Value, Value> content);
-
+    void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content);
 }

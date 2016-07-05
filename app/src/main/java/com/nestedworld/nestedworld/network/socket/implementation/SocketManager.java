@@ -142,7 +142,6 @@ public class SocketManager implements Runnable {
                 ImmutableValue message = messageUnpacker.unpackValue();
 
                 notifyMessageReceived(message);
-                LogHelper.d(TAG, "receive message:" + message);
             }
 
         } catch (IOException | MessageInsufficientBufferException e) {
@@ -161,7 +160,6 @@ public class SocketManager implements Runnable {
             LogHelper.d(TAG, "Can't send message");
             e.printStackTrace();
         }
-        notifyMessageSent();
     }
 
     /*
@@ -170,12 +168,7 @@ public class SocketManager implements Runnable {
     //Thread safe (callback in main thread)
     private void notifySocketConnected() {
         for (final SocketListener listener : listeners) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    listener.onSocketConnected();
-                }
-            });
+            listener.onSocketConnected();
         }
     }
 
@@ -183,13 +176,6 @@ public class SocketManager implements Runnable {
     private void notifySocketDisconnected() {
         for (final SocketListener listener : listeners) {
             listener.onSocketDisconnected();
-        }
-    }
-
-    //Thread unsafe (callback in current thread)
-    private void notifyMessageSent() {
-        for (final SocketListener listener : listeners) {
-            listener.onMessageSent();
         }
     }
 

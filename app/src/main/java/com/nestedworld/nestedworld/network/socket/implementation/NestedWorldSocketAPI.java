@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.network.socket.implementation;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -74,9 +75,17 @@ public final class NestedWorldSocketAPI implements SocketListener {
     }
 
     /*
-    ** Public method (API)
+    ** Public method
      */
-    public void authRequest(@NonNull String requestId) {
+    public void sendRequest(@NonNull final DefaultModel data, @NonNull final SocketMessageType.MessageKind messageKind) {
+        //Send a message with the corresponding key
+        sendMessage(data.serialise(), SocketMessageType.messageType.getMap().get(messageKind));
+    }
+
+    /*
+    ** Private method
+     */
+    private void authRequest(@NonNull String requestId) {
         Session session = SessionManager.get().getSession();
         if (session != null) {
             String token = session.authToken;
@@ -89,16 +98,63 @@ public final class NestedWorldSocketAPI implements SocketListener {
         }
     }
 
-    public void combatRequest(@NonNull final DefaultModel data) {
-        sendMessage(data.serialise(), "COMBAT_REQUEST");
-    }
-
-    /*
-    ** Private method
-     */
     private void sendMessage(@NonNull final ValueFactory.MapBuilder mapBuilder, @NonNull final String requestId) {
         mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
         mSocketManager.send(mapBuilder.build());
+    }
+
+    private void parseSocketMessage(@NonNull final Map<Value, Value> message) {
+        //Check if the message is a response
+        if (message.containsKey(ValueFactory.newString("id"))) {
+            //get the messageId
+            final String messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
+
+            //check if we know this id
+            if (SocketMessageType.messageType.getMap().containsValue(messageId)) {
+                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getInvertedMap().get(messageId);
+                //Check it it's an auth response
+                if (kind == SocketMessageType.MessageKind.TYPE_AUTHENTICATE) {
+                    parseAuthMessage(message);
+                    return;
+                } else {
+                    notifyMessageReceive(kind, message);
+                    return;
+                }
+            }
+        }
+
+        //It's a spontaneous message, try to found the type
+        if (message.containsKey(ValueFactory.newString("type"))) {
+            final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
+
+            //check if we know the type
+            if (SocketMessageType.messageType.getMap().containsValue(type)) {
+                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getInvertedMap().get(type);
+                notifyMessageReceive(kind, message);
+                return;
+            }
+        }
+        LogHelper.d(TAG, "Can't parse message");
+    }
+
+    private void parseAuthMessage(@NonNull final Map<Value, Value> message) {
+        if (message.get(ValueFactory.newString("result")).asStringValue().asString().equals("success")) {
+            //Call connectionListener.onConnectionReady() inside the main thread
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    mConnectionListener.onConnectionReady(mSingleton);
+                }
+            });
+        } else {
+            onSocketDisconnected();
+            mSocketManager.disconnect();
+        }
+    }
+
+    private void notifyMessageReceive(@NonNull SocketMessageType.MessageKind messageKind, @NonNull final Map<Value, Value> message) {
+        LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getMap().get(messageKind));
+        mConnectionListener.onMessageReceived(messageKind, message);
     }
 
     /*
@@ -111,20 +167,15 @@ public final class NestedWorldSocketAPI implements SocketListener {
         //Connection success, we can init the singleton
         mSingleton = NestedWorldSocketAPI.this;
 
-        //Call the listener inside the main thread
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                mConnectionListener.onConnectionReady(mSingleton);
-            }
-        });
+        //Auth the connection
+        authRequest("AUTH_REQUEST");
     }
 
     @Override
     public void onSocketDisconnected() {
         mSingleton = null;
 
-        //Call the listener inside the main thread
+        //Call connectionListener.onConnectionLost() inside the main thread
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -134,34 +185,17 @@ public final class NestedWorldSocketAPI implements SocketListener {
     }
 
     @Override
-    public void onMessageSent() {
-        //A message has been send, should call some listener
-    }
-
-    @Override
     public void onMessageReceived(ImmutableValue message) {
-        LogHelper.d(TAG, "Message received");
-
         switch (message.getValueType()) {
             case MAP:
                 final Map<Value, Value> map = message.asMapValue().map();
-                final String messageId = map.get(ValueFactory.newString("id")).asStringValue().asString();
-
-                //Call the listener inside the main thread
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mConnectionListener.onMessageReceived(messageId, map);
-                    }
-                });
-
-
+                parseSocketMessage(map);
                 break;
             default:
                 //Cannot parse the message, undefined in the protocol
+                LogHelper.d(TAG, "Can't parse message");
                 break;
         }
-
     }
 }
 

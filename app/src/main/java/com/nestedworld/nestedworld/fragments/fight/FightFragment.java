@@ -17,12 +17,12 @@ import com.nestedworld.nestedworld.customView.drawingGestureView.listener.Drawin
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.rey.material.widget.ProgressView;
 
 import org.msgpack.value.Value;
-import org.msgpack.value.ValueFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 
-public class FightFragment extends BaseFragment {
+public  class FightFragment extends BaseFragment implements ConnectionListener {
 
     private final ArrayList<Integer> mPositions = new ArrayList<>();
     @Bind(R.id.progressView)
@@ -71,55 +71,11 @@ public class FightFragment extends BaseFragment {
         /*start a loading animation*/
         progressView.start();
 
+        //Init the gestureListener
+        initDrawingGestureView(rootView);
+
         /*Init the socket*/
-        NestedWorldSocketAPI.getInstance(new ConnectionListener() {
-            @Override
-            public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                /*Socket successfully init*/
-                mNestedWorldSocketAPI = nestedWorldSocketAPI;
-
-                /*Need to auth*/
-                mNestedWorldSocketAPI.authRequest("AUTH_REQUEST");
-            }
-
-            @Override
-            public void onConnectionLost() {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
-
-                /*Stop the loading animation and display an error message*/
-                if (progressView != null) {
-                    progressView.stop();
-                }
-
-                /*Display an error message*/
-                //TODO use string from xml
-                Toast.makeText(mContext, "Connexion impossible", Toast.LENGTH_LONG).show();
-
-                /*Stop the activity (can't run without connection)*/
-                getActivity().finish();
-            }
-
-            @Override
-            public void onMessageReceived(@NonNull String requestId, @NonNull Map<Value, Value> content) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
-
-                if (requestId.equals("AUTH_REQUEST")) {
-                    if (content.get(ValueFactory.newString("result")).asStringValue().asString().equals("success")) {
-                        /*Stop the loading animation*/
-                        progressView.stop();
-
-                        /*Init the custom view (for sending attack)*/
-                        initDrawingGestureView(rootView);
-                    }
-                }
-            }
-        });
+        NestedWorldSocketAPI.getInstance(this);
     }
 
     private void initDrawingGestureView(View rootView) {
@@ -162,13 +118,55 @@ public class FightFragment extends BaseFragment {
                 data.target = 10;
                 data.attack = Integer.parseInt(buf);
 
-                mNestedWorldSocketAPI.combatRequest(data);
+                mNestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 mPositions.clear();
             }
         });
 
         /*Add the custom view under the rootView*/
-        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(drawingGestureView);
+        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(drawingGestureView);;
     }
 
+    /*
+    ** Connection listener implementation
+     */
+    @Override
+    public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+        /*Socket successfully init*/
+        mNestedWorldSocketAPI = nestedWorldSocketAPI;
+
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Stop the loading animation
+        if (progressView != null) {
+            progressView.stop();
+        }
+    }
+
+    @Override
+    public void onConnectionLost() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        /*Stop the loading animation and display an error message*/
+        if (progressView != null) {
+            progressView.stop();
+        }
+
+        /*Display an error message*/
+        Toast.makeText(mContext, R.string.fight_msg_connection_impossible, Toast.LENGTH_LONG).show();
+
+        /*Stop the activity (can't run without connection)*/
+        getActivity().finish();
+    }
+
+    @Override
+    public void onMessageReceived(@NonNull SocketMessageType.MessageKind messageKind, @NonNull Map<Value, Value> content) {
+
+    }
 }
