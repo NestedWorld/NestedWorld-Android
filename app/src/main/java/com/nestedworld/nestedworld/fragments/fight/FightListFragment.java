@@ -19,9 +19,17 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Combat;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.orm.query.Select;
 
+import org.msgpack.value.Value;
+import org.msgpack.value.ValueFactory;
+
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 
@@ -134,6 +142,25 @@ public class FightListFragment extends BaseFragment {
                 public void onClick(View view) {
                     currentCombat.delete();
                     remove(currentCombat);
+                    NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+                        @Override
+                        public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+                            ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+                            map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
+
+                            nestedWorldSocketAPI.sendRequest(new ResultRequest(map.build().map()), SocketMessageType.MessageKind.TYPE_RESULT);
+                        }
+
+                        @Override
+                        public void onConnectionLost() {
+
+                        }
+
+                        @Override
+                        public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+
+                        }
+                    });
                 }
             });
 
