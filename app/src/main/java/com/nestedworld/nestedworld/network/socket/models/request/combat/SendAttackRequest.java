@@ -5,8 +5,13 @@ import com.nestedworld.nestedworld.network.socket.models.request.DefaultRequest;
 import org.msgpack.value.ValueFactory;
 
 public class SendAttackRequest implements DefaultRequest {
-    public int target;
-    public int attack;
+    private int target;
+    private int attack;
+
+    public SendAttackRequest(final int target, final int attack) {
+        this.target = target;
+        this.attack = attack;
+    }
 
     @Override
     public ValueFactory.MapBuilder serialise() {

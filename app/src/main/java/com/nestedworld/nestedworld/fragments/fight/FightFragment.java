@@ -108,15 +108,15 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
         drawingGestureView.setOnFinishMoveListener(new OnFinishMoveListener() {
             @Override
             public void onFinish() {
-                SendAttackRequest data = new SendAttackRequest();
+
+                //TODO use good information
 
                 String buf = "0";
                 for (int i : mPositions) {
                     buf += i;
                 }
 
-                data.target = 10;
-                data.attack = Integer.parseInt(buf);
+                SendAttackRequest data = new SendAttackRequest(10, Integer.parseInt(buf));
 
                 mNestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 mPositions.clear();
