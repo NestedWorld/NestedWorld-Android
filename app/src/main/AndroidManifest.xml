@@ -75,7 +75,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <!--Service-->
-        <service android:name=".Service.SocketService"/>
+        <service android:name=".service.SocketService"/>
 
         <!-- Meta data-->
         <meta-data

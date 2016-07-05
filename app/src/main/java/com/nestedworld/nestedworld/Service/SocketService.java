@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.Service;
+package com.nestedworld.nestedworld.service;
 
 import android.app.Service;
 import android.content.Intent;

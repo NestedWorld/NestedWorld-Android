@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.Service.SocketService;
+import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
@@ -35,15 +35,10 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdate
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
-import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.rey.material.widget.ProgressView;
-
-import org.msgpack.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
