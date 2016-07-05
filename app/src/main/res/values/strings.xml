@@ -93,6 +93,7 @@
 
     <!--Fight.combat-->
     <string name="fight_msg_monsterLife">Life</string>
+    <string name="fight_msg_connection_impossible">Connection impossible</string>
 
     <!--Chat-->
     <string name="chat_title">Chat</string>
