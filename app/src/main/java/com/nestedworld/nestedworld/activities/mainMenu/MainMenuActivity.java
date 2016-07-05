@@ -1,6 +1,11 @@
 package com.nestedworld.nestedworld.activities.mainMenu;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.Service.SocketService;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
@@ -29,10 +35,15 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdate
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.rey.material.widget.ProgressView;
+
+import org.msgpack.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
@@ -61,6 +72,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         progressView.start();
         updateDataBase();
+        initSocketConnection();
     }
 
     @Override
@@ -86,6 +98,44 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        doUnbindService();
+    }
+
+    /*
+    ** private method
+     */
+    SocketService mBoundService;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mBoundService = ((SocketService.LocalBinder)service).getService();
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mBoundService = null;
+        }
+
+    };
+    private void doBindService() {
+        bindService(new Intent(this, SocketService.class), mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void doUnbindService() {
+        // Detach our existing connection.
+        unbindService(mConnection);
+    }
+
+    private void initSocketConnection() {
+        Intent intent = new Intent(this, SocketService.class);
+        startService(intent);
+        doBindService();
     }
 
     private void initTabs() {
