@@ -10,6 +10,7 @@ import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.network.socket.models.request.DefaultRequest;
+import com.nestedworld.nestedworld.network.socket.models.request.auth.AuthRequest;
 
 import org.msgpack.value.ImmutableValue;
 import org.msgpack.value.Value;
@@ -105,10 +106,8 @@ public final class NestedWorldSocketAPI implements SocketListener {
         if (session != null) {
             String token = session.authToken;
 
-            ValueFactory.MapBuilder mapBuilder = ValueFactory.newMapBuilder();
-            mapBuilder.put(ValueFactory.newString("token"), ValueFactory.newString(token));
-
-            sendMessage(mapBuilder, SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
+            AuthRequest authRequest = new AuthRequest(session.authToken);
+            sendMessage(authRequest.serialise(),SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
         }
     }
 
