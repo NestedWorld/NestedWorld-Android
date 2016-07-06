@@ -24,7 +24,7 @@ public class AvailableMessage implements DefaultMessage {
             type = combat.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("id"))) {
-            id = combat.combat_id = message.get(ValueFactory.newString("id")).asStringValue().asString();
+            id = combat.message_id = message.get(ValueFactory.newString("id")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("origin"))) {
             origin = combat.origin = message.get(ValueFactory.newString("origin")).asStringValue().asString();

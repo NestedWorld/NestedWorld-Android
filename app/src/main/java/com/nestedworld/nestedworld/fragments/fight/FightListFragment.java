@@ -149,7 +149,7 @@ public class FightListFragment extends BaseFragment {
                             map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
 
                             ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                            nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, currentCombat.combat_id);
+                            nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, currentCombat.message_id);
                         }
 
                         @Override

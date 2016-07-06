@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
@@ -26,6 +29,7 @@ import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.UserMonster;
+import com.orm.query.Condition;
 import com.orm.query.Select;
 
 import java.util.ArrayList;
@@ -49,15 +53,24 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     private List<UserMonster> mUserMonsters;
     private List<UserMonster> mSelectedMonster;
     private UserMonsterPagerAdapter mUserMonsterPagerAdapter;
+    private Combat currentCombat;
 
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager, Combat currentCombat) {
-        //TODO add currentCombat in fragment param
 
+        //Instantiate new fragment
+        Fragment newFragment = new TeamSelectionFragment();
+
+        //Add fragment param
+        Bundle args = new Bundle();
+        args.putLong("combatId", currentCombat.getId());
+        newFragment.setArguments(args);
+
+        //Display the fragment
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new TeamSelectionFragment());
+        fragmentTransaction.replace(R.id.container, newFragment);
         fragmentTransaction.commit();
     }
 
@@ -71,10 +84,14 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        changeActionBarName();
+        parseArgs();
+
+        Log.e(TAG, currentCombat.toString());
+
         mUserMonsters = Select.from(UserMonster.class).list();
         mSelectedMonster = new ArrayList<>();
 
-        changeActionBarName();
         setUpViewPager();
 
         button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0));
@@ -85,6 +102,33 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                 updateArrowState();
             }
         });
+    }
+
+    /*
+    ** Private method
+     */
+    private void parseArgs() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Parse combatId
+        Long combatId = getArguments().getLong("combatId", 0);
+
+        //Retrieve Combat from Orm
+        Combat combat = Select.from(Combat.class).where(Condition.prop("id").eq(combatId)).first();
+
+        //Check if we successfully got the combat
+        if (combat == null) {
+            //Display an error message
+            Toast.makeText(mContext, "An error occur, please try again", Toast.LENGTH_LONG).show();
+
+            //Finish the current activity
+            ((AppCompatActivity)mContext).finish();
+        }
+
+        this.currentCombat = combat;
     }
 
     private void setUpViewPager() {
