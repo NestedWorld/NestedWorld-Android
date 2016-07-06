@@ -96,9 +96,9 @@ public class FriendListFragment extends BaseFragment {
     /**
      * * Custom adapter for displaying friend on the listView
      **/
-    private class FriendsAdapter extends ArrayAdapter<Friend> {
+    private static class FriendsAdapter extends ArrayAdapter<Friend> {
 
-        private static final int resource = R.layout.item_friend_list;
+        private static final int resource = R.layout.item_friend_home;
         private final Context mContext;
 
         public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
@@ -119,7 +119,6 @@ public class FriendListFragment extends BaseFragment {
                 friendHolder = new FriendHolder();
                 friendHolder.friendPicture = (ImageView) view.findViewById(R.id.imageView_item_friend);
                 friendHolder.friendName = (TextView) view.findViewById(R.id.textView_item_friend);
-                friendHolder.buttonDefy = (Button) view.findViewById(R.id.button_defy_friend);
 
                 view.setTag(friendHolder);
             } else {
@@ -129,7 +128,7 @@ public class FriendListFragment extends BaseFragment {
 
             //get the currentFriend
             Friend currentFriend = getItem(position);
-            final User currentFriendInfo = currentFriend.info();
+            User currentFriendInfo = currentFriend.info();
 
             if (currentFriendInfo == null) {
                 return null;
@@ -152,39 +151,12 @@ public class FriendListFragment extends BaseFragment {
                     .centerCrop()
                     .into(friendHolder.friendPicture);
 
-            //set listener on defy button
-            friendHolder.buttonDefy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    progressView.start();
-                    NestedWorldSocketAPI.getInstance(new ConnectionListener() {
-                        @Override
-                        public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                            nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
-                        }
-
-                        @Override
-                        public void onConnectionLost() {
-
-                        }
-
-                        @Override
-                        public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-                            if (kind == SocketMessageType.MessageKind.TYPE_RESULT) {
-                                //TODO check result content
-                            }
-                        }
-                    });
-                }
-            });
-
             return view;
         }
 
         private class FriendHolder {
             public ImageView friendPicture;
             public TextView friendName;
-            public Button buttonDefy;
         }
     }
 }

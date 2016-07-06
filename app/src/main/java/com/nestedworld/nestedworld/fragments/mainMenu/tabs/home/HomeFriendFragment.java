@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,11 +22,19 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
 import com.orm.query.Select;
 
+import org.msgpack.value.Value;
+
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -82,9 +91,10 @@ public class HomeFriendFragment extends BaseFragment {
     /**
      * * Custom adapter for displaying friend on the listView
      **/
-    private static class FriendsAdapter extends ArrayAdapter<Friend> {
 
-        private static final int resource = R.layout.item_friend_home;
+    private class FriendsAdapter extends ArrayAdapter<Friend> {
+
+        private static final int resource = R.layout.item_friend_list;
         private final Context mContext;
 
         public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
@@ -105,6 +115,7 @@ public class HomeFriendFragment extends BaseFragment {
                 friendHolder = new FriendHolder();
                 friendHolder.friendPicture = (ImageView) view.findViewById(R.id.imageView_item_friend);
                 friendHolder.friendName = (TextView) view.findViewById(R.id.textView_item_friend);
+                friendHolder.buttonDefy = (Button) view.findViewById(R.id.button_defy_friend);
 
                 view.setTag(friendHolder);
             } else {
@@ -114,7 +125,7 @@ public class HomeFriendFragment extends BaseFragment {
 
             //get the currentFriend
             Friend currentFriend = getItem(position);
-            User currentFriendInfo = currentFriend.info();
+            final User currentFriendInfo = currentFriend.info();
 
             if (currentFriendInfo == null) {
                 return null;
@@ -137,12 +148,39 @@ public class HomeFriendFragment extends BaseFragment {
                     .centerCrop()
                     .into(friendHolder.friendPicture);
 
+            //set listener on defy button
+            friendHolder.buttonDefy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+                        @Override
+                        public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+                            nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
+                        }
+
+                        @Override
+                        public void onConnectionLost() {
+
+                        }
+
+                        @Override
+                        public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+                            if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_ASK) {
+                                LogHelper.d(TAG, "Got response");
+                                //TODO parse message
+                            }
+                        }
+                    });
+                }
+            });
+
             return view;
         }
 
         private class FriendHolder {
             public ImageView friendPicture;
             public TextView friendName;
+            public Button buttonDefy;
         }
     }
 }
