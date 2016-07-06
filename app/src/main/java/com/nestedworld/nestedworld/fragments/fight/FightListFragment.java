@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
@@ -94,6 +95,7 @@ public class FightListFragment extends BaseFragment {
      **/
     private static class FightAdapter extends ArrayAdapter<Combat> {
 
+        private static final String TAG = FightAdapter.class.getSimpleName();
         private static final int resource = R.layout.item_fight;
         private final Context mContext;
 
@@ -140,6 +142,10 @@ public class FightListFragment extends BaseFragment {
             fightHolder.buttonRefuse.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    //Display some log
+                    LogHelper.d(TAG, "Combat selected: " + currentCombat.toString());
+
                     currentCombat.delete();
                     remove(currentCombat);
                     NestedWorldSocketAPI.getInstance(new ConnectionListener() {
