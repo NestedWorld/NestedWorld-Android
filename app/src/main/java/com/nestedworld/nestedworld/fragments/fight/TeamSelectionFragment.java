@@ -206,10 +206,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
                         List<Value> selectedMonsterIdList = new ArrayList<>();
                         for (UserMonster userMonster : mSelectedMonster) {
-                            Monster monster = userMonster.info();
-                            if (monster != null) {
-                                selectedMonsterIdList.add(ValueFactory.newInteger(monster.monster_id));
-                            }
+                            selectedMonsterIdList.add(ValueFactory.newInteger(userMonster.user_monster_id));
                         }
 
                         map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(true));
