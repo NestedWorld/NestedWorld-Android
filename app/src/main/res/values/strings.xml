@@ -102,5 +102,6 @@
 
     <!--Chat-->
     <string name="chat_title">Chat</string>
+    <string name="chat_msg_button">Send</string>
 
 </resources>

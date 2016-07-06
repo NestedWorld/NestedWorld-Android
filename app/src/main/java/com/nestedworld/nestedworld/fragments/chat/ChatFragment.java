@@ -19,6 +19,7 @@ import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
@@ -63,6 +64,21 @@ public class ChatFragment extends BaseFragment {
     }
 
     /*
+    ** Butterknife callback
+     */
+    @OnClick(R.id.button_send_message)
+    public void sendMessage() {
+        //add the text on the adapter
+        itemAdapter.add(editTextChat.getText().toString());
+
+        //update adapter
+        itemAdapter.notifyDataSetChanged();
+
+        //clear editText content
+        editTextChat.setText("");
+    }
+
+    /*
     ** Utils
      */
     private void initActionBar() {
@@ -92,14 +108,7 @@ public class ChatFragment extends BaseFragment {
                 if (actionId == EditorInfo.IME_NULL
                         && event.getAction() == KeyEvent.ACTION_DOWN) {
 
-                    //add the text on the adapter
-                    itemAdapter.add(editTextChat.getText().toString());
-
-                    //update adapter
-                    itemAdapter.notifyDataSetChanged();
-
-                    //clear editText content
-                    editTextChat.setText("");
+                    sendMessage();
 
                     return true;
                 }
