@@ -5,89 +5,60 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/imageView_center"
-        android:layout_width="55dip"
+        android:layout_width="110dip"
         android:layout_height="55dip"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:src="@drawable/ic_action_ghost"
-        android:visibility="invisible" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:id="@+id/imageView_top"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:layout_above="@+id/imageView_center"
-        android:layout_alignStart="@+id/imageView_center"
-        android:layout_marginBottom="56dp"
-        android:src="@drawable/ic_action_ghost" />
+        android:src="@drawable/ic_action_ghost"
+        android:layout_above="@+id/imageView_top_right"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:id="@+id/imageView_bottom"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:layout_alignStart="@+id/imageView_center"
-        android:layout_below="@+id/imageView_center"
-        android:layout_marginTop="56dp"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_right"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_alignTop="@+id/imageView_center"
-        android:layout_marginStart="56dp"
-        android:layout_toEndOf="@+id/imageView_center"
-        android:src="@drawable/ic_action_ghost" />
-
-    <ImageView
-        android:id="@+id/imageView_left"
-        android:layout_width="55dip"
-        android:layout_height="55dip"
-        android:layout_alignTop="@+id/imageView_center"
-        android:layout_marginEnd="56dp"
-        android:layout_toStartOf="@+id/imageView_center"
-        android:src="@drawable/ic_action_ghost" />
-
+        android:src="@drawable/ic_action_ghost"
+        android:layout_below="@+id/imageView_bottom_right"
+        android:layout_centerHorizontal="true" />
     <ImageView
         android:id="@+id/imageView_top_left"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:layout_above="@+id/imageView_left"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="28dp"
-        android:layout_toStartOf="@+id/imageView_top"
-        android:src="@drawable/ic_action_ghost" />
+        android:src="@drawable/ic_action_ghost"
+        android:layout_above="@+id/imageView_center"
+        android:layout_alignStart="@+id/imageView_bottom_left" />
 
     <ImageView
         android:id="@+id/imageView_top_right"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:layout_above="@+id/imageView_right"
-        android:layout_marginBottom="26dp"
-        android:layout_marginStart="26dp"
-        android:layout_toEndOf="@+id/imageView_top"
-        android:src="@drawable/ic_action_ghost" />
+        android:src="@drawable/ic_action_ghost"
+        android:layout_above="@+id/imageView_center"
+        android:layout_toEndOf="@+id/imageView_center" />
 
     <ImageView
         android:id="@+id/imageView_bottom_right"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:layout_below="@+id/imageView_right"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/imageView_bottom"
-        android:src="@drawable/ic_action_ghost" />
+        android:src="@drawable/ic_action_ghost"
+        android:layout_below="@+id/imageView_center"
+        android:layout_alignStart="@+id/imageView_top_right" />
 
     <ImageView
         android:id="@+id/imageView_bottom_left"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:layout_below="@+id/imageView_left"
-        android:layout_marginEnd="26dp"
-        android:layout_marginTop="26dp"
-        android:layout_toStartOf="@+id/imageView_bottom"
-        android:src="@drawable/ic_action_ghost" />
+        android:src="@drawable/ic_action_ghost"
+        android:layout_below="@+id/imageView_center"
+        android:layout_toStartOf="@+id/imageView_center" />
 
 
 </RelativeLayout>

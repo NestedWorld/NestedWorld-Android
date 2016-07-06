@@ -87,11 +87,9 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
         final List<ImageView> tiles = Arrays.asList(
                 (ImageView) rootView.findViewById(R.id.imageView_top),
                 (ImageView) rootView.findViewById(R.id.imageView_top_right),
-                (ImageView) rootView.findViewById(R.id.imageView_right),
                 (ImageView) rootView.findViewById(R.id.imageView_bottom_right),
                 (ImageView) rootView.findViewById(R.id.imageView_bottom),
                 (ImageView) rootView.findViewById(R.id.imageView_bottom_left),
-                (ImageView) rootView.findViewById(R.id.imageView_left),
                 (ImageView) rootView.findViewById(R.id.imageView_top_left));
 
         /*Create and init the custom view*/
