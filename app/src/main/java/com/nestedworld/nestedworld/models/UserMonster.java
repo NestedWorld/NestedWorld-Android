@@ -3,8 +3,10 @@ package com.nestedworld.nestedworld.models;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.nestedworld.nestedworld.R;
 import com.orm.SugarRecord;
+import com.orm.dsl.Unique;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
@@ -15,6 +17,12 @@ import com.orm.query.Select;
  * /!\ Keep the default constructor empty (see sugarOrm doc)
  */
 public class UserMonster extends SugarRecord {
+
+    @Expose
+    @SerializedName("id")
+    @Unique
+    public Long user_monster_id;// the sql table will be called usermonsterid (see sugarOrm doc)
+
 
     @Expose
     public Monster infos;
@@ -47,11 +55,12 @@ public class UserMonster extends SugarRecord {
     @Override
     public String toString() {
         return "UserMonster{" +
-                "infos=" + infos +
-                ", level='" + level + '\'' +
+                "user_monster_id=" + user_monster_id +
+                ", infos=" + infos +
+                ", level=" + level +
                 ", surname='" + surname + '\'' +
                 ", experience='" + experience + '\'' +
-                ", fkMonster=" + fkmonster +
+                ", fkmonster=" + fkmonster +
                 '}';
     }
 
