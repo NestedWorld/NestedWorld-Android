@@ -29,8 +29,8 @@ public class AvailableMessage implements DefaultMessage {
         if (message.containsKey(ValueFactory.newString("origin"))) {
             origin = combat.origin = message.get(ValueFactory.newString("origin")).asStringValue().asString();
         }
-        if (message.containsKey(ValueFactory.newString("monsterId"))) {
-            monsterId = combat.monsterId = message.get(ValueFactory.newString("monsterId")).asIntegerValue().asInt();
+        if (message.containsKey(ValueFactory.newString("monster_id"))) {
+            monsterId = combat.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asInt();
         }
         if (message.containsKey(ValueFactory.newString("user"))) {
             Map<Value, Value> userInfo = message.get(ValueFactory.newString("user")).asMapValue().map();
