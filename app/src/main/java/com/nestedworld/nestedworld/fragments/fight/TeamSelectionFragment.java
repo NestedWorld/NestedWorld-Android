@@ -26,14 +26,23 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.UserMonster;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import org.msgpack.value.Value;
+import org.msgpack.value.ValueFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 
@@ -84,17 +93,23 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        //Change action bar title
         changeActionBarName();
+
+        //Get selectedCombat from arg
         parseArgs();
 
-        Log.e(TAG, currentCombat.toString());
-
+        //Retrieve monster and init selectedMonster list
         mUserMonsters = Select.from(UserMonster.class).list();
         mSelectedMonster = new ArrayList<>();
 
+        //Init the viewPager (will display userMonster)
         setUpViewPager();
 
+        //Init button 'start_fight' text (will display the state until we've selected enough monster)
         button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0));
+
+        //Init button 'select_monster'
         button_select_monster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,11 +139,17 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             //Display an error message
             Toast.makeText(mContext, "An error occur, please try again", Toast.LENGTH_LONG).show();
 
+            //Display some log
+            LogHelper.d(TAG, "cannot parse combatId args");
+
             //Finish the current activity
             ((AppCompatActivity)mContext).finish();
-        }
+        } else {
+            this.currentCombat = combat;
 
-        this.currentCombat = combat;
+            //Display some log
+            LogHelper.d(TAG, "Combat= " + this.currentCombat.toString());
+        }
     }
 
     private void setUpViewPager() {
@@ -145,25 +166,72 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     }
 
     private void onMonsterSelected() {
-        tableRow_selected_monster.getChildAt(mSelectedMonster.size()).setBackgroundResource(R.drawable.default_monster);
-        mSelectedMonster.add(mUserMonsters.get(viewPager.getCurrentItem()));
+        //Get the selected monster
+        UserMonster selectedMonster = mUserMonsters.get(viewPager.getCurrentItem());
 
+        //Display some log
+        LogHelper.d(TAG, "Monster selected: " + selectedMonster.toString());
+
+        /*
+        ** /!\ keep order : show monster and then add it in the list /!\
+        ** (because show is based on mSelectedMonster.size())
+         */
+        //Show the selected monster
+        tableRow_selected_monster.getChildAt(mSelectedMonster.size()).setBackgroundResource(R.drawable.default_monster);
+
+        //Add the monster in the list (of selected monster)
+        mSelectedMonster.add(selectedMonster);
+
+        //Update 'start_fight' button with the current state
         button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), mSelectedMonster.size()));
 
         //If we've selected enough monster, we enable the button
         if (mSelectedMonster.size() == 4) {
-            //Change text on the button
-            button_go_fight.setText(getResources().getString(R.string.teamSelection_msg_startFight));
-
-            //Set a listener for starting the fight
-            button_go_fight.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO send resultRequest
-                    FightFragment.load(getFragmentManager());
-                }
-            });
+            onEnoughMonsterSelected();
         }
+    }
+
+    private void onEnoughMonsterSelected() {
+        //Change text on the button
+        button_go_fight.setText(getResources().getString(R.string.teamSelection_msg_startFight));
+
+        //Set a listener for starting the fight
+        button_go_fight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+                    @Override
+                    public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+                        ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+
+                        List<Value> selectedMonsterIdList = new ArrayList<>();
+                        for (UserMonster userMonster : mSelectedMonster) {
+                            Monster monster = userMonster.info();
+                            if (monster != null) {
+                                selectedMonsterIdList.add(ValueFactory.newInteger(monster.monster_id));
+                            }
+                        }
+
+                        map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(true));
+                        map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
+
+                        ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                        nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, currentCombat.message_id);
+                    }
+
+                    @Override
+                    public void onConnectionLost() {
+
+                    }
+
+                    @Override
+                    public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+
+                    }
+                });
+                FightFragment.load(getFragmentManager());
+            }
+        });
     }
 
     private void updateArrowState() {
