@@ -9,9 +9,11 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Region;
 import com.nestedworld.nestedworld.models.Session;
+import com.nestedworld.nestedworld.network.http.models.request.friends.AddFriendRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignInRequest;
+import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionResponse;
@@ -146,6 +148,10 @@ public final class NestedWorldHttpApi {
         return mClient.forgotPassword(new ForgotPasswordRequest(email));
     }
 
+    public Call<AddFriendResponse> addFriend(@NonNull final String pseudo) {
+        return mClient.addFriends(new AddFriendRequest(pseudo));
+    }
+
     public Call<LogoutResponse> logout() {
         return mClient.logout();
     }
@@ -178,6 +184,7 @@ public final class NestedWorldHttpApi {
         return mClient.getUserMonsters();
     }
 
+
     /**
      * API Interface which use the retrofit annotation
      */
@@ -187,6 +194,9 @@ public final class NestedWorldHttpApi {
 
         @GET(HttpEndPoint.USER_FRIENDS)
         Call<FriendsResponse> getFriends();
+
+        @POST(HttpEndPoint.USER_FRIENDS)
+        Call<AddFriendResponse> addFriends(@Body AddFriendRequest body);
 
         @POST(HttpEndPoint.USER_LOGOUT)
         Call<LogoutResponse> logout();

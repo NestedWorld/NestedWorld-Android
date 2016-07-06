@@ -79,6 +79,9 @@
     <!--MainMenu.tab.home.friendList-->
     <string name="tabHome_title_friendList">Your friend</string>
     <string name="tabHome_msg_addFriend">Add</string>
+    <string name="tabHome_title_addFriend">Add friend</string>
+    <string name="tabHome_msg_friendPseudo">Pseudo</string>
+    <string name="tabHome_msg_cancel">Cancel</string>
 
     <!--Fight.teamSelection-->
     <string name="teamSelection_msg_hint">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
@@ -106,5 +109,4 @@
 
     <!--Friend-->
     <string name="friend_defy">Defy</string>
-
 </resources>

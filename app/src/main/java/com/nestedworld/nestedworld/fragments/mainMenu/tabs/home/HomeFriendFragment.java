@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.fragments.mainMenu.tabs.home;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,15 +10,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
@@ -25,6 +27,8 @@ import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
@@ -39,6 +43,9 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFriendFragment extends BaseFragment {
 
@@ -84,8 +91,43 @@ public class HomeFriendFragment extends BaseFragment {
             return;
         }
 
-        //TODO display popup for adding friend
-        Toast.makeText(mContext, "Incoming feature...", Toast.LENGTH_LONG).show();
+        //Instantiate a popup
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        alertDialog.setTitle(getString(R.string.tabHome_title_addFriend));
+        alertDialog.setMessage(getString(R.string.tabHome_msg_friendPseudo));
+
+        //Inflate popup
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.inflater_alertdialog_add_friend, null);
+        final EditText editTextPseudo = (EditText) view.findViewById(R.id.editText_addFriend);
+        alertDialog.setView(view);
+
+        //Set callback
+        alertDialog.setPositiveButton(getString(R.string.tabHome_msg_addFriend), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String pseudo = editTextPseudo.getText().toString();
+                NestedWorldHttpApi.getInstance(mContext).addFriend(pseudo).enqueue(new Callback<AddFriendResponse>() {
+                    @Override
+                    public void onResponse(Call<AddFriendResponse> call, Response<AddFriendResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddFriendResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+        alertDialog.setNegativeButton(getString(R.string.tabHome_msg_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        //Display popup
+        alertDialog.show();
     }
 
     /**
