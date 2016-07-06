@@ -30,6 +30,7 @@ public class SocketMessageType {
         TYPE_COMBAT_MONSTER_KO_CAPTURE,
         TYPE_COMBAT_MONSTER_KO_REPLACE,
         TYPE_COMBAT_FLEE,
+        TYPE_COMBAT_ASK,
 
         //Client and Server
         TYPE_RESULT
@@ -77,6 +78,7 @@ public class SocketMessageType {
             put(MessageKind.TYPE_COMBAT_MONSTER_KO_CAPTURE, "combat:monster-ko:capture");
             put(MessageKind.TYPE_COMBAT_MONSTER_KO_REPLACE, "combat:monster-ko:replace");
             put(MessageKind.TYPE_COMBAT_FLEE, "combat:flee");
+            put(MessageKind.TYPE_COMBAT_ASK, "combat:ask");
 
             /*
             ** Message send by app and by client

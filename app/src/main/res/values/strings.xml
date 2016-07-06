@@ -104,4 +104,7 @@
     <string name="chat_title">Chat</string>
     <string name="chat_msg_button">Send</string>
 
+    <!--Friend-->
+    <string name="friend_defy">Defy</string>
+
 </resources>

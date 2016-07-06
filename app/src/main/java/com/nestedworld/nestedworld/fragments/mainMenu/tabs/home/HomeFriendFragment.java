@@ -84,7 +84,7 @@ public class HomeFriendFragment extends BaseFragment {
      **/
     private static class FriendsAdapter extends ArrayAdapter<Friend> {
 
-        private static final int resource = R.layout.item_friend;
+        private static final int resource = R.layout.item_friend_home;
         private final Context mContext;
 
         public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
