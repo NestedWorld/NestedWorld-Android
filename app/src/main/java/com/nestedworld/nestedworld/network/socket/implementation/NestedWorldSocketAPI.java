@@ -16,6 +16,8 @@ import org.msgpack.value.ImmutableValue;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public final class NestedWorldSocketAPI implements SocketListener {
@@ -31,14 +33,15 @@ public final class NestedWorldSocketAPI implements SocketListener {
     //Private field
     private final String TAG = getClass().getSimpleName();
     private final SocketManager mSocketManager;
-    private final ConnectionListener mConnectionListener;
+    private final List<ConnectionListener> mConnectionListener = new ArrayList<>();
+    private boolean isAuth = false;
 
     /*
     ** Constructor
      */
     private NestedWorldSocketAPI(@NonNull final ConnectionListener connectionListener) {
         //Init private field
-        mConnectionListener = connectionListener;
+        mConnectionListener.add(connectionListener);
 
         //Init the socket
         mSocketManager = new SocketManager(HOST, PORT);
@@ -63,7 +66,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         if (mSingleton == null) {
             new NestedWorldSocketAPI(connectionListener);
         } else {
-            connectionListener.onConnectionReady(mSingleton);
+            mSingleton.addListener(connectionListener);
         }
     }
 
@@ -87,6 +90,28 @@ public final class NestedWorldSocketAPI implements SocketListener {
         sendMessage(data.serialise(), messageKind, requestId);
     }
 
+    public void addListener(@NonNull final ConnectionListener connectionListener) {
+        mConnectionListener.add(connectionListener);
+        if (isAuth) {
+            connectionListener.onConnectionReady(mSingleton);
+        }
+    }
+
+    public void removeListener(@NonNull final ConnectionListener connectionListener) {
+        mConnectionListener.remove(connectionListener);
+    }
+
+    /*
+    ** Private method
+     */
+    private void authRequest() {
+        Session session = SessionManager.get().getSession();
+        if (session != null) {
+            AuthRequest authRequest = new AuthRequest(session.authToken);
+            sendMessage(authRequest.serialise(),SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
+        }
+    }
+
     private void sendMessage(@NonNull final ValueFactory.MapBuilder mapBuilder, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
         //Add id field
         mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
@@ -96,19 +121,6 @@ public final class NestedWorldSocketAPI implements SocketListener {
 
         //Send message
         mSocketManager.send(mapBuilder.build());
-    }
-
-    /*
-    ** Private method
-     */
-    private void authRequest() {
-        Session session = SessionManager.get().getSession();
-        if (session != null) {
-            String token = session.authToken;
-
-            AuthRequest authRequest = new AuthRequest(session.authToken);
-            sendMessage(authRequest.serialise(),SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
-        }
     }
 
     private void parseSocketMessage(@NonNull final Map<Value, Value> message) {
@@ -147,11 +159,17 @@ public final class NestedWorldSocketAPI implements SocketListener {
 
     private void parseAuthMessage(@NonNull final Map<Value, Value> message) {
         if (message.get(ValueFactory.newString("result")).asStringValue().asString().equals("success")) {
+            isAuth = true;
+
             //Call connectionListener.onConnectionReady() inside the main thread
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    mConnectionListener.onConnectionReady(mSingleton);
+                    for (ConnectionListener connectionListener : mConnectionListener) {
+                        if (connectionListener != null) {
+                            connectionListener.onConnectionReady(mSingleton);
+                        }
+                    }
                 }
             });
         } else {
@@ -162,7 +180,11 @@ public final class NestedWorldSocketAPI implements SocketListener {
 
     private void notifyMessageReceive(@NonNull SocketMessageType.MessageKind messageKind, @NonNull final Map<Value, Value> message) {
         LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getMap().get(messageKind));
-        mConnectionListener.onMessageReceived(messageKind, message);
+        for (ConnectionListener connectionListener : mConnectionListener) {
+            if (connectionListener != null) {
+                connectionListener.onMessageReceived(messageKind, message);
+            }
+        }
     }
 
     /*
@@ -187,7 +209,11 @@ public final class NestedWorldSocketAPI implements SocketListener {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                mConnectionListener.onConnectionLost();
+                for (ConnectionListener connectionListener : mConnectionListener) {
+                    if (connectionListener != null) {
+                        connectionListener.onConnectionLost();
+                    }
+                }
             }
         });
     }
