@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,89 +7,105 @@
     android:padding="8dip"
     android:orientation="vertical">
 
-    <com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator
-        android:padding="8dip"
-        android:background="@color/white"
-        android:id="@+id/ViewPagerArrowIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dip"
-        app:left_arrow.drawable="@drawable/ic_arrow_left"
-        app:right_arrow.drawable="@drawable/ic_arrow_right"
-        app:round.size="15dip">
-
-        <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator>
-
-    <Button
-        android:layout_margin="8dip"
-        android:id="@+id/button_select_monster"
-        android:layout_gravity="center"
-        android:layout_width="58dip"
-        android:layout_height="58dip"
-        android:background="@drawable/ic_action_arrow_bottom_blue" />
-
-    <TableRow
-        android:padding="8dip"
-        android:background="@color/white"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tablerow_selected_monster">
-
-        <ImageView
-            android:layout_width="58dip"
-            android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear" />
-
-        <ImageView
-            android:layout_width="58dip"
-            android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear" />
-
-        <ImageView
-            android:layout_width="58dip"
-            android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear" />
-
-        <ImageView
-            android:layout_width="58dip"
-            android:layout_height="58dip"
-            android:background="@drawable/places_ic_clear" />
-
-    </TableRow>
-
-    <Button
-        android:layout_margin="8dip"
-        android:id="@+id/button_go_fight"
-        android:layout_gravity="center"
-        android:layout_width="58dip"
-        android:layout_height="58dip" />
-
     <LinearLayout
-        android:padding="8dip"
-        android:background="@color/white"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator
+            android:padding="8dip"
+            android:background="@color/white"
+            android:id="@+id/ViewPagerArrowIndicator"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_help_outline" />
+            android:layout_margin="8dip"
+            app:left_arrow.drawable="@drawable/ic_arrow_left"
+            app:right_arrow.drawable="@drawable/ic_arrow_right"
+            app:round.size="15dip">
 
-        <TextView
+            <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator>
+
+        <Button
+            android:layout_margin="8dip"
+            android:id="@+id/button_select_monster"
+            android:layout_gravity="center"
+            android:layout_width="58dip"
+            android:layout_height="58dip"
+            android:background="@drawable/ic_action_arrow_bottom_blue" />
+
+        <TableRow
+            android:padding="8dip"
+            android:background="@color/white"
+            android:layout_gravity="center"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/teamSelection_msg_hint" />
+            android:id="@+id/tablerow_selected_monster">
+
+            <ImageView
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:background="@drawable/places_ic_clear" />
+
+            <ImageView
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:background="@drawable/places_ic_clear" />
+
+            <ImageView
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:background="@drawable/places_ic_clear" />
+
+            <ImageView
+                android:layout_width="58dip"
+                android:layout_height="58dip"
+                android:background="@drawable/places_ic_clear" />
+
+        </TableRow>
+
+        <Button
+            android:layout_margin="8dip"
+            android:id="@+id/button_go_fight"
+            android:layout_gravity="center"
+            android:layout_width="58dip"
+            android:layout_height="58dip" />
+
+        <LinearLayout
+            android:padding="8dip"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_help_outline" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/teamSelection_msg_hint" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/progressView"
+        android:layout_width="48dip"
+        android:layout_height="48dip"
+        android:layout_centerInParent="true"
+        app:pv_autostart="false"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
 
-</LinearLayout>
+</RelativeLayout>

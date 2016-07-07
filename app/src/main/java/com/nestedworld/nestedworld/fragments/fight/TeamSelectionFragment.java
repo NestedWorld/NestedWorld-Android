@@ -33,9 +33,11 @@ import com.nestedworld.nestedworld.models.UserMonster;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.orm.query.Condition;
 import com.orm.query.Select;
+import com.rey.material.widget.ProgressView;
 
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
@@ -58,6 +60,8 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     TableRow tableRow_selected_monster;
     @Bind(R.id.button_go_fight)
     Button button_go_fight;
+    @Bind(R.id.progressView)
+    ProgressView progressView;
 
     private List<UserMonster> mUserMonsters;
     private List<UserMonster> mSelectedMonster;
@@ -199,6 +203,9 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         button_go_fight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                progressView.start();
+
                 NestedWorldSocketAPI.getInstance(new ConnectionListener() {
                     @Override
                     public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
@@ -223,10 +230,18 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
                     @Override
                     public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+                        if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_START) {
 
+                            currentCombat.delete();
+
+
+                            StartMessage startMessage = new StartMessage();
+                            startMessage.unSerialise(content);
+
+                            FightFragment.load(getFragmentManager());
+                        }
                     }
                 });
-                FightFragment.load(getFragmentManager());
             }
         });
     }
