@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.fragments.fight;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -16,10 +17,17 @@ import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureV
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.models.UserMonster;
+import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import org.msgpack.value.Value;
@@ -30,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
+import retrofit2.Response;
 
 public  class FightFragment extends BaseFragment implements ConnectionListener {
 
@@ -37,11 +46,16 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
     @Bind(R.id.progressView)
     ProgressView progressView;
     private NestedWorldSocketAPI mNestedWorldSocketAPI;
+    private DrawingGestureView mDrawingGestureView;
+    private static StartMessage mStartMessage;
 
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager) {
+    public static void load(@NonNull final FragmentManager fragmentManager, StartMessage startMessage) {
+        //TODO avoid leak with mStartMessage
+        mStartMessage = startMessage;
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new FightFragment());
         fragmentTransaction.commit();
@@ -71,10 +85,10 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
         /*start a loading animation*/
         progressView.start();
 
-        //Init the gestureListener
+        /*Init the gestureListener*/
         initDrawingGestureView(rootView);
 
-        /*Init the socket*/
+        /*Init socket API*/
         NestedWorldSocketAPI.getInstance(this);
     }
 
@@ -93,9 +107,10 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
                 (ImageView) rootView.findViewById(R.id.imageView_top_left));
 
         /*Create and init the custom view*/
-        DrawingGestureView drawingGestureView = new DrawingGestureView(mContext);
-        drawingGestureView.setTiles(tiles);
-        drawingGestureView.setOnTileTouchListener(new DrawingGestureListener() {
+        mDrawingGestureView = new DrawingGestureView(mContext);
+        mDrawingGestureView.setEnabled(false);
+        mDrawingGestureView.setTiles(tiles);
+        mDrawingGestureView.setOnTileTouchListener(new DrawingGestureListener() {
             @Override
             public void onTouch(int tileId) {
                 if (!mPositions.contains(tileId)) {
@@ -103,18 +118,10 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
                 }
             }
         });
-        drawingGestureView.setOnFinishMoveListener(new OnFinishMoveListener() {
+        mDrawingGestureView.setOnFinishMoveListener(new OnFinishMoveListener() {
             @Override
             public void onFinish() {
-
-                //TODO use good information
-
-                String buf = "0";
-                for (int i : mPositions) {
-                    buf += i;
-                }
-
-                SendAttackRequest data = new SendAttackRequest(10, Integer.parseInt(buf));
+                SendAttackRequest data = new SendAttackRequest(mStartMessage.opponent.monster.id, 10);
 
                 mNestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 mPositions.clear();
@@ -122,7 +129,7 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
         });
 
         /*Add the custom view under the rootView*/
-        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(drawingGestureView);;
+        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);;
     }
 
     /*
@@ -138,10 +145,11 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
             return;
         }
 
-        //Stop the loading animation
         if (progressView != null) {
             progressView.stop();
         }
+
+        mDrawingGestureView.setEnabled(true);
     }
 
     @Override
