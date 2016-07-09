@@ -1,13 +1,13 @@
 package com.nestedworld.nestedworld.fragments.mainMenu.tabs.home;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
@@ -20,18 +20,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
 import com.orm.query.Select;
 
@@ -43,8 +45,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFriendFragment extends BaseFragment {
@@ -77,7 +77,7 @@ public class HomeFriendFragment extends BaseFragment {
         List<Friend> friends = Select.from(Friend.class).list();
 
         //init adapter for our listView
-        final FriendsAdapter friendAdapter = new FriendsAdapter(mContext, friends);
+        final FriendsAdapter friendAdapter = new FriendsAdapter(friends);
         listView.setAdapter(friendAdapter);
     }
 
@@ -108,12 +108,12 @@ public class HomeFriendFragment extends BaseFragment {
                 String pseudo = editTextPseudo.getText().toString();
                 NestedWorldHttpApi.getInstance(mContext).addFriend(pseudo).enqueue(new Callback<AddFriendResponse>() {
                     @Override
-                    public void onResponse(Call<AddFriendResponse> call, Response<AddFriendResponse> response) {
+                    public void onSuccess(Response<AddFriendResponse> response) {
 
                     }
 
                     @Override
-                    public void onFailure(Call<AddFriendResponse> call, Throwable t) {
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<AddFriendResponse> response) {
 
                     }
                 });
@@ -137,15 +137,18 @@ public class HomeFriendFragment extends BaseFragment {
     private class FriendsAdapter extends ArrayAdapter<Friend> {
 
         private static final int resource = R.layout.item_friend_list;
-        private final Context mContext;
 
-        public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
-            super(context, resource, friendList);
-            this.mContext = context;
+        public FriendsAdapter(@NonNull final List<Friend> friendList) {
+            super(mContext, resource, friendList);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
+            //Check if fragment hasn't been detach
+            if (mContext == null) {
+                return null;
+            }
 
             View view;
             FriendHolder friendHolder;
@@ -197,6 +200,11 @@ public class HomeFriendFragment extends BaseFragment {
                     NestedWorldSocketAPI.getInstance(new ConnectionListener() {
                         @Override
                         public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+                            //Check if fragment hasn't been detach
+                            if (mContext == null) {
+                                return;
+                            }
+
                             nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
                         }
 
@@ -207,9 +215,15 @@ public class HomeFriendFragment extends BaseFragment {
 
                         @Override
                         public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+                            //Check if fragment hasn't been detach
+                            if (mContext == null) {
+                                return;
+                            }
                             if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_ASK) {
-                                LogHelper.d(TAG, "Got response");
-                                //TODO parse message
+                                AvailableMessage availableMessage = new AvailableMessage();
+                                availableMessage.unSerialise(content);
+
+                                Toast.makeText(mContext, R.string.tabHome_msg_fightReady, Toast.LENGTH_LONG).show();
                             }
                         }
                     });
