@@ -139,9 +139,11 @@ public class SocketManager implements Runnable {
         try {
             LogHelper.d(TAG, "Listening on socket...");
             while (true) {
-                ImmutableValue message = messageUnpacker.unpackValue();
+                if (messageUnpacker != null) {
+                    ImmutableValue message = messageUnpacker.unpackValue();
+                    notifyMessageReceived(message);
+                }
 
-                notifyMessageReceived(message);
             }
 
         } catch (IOException | MessageInsufficientBufferException e) {
