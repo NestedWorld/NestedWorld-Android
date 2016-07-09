@@ -10,15 +10,16 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_chat"
-        android:icon="@drawable/ic_action_chat"
-        android:title="@string/mainMenu_action_chat"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_fight"
         android:icon="@drawable/ic_action_sword"
         android:title="@string/mainMenu_action_fight"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/action_chat"
+        android:icon="@drawable/ic_action_chat"
+        android:title="@string/mainMenu_action_chat"
         app:showAsAction="ifRoom" />
 
 </menu>
