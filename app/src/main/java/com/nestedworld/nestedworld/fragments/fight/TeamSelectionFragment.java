@@ -230,15 +230,16 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
                     @Override
                     public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
+
                         if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_START) {
-
                             currentCombat.delete();
-
-
                             StartMessage startMessage = new StartMessage();
                             startMessage.unSerialise(content);
-
-                            FightFragment.load(getFragmentManager());
+                            FightFragment.load(((AppCompatActivity)mContext).getSupportFragmentManager(), startMessage);
                         }
                     }
                 });
