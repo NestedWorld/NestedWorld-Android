@@ -43,7 +43,7 @@ public class SocketService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(final Intent intent, final int flags, final int startId) {
 
         LogHelper.d(TAG, "onStartCommand()");
 
@@ -57,6 +57,7 @@ public class SocketService extends Service {
             @Override
             public void onConnectionLost() {
                 NestedWorldSocketAPI.reset();
+                onStartCommand(intent, flags, startId);
             }
 
             @Override
