@@ -61,6 +61,10 @@ public class Monster extends SugarRecord {
 
     //Utils
     public int getColorResource() {
+        if (type == null) {
+            return R.color.black;
+        }
+
         switch (type) {
             case "water":
                 return R.color.holo_blue_light;
