@@ -142,7 +142,6 @@ public final class NestedWorldSocketAPI implements SocketListener {
                 }
             }
         }
-
         //It's a spontaneous message, try to found the type
         if (message.containsKey(ValueFactory.newString("type"))) {
             final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
@@ -160,30 +159,10 @@ public final class NestedWorldSocketAPI implements SocketListener {
     private void parseAuthMessage(@NonNull final Map<Value, Value> message) {
         if (message.get(ValueFactory.newString("result")).asStringValue().asString().equals("success")) {
             isAuth = true;
-
-            //Call connectionListener.onConnectionReady() inside the main thread
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    for (ConnectionListener connectionListener : mConnectionListener) {
-                        if (connectionListener != null) {
-                            connectionListener.onConnectionReady(mSingleton);
-                        }
-                    }
-                }
-            });
+            notifySocketConnected();
         } else {
             onSocketDisconnected();
             mSocketManager.disconnect();
-        }
-    }
-
-    private void notifyMessageReceive(@NonNull SocketMessageType.MessageKind messageKind, @NonNull final Map<Value, Value> message) {
-        LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getMap().get(messageKind));
-        for (ConnectionListener connectionListener : mConnectionListener) {
-            if (connectionListener != null) {
-                connectionListener.onMessageReceived(messageKind, message);
-            }
         }
     }
 
@@ -204,18 +183,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     @Override
     public void onSocketDisconnected() {
         mSingleton = null;
-
-        //Call connectionListener.onConnectionLost() inside the main thread
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                for (ConnectionListener connectionListener : mConnectionListener) {
-                    if (connectionListener != null) {
-                        connectionListener.onConnectionLost();
-                    }
-                }
-            }
-        });
+        notifySocketDisconnected();
     }
 
     @Override
@@ -231,5 +199,53 @@ public final class NestedWorldSocketAPI implements SocketListener {
                 break;
         }
     }
+
+    /*
+    ** Notification (will call listener on the main thread)
+     */
+    private void notifySocketDisconnected() {
+        //Call connectionListener.onConnectionLost() inside the main thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                for (ConnectionListener connectionListener : mConnectionListener) {
+                    if (connectionListener != null) {
+                        connectionListener.onConnectionLost();
+                    }
+                }
+            }
+        });
+    }
+
+    private void notifyMessageReceive(@NonNull final SocketMessageType.MessageKind messageKind, @NonNull final Map<Value, Value> message) {
+        LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getMap().get(messageKind));
+
+        //Call connectionListener.onMessageReceived() inside the main thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                for (ConnectionListener connectionListener : mConnectionListener) {
+                    if (connectionListener != null) {
+                        connectionListener.onMessageReceived(messageKind, message);
+                    }
+                }
+            }
+        });
+    }
+
+    private void notifySocketConnected() {
+        //Call connectionListener.onConnectionReady() inside the main thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                for (ConnectionListener connectionListener : mConnectionListener) {
+                    if (connectionListener != null) {
+                        connectionListener.onConnectionReady(mSingleton);
+                    }
+                }
+            }
+        });
+    }
+
 }
 
