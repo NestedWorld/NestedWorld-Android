@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class AvailableMessage implements DefaultMessage {
 
-    String type;
-    String id;
-    String origin;
-    Integer monsterId;
-    String opponentName;
+    public String type;
+    public String id;
+    public String origin;
+    public Integer monsterId;
+    public String opponentName;
 
     @Override
     public void unSerialise(Map<Value, Value> message) {

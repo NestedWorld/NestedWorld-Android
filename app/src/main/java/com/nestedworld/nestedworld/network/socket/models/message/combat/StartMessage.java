@@ -12,12 +12,12 @@ import java.util.Map;
 public class StartMessage implements DefaultMessage {
 
     public static class PlayerMonster {
-        Integer id;
-        String name;
-        Integer monster_id;
-        Integer user_monster_id;
-        Integer hp;
-        Integer level;
+        public Integer id;
+        public String name;
+        public Integer monster_id;
+        public Integer user_monster_id;
+        public Integer hp;
+        public Integer level;
 
         public static PlayerMonster fromMessage(@NonNull final Map<Value, Value> combatOpponentMonsterMap) {
             PlayerMonster combatOpponentMonster = new PlayerMonster();
@@ -33,7 +33,7 @@ public class StartMessage implements DefaultMessage {
     }
 
     public static class Player {
-        PlayerMonster monster;
+        public PlayerMonster monster;
 
         public static Player fromMessage(@NonNull final Map<Value, Value> playerMap) {
             Player player = new Player();
@@ -44,8 +44,8 @@ public class StartMessage implements DefaultMessage {
     }
 
     public static class Opponent {
-        PlayerMonster monster;
-        Integer monster_count;
+        public PlayerMonster monster;
+        public Integer monster_count;
 
         public static Opponent fromMessage(@NonNull final Map<Value, Value> opponentMap) {
             Opponent opponent = new Opponent();
@@ -57,14 +57,14 @@ public class StartMessage implements DefaultMessage {
         }
     }
 
-    String type;
-    String id;
-    Integer combat_id;
-    Player user;
-    Opponent opponent;
-    String combat_type;
-    String env;
-    boolean first;
+    public String type;
+    public String id;
+    public Integer combat_id;
+    public Player user;
+    public Opponent opponent;
+    public String combat_type;
+    public String env;
+    public boolean first;
 
     @Override
     public void unSerialise(Map<Value, Value> message) {
