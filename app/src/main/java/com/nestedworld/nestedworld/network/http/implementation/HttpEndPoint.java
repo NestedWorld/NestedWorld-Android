@@ -10,6 +10,7 @@ public class HttpEndPoint {
 
     private final static String MONSTERS_PREFIX = "monsters";
     public final static String MONSTERS_LIST = MONSTERS_PREFIX;
+    public final static String MONSTER_ATTACK = MONSTERS_PREFIX + "/{monster_id}/attacks";
 
     private final static String PLACES_PREFIX = "places";
     public final static String PLACES_LIST = PLACES_PREFIX;

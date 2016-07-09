@@ -14,6 +14,7 @@ import com.nestedworld.nestedworld.network.http.models.request.users.auth.Forgot
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignInRequest;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
+import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionResponse;
@@ -38,7 +39,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 
 /**
@@ -152,6 +155,10 @@ public final class NestedWorldHttpApi {
         return mClient.addFriends(new AddFriendRequest(pseudo));
     }
 
+    public Call<MonsterAttackResponse> getMonsterAttack(@NonNull final Long monsterId) {
+        return mClient.getMonsterAttack(monsterId);
+    }
+
     public Call<LogoutResponse> logout() {
         return mClient.logout();
     }
@@ -183,6 +190,8 @@ public final class NestedWorldHttpApi {
     public Call<UserMonsterResponse> getUserMonster() {
         return mClient.getUserMonsters();
     }
+
+
 
 
     /**
@@ -224,5 +233,8 @@ public final class NestedWorldHttpApi {
 
         @GET
         Call<RegionResponse> getRegionDetail(@Url String endPoint);
+
+        @GET(HttpEndPoint.MONSTER_ATTACK)
+        Call<MonsterAttackResponse> getMonsterAttack(@Path("monster_id") Long monster_id);
     }
 }
