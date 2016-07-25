@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.fragments.fight;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -76,7 +75,7 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
         /*Update toolbar title*/
         ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Fight");
+            actionBar.setTitle(getResources().getString(R.string.combat_title));
         }
 
         /*start a loading animation*/
@@ -162,7 +161,7 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
         }
 
         /*Display an error message*/
-        Toast.makeText(mContext, R.string.fight_msg_connection_impossible, Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, R.string.combat_msg_connection_impossible, Toast.LENGTH_LONG).show();
 
         /*Stop the activity (can't run without connection)*/
         getActivity().finish();

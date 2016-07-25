@@ -86,7 +86,6 @@
     <string name="tab_home_msg_addFriendSuccess">Successfully added</string>
     <string name="tab_home_msg_addFriendFailed">Cannot add your friend</string>
 
-
     <!--Fight.teamSelection-->
     <string name="teamSelection_msg_hint">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
     <string name="teamSelection_title">Team selection</string>
@@ -99,8 +98,9 @@
     <string name="teamSelection_msg_monsterHp">Hp: %s</string>
 
     <!--Fight.combat-->
-    <string name="fight_msg_monsterLife">Life</string>
-    <string name="fight_msg_connection_impossible">Connection impossible</string>
+    <string name="combat_title">Fight</string>
+    <string name="combat_msg_monsterLife">Life</string>
+    <string name="combat_msg_connection_impossible">Connection impossible</string>
 
     <!--Fight.fightList-->
     <string name="fightList_title">Fight list</string>

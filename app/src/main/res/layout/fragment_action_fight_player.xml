@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/fight_msg_monsterLife"
+            android:text="@string/combat_msg_monsterLife"
             android:id="@+id/textView6" />
 
         <ProgressBar
