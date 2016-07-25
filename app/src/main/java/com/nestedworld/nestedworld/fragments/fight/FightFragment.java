@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.fragments.fight;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -39,18 +40,22 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
     ProgressView progressView;
     private NestedWorldSocketAPI mNestedWorldSocketAPI;
     private DrawingGestureView mDrawingGestureView;
-    private static StartMessage mStartMessage;
+    private StartMessage mStartMessage;
 
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, StartMessage startMessage) {
-        //TODO avoid leak with mStartMessage
-        mStartMessage = startMessage;
+    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final StartMessage startMessage) {
+        FightFragment fightFragment = new FightFragment();
+        fightFragment.setStartMessage(startMessage);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new FightFragment());
+        fragmentTransaction.replace(R.id.container, fightFragment);
         fragmentTransaction.commit();
+    }
+
+    public void setStartMessage(@NonNull final StartMessage startMessage) {
+        mStartMessage = startMessage;
     }
 
     /*
