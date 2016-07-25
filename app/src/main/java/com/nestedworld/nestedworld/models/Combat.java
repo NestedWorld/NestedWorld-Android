@@ -11,17 +11,17 @@ import com.orm.dsl.Unique;
  */
 public class Combat extends SugarRecord {
 
-    //Empty constructor for SugarRecord
-    public Combat() {
-        //Keep empty
-    }
-
     @Unique
     public String message_id;// the sql table will be called messageid (see sugarOrm doc)
     public String type;
     public String origin;
     public Integer monsterId;
     public String opponent_pseudo;// the sql table will be called opponentpseudo (see sugarOrm doc)
+
+    //Empty constructor for SugarRecord
+    public Combat() {
+        //Keep empty
+    }
 
     //Generated
     @Override

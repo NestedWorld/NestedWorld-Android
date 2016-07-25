@@ -20,17 +20,17 @@ public class Friend extends SugarRecord {
 
     public Long fkfuser;//key for User<->Friend relationship
 
+    //Empty constructor for SugarRecord
+    public Friend() {
+        //Keep empty
+    }
+
     @Nullable
     public User info() {
         if (info == null) {
             info = Friend.findById(User.class, fkfuser);
         }
         return info;
-    }
-
-    //Empty constructor for SugarRecord
-    public Friend() {
-        //Keep empty
     }
 
     //Generated
@@ -47,10 +47,8 @@ public class Friend extends SugarRecord {
         int allyOnline = 0;
         for (Friend friend : Select.from(Friend.class).list()) {
             User friendInfo = friend.info;
-            if (friendInfo != null) {
-                if (friendInfo.is_connected) {
-                    allyOnline++;
-                }
+            if (friendInfo != null && friendInfo.is_connected) {
+                allyOnline++;
             }
         }
         return allyOnline;

@@ -4,10 +4,6 @@ import com.nestedworld.nestedworld.BuildConfig;
 
 public final class HttpEndPoint {
 
-    private HttpEndPoint() {
-        //Empty constructor for avoiding this class to be construct
-    }
-
     private final static String API_VERSION = "v1/";
     private final static String BASE_URL = BuildConfig.DEBUG ? "http://eip-api-dev.kokakiwi.net/" : "http://eip-api.kokakiwi.net/";
     public final static String BASE_END_POINT = BASE_URL + API_VERSION;
@@ -30,4 +26,8 @@ public final class HttpEndPoint {
     public final static String USER_REGISTER = AUTH_PREFIX + "register";
     public final static String USER_PASSWORD = AUTH_PREFIX + "resetpassword";
     public final static String USER_LOGOUT = AUTH_PREFIX + "logout";
+
+    private HttpEndPoint() {
+        //Empty constructor for avoiding this class to be construct
+    }
 }

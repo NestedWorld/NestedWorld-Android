@@ -7,8 +7,6 @@ import android.view.View;
 
 public class WrapContentViewPager extends ViewPager {
 
-    private int mCurrentPagePosition = 0;
-
     public WrapContentViewPager(Context context) {
         super(context);
     }

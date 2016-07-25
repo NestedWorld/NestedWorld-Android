@@ -104,17 +104,18 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     /*
     ** private method
      */
-    SocketService mBoundService;
     private ServiceConnection mConnection = new ServiceConnection() {
+        SocketService boundService;
+
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mBoundService = ((SocketService.LocalBinder) service).getService();
+            boundService = ((SocketService.LocalBinder) service).getService();
 
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mBoundService = null;
+            boundService = null;
         }
 
     };

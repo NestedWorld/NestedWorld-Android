@@ -36,12 +36,12 @@ public class UserMonster extends SugarRecord {
     @Expose
     public String experience;
 
+    public Long fkmonster;//key for Monster<->UserMonster relationship
+
     //Empty constructor for SugarRecord
     public UserMonster() {
         //Keep empty
     }
-
-    public Long fkmonster;//key for Monster<->UserMonster relationship
 
     @Nullable
     public Monster info() {

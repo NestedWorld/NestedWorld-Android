@@ -11,6 +11,15 @@ import java.util.Map;
 
 public class StartMessage implements DefaultMessage {
 
+    public String type;
+    public String id;
+    public Integer combat_id;
+    public Player user;
+    public Opponent opponent;
+    public String combat_type;
+    public String env;
+    public boolean first;
+
     public static class PlayerMonster {
         public Integer id;
         public String name;
@@ -56,15 +65,6 @@ public class StartMessage implements DefaultMessage {
             return opponent;
         }
     }
-
-    public String type;
-    public String id;
-    public Integer combat_id;
-    public Player user;
-    public Opponent opponent;
-    public String combat_type;
-    public String env;
-    public boolean first;
 
     @Override
     public void unSerialise(Map<Value, Value> message) {
