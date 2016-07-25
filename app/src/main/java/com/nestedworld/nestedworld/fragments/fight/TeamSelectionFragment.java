@@ -12,7 +12,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,7 +146,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             LogHelper.d(TAG, "cannot parse combatId args");
 
             //Finish the current activity
-            ((AppCompatActivity)mContext).finish();
+            ((AppCompatActivity) mContext).finish();
         } else {
             this.currentCombat = combat;
 
@@ -239,7 +238,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                             currentCombat.delete();
                             StartMessage startMessage = new StartMessage();
                             startMessage.unSerialise(content);
-                            FightFragment.load(((AppCompatActivity)mContext).getSupportFragmentManager(), startMessage);
+                            FightFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), startMessage);
                         }
                     }
                 });

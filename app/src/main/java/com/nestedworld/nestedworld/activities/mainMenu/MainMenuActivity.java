@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.activities.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.activities.chat.ChatActivity;
 import com.nestedworld.nestedworld.activities.fight.FightActivity;
@@ -35,6 +34,7 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdate
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.service.SocketService;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mBoundService = ((SocketService.LocalBinder)service).getService();
+            mBoundService = ((SocketService.LocalBinder) service).getService();
 
         }
 
@@ -118,6 +118,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         }
 
     };
+
     private void doBindService() {
         bindService(new Intent(this, SocketService.class), mConnection, Context.BIND_AUTO_CREATE);
     }

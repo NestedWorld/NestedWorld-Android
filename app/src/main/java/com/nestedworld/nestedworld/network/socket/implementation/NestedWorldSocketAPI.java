@@ -108,7 +108,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         Session session = SessionManager.get().getSession();
         if (session != null) {
             AuthRequest authRequest = new AuthRequest(session.authToken);
-            sendMessage(authRequest.serialise(),SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
+            sendMessage(authRequest.serialise(), SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
         }
     }
 

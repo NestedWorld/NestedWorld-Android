@@ -1,7 +1,5 @@
 package com.nestedworld.nestedworld.network.socket.implementation;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;

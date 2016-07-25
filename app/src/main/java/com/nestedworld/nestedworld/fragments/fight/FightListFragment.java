@@ -135,7 +135,7 @@ public class FightListFragment extends BaseFragment {
             fightHolder.buttonAccept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TeamSelectionFragment.load(((AppCompatActivity)mContext).getSupportFragmentManager(), currentCombat);
+                    TeamSelectionFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), currentCombat);
                 }
             });
 

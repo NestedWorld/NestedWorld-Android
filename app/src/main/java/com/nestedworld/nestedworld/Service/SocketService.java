@@ -45,7 +45,7 @@ public class SocketService extends Service {
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
 
         LogHelper.d(TAG, "onStartCommand()");
-        
+
         NestedWorldSocketAPI.getInstance(new ConnectionListener() {
             @Override
             public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {

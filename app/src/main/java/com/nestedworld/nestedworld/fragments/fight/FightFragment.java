@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.fragments.fight;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -17,17 +16,11 @@ import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureV
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
-import com.nestedworld.nestedworld.models.UserMonster;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import org.msgpack.value.Value;
@@ -38,9 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
-import retrofit2.Response;
 
-public  class FightFragment extends BaseFragment implements ConnectionListener {
+public class FightFragment extends BaseFragment implements ConnectionListener {
 
     private final ArrayList<Integer> mPositions = new ArrayList<>();
     @Bind(R.id.progressView)
@@ -129,7 +121,8 @@ public  class FightFragment extends BaseFragment implements ConnectionListener {
         });
 
         /*Add the custom view under the rootView*/
-        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);;
+        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
+        ;
     }
 
     /*

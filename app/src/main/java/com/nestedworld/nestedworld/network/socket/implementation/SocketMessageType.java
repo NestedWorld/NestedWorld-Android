@@ -2,9 +2,6 @@ package com.nestedworld.nestedworld.network.socket.implementation;
 
 import com.nestedworld.nestedworld.helpers.bimap.BiMap;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SocketMessageType {
 
     //Enum use for listing every message (send & response)
@@ -36,7 +33,7 @@ public class SocketMessageType {
         TYPE_RESULT
     }
 
-    public static final BiMap<MessageKind, String> messageType = new BiMap<MessageKind, String>(){
+    public static final BiMap<MessageKind, String> messageType = new BiMap<MessageKind, String>() {
         {
             /*
             ** Spontaneous message (server side)

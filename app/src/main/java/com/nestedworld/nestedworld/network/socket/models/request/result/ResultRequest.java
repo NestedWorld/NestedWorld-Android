@@ -8,7 +8,6 @@ import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class ResultRequest implements DefaultRequest {
 

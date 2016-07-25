@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,17 +26,10 @@ import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.fragments.chat.ChatFragment;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
-import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
-import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
-import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
-import org.msgpack.value.Value;
-
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
