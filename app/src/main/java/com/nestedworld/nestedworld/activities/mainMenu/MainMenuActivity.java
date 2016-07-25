@@ -273,7 +273,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         /**
          * Custom class for easy tab management
          */
-        public class CustomTab {
+        public static class CustomTab {
             private final Fragment mFragment;
             private final int mIcon;
             private String mTitle = "";

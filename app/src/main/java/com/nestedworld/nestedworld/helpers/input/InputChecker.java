@@ -7,9 +7,13 @@ import android.text.TextUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class InputChecker {
+public final class InputChecker {
 
     public final static int SHORTEST_PASSWORD_LENGTH = 6;
+
+    private InputChecker() {
+        //Empty constructor for avoiding this class to be construct
+    }
 
     public static boolean checkEmailFormat(@NonNull final String email) {
         boolean isValid = false;

@@ -24,15 +24,18 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
  * public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
  * in you activity
  */
-public class PermissionUtils {
+public final class PermissionUtils {
     public final static int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public final static int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
     private static final String TAG = PermissionUtils.class.getSimpleName();
 
+    private PermissionUtils() {
+        //Empty constructor for avoiding this class to be construct
+    }
+
     /*
     ** Public method
      */
-
     //asking for multiple permissions from an appcompatActivity
     public static void askForPermissionsFromActivity(@NonNull final Context context, @NonNull final List<String> permissionsName) {
         List<String> permissionNeeded = new ArrayList<>();

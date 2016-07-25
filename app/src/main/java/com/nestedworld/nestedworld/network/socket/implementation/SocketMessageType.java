@@ -2,7 +2,11 @@ package com.nestedworld.nestedworld.network.socket.implementation;
 
 import com.nestedworld.nestedworld.helpers.bimap.BiMap;
 
-public class SocketMessageType {
+public final class SocketMessageType {
+
+    private SocketMessageType() {
+        //Empty constructor for avoiding this class to be construct
+    }
 
     //Enum use for listing every message (send & response)
     public enum MessageKind {

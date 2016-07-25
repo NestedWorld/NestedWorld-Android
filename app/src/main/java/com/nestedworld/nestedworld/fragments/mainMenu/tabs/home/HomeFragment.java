@@ -194,7 +194,7 @@ public class HomeFragment extends BaseFragment {
         /**
          * Custom class for easy tab management
          */
-        public class CustomTab {
+        private static class CustomTab {
             private final Fragment mFragment;
             private String mTitle = "";
 

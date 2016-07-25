@@ -141,9 +141,9 @@ public final class NestedWorldHttpApi {
     }
 
     public Call<SignInResponse> signIn(@NonNull final String email, @NonNull final String password) {
-        String app_token = mContext.getString(R.string.app_token);
+        String appToken = mContext.getString(R.string.app_token);
 
-        return mClient.signIn(new SignInRequest(email, password, app_token));
+        return mClient.signIn(new SignInRequest(email, password, appToken));
     }
 
     public Call<ForgotPasswordResponse> forgotPassword(@NonNull final String email) {
@@ -232,6 +232,6 @@ public final class NestedWorldHttpApi {
         Call<RegionResponse> getRegionDetail(@Url String endPoint);
 
         @GET(HttpEndPoint.MONSTER_ATTACK)
-        Call<MonsterAttackResponse> getMonsterAttack(@Path("monster_id") Long monster_id);
+        Call<MonsterAttackResponse> getMonsterAttack(@Path("monster_id") Long monsterId);
     }
 }

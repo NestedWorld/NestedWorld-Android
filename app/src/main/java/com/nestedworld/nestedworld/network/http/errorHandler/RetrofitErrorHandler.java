@@ -20,8 +20,12 @@ import retrofit2.Response;
  * if the server provide an error message he will be returned
  * if the server didn't provide any error message, a custom (static) message will be returned
  */
-public class RetrofitErrorHandler {
+public final class RetrofitErrorHandler {
     private final static String TAG = RetrofitErrorHandler.class.getSimpleName();
+
+    private RetrofitErrorHandler() {
+        //Empty constructor for avoiding this class to be construct
+    }
 
     /*
     ** Public method

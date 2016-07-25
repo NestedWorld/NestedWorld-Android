@@ -146,7 +146,7 @@ public class FriendListFragment extends BaseFragment {
             return view;
         }
 
-        private class FriendHolder {
+        private static class FriendHolder {
             public ImageView friendPicture;
             public TextView friendName;
         }

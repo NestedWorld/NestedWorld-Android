@@ -2,7 +2,11 @@ package com.nestedworld.nestedworld.network.http.implementation;
 
 import com.nestedworld.nestedworld.BuildConfig;
 
-public class HttpEndPoint {
+public final class HttpEndPoint {
+
+    private HttpEndPoint() {
+        //Empty constructor for avoiding this class to be construct
+    }
 
     private final static String API_VERSION = "v1/";
     private final static String BASE_URL = BuildConfig.DEBUG ? "http://eip-api-dev.kokakiwi.net/" : "http://eip-api.kokakiwi.net/";

@@ -122,7 +122,6 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
 
         /*Add the custom view under the rootView*/
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
-        ;
     }
 
     /*

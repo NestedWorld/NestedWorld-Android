@@ -174,7 +174,7 @@ public class FightListFragment extends BaseFragment {
             return view;
         }
 
-        private class FightHolder {
+        private static class FightHolder {
             public TextView textViewFightDescription;
             public Button buttonAccept;
             public Button buttonRefuse;
