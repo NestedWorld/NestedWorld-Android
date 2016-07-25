@@ -82,7 +82,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
      */
     public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind) {
         //Send a message with generic id (from messageType)
-        sendRequest(data, messageKind, SocketMessageType.messageType.getMap().get(messageKind));
+        sendRequest(data, messageKind, SocketMessageType.messageType.getValueFromKey(messageKind));
     }
 
     public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
@@ -108,7 +108,9 @@ public final class NestedWorldSocketAPI implements SocketListener {
         Session session = SessionManager.get().getSession();
         if (session != null) {
             AuthRequest authRequest = new AuthRequest(session.authToken);
-            sendMessage(authRequest.serialise(), SocketMessageType.MessageKind.TYPE_AUTHENTICATE, SocketMessageType.messageType.getMap().get(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
+            sendMessage(authRequest.serialise(),
+                    SocketMessageType.MessageKind.TYPE_AUTHENTICATE,
+                    SocketMessageType.messageType.getValueFromKey(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
         }
     }
 
@@ -117,7 +119,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
 
         //Add type field
-        mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString(SocketMessageType.messageType.getMap().get(messageKind)));
+        mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString(SocketMessageType.messageType.getValueFromKey(messageKind)));
 
         //Send message
         mSocketManager.send(mapBuilder.build());
@@ -130,8 +132,8 @@ public final class NestedWorldSocketAPI implements SocketListener {
             final String messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
 
             //check if we know this id
-            if (SocketMessageType.messageType.getMap().containsValue(messageId)) {
-                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getInvertedMap().get(messageId);
+            if (SocketMessageType.messageType.containsValue(messageId)) {
+                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getKeyFromValue(messageId);
                 //Check it it's an auth response
                 if (kind == SocketMessageType.MessageKind.TYPE_AUTHENTICATE) {
                     parseAuthMessage(message);
@@ -147,8 +149,8 @@ public final class NestedWorldSocketAPI implements SocketListener {
             final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
 
             //check if we know the type
-            if (SocketMessageType.messageType.getMap().containsValue(type)) {
-                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getInvertedMap().get(type);
+            if (SocketMessageType.messageType.containsValue(type)) {
+                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getKeyFromValue(type);
                 notifyMessageReceive(kind, message);
                 return;
             }
@@ -218,7 +220,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     }
 
     private void notifyMessageReceive(@NonNull final SocketMessageType.MessageKind messageKind, @NonNull final Map<Value, Value> message) {
-        LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getMap().get(messageKind));
+        LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getValueFromKey(messageKind));
 
         //Call connectionListener.onMessageReceived() inside the main thread
         new Handler(Looper.getMainLooper()).post(new Runnable() {

@@ -12,12 +12,19 @@ public class BiMap<K, V> {
         invertedMap.put(v, k);
     }
 
-    public HashMap<K, V> getMap() {
-        return map;
+    public V getValueFromKey(K key) {
+        return map.get(key);
     }
 
-    public HashMap<V, K> getInvertedMap() {
-        return invertedMap;
+    public K getKeyFromValue(V value) {
+        return invertedMap.get(value);
     }
 
+    public Boolean containsValue(V value) {
+        return map.containsValue(value);
+    }
+
+    public Boolean containsKey(K key) {
+        return map.containsKey(key);
+    }
 }
