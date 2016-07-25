@@ -46,11 +46,15 @@ public abstract class EntityUpdater<T> extends Thread {
                 updateEntity(response);
                 onSuccess();
             } else {
-                onError(OnEntityUpdated.KIND.SERVER);
+                //We don't want to call the listener if the Thread has been interrupted
+                if (isInterrupted()) {
+                    onThreadInterrupted();
+                } else {
+                    onError(OnEntityUpdated.KIND.SERVER);
+                }
             }
         } catch (IOException e) {
             request.cancel();
-            onError(OnEntityUpdated.KIND.NETWORK);
             e.printStackTrace();
         }
     }
@@ -65,6 +69,10 @@ public abstract class EntityUpdater<T> extends Thread {
     /*
     ** Private method
      */
+    private void onThreadInterrupted() {
+        //Do what you want
+    }
+
     private void onError(@NonNull final OnEntityUpdated.KIND kind) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
