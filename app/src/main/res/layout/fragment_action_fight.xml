@@ -12,7 +12,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/fragment_action_fight_player" />
+        <include
+            android:id="@+id/layout_opponent"
+            layout="@layout/fragment_action_fight_player" />
 
         <include
             android:id="@+id/layout_fight_body"
@@ -21,7 +23,9 @@
             android:layout_height="0dp"
             layout="@layout/fragment_action_fight_body" />
 
-        <include layout="@layout/fragment_action_fight_player" />
+        <include
+            android:id="@+id/layout_player"
+            layout="@layout/fragment_action_fight_player" />
 
     </LinearLayout>
 

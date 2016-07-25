@@ -8,7 +8,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
@@ -35,11 +37,16 @@ import butterknife.Bind;
 public class FightFragment extends BaseFragment implements ConnectionListener {
 
     private final ArrayList<Integer> mPositions = new ArrayList<>();
-    @Bind(R.id.progressView)
-    ProgressView progressView;
     private NestedWorldSocketAPI mNestedWorldSocketAPI;
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage;
+
+    @Bind(R.id.progressView)
+    ProgressView progressView;
+    @Bind(R.id.layout_player)
+    LinearLayout layoutPlayer;
+    @Bind(R.id.layout_opponent)
+    LinearLayout layoutOpponent;
 
     /*
     ** Public method
@@ -81,11 +88,30 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
         /*start a loading animation*/
         progressView.start();
 
+        /*populate the view*/
+        setupEnvironment();
+        initMonsterLayout(layoutOpponent, mStartMessage.opponent.monster);
+        initMonsterLayout(layoutPlayer, mStartMessage.user.monster);
+
         /*Init the gestureListener*/
         initDrawingGestureView(rootView);
 
         /*Init socket API*/
         NestedWorldSocketAPI.getInstance(this);
+    }
+
+    /*
+    ** Private method
+     */
+    private void setupEnvironment() {
+        //TODO parse mStartMessage.env and set background
+
+        switch (mStartMessage.env) {
+            case "city" :
+                break;
+            default:
+                break;
+        }
     }
 
     private void initDrawingGestureView(View rootView) {
@@ -126,6 +152,26 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
 
         /*Add the custom view under the rootView*/
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
+    }
+
+    private void initMonsterLayout(@NonNull final LinearLayout layout, @NonNull final StartMessage.PlayerMonster monster) {
+        //Retrieve widget
+        TextView opponentName = (TextView) layout.findViewById(R.id.textViewOpponentName);
+        TextView monsterLvl = (TextView) layout.findViewById(R.id.textview_monster_lvl);
+        TextView monsterHp = (TextView) layout.findViewById(R.id.textview_monster_hp);
+        ImageView monsterPicture =(ImageView) layout.findViewById(R.id.imageView_monster);
+
+        //Populate widget
+        opponentName.setText(monster.name);
+        monsterLvl.setText(String.format(getResources().getString(R.string.combat_msg_monster_lvl), monster.level));
+        monsterHp.setText(String.format(getResources().getString(R.string.combat_msg_monster_hp), monster.hp));
+
+        //TODO retrieve sprite and populate picture
+//        Glide.with(mContext)
+//                .load(monster.sprite)
+//                .placeholder(R.drawable.default_monster)
+//                .centerCrop()
+//                .into(monsterPicture);
     }
 
     /*
