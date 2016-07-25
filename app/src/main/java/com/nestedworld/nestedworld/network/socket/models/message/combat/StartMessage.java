@@ -20,6 +20,30 @@ public class StartMessage implements DefaultMessage {
     public String env;
     public boolean first;
 
+    @Override
+    public void unSerialise(Map<Value, Value> message) {
+        this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
+        this.id = message.get(ValueFactory.newString("id")).asStringValue().asString();
+        this.combat_id = message.get(ValueFactory.newString("combat_id")).asIntegerValue().asInt();
+        this.combat_type = message.get(ValueFactory.newString("combat_type")).asStringValue().asString();
+        this.env = message.get(ValueFactory.newString("env")).asStringValue().asString();
+        this.first = message.get(ValueFactory.newString("first")).asBooleanValue().getBoolean();
+
+        if (message.containsKey(ValueFactory.newString("user"))) {
+            Map<Value, Value> userMap = message.get(ValueFactory.newString("user")).asMapValue().map();
+            if (userMap != null) {
+                this.user = Player.fromMessage(userMap);
+            }
+        }
+
+        if (message.containsKey(ValueFactory.newString("opponent"))) {
+            Map<Value, Value> opponentMap = message.get(ValueFactory.newString("opponent")).asMapValue().map();
+            if (opponentMap != null) {
+                this.opponent = Opponent.fromMessage(opponentMap);
+            }
+        }
+    }
+
     public static class PlayerMonster {
         public Integer id;
         public String name;
@@ -63,30 +87,6 @@ public class StartMessage implements DefaultMessage {
             opponent.monster_count = opponentMap.get(ValueFactory.newString("monsters_count")).asIntegerValue().asInt();
 
             return opponent;
-        }
-    }
-
-    @Override
-    public void unSerialise(Map<Value, Value> message) {
-        this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
-        this.id = message.get(ValueFactory.newString("id")).asStringValue().asString();
-        this.combat_id = message.get(ValueFactory.newString("combat_id")).asIntegerValue().asInt();
-        this.combat_type = message.get(ValueFactory.newString("combat_type")).asStringValue().asString();
-        this.env = message.get(ValueFactory.newString("env")).asStringValue().asString();
-        this.first = message.get(ValueFactory.newString("first")).asBooleanValue().getBoolean();
-
-        if (message.containsKey(ValueFactory.newString("user"))) {
-            Map<Value, Value> userMap = message.get(ValueFactory.newString("user")).asMapValue().map();
-            if (userMap != null) {
-                this.user = Player.fromMessage(userMap);
-            }
-        }
-
-        if (message.containsKey(ValueFactory.newString("opponent"))) {
-            Map<Value, Value> opponentMap = message.get(ValueFactory.newString("opponent")).asMapValue().map();
-            if (opponentMap != null) {
-                this.opponent = Opponent.fromMessage(opponentMap);
-            }
         }
     }
 }

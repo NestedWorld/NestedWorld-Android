@@ -26,6 +26,6 @@
         android:id="@+id/button_defy_friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/friend_defy"/>
+        android:text="@string/friend_defy" />
 
 </LinearLayout>

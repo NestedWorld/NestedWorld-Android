@@ -62,7 +62,7 @@ public final class SocketMessageType {
 
             /*
             ** Message send by app (client)
-            ** Value = request.dd
+            ** Value = request.id
             ** -> we'll use the value to parse some response
              */
             //Auth

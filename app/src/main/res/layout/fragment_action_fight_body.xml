@@ -28,6 +28,7 @@
         android:src="@drawable/ic_action_ghost"
         android:layout_below="@+id/imageView_bottom_right"
         android:layout_centerHorizontal="true" />
+
     <ImageView
         android:id="@+id/imageView_top_left"
         android:layout_width="55dip"

@@ -107,7 +107,7 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
         //TODO parse mStartMessage.env and set background
 
         switch (mStartMessage.env) {
-            case "city" :
+            case "city":
                 break;
             default:
                 break;
@@ -159,7 +159,7 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
         TextView opponentName = (TextView) layout.findViewById(R.id.textViewOpponentName);
         TextView monsterLvl = (TextView) layout.findViewById(R.id.textview_monster_lvl);
         TextView monsterHp = (TextView) layout.findViewById(R.id.textview_monster_hp);
-        ImageView monsterPicture =(ImageView) layout.findViewById(R.id.imageView_monster);
+        ImageView monsterPicture = (ImageView) layout.findViewById(R.id.imageView_monster);
 
         //Populate widget
         opponentName.setText(monster.name);
