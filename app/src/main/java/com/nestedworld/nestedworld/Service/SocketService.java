@@ -21,7 +21,6 @@ public class SocketService extends Service {
 
     public final static String TAG = SocketService.class.getSimpleName();
     private final IBinder mBinder = new LocalBinder();
-    @Nullable private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
 
     /*
     ** Binder
@@ -46,12 +45,11 @@ public class SocketService extends Service {
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
 
         LogHelper.d(TAG, "onStartCommand()");
-
-
+        
         NestedWorldSocketAPI.getInstance(new ConnectionListener() {
             @Override
             public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                mNestedWorldSocketAPI = nestedWorldSocketAPI;
+                //Can send message here
             }
 
             @Override
