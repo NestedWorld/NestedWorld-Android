@@ -84,7 +84,7 @@ public class HomeFriendFragment extends BaseFragment {
     /*
     ** Butterknife callback
      */
-    @OnClick(R.id.button_add_friend)
+    @OnClick(R.id.fab_add_friend)
     public void addFriend() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
@@ -109,12 +109,12 @@ public class HomeFriendFragment extends BaseFragment {
                 NestedWorldHttpApi.getInstance(mContext).addFriend(pseudo).enqueue(new Callback<AddFriendResponse>() {
                     @Override
                     public void onSuccess(Response<AddFriendResponse> response) {
-
+                        Toast.makeText(mContext, R.string.tab_home_msg_addFriendSuccess, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<AddFriendResponse> response) {
-
+                        Toast.makeText(mContext, R.string.tab_home_msg_addFriendFailed, Toast.LENGTH_LONG).show();
                     }
                 });
             }
