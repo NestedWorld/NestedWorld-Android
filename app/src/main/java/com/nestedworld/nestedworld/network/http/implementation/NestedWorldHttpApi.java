@@ -13,6 +13,7 @@ import com.nestedworld.nestedworld.network.http.models.request.friends.AddFriend
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.RegisterRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignInRequest;
+import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
@@ -158,6 +159,10 @@ public final class NestedWorldHttpApi {
         return mClient.getMonsterAttack(monsterId);
     }
 
+    public Call<AttacksResponse> getAttacks() {
+        return mClient.getAttacks();
+    }
+
     public Call<LogoutResponse> logout() {
         return mClient.logout();
     }
@@ -230,6 +235,9 @@ public final class NestedWorldHttpApi {
 
         @GET
         Call<RegionResponse> getRegionDetail(@Url String endPoint);
+
+        @GET(HttpEndPoint.ATTACK_LIST)
+        Call<AttacksResponse> getAttacks();
 
         @GET(HttpEndPoint.MONSTER_ATTACK)
         Call<MonsterAttackResponse> getMonsterAttack(@Path("monster_id") Long monsterId);

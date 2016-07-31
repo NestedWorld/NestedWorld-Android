@@ -29,6 +29,7 @@ import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.ToolsFragment;
 import com.nestedworld.nestedworld.fragments.mainMenu.tabs.home.HomeFragment;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.AttacksUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
@@ -205,6 +206,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         tasks.add(new UserUpdater(MainMenuActivity.this, callback));
         tasks.add(new FriendsUpdater(MainMenuActivity.this, callback));
+        tasks.add(new AttacksUpdater(MainMenuActivity.this, callback));
         tasks.add(new MonsterUpdater(MainMenuActivity.this, new OnEntityUpdated() {
             @Override
             public void onSuccess() {
