@@ -28,6 +28,7 @@ public class AttacksUpdater extends EntityUpdater<AttacksResponse> {
         //Delete old entity
         Attack.deleteAll(Attack.class);
 
-        //TODO save new entity
+        //Save entity
+        Attack.saveInTx(response.body().attacks);
     }
 }

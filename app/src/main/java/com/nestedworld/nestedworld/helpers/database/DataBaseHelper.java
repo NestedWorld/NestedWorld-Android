@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.helpers.database;
 
+import com.nestedworld.nestedworld.models.Attack;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.Monster;
@@ -17,6 +18,7 @@ public final class DataBaseHelper {
     }
 
     public static void cleanDataBase() {
+        SugarRecord.deleteAll(Attack.class);
         SugarRecord.deleteAll(Combat.class);
         SugarRecord.deleteAll(Friend.class);
         SugarRecord.deleteAll(Monster.class);
