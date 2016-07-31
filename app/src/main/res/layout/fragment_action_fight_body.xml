@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
-        android:visibility="invisible"
         android:id="@+id/imageView_center"
         android:layout_width="110dip"
         android:layout_height="55dip"
-        android:src="@drawable/ic_action_ghost"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/ic_action_ghost"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageView_top"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:src="@drawable/ic_action_ghost"
         android:layout_above="@+id/imageView_top_right"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_action_ghost" />
 
     <ImageView
         android:id="@+id/imageView_bottom"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:src="@drawable/ic_action_ghost"
         android:layout_below="@+id/imageView_bottom_right"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_action_ghost" />
 
     <ImageView
         android:id="@+id/imageView_top_left"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:src="@drawable/ic_action_ghost"
         android:layout_above="@+id/imageView_center"
-        android:layout_alignStart="@+id/imageView_bottom_left" />
+        android:layout_alignStart="@+id/imageView_bottom_left"
+        android:src="@drawable/ic_action_ghost" />
 
     <ImageView
         android:id="@+id/imageView_top_right"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:src="@drawable/ic_action_ghost"
         android:layout_above="@+id/imageView_center"
-        android:layout_toEndOf="@+id/imageView_center" />
+        android:layout_toEndOf="@+id/imageView_center"
+        android:src="@drawable/ic_action_ghost" />
 
     <ImageView
         android:id="@+id/imageView_bottom_right"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:src="@drawable/ic_action_ghost"
+        android:layout_alignStart="@+id/imageView_top_right"
         android:layout_below="@+id/imageView_center"
-        android:layout_alignStart="@+id/imageView_top_right" />
+        android:src="@drawable/ic_action_ghost" />
 
     <ImageView
         android:id="@+id/imageView_bottom_left"
         android:layout_width="55dip"
         android:layout_height="55dip"
-        android:src="@drawable/ic_action_ghost"
         android:layout_below="@+id/imageView_center"
-        android:layout_toStartOf="@+id/imageView_center" />
+        android:layout_toStartOf="@+id/imageView_center"
+        android:src="@drawable/ic_action_ghost" />
 
 
 </RelativeLayout>

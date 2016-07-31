@@ -4,21 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0"
-    android:padding="8dip"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dip">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator
-            android:padding="8dip"
-            android:background="@color/white"
             android:id="@+id/ViewPagerArrowIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dip"
+            android:background="@color/white"
+            android:padding="8dip"
             app:left_arrow.drawable="@drawable/ic_arrow_left"
             app:right_arrow.drawable="@drawable/ic_arrow_right"
             app:round.size="15dip">
@@ -31,21 +31,21 @@
         </com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator>
 
         <Button
-            android:layout_margin="8dip"
             android:id="@+id/button_select_monster"
-            android:layout_gravity="center"
             android:layout_width="58dip"
             android:layout_height="58dip"
+            android:layout_gravity="center"
+            android:layout_margin="8dip"
             android:background="@drawable/ic_action_arrow_bottom_blue" />
 
         <TableRow
-            android:padding="8dip"
-            android:background="@color/white"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:id="@+id/tablerow_selected_monster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tablerow_selected_monster">
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="8dip">
 
             <ImageView
                 android:layout_width="58dip"
@@ -70,18 +70,18 @@
         </TableRow>
 
         <Button
-            android:layout_margin="8dip"
             android:id="@+id/button_go_fight"
-            android:layout_gravity="center"
             android:layout_width="58dip"
-            android:layout_height="58dip" />
+            android:layout_height="58dip"
+            android:layout_gravity="center"
+            android:layout_margin="8dip" />
 
         <LinearLayout
-            android:padding="8dip"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="8dip">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -89,9 +89,9 @@
                 android:src="@drawable/ic_help_outline" />
 
             <TextView
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/teamSelection_msg_hint" />
 
         </LinearLayout>

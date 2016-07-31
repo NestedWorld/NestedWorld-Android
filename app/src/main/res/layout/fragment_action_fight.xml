@@ -4,8 +4,8 @@
     android:id="@+id/relativeLayout_fight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#f0f0f0">
+    android:background="#f0f0f0"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,10 +18,10 @@
 
         <include
             android:id="@+id/layout_fight_body"
-            android:layout_weight="1"
+            layout="@layout/fragment_action_fight_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            layout="@layout/fragment_action_fight_body" />
+            android:layout_weight="1" />
 
         <include
             android:id="@+id/layout_player"

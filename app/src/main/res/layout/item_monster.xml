@@ -7,9 +7,9 @@
 
     <LinearLayout
         android:id="@+id/imageView_monster_shape"
-        android:padding="3dip"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="3dip">
 
         <ImageView
             android:id="@+id/imageView_monster"
@@ -23,20 +23,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dip"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dip">
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_name"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/apptheme_color"
             android:textSize="14sp" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_lvl"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/apptheme_color"
@@ -45,34 +45,34 @@
     </LinearLayout>
 
     <LinearLayout
-        android:padding="8dip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dip">
 
         <TextView
-            android:textSize="14sp"
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_hp"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color" />
+            android:textColor="@color/apptheme_color"
+            android:textSize="14sp" />
 
         <TextView
-            android:textSize="14sp"
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_attack"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color" />
+            android:textColor="@color/apptheme_color"
+            android:textSize="14sp" />
 
         <TextView
-            android:textSize="14sp"
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textview_monster_defense"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color" />
+            android:textColor="@color/apptheme_color"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

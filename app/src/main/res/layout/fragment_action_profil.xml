@@ -8,60 +8,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dip"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dip">
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_gender"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_pseudo"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_birthDate"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_city"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_registeredAt"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_email"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_backgroundUrl"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_level"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova"
             android:id="@+id/textView_avatar"
+            style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

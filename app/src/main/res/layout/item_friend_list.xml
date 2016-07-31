@@ -13,11 +13,11 @@
 
     <TextView
         android:id="@+id/textView_item_friend"
-        android:layout_weight="1"
         style="@style/TypefaceStyle.ProximaNova.light"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="center|start"
         android:padding="8dip"
         android:textColor="@color/apptheme_color" />
