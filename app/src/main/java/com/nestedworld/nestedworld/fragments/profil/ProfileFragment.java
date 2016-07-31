@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.activities.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
+import com.nestedworld.nestedworld.helpers.database.DataBaseHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Session;
@@ -128,9 +129,12 @@ public class ProfileFragment extends BaseFragment {
         //remove user
         SessionManager.get().deleteSession();
 
-        //avoid leek with the static instance
+        //avoid leak with the static instance
         NestedWorldHttpApi.reset();
         NestedWorldSocketAPI.reset();
+
+        //clean db
+        DataBaseHelper.cleanDataBase();
 
         //go to launch screen & kill the current context
         Intent intent = new Intent(mContext, RegistrationActivity.class);
