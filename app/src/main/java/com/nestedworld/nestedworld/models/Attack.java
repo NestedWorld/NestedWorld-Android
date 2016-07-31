@@ -13,11 +13,6 @@ import com.orm.dsl.Unique;
  */
 public class Attack extends SugarRecord {
 
-    //Empty constructor for SugarRecord
-    public Attack() {
-        //Keep empty
-    }
-
     @Expose
     @SerializedName("id")
     @Unique
@@ -26,6 +21,11 @@ public class Attack extends SugarRecord {
     public String name;
     @Expose
     public String type;
+
+    //Empty constructor for SugarRecord
+    public Attack() {
+        //Keep empty
+    }
 
     //Generated
     @Override
