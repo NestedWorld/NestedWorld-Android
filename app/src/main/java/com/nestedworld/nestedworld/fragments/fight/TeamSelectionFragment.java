@@ -70,7 +70,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, Combat currentCombat) {
+    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Combat currentCombat) {
 
         //Instantiate new fragment
         Fragment newFragment = new TeamSelectionFragment();
@@ -99,17 +99,17 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         //Change action bar title
         changeActionBarName();
 
-        //Get selectedCombat from arg
+        //Get CombatId from arg
         parseArgs();
 
         //Retrieve monster and init selectedMonster list
         mUserMonsters = Select.from(UserMonster.class).list();
         mSelectedMonster = new ArrayList<>();
 
-        //Init the viewPager (will display userMonster)
+        //Init the viewPager (it will display user's monster)
         setUpViewPager();
 
-        //Init button 'start_fight' text (will display the state until we've selected enough monster)
+        //Init button 'start_fight' text (it will display the number of selected monster)
         button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0));
 
         //Init button 'select_monster'
@@ -224,7 +224,16 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
                     @Override
                     public void onConnectionLost() {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
+                        //Display an error message
+                        Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
+
+                        //Finish the current activity
+                        ((AppCompatActivity) mContext).finish();
                     }
 
                     @Override
@@ -234,8 +243,13 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                             return;
                         }
 
+                        //If we receive a 'start message', we can start the fight
                         if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_START) {
+
+                            //Delete the combat from Orm
                             currentCombat.delete();
+
+                            //Retrieve
                             StartMessage startMessage = new StartMessage();
                             startMessage.unSerialise(content);
                             FightFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), startMessage);
