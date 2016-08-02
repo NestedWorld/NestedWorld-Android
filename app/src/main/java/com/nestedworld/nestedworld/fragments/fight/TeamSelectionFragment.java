@@ -203,6 +203,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             @Override
             public void onClick(View v) {
 
+                //Start a loading animation
                 progressView.start();
 
                 NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {

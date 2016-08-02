@@ -53,7 +53,7 @@ public class SocketService extends Service {
         LogHelper.d(TAG, "onStartCommand()");
 
         //Instantiate a socketConnection listener
-        NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {
+        NestedWorldSocketAPI.getInstance(new ConnectionListener() {
             @Override
             public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
                 //Do what you want (can send message)
