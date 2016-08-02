@@ -213,6 +213,13 @@ public class HomeFriendFragment extends BaseFragment {
 
                         @Override
                         public void onConnectionLost() {
+                            //Check if fragment hasn't been detach
+                            if (mContext == null) {
+                                return;
+                            }
+
+                            //Display an error message
+                            Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
