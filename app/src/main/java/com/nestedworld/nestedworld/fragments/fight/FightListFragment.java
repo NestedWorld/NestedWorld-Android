@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
@@ -135,39 +136,14 @@ public class FightListFragment extends BaseFragment {
             fightHolder.buttonAccept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TeamSelectionFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), currentCombat);
+                    acceptCombat(currentCombat);
                 }
             });
 
             fightHolder.buttonRefuse.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    //Display some log
-                    LogHelper.d(TAG, "Combat selected: " + currentCombat.toString());
-
-                    currentCombat.delete();
-                    remove(currentCombat);
-                    NestedWorldSocketAPI.getInstance(new ConnectionListener() {
-                        @Override
-                        public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                            ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
-                            map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
-
-                            ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                            nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, currentCombat.message_id);
-                        }
-
-                        @Override
-                        public void onConnectionLost() {
-
-                        }
-
-                        @Override
-                        public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-
-                        }
-                    });
+                    refuseCombat(currentCombat);
                 }
             });
 
@@ -179,6 +155,50 @@ public class FightListFragment extends BaseFragment {
             public Button buttonAccept;
             public Button buttonRefuse;
         }
-    }
 
+        /*
+        ** Utils
+         */
+        private void acceptCombat(@NonNull final Combat combat) {
+            //Display some log
+            LogHelper.d(TAG, "Combat accepted: " + combat.toString());
+
+            //Display the team selection
+            TeamSelectionFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), combat);
+        }
+
+        private void refuseCombat(@NonNull final Combat combat) {
+            //Display some log
+            LogHelper.d(TAG, "Combat refuse: " + combat.toString());
+
+            //Delete combat in db
+            combat.delete();
+
+            //Delete combat in adapter
+            remove(combat);
+
+            //Tell the server we refuse the combat
+            NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+                @Override
+                public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+                    ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+                    map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
+
+                    ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.message_id);
+                }
+
+                @Override
+                public void onConnectionLost() {
+                    //Display an error message
+                    Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+
+                }
+            });
+        }
+    }
 }

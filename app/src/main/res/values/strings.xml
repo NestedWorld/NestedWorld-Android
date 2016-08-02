@@ -11,6 +11,8 @@
     <string name="error_no_internet">Network error.</string>
     <string name="error_conversion">Unexpected error.</string>
     <string name="error_createAccount">Can\'t create your account</string>
+    <string name="error_network">Connection lost</string>
+    <string name="error_network_tryAgain">Connection lost, please try again later</string>
 
     <!--Error message (request failed)-->
     <string name="error_request_login">Cannot login.</string>
