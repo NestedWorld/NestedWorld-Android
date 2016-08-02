@@ -91,7 +91,10 @@ public final class NestedWorldSocketAPI implements SocketListener {
     }
 
     public void addListener(@NonNull final ConnectionListener connectionListener) {
+        //Add listener to the list of listener
         mConnectionListener.add(connectionListener);
+
+        //If we have an authenticated connection, we directly call onConnectionReady()
         if (isAuth) {
             connectionListener.onConnectionReady(mSingleton);
         }
@@ -161,7 +164,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     private void parseAuthMessage(@NonNull final Map<Value, Value> message) {
         if (message.get(ValueFactory.newString("result")).asStringValue().asString().equals("success")) {
             isAuth = true;
-            notifySocketConnected();
+            notifySocketReady();
         } else {
             onSocketDisconnected();
             mSocketManager.disconnect();
@@ -235,7 +238,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         });
     }
 
-    private void notifySocketConnected() {
+    private void notifySocketReady() {
         //Call connectionListener.onConnectionReady() inside the main thread
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
