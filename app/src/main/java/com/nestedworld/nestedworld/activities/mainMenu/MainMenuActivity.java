@@ -34,6 +34,7 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdate
 import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
+import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.service.SocketService;
 import com.rey.material.widget.ProgressView;
@@ -68,7 +69,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         progressView.start();
         updateDataBase();
-        initSocketConnection();
+        initSocketService();
     }
 
     @Override
@@ -99,41 +100,20 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        doUnbindService();
+        stopSocketService();
     }
 
     /*
     ** private method
      */
-    private ServiceConnection mConnection = new ServiceConnection() {
-        SocketService boundService;
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            boundService = ((SocketService.LocalBinder) service).getService();
-
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            boundService = null;
-        }
-
-    };
-
-    private void doBindService() {
-        bindService(new Intent(this, SocketService.class), mConnection, Context.BIND_AUTO_CREATE);
+    private void initSocketService() {
+        //Start the service
+        ServiceHelper.startSocketService(this);
     }
 
-    private void doUnbindService() {
-        // Detach our existing connection.
-        unbindService(mConnection);
-    }
-
-    private void initSocketConnection() {
-        Intent intent = new Intent(this, SocketService.class);
-        startService(intent);
-        doBindService();
+    private void stopSocketService() {
+        //Stop the service
+        ServiceHelper.stopSocketService(this);
     }
 
     private void initTabs() {
