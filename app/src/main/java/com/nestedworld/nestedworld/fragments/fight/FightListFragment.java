@@ -178,7 +178,7 @@ public class FightListFragment extends BaseFragment {
             remove(combat);
 
             //Tell the server we refuse the combat
-            NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+            NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {
                 @Override
                 public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
                     ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();

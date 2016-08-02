@@ -205,7 +205,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
                 progressView.start();
 
-                NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+                NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {
                     @Override
                     public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
                         ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();

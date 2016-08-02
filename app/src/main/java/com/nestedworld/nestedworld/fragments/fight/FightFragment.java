@@ -97,7 +97,7 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
         initDrawingGestureView(rootView);
 
         /*Init socket API*/
-        NestedWorldSocketAPI.getInstance(this);
+        NestedWorldSocketAPI.getInstance().addListener(this);
     }
 
     /*
