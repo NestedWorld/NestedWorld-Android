@@ -15,6 +15,8 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.Availabl
 
 import org.msgpack.value.Value;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SocketService extends Service {
@@ -27,6 +29,7 @@ public class SocketService extends Service {
      */
     public class LocalBinder extends Binder {
         public SocketService getService() {
+            // Return this instance of SocketService so clients can call public methods
             return SocketService.this;
         }
     }
@@ -37,33 +40,38 @@ public class SocketService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        //Display some log
         LogHelper.d(TAG, "onBind()");
+
         return mBinder;
     }
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
 
+        //Display some log
         LogHelper.d(TAG, "onStartCommand()");
 
-        NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+        //Instantiate a socketConnection listener
+        NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {
             @Override
             public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                //Can send message here
+                //Do what you want (can send message)
             }
 
             @Override
             public void onConnectionLost() {
+                //Clean API
                 NestedWorldSocketAPI.reset();
+
+                //Re-init API
                 onStartCommand(intent, flags, startId);
             }
 
             @Override
             public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-                if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE) {
-                    AvailableMessage availableMessage = new AvailableMessage(content);
-                    availableMessage.saveAsCombat();
-                }
+                //Do internal job
+                parseMessage(kind, content);
             }
         });
 
@@ -71,12 +79,18 @@ public class SocketService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        LogHelper.d(TAG, "onCreate()");
-    }
-
-    @Override
     public void onDestroy() {
         NestedWorldSocketAPI.reset();
+    }
+
+    /*
+    ** Internal method
+     */
+    private void parseMessage(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+        //Do internal job
+        if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE) {
+            AvailableMessage availableMessage = new AvailableMessage(content);
+            availableMessage.saveAsCombat();
+        }
     }
 }
