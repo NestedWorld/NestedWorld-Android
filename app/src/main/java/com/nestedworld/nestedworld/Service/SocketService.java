@@ -61,8 +61,8 @@ public class SocketService extends Service {
             @Override
             public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
                 if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE) {
-                    AvailableMessage availableMessage = new AvailableMessage();
-                    availableMessage.unSerialise(content);
+                    AvailableMessage availableMessage = new AvailableMessage(content);
+                    availableMessage.saveAsCombat();
                 }
             }
         });

@@ -84,7 +84,7 @@
     <string name="tabHome_title_addFriend">Add friend</string>
     <string name="tabHome_msg_friendPseudo">Pseudo</string>
     <string name="tabHome_msg_cancel">Cancel</string>
-    <string name="tabHome_msg_fightReady">Fight ready</string>
+    <string name="tabHome_msg_requestFightSend">Request send</string>
     <string name="tab_home_msg_addFriendSuccess">Successfully added</string>
     <string name="tab_home_msg_addFriendFailed">Cannot add your friend</string>
 

@@ -9,7 +9,7 @@ import org.msgpack.value.ValueFactory;
 
 import java.util.Map;
 
-public class StartMessage implements DefaultMessage {
+public class StartMessage extends DefaultMessage {
 
     public String type;
     public String id;
@@ -20,8 +20,12 @@ public class StartMessage implements DefaultMessage {
     public String env;
     public boolean first;
 
+    public StartMessage(@NonNull Map<Value, Value> message) {
+        super(message);
+    }
+
     @Override
-    public void unSerialise(Map<Value, Value> message) {
+    protected void unSerialise(Map<Value, Value> message) {
         this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         this.id = message.get(ValueFactory.newString("id")).asStringValue().asString();
         this.combat_id = message.get(ValueFactory.newString("combat_id")).asIntegerValue().asInt();

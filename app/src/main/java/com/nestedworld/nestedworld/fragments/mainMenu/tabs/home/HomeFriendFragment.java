@@ -206,25 +206,18 @@ public class HomeFriendFragment extends BaseFragment {
                             }
 
                             nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
+
+                            //Display message
+                            Toast.makeText(mContext, R.string.tabHome_msg_requestFightSend, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void onConnectionLost() {
-
                         }
 
                         @Override
                         public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-                            //Check if fragment hasn't been detach
-                            if (mContext == null) {
-                                return;
-                            }
-                            if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_ASK) {
-                                AvailableMessage availableMessage = new AvailableMessage();
-                                availableMessage.unSerialise(content);
 
-                                Toast.makeText(mContext, R.string.tabHome_msg_fightReady, Toast.LENGTH_LONG).show();
-                            }
                         }
                     });
                 }

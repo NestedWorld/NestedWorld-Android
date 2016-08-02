@@ -249,9 +249,10 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                             //Delete the combat from Orm
                             currentCombat.delete();
 
-                            //Retrieve
-                            StartMessage startMessage = new StartMessage();
-                            startMessage.unSerialise(content);
+                            //Retrieve message
+                            StartMessage startMessage = new StartMessage(content);
+
+                            //Start fight fragment
                             FightFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), startMessage);
                         }
                     }
