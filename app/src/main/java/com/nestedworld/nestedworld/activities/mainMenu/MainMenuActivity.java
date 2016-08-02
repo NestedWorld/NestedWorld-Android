@@ -1,11 +1,6 @@
 package com.nestedworld.nestedworld.activities.mainMenu;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -36,7 +31,6 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUp
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
-import com.nestedworld.nestedworld.service.SocketService;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;

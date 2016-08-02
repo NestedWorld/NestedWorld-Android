@@ -20,16 +20,16 @@ public class Session extends SugarRecord {
     @Unique
     public String email;
 
+    //Empty constructor for SugarRecord
+    public Session() {
+        //keep empty
+    }
+
     @Nullable
     public User getUser() {
         return Select.from(User.class)
                 .where(Condition.prop("email").eq(email))
                 .first();
-    }
-
-    //Empty constructor for SugarRecord
-    public Session() {
-        //keep empty
     }
 
     //Generated

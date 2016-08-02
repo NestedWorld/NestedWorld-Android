@@ -22,14 +22,12 @@ import java.util.Map;
 
 public final class NestedWorldSocketAPI implements SocketListener {
 
-    //Singleton
-    private static NestedWorldSocketAPI mSingleton;
-
     //Static field
     private final static int TIME_OUT = 10000;
     private final static String HOST = "eip.kokakiwi.net";
     private final static int PORT = 6464;
-
+    //Singleton
+    private static NestedWorldSocketAPI mSingleton;
     //Private field
     private final String TAG = getClass().getSimpleName();
     private final SocketManager mSocketManager;

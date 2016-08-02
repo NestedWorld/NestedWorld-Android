@@ -12,11 +12,10 @@ import com.orm.query.Select;
  * /!\ this implementation only allow one session per application (it's a personal choice) /!\
  */
 public final class SessionManager {
-    //singleton
-    private static SessionManager mUserManager = null;
-
     //private static field
     private final static String TAG = SessionManager.class.getSimpleName();
+    //singleton
+    private static SessionManager mUserManager = null;
 
     /*
     ** Constructor

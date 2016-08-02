@@ -37,16 +37,15 @@ import butterknife.Bind;
 public class FightFragment extends BaseFragment implements ConnectionListener {
 
     private final ArrayList<Integer> mPositions = new ArrayList<>();
-    private NestedWorldSocketAPI mNestedWorldSocketAPI;
-    private DrawingGestureView mDrawingGestureView;
-    private StartMessage mStartMessage;
-
     @Bind(R.id.progressView)
     ProgressView progressView;
     @Bind(R.id.layout_player)
     LinearLayout layoutPlayer;
     @Bind(R.id.layout_opponent)
     LinearLayout layoutOpponent;
+    private NestedWorldSocketAPI mNestedWorldSocketAPI;
+    private DrawingGestureView mDrawingGestureView;
+    private StartMessage mStartMessage;
 
     /*
     ** Public method

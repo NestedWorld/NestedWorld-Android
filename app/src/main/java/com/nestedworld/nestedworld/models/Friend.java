@@ -25,6 +25,18 @@ public class Friend extends SugarRecord {
         //Keep empty
     }
 
+    //Utils
+    public static int getNumberOfAllyOnline() {
+        int allyOnline = 0;
+        for (Friend friend : Select.from(Friend.class).list()) {
+            User friendInfo = friend.info;
+            if (friendInfo != null && friendInfo.is_connected) {
+                allyOnline++;
+            }
+        }
+        return allyOnline;
+    }
+
     @Nullable
     public User info() {
         if (info == null) {
@@ -40,17 +52,5 @@ public class Friend extends SugarRecord {
                 "info=" + info +
                 ", fkfuser=" + fkfuser +
                 '}';
-    }
-
-    //Utils
-    public static int getNumberOfAllyOnline() {
-        int allyOnline = 0;
-        for (Friend friend : Select.from(Friend.class).list()) {
-            User friendInfo = friend.info;
-            if (friendInfo != null && friendInfo.is_connected) {
-                allyOnline++;
-            }
-        }
-        return allyOnline;
     }
 }

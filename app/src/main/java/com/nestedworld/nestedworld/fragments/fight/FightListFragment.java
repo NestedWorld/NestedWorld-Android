@@ -100,11 +100,17 @@ public class FightListFragment extends BaseFragment {
         private static final int resource = R.layout.item_fight;
         private final Context mContext;
 
+        /*
+        ** Constructor
+         */
         public FightAdapter(@NonNull final Context context, @NonNull final List<Combat> combatList) {
             super(context, resource, combatList);
             this.mContext = context;
         }
 
+        /*
+        ** ArrayAdapter implementation
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -148,12 +154,6 @@ public class FightListFragment extends BaseFragment {
             });
 
             return view;
-        }
-
-        private static class FightHolder {
-            public TextView textViewFightDescription;
-            public Button buttonAccept;
-            public Button buttonRefuse;
         }
 
         /*
@@ -204,6 +204,12 @@ public class FightListFragment extends BaseFragment {
 
                 }
             });
+        }
+
+        private static class FightHolder {
+            public TextView textViewFightDescription;
+            public Button buttonAccept;
+            public Button buttonRefuse;
         }
     }
 }

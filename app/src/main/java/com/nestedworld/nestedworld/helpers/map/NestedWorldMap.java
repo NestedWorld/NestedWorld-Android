@@ -34,10 +34,6 @@ public class NestedWorldMap {
     private final GoogleMap mGoogleMap;
     private final Context mContext;
 
-    public interface OnMapReadyListener {
-        void onMapReady();
-    }
-
     public NestedWorldMap(@NonNull final Context context, @NonNull final GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mContext = context;
@@ -125,7 +121,6 @@ public class NestedWorldMap {
         });
     }
 
-
     private void retrieveAndPopulatePlace() {
         //retrieving places from API
         NestedWorldHttpApi.getInstance(mContext).getPlaces().enqueue(new Callback<PlacesResponse>() {
@@ -191,5 +186,9 @@ public class NestedWorldMap {
 
     private boolean isRegionDisplayable(@NonNull final Region region) {
         return false;
+    }
+
+    public interface OnMapReadyListener {
+        void onMapReady();
     }
 }

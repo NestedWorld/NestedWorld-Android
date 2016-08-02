@@ -33,7 +33,6 @@ import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriend
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
-import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
 import com.orm.query.Select;
 

@@ -23,12 +23,12 @@ import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
+    private static Friend mFriend;
     @Bind(R.id.editText_chat)
     EditText editTextChat;
     @Bind(R.id.listView_chat)
     ListView listViewChat;
     private ArrayAdapter<String> itemAdapter;
-    private static Friend mFriend;
 
     /*
     ** Public method

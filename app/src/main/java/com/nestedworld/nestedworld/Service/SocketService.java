@@ -15,24 +15,12 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.Availabl
 
 import org.msgpack.value.Value;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class SocketService extends Service {
 
     public final static String TAG = SocketService.class.getSimpleName();
     private final IBinder mBinder = new LocalBinder();
-
-    /*
-    ** Binder
-     */
-    public class LocalBinder extends Binder {
-        public SocketService getService() {
-            // Return this instance of SocketService so clients can call public methods
-            return SocketService.this;
-        }
-    }
 
     /*
     ** Life cycle
@@ -91,6 +79,16 @@ public class SocketService extends Service {
         if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE) {
             AvailableMessage availableMessage = new AvailableMessage(content);
             availableMessage.saveAsCombat();
+        }
+    }
+
+    /*
+    ** Binder
+     */
+    public class LocalBinder extends Binder {
+        public SocketService getService() {
+            // Return this instance of SocketService so clients can call public methods
+            return SocketService.this;
         }
     }
 }

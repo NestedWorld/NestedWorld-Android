@@ -21,6 +21,11 @@ public class Place extends SugarRecord {
     @Expose
     private ArrayList<Float> position;
 
+    //Empty constructor for SugarRecord
+    public Place() {
+        //keep empty
+    }
+
     public Float latitude() {
         if (position != null && (position.size() >= 2)) {
             return position.get(1);
@@ -33,11 +38,6 @@ public class Place extends SugarRecord {
             return position.get(0);
         }
         return 0.0f;
-    }
-
-    //Empty constructor for SugarRecord
-    public Place() {
-        //keep empty
     }
 
     //Generated
