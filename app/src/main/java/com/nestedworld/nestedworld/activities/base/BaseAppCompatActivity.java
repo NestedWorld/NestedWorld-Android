@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.activities.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Trace;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -43,7 +44,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
         setContentView(getLayoutResource());
         ButterKnife.bind(this);
-        init(savedInstanceState);
+
+        try {
+            Trace.beginSection(TAG + " init");
+            init(savedInstanceState);
+        } finally {
+            Trace.endSection();
+        }
     }
 
     @Override
