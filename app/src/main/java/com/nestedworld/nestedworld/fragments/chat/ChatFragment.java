@@ -23,12 +23,12 @@ import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
+    private static Friend mFriend;
     @Bind(R.id.editText_chat)
     EditText editTextChat;
     @Bind(R.id.listView_chat)
     ListView listViewChat;
     private ArrayAdapter<String> itemAdapter;
-    private static Friend mFriend;
 
     /*
     ** Public method
@@ -83,8 +83,9 @@ public class ChatFragment extends BaseFragment {
      */
     private void initActionBar() {
         //Check if fragment hasn't been detach
-        if (mContext == null)
+        if (mContext == null) {
             return;
+        }
 
         ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {

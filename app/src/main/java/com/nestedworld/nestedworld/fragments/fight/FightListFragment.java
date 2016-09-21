@@ -150,12 +150,6 @@ public class FightListFragment extends BaseFragment {
             return view;
         }
 
-        private static class FightHolder {
-            public TextView textViewFightDescription;
-            public Button buttonAccept;
-            public Button buttonRefuse;
-        }
-
         /*
         ** Utils
          */
@@ -204,6 +198,12 @@ public class FightListFragment extends BaseFragment {
 
                 }
             });
+        }
+
+        private static class FightHolder {
+            public TextView textViewFightDescription;
+            public Button buttonAccept;
+            public Button buttonRefuse;
         }
     }
 }

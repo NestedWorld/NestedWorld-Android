@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f0f0f0"
-    android:orientation="vertical"
-    android:padding="8dip">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f0f0f0"
+                android:orientation="vertical"
+                android:padding="8dip">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
         </com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator>
 
@@ -36,7 +36,7 @@
             android:layout_height="58dip"
             android:layout_gravity="center"
             android:layout_margin="8dip"
-            android:background="@drawable/ic_action_arrow_bottom_blue" />
+            android:background="@drawable/ic_action_arrow_bottom_blue"/>
 
         <TableRow
             android:id="@+id/tablerow_selected_monster"
@@ -50,22 +50,22 @@
             <ImageView
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear" />
+                android:background="@drawable/places_ic_clear"/>
 
             <ImageView
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear" />
+                android:background="@drawable/places_ic_clear"/>
 
             <ImageView
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear" />
+                android:background="@drawable/places_ic_clear"/>
 
             <ImageView
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear" />
+                android:background="@drawable/places_ic_clear"/>
 
         </TableRow>
 
@@ -74,7 +74,7 @@
             android:layout_width="58dip"
             android:layout_height="58dip"
             android:layout_gravity="center"
-            android:layout_margin="8dip" />
+            android:layout_margin="8dip"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,13 +86,13 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_help_outline" />
+                android:src="@drawable/ic_help_outline"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/teamSelection_msg_hint" />
+                android:text="@string/teamSelection_msg_hint"/>
 
         </LinearLayout>
 
@@ -106,6 +106,6 @@
         app:pv_autostart="false"
         app:pv_circular="true"
         app:pv_progressMode="indeterminate"
-        app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
 
 </RelativeLayout>

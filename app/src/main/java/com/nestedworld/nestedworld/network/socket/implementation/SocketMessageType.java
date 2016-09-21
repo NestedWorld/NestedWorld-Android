@@ -4,39 +4,6 @@ import com.nestedworld.nestedworld.helpers.bimap.BiMap;
 
 public final class SocketMessageType {
 
-    private SocketMessageType() {
-        //Empty constructor for avoiding this class to be construct
-    }
-
-    //Enum use for listing every message (send & response)
-    public enum MessageKind {
-        //Server side message
-        TYPE_CHAT_USER_JOINED,
-        TYPE_CHAT_USER_PARTED,
-        TYPE_CHAT_MESSAGE_RECEIVED,
-        TYPE_COMBAT_START,
-        TYPE_COMBAT_AVAILABLE,
-        TYPE_COMBAT_MONSTER_KO,
-        TYPE_COMBAT_ATTACK_RECEIVED,
-        TYPE_COMBAT_MONSTER_REPLACED,
-        TYPE_COMBAT_END,
-        TYPE_GEO_PLACES_CAPTURED,
-
-        //Client side message
-        TYPE_AUTHENTICATE,
-        TYPE_CHAT_JOIN_CHANNEL,
-        TYPE_CHAT_PART_CHANNEL,
-        TYPE_CHAT_SEND_MESSAGE,
-        TYPE_COMBAT_SEND_ATTACK,
-        TYPE_COMBAT_MONSTER_KO_CAPTURE,
-        TYPE_COMBAT_MONSTER_KO_REPLACE,
-        TYPE_COMBAT_FLEE,
-        TYPE_COMBAT_ASK,
-
-        //Client and Server
-        TYPE_RESULT
-    }
-
     public static final BiMap<MessageKind, String> messageType = new BiMap<MessageKind, String>() {
         {
             /*
@@ -87,4 +54,37 @@ public final class SocketMessageType {
             put(MessageKind.TYPE_RESULT, "result");
         }
     };
+
+    private SocketMessageType() {
+        //Empty constructor for avoiding this class to be construct
+    }
+
+    //Enum use for listing every message (send & response)
+    public enum MessageKind {
+        //Server side message
+        TYPE_CHAT_USER_JOINED,
+        TYPE_CHAT_USER_PARTED,
+        TYPE_CHAT_MESSAGE_RECEIVED,
+        TYPE_COMBAT_START,
+        TYPE_COMBAT_AVAILABLE,
+        TYPE_COMBAT_MONSTER_KO,
+        TYPE_COMBAT_ATTACK_RECEIVED,
+        TYPE_COMBAT_MONSTER_REPLACED,
+        TYPE_COMBAT_END,
+        TYPE_GEO_PLACES_CAPTURED,
+
+        //Client side message
+        TYPE_AUTHENTICATE,
+        TYPE_CHAT_JOIN_CHANNEL,
+        TYPE_CHAT_PART_CHANNEL,
+        TYPE_CHAT_SEND_MESSAGE,
+        TYPE_COMBAT_SEND_ATTACK,
+        TYPE_COMBAT_MONSTER_KO_CAPTURE,
+        TYPE_COMBAT_MONSTER_KO_REPLACE,
+        TYPE_COMBAT_FLEE,
+        TYPE_COMBAT_ASK,
+
+        //Client and Server
+        TYPE_RESULT
+    }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/apptheme_color"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/apptheme_color"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_width="65dip"
             android:layout_height="65dip"
             android:scaleType="fitCenter"
-            android:src="@drawable/default_avatar" />
+            android:src="@drawable/default_avatar"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/textView_userLevel"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dip"
                 android:gravity="center"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/tabHome_title_creditsNumber"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/textView_creditsNumber"
@@ -82,7 +82,7 @@
                 android:layout_marginTop="8dip"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="22sp"/>
 
         </LinearLayout>
 
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/tabHome_title_monsterCaptured"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/textView_monsterCaptured"
@@ -111,7 +111,7 @@
                 android:layout_marginTop="8dip"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="22sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/tabHome_title_areaCaptured"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/textView_areaCaptured"
@@ -139,7 +139,7 @@
                 android:layout_marginTop="8dip"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="22sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/tabHome_title_allyOnline"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/textView_allyOnline"
@@ -167,7 +167,7 @@
                 android:layout_marginTop="8dip"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="22sp"/>
         </LinearLayout>
 
     </LinearLayout>
