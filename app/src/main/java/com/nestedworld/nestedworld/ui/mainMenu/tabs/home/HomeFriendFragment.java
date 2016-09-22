@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
@@ -82,7 +83,7 @@ public class HomeFriendFragment extends BaseFragment {
         List<Friend> friends = Select.from(Friend.class).list();
 
         //init adapter for our listView
-        final FriendsAdapter friendAdapter = new FriendsAdapter(friends);
+        final FriendsAdapter friendAdapter = new FriendsAdapter(mContext, friends);
         listView.setAdapter(friendAdapter);
     }
 
@@ -138,28 +139,23 @@ public class HomeFriendFragment extends BaseFragment {
     /**
      * * Custom adapter for displaying friend on the listView
      **/
-
-    private class FriendsAdapter extends ArrayAdapter<Friend> {
+    private static class FriendsAdapter extends ArrayAdapter<Friend> {
 
         private static final int resource = R.layout.item_friend_list;
 
-        public FriendsAdapter(@NonNull final List<Friend> friendList) {
-            super(mContext, resource, friendList);
+        public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
+            super(context, resource, friendList);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            //Check if fragment hasn't been detach
-            if (mContext == null) {
-                return null;
-            }
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
             View view;
             FriendHolder friendHolder;
 
             if (convertView == null) {
-                LayoutInflater layoutInflater = ((Activity) mContext).getLayoutInflater();
+                LayoutInflater layoutInflater = ((Activity) getContext()).getLayoutInflater();
                 view = layoutInflater.inflate(resource, parent, false);
 
                 friendHolder = new FriendHolder();
@@ -175,26 +171,29 @@ public class HomeFriendFragment extends BaseFragment {
 
             //get the currentFriend
             Friend currentFriend = getItem(position);
-            final User currentFriendInfo = currentFriend.info();
+            if (currentFriend == null) {
+                return view;
+            }
 
+            final User currentFriendInfo = currentFriend.info();
             if (currentFriendInfo == null) {
-                return null;
+                return view;
             }
 
             //display the friend name
             friendHolder.friendName.setText(currentFriendInfo.pseudo);
 
             //display a rounded placeHolder for friend's avatar
-            Resources resources = mContext.getResources();
+            Resources resources = getContext().getResources();
             Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
             roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
 
             //display friend's avatar
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(currentFriendInfo.avatar)
                     .placeholder(roundedBitmapDrawable)
-                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .bitmapTransform(new CropCircleTransformation(getContext()))
                     .centerCrop()
                     .into(friendHolder.friendPicture);
 
@@ -202,7 +201,7 @@ public class HomeFriendFragment extends BaseFragment {
             friendHolder.buttonDefy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
+                    ServiceHelper.bindToSocketService(getContext(), new ServiceConnection() {
                         @Override
                         public void onServiceConnected(ComponentName name, IBinder service) {
                             SocketService socketService = ((SocketService.LocalBinder)service).getService();
@@ -218,7 +217,7 @@ public class HomeFriendFragment extends BaseFragment {
                         @Override
                         public void onServiceDisconnected(ComponentName name) {
                             //Display an error message
-                            Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -227,7 +226,7 @@ public class HomeFriendFragment extends BaseFragment {
             return view;
         }
 
-        private class FriendHolder {
+        private static class FriendHolder {
             public ImageView friendPicture;
             public TextView friendName;
             public Button buttonDefy;
