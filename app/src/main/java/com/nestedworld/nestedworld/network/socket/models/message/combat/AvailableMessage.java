@@ -64,7 +64,7 @@ public class AvailableMessage extends DefaultMessage {
     /*
     ** Getter (generated)
      */
-    public String getMessage_id() {
+    public String getMessageId() {
         return combat_id;
     }
 }

@@ -58,7 +58,7 @@ public class AskMessage extends DefaultMessage {
         return message;
     }
 
-    public String getMessage_id() {
+    public String getMessageId() {
         return message_id;
     }
 
