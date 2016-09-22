@@ -65,7 +65,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     private List<UserMonster> mUserMonsters;
     private List<UserMonster> mSelectedMonster;
     private UserMonsterPagerAdapter mUserMonsterPagerAdapter;
-    private Combat currentCombat;
+    private Combat mCurrentCombat;
 
     /*
     ** Public method
@@ -131,6 +131,12 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             return;
         }
 
+        //Check parameter
+        if (!getArguments().containsKey("combatId")) {
+            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         //Parse combatId
         Long combatId = getArguments().getLong("combatId", 0);
 
@@ -140,7 +146,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         //Check if we successfully got the combat
         if (combat == null) {
             //Display an error message
-            Toast.makeText(mContext, "An error occur, please try again", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
 
             //Display some log
             LogHelper.d(TAG, "cannot parse combatId args");
@@ -148,10 +154,10 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             //Finish the current activity
             ((AppCompatActivity) mContext).finish();
         } else {
-            this.currentCombat = combat;
+            this.mCurrentCombat = combat;
 
             //Display some log
-            LogHelper.d(TAG, "Combat= " + this.currentCombat.toString());
+            LogHelper.d(TAG, "Combat= " + this.mCurrentCombat.toString());
         }
     }
 
@@ -219,7 +225,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                         map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
 
                         ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                        nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, currentCombat.message_id);
+                        nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCurrentCombat.message_id);
                     }
 
                     @Override
@@ -247,7 +253,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                         if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_START) {
 
                             //Delete the combat from Orm
-                            currentCombat.delete();
+                            mCurrentCombat.delete();
 
                             //Retrieve message
                             StartMessage startMessage = new StartMessage(content);
@@ -311,7 +317,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         private final List<UserMonster> mUserMonsters;
         private final Context mContext;
 
-        public UserMonsterPagerAdapter(@NonNull Context context, @NonNull List<UserMonster> userMonsters) {
+        UserMonsterPagerAdapter(@NonNull Context context, @NonNull List<UserMonster> userMonsters) {
             mUserMonsters = userMonsters;
             mContext = context;
         }

@@ -7,12 +7,14 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.event.socket.OnAvaialableMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 
+import org.greenrobot.eventbus.EventBus;
 import org.msgpack.value.Value;
 
 import java.util.Map;
@@ -76,9 +78,50 @@ public class SocketService extends Service {
      */
     private void parseMessage(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
         //Do internal job
-        if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE) {
-            AvailableMessage availableMessage = new AvailableMessage(content);
-            availableMessage.saveAsCombat();
+        switch (kind) {
+            case TYPE_CHAT_USER_JOINED:
+                break;
+            case TYPE_CHAT_USER_PARTED:
+                break;
+            case TYPE_CHAT_MESSAGE_RECEIVED:
+                break;
+            case TYPE_COMBAT_START:
+                break;
+            case TYPE_COMBAT_AVAILABLE:
+                AvailableMessage availableMessage = new AvailableMessage(content);
+                availableMessage.saveAsCombat();
+                EventBus.getDefault().post(new OnAvaialableMessageEvent(availableMessage));
+                break;
+            case TYPE_COMBAT_MONSTER_KO:
+                break;
+            case TYPE_COMBAT_ATTACK_RECEIVED:
+                break;
+            case TYPE_COMBAT_MONSTER_REPLACED:
+                break;
+            case TYPE_COMBAT_END:
+                break;
+            case TYPE_GEO_PLACES_CAPTURED:
+                break;
+            case TYPE_AUTHENTICATE:
+                break;
+            case TYPE_CHAT_JOIN_CHANNEL:
+                break;
+            case TYPE_CHAT_PART_CHANNEL:
+                break;
+            case TYPE_CHAT_SEND_MESSAGE:
+                break;
+            case TYPE_COMBAT_SEND_ATTACK:
+                break;
+            case TYPE_COMBAT_MONSTER_KO_CAPTURE:
+                break;
+            case TYPE_COMBAT_MONSTER_KO_REPLACE:
+                break;
+            case TYPE_COMBAT_FLEE:
+                break;
+            case TYPE_COMBAT_ASK:
+                break;
+            case TYPE_RESULT:
+                break;
         }
     }
 

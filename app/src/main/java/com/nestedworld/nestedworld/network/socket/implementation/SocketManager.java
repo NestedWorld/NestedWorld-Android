@@ -17,7 +17,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.LinkedList;
 
-public class SocketManager implements Runnable {
+public final class SocketManager implements Runnable {
     private final String TAG = getClass().getSimpleName();
     private final String hostname;
     private final int port;
@@ -36,6 +36,8 @@ public class SocketManager implements Runnable {
     }
 
     public SocketManager(@NonNull String hostname, int port, int timeOut) {
+        LogHelper.d(TAG, "init SocketManager: hostname=" + hostname + " port=" + port + " timeOut=" + timeOut);
+
         this.hostname = hostname;
         this.port = port;
         this.timeOut = timeOut;

@@ -13,6 +13,7 @@
     <string name="error_createAccount">Can\'t create your account</string>
     <string name="error_network">Connection lost</string>
     <string name="error_network_tryAgain">Connection lost, please try again later</string>
+    <string name="error_unexpected">An error occur, please try again</string>
 
     <!--Error message (request failed)-->
     <string name="error_request_login">Cannot login.</string>
@@ -94,7 +95,7 @@
     <string name="teamSelection_msg_progress">%d / 4</string>
     <string name="teamSelection_msg_startFight">Go !</string>
     <string name="teamSelection_msg_monsterName">Name: %s</string>
-    <string name="teamSelection_msg_monsterLvl">lvl: %s</string>
+    <string name="teamSelection_msg_monsterLvl">lvl: %d</string>
     <string name="teamSelection_msg_monsterAttack">Attack %d</string>
     <string name="teamSelection_msg_monsterDefence">Defence: %d</string>
     <string name="teamSelection_msg_monsterHp">Hp: %s</string>

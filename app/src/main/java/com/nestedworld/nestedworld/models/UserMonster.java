@@ -23,7 +23,6 @@ public class UserMonster extends SugarRecord {
     @Unique
     public Long user_monster_id;// the sql table will be called usermonsterid (see sugarOrm doc)
 
-
     @Expose
     public Monster infos;
 

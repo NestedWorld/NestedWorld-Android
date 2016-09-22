@@ -27,6 +27,7 @@ import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.orm.query.Select;
 
+import org.greenrobot.eventbus.EventBus;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
@@ -56,6 +57,10 @@ public class FightListFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        
         changeActionBarName();
         populateFightList();
     }
@@ -65,12 +70,13 @@ public class FightListFragment extends BaseFragment {
      */
     private void populateFightList() {
 
-        List<Combat> combats = Select.from(Combat.class).list();
-
         //check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
+
+        //Retrieve list of available combat from Orm
+        List<Combat> combats = Select.from(Combat.class).list();
 
         //init adapter for our listView
         final FightAdapter friendAdapter = new FightAdapter(mContext, combats);
@@ -91,6 +97,11 @@ public class FightListFragment extends BaseFragment {
         }
     }
 
+    /*
+    ** EventBus
+     */
+
+
     /**
      * * Custom adapter for displaying fight on the listView
      **/
@@ -100,13 +111,14 @@ public class FightListFragment extends BaseFragment {
         private static final int resource = R.layout.item_fight;
         private final Context mContext;
 
-        public FightAdapter(@NonNull final Context context, @NonNull final List<Combat> combatList) {
+        FightAdapter(@NonNull final Context context, @NonNull final List<Combat> combatList) {
             super(context, resource, combatList);
             this.mContext = context;
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
             View view;
             FightHolder fightHolder;
@@ -128,24 +140,25 @@ public class FightListFragment extends BaseFragment {
 
             //get the currentCombat
             final Combat currentCombat = getItem(position);
+            if (currentCombat != null) {
+                //display the combat information
+                fightHolder.textViewFightDescription.setText(currentCombat.origin);
 
-            //display the combat information
-            fightHolder.textViewFightDescription.setText(currentCombat.origin);
+                //set callback
+                fightHolder.buttonAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        acceptCombat(currentCombat);
+                    }
+                });
 
-            //set callback
-            fightHolder.buttonAccept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    acceptCombat(currentCombat);
-                }
-            });
-
-            fightHolder.buttonRefuse.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    refuseCombat(currentCombat);
-                }
-            });
+                fightHolder.buttonRefuse.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        refuseCombat(currentCombat);
+                    }
+                });
+            }
 
             return view;
         }
@@ -201,9 +214,9 @@ public class FightListFragment extends BaseFragment {
         }
 
         private static class FightHolder {
-            public TextView textViewFightDescription;
-            public Button buttonAccept;
-            public Button buttonRefuse;
+            TextView textViewFightDescription;
+            Button buttonAccept;
+            Button buttonRefuse;
         }
     }
 }
