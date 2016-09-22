@@ -8,7 +8,7 @@ import org.msgpack.value.Value;
 
 import java.util.Map;
 
-public class AttackReceiveMessage extends DefaultMessage{
+public class AttackReceiveMessage extends DefaultMessage {
 
 
     public AttackReceiveMessage(@NonNull Map<Value, Value> message) {

@@ -30,9 +30,6 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.event.socket.combat.OnAskMessageEvent;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
-import com.nestedworld.nestedworld.service.SocketService;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
@@ -40,7 +37,10 @@ import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpAp
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
+import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 
 import org.greenrobot.eventbus.EventBus;
@@ -244,7 +244,7 @@ public class HomeFriendFragment extends BaseFragment {
                     ServiceHelper.bindToSocketService(getContext(), new ServiceConnection() {
                         @Override
                         public void onServiceConnected(ComponentName name, IBinder service) {
-                            SocketService socketService = ((SocketService.LocalBinder)service).getService();
+                            SocketService socketService = ((SocketService.LocalBinder) service).getService();
                             NestedWorldSocketAPI nestedWorldSocketAPI = socketService.getApiInstance();
 
                             if (nestedWorldSocketAPI != null) {

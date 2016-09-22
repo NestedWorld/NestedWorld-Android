@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
 
-public abstract class SocketMessageEvent<T extends  DefaultMessage> {
+public abstract class SocketMessageEvent<T extends DefaultMessage> {
     private final T mMessage;
 
     /*

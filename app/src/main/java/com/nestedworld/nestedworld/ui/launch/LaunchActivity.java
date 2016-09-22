@@ -5,10 +5,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
+import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
 
 import butterknife.Bind;
 

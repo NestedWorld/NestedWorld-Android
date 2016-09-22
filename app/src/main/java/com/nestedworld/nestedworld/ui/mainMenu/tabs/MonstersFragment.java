@@ -3,7 +3,6 @@ package com.nestedworld.nestedworld.ui.mainMenu.tabs;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -26,17 +25,13 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Monster;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 
 import java.util.List;
 
 import butterknife.Bind;
-import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.

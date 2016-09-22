@@ -11,14 +11,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.Bind;

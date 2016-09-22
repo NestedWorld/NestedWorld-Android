@@ -48,6 +48,23 @@ public class StartMessage extends DefaultMessage {
         }
     }
 
+    /*
+    ** Generated
+     */
+    @Override
+    public String toString() {
+        return "StartMessage{" +
+                "combat_id=" + combat_id +
+                ", type='" + type + '\'' +
+                ", id='" + id + '\'' +
+                ", user=" + user +
+                ", opponent=" + opponent +
+                ", combat_type='" + combat_type + '\'' +
+                ", env='" + env + '\'' +
+                ", first=" + first +
+                '}';
+    }
+
     public static class PlayerMonster {
         public Integer id;
         public String name;
@@ -92,22 +109,5 @@ public class StartMessage extends DefaultMessage {
 
             return opponent;
         }
-    }
-
-    /*
-    ** Generated
-     */
-    @Override
-    public String toString() {
-        return "StartMessage{" +
-                "combat_id=" + combat_id +
-                ", type='" + type + '\'' +
-                ", id='" + id + '\'' +
-                ", user=" + user +
-                ", opponent=" + opponent +
-                ", combat_type='" + combat_type + '\'' +
-                ", env='" + env + '\'' +
-                ", first=" + first +
-                '}';
     }
 }

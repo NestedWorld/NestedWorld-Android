@@ -17,10 +17,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.map.NestedWorldMap;
 import com.nestedworld.nestedworld.helpers.permission.PermissionUtils;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
 import java.util.Arrays;

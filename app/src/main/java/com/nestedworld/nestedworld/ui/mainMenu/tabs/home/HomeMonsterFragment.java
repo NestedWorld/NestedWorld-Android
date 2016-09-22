@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.UserMonster;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 
 import java.util.List;

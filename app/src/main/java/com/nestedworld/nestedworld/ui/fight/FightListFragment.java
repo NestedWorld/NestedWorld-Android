@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.event.socket.combat.OnAvailableMessageEvent;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.models.Combat;
@@ -31,6 +30,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageTy
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 

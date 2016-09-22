@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.database.DataBaseHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
@@ -22,6 +20,8 @@ import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;

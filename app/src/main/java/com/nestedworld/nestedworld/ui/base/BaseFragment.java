@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
 
 import butterknife.ButterKnife;
 

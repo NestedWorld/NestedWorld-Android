@@ -23,14 +23,14 @@ import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFini
 import com.nestedworld.nestedworld.event.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.event.socket.combat.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
-import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterKoMessage;
-import com.nestedworld.nestedworld.service.SocketService;
-import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterKoMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
+import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -208,7 +208,7 @@ public class FightFragment extends BaseFragment {
         ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder)service).getService().getApiInstance();
+                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
                 if (nestedWorldSocketAPI != null) {
                     SendAttackRequest data = new SendAttackRequest(mStartMessage.opponent.monster.id, 10);
                     nestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
