@@ -1,8 +1,12 @@
 package com.nestedworld.nestedworld.fragments.fight;
 
 import android.app.Activity;
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,12 +26,14 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
+import com.nestedworld.nestedworld.service.SocketService;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
@@ -207,6 +213,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
             //Display some log
             LogHelper.d(TAG, "Combat accepted: " + combat.toString());
 
+            //Yes just accept the combat, we have to choose our team
             //Display the team selection
             TeamSelectionFragment.load(((AppCompatActivity) getContext()).getSupportFragmentManager(), combat);
         }
@@ -222,25 +229,24 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
             remove(combat);
 
             //Tell the server we refuse the combat
-            NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+            ServiceHelper.bindToSocketService(getContext(), new ServiceConnection() {
                 @Override
-                public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                    ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
-                    map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    SocketService socketService = ((SocketService.LocalBinder) service).getService();
+                    if (socketService.getApiInstance() != null) {
+                        ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+                        map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
 
-                    ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.message_id);
+                        ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                        socketService.getApiInstance().sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.message_id);
+                    } else {
+                        onServiceDisconnected(null);
+                    }
                 }
 
                 @Override
-                public void onConnectionLost() {
-                    //Display an error message
-                    Toast.makeText(getContext(), R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-
+                public void onServiceDisconnected(ComponentName name) {
+                    Toast.makeText(getContext(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
                 }
             });
         }

@@ -23,6 +23,7 @@ public class SocketService extends Service {
 
     public final static String TAG = SocketService.class.getSimpleName();
     private final IBinder mBinder = new LocalBinder();
+    private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
 
     /*
     ** Life cycle
@@ -46,11 +47,13 @@ public class SocketService extends Service {
         NestedWorldSocketAPI.getInstance(new ConnectionListener() {
             @Override
             public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                //Do what you want (can send message)
+                mNestedWorldSocketAPI = nestedWorldSocketAPI;
             }
 
             @Override
             public void onConnectionLost() {
+                mNestedWorldSocketAPI = null;
+
                 //Clean API
                 NestedWorldSocketAPI.reset();
 
@@ -71,6 +74,14 @@ public class SocketService extends Service {
     @Override
     public void onDestroy() {
         NestedWorldSocketAPI.reset();
+    }
+
+    /*
+    ** Public method (for client)
+     */
+    @Nullable
+    public NestedWorldSocketAPI getApiInstance() {
+        return mNestedWorldSocketAPI;
     }
 
     /*
