@@ -42,7 +42,31 @@ public class AskMessage extends DefaultMessage {
             this.kind = message.get(ValueFactory.newString("kind")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("message"))) {
-            this.message_id = message.get(ValueFactory.newString("message")).asStringValue().asString();
+            this.message = message.get(ValueFactory.newString("message")).asStringValue().asString();
         }
+    }
+
+    /*
+    ** Getter / Setter
+     */
+
+    public String getKind() {
+        return kind;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getMessage_id() {
+        return message_id;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public String getType() {
+        return type;
     }
 }

@@ -28,7 +28,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.event.socket.OnAskMessageEvent;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Friend;
@@ -43,6 +45,8 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.AskReque
 import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
 import com.orm.query.Select;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.msgpack.value.Value;
 
 import java.util.List;
@@ -68,8 +72,42 @@ public class HomeFriendFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         populateFriendList();
     }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onAskMessage(OnAskMessageEvent messageEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Retrieve message
+        AskMessage askMessage = messageEvent.getMessage();
+
+        //Check if we have an error
+        if (askMessage.getResult() != null && askMessage.getResult().equals("error")) {
+
+            //Check if we have an error message
+            if (askMessage.getMessage() != null) {
+                //display error from server
+                Toast.makeText(mContext, askMessage.getMessage(), Toast.LENGTH_LONG).show();
+            } else {
+                //Display generic error
+                Toast.makeText(mContext, R.string.tabHome_msg_requestFightFail, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(mContext, R.string.tabHome_msg_requestFightSuccess, Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     /*
     ** Private method
@@ -143,10 +181,16 @@ public class HomeFriendFragment extends BaseFragment {
 
         private static final int resource = R.layout.item_friend_list;
 
+        /*
+        ** Constructor
+         */
         public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
             super(context, resource, friendList);
         }
 
+        /*
+        ** Life cycle
+         */
         @NonNull
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -209,6 +253,7 @@ public class HomeFriendFragment extends BaseFragment {
 
                             if (nestedWorldSocketAPI != null) {
                                 nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
+                                Toast.makeText(getContext(), R.string.tabHome_msg_requestFightSend, Toast.LENGTH_LONG).show();
                             } else {
                                 onServiceDisconnected(null);
                             }
@@ -217,7 +262,7 @@ public class HomeFriendFragment extends BaseFragment {
                         @Override
                         public void onServiceDisconnected(ComponentName name) {
                             //Display an error message
-                            Toast.makeText(getContext(), R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
