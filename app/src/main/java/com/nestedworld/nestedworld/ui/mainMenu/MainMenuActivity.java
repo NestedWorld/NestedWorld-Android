@@ -77,6 +77,14 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        //We want to redraw the toolbar
+        invalidateOptionsMenu();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -124,7 +132,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         //We want to redraw the toolbar
         invalidateOptionsMenu();
     }
-
 
     /*
     ** private method
