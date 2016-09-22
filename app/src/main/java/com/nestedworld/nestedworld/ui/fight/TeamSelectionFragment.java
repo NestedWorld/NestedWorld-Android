@@ -270,6 +270,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             return;
         }
 
+        //Start loading animation
         progressView.start();
 
         ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
@@ -298,6 +299,9 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 if (mContext != null) {
+                    //Stop loading animation
+                    progressView.stop();
+
                     //Display error message
                     Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
 

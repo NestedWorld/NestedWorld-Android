@@ -37,10 +37,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     /*
     ** Constructor
      */
-    private NestedWorldSocketAPI(@NonNull final ConnectionListener connectionListener) {
-        //Init private field
-        mConnectionListener.add(connectionListener);
-
+    private NestedWorldSocketAPI() {
         //Init the socket
         mSocketManager = new SocketManager(HOST, PORT);
         mSocketManager.setTimeOut(TIME_OUT);
@@ -60,12 +57,11 @@ public final class NestedWorldSocketAPI implements SocketListener {
     /*
     ** Singleton
      */
-    public static void getInstance(@NonNull ConnectionListener connectionListener) {
+    public static NestedWorldSocketAPI getInstance() {
         if (mSingleton == null) {
-            new NestedWorldSocketAPI(connectionListener);
-        } else {
-            mSingleton.addListener(connectionListener);
+            mSingleton = new NestedWorldSocketAPI();
         }
+        return mSingleton;
     }
 
     /*
@@ -78,16 +74,6 @@ public final class NestedWorldSocketAPI implements SocketListener {
     /*
     ** Public method
      */
-    public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind) {
-        //Send a message with generic id (from messageType)
-        sendRequest(data, messageKind, SocketMessageType.messageType.getValueFromKey(messageKind));
-    }
-
-    public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
-        //Send a message with the given id
-        sendMessage(data.serialise(), messageKind, requestId);
-    }
-
     public void addListener(@NonNull final ConnectionListener connectionListener) {
         //Add listener to the list of listener
         mConnectionListener.add(connectionListener);
@@ -100,6 +86,16 @@ public final class NestedWorldSocketAPI implements SocketListener {
 
     public void removeListener(@NonNull final ConnectionListener connectionListener) {
         mConnectionListener.remove(connectionListener);
+    }
+
+    public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind) {
+        //Send a message with generic id (from messageType)
+        sendRequest(data, messageKind, SocketMessageType.messageType.getValueFromKey(messageKind));
+    }
+
+    public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
+        //Send a message with the given id
+        sendMessage(data.serialise(), messageKind, requestId);
     }
 
     /*
@@ -145,6 +141,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
                 }
             }
         }
+
         //It's a spontaneous message, try to found the type
         if (message.containsKey(ValueFactory.newString("type"))) {
             final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
@@ -156,6 +153,8 @@ public final class NestedWorldSocketAPI implements SocketListener {
                 return;
             }
         }
+
+        //Display some log
         LogHelper.d(TAG, "Can't parse message: " + message);
     }
 

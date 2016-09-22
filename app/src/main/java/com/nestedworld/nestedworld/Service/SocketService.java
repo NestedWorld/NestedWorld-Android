@@ -68,7 +68,7 @@ public class SocketService extends Service {
         LogHelper.d(TAG, "onStartCommand()");
 
         //Instantiate a socketConnection listener
-        NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+        NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {
             @Override
             public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
                 mNestedWorldSocketAPI = nestedWorldSocketAPI;
