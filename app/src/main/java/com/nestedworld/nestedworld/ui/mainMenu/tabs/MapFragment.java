@@ -24,6 +24,7 @@ import com.nestedworld.nestedworld.helpers.permission.PermissionUtils;
 import com.rey.material.widget.ProgressView;
 
 import java.util.Arrays;
+import java.util.Calendar;
 
 import butterknife.Bind;
 
@@ -38,6 +39,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
     MapView mMapView;
     @Bind(R.id.progressView)
     ProgressView progressView;
+
     private NestedWorldMap mMap;
 
     /*
@@ -189,12 +191,19 @@ public class MapFragment extends BaseFragment implements LocationListener {
      */
     @Override
     public void onLocationChanged(@NonNull final Location location) {
-        LogHelper.d(TAG, "location changed");
+        LogHelper.d(TAG, "onLocationChanged");
 
         //Check if fragment hasn't been destroy
         if (mContext == null || progressView == null) {
             return;
         }
+
+            LogHelper.d(TAG, "onLocationChanged > ignore");
+            return;
+        }
+        LogHelper.d(TAG, "onLocationChanged > update");
+
+        lastUpdate = Calendar.getInstance().getTimeInMillis();
 
         progressView.start();
 
