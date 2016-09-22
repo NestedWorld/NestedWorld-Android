@@ -1,8 +1,11 @@
 package com.nestedworld.nestedworld.ui.fight;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +27,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
+import com.nestedworld.nestedworld.event.socket.OnCombatStartMessageEvent;
+import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Combat;
@@ -31,19 +37,19 @@ import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.UserMonster;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
-import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 
@@ -96,11 +102,22 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         //Change action bar title
-        changeActionBarName();
+        setupActionBar();
 
         //Get CombatId from arg
-        parseArgs();
+        if (!parseArgs()) {
+            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+
+            //Finish the current activity
+            if (mContext != null) {
+                ((AppCompatActivity) mContext).finish();
+            }
+        }
 
         //Retrieve monster and init selectedMonster list
         mUserMonsters = Select.from(UserMonster.class).list();
@@ -123,42 +140,62 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     }
 
     /*
-    ** Private method
+    ** Eventbus
      */
-    private void parseArgs() {
+    @Subscribe
+    public void onNewCombatStart(OnCombatStartMessageEvent event) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        //Check parameter
-        if (!getArguments().containsKey("combatId")) {
-            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
-            return;
-        }
+        LogHelper.d(TAG, "onNewCombatStart");
 
-        //Parse combatId
-        Long combatId = getArguments().getLong("combatId", 0);
+        StartMessage startMessage = event.getMessage();
 
-        //Retrieve Combat from Orm
-        Combat combat = Select.from(Combat.class).where(Condition.prop("id").eq(combatId)).first();
+        if (startMessage.id.equals(mCurrentCombat.combat_id)) {
+            LogHelper.d(TAG, "onNewCombatStart > accept");
 
-        //Check if we successfully got the combat
-        if (combat == null) {
-            //Display an error message
-            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+            //Delete the combat from Orm
+            mCurrentCombat.delete();
 
-            //Display some log
-            LogHelper.d(TAG, "cannot parse combatId args");
-
-            //Finish the current activity
-            ((AppCompatActivity) mContext).finish();
+            //Start fight fragment
+            FightFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), startMessage);
         } else {
-            this.mCurrentCombat = combat;
-
-            //Display some log
-            LogHelper.d(TAG, "Combat= " + this.mCurrentCombat.toString());
+            LogHelper.d(TAG, "onNewCombatStart > refuse");
         }
+    }
+
+    /*
+    ** Private method
+     */
+    private boolean parseArgs() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return false;
+        }
+
+        //Check parameter
+        if (getArguments().containsKey("combatId")) {
+            //Parse combatId
+            Long combatId = getArguments().getLong("combatId", 0);
+
+            //Retrieve Combat from Orm
+            Combat combat = Select.from(Combat.class).where(Condition.prop("id").eq(combatId)).first();
+            if (combat != null) {
+                mCurrentCombat = combat;
+
+                //Display some log
+                LogHelper.d(TAG, "Combat= " + mCurrentCombat.toString());
+
+                return true;
+            }
+        }
+
+        //Display some log
+        LogHelper.d(TAG, "cannot parse combatId args");
+
+        return false;
     }
 
     private void setUpViewPager() {
@@ -172,6 +209,20 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         viewPager.setAdapter(mUserMonsterPagerAdapter);
         viewPagerArrowIndicator.setViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
+    }
+
+    private void setupActionBar() {
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (mContext instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(getResources().getString(R.string.teamSelection_title));
+            }
+        }
     }
 
     private void onMonsterSelected() {
@@ -208,61 +259,51 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         button_go_fight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendAcceptRequest();
+            }
+        });
+    }
 
-                progressView.start();
+    private void sendAcceptRequest() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
 
-                NestedWorldSocketAPI.getInstance(new ConnectionListener() {
-                    @Override
-                    public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                        ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+        progressView.start();
 
-                        List<Value> selectedMonsterIdList = new ArrayList<>();
-                        for (UserMonster userMonster : mSelectedMonster) {
-                            selectedMonsterIdList.add(ValueFactory.newInteger(userMonster.user_monster_id));
-                        }
+        ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
+                if (nestedWorldSocketAPI != null) {
+                    ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
 
-                        map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(true));
-                        map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
-
-                        ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                        nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCurrentCombat.message_id);
+                    List<Value> selectedMonsterIdList = new ArrayList<>();
+                    for (UserMonster userMonster : mSelectedMonster) {
+                        selectedMonsterIdList.add(ValueFactory.newInteger(userMonster.user_monster_id));
                     }
 
-                    @Override
-                    public void onConnectionLost() {
-                        //Check if fragment hasn't been detach
-                        if (mContext == null) {
-                            return;
-                        }
+                    map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(true));
+                    map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
 
-                        //Display an error message
-                        Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
+                    ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCurrentCombat.combat_id);
 
-                        //Finish the current activity
-                        ((AppCompatActivity) mContext).finish();
-                    }
+                } else {
+                    onServiceDisconnected(null);
+                }
+            }
 
-                    @Override
-                    public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-                        //Check if fragment hasn't been detach
-                        if (mContext == null) {
-                            return;
-                        }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                if (mContext != null) {
+                    //Display error message
+                    Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
 
-                        //If we receive a 'start message', we can start the fight
-                        if (kind == SocketMessageType.MessageKind.TYPE_COMBAT_START) {
-
-                            //Delete the combat from Orm
-                            mCurrentCombat.delete();
-
-                            //Retrieve message
-                            StartMessage startMessage = new StartMessage(content);
-
-                            //Start fight fragment
-                            FightFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), startMessage);
-                        }
-                    }
-                });
+                    //Finish the current activity
+                    ((AppCompatActivity) mContext).finish();
+                }
             }
         });
     }
@@ -274,20 +315,6 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         } else {
             button_select_monster.setBackgroundResource(R.drawable.ic_action_arrow_bottom_blue);
             button_select_monster.setClickable(true);
-        }
-    }
-
-    private void changeActionBarName() {
-        //check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        if (mContext instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle(getResources().getString(R.string.teamSelection_title));
-            }
         }
     }
 

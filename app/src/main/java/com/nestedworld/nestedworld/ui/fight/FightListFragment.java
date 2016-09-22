@@ -138,7 +138,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     @Subscribe
     public void onNewCombatAvailable(OnAvailableMessageEvent event) {
         AvailableMessage message = event.getMessage();
-        Combat newCombat = Select.from(Combat.class).where(Condition.prop("messageid").eq(message.getMessage_id())).first();
+        Combat newCombat = Select.from(Combat.class).where(Condition.prop("combatid").eq(message.getMessage_id())).first();
         mAdapter.add(newCombat);
     }
 
@@ -233,7 +233,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
                         map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
 
                         ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                        socketService.getApiInstance().sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.message_id);
+                        socketService.getApiInstance().sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.combat_id);
                     } else {
                         onServiceDisconnected(null);
                     }

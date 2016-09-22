@@ -12,7 +12,7 @@ import com.orm.dsl.Unique;
 public class Combat extends SugarRecord {
 
     @Unique
-    public String message_id;// the sql table will be called messageid (see sugarOrm doc)
+    public String combat_id;// the sql table will be called combatid (see sugarOrm doc)
     public String type;
     public String origin;
     public Integer monsterId;
@@ -27,7 +27,7 @@ public class Combat extends SugarRecord {
     @Override
     public String toString() {
         return "Combat{" +
-                "message_id='" + message_id + '\'' +
+                "combat_id='" + combat_id + '\'' +
                 ", type='" + type + '\'' +
                 ", origin='" + origin + '\'' +
                 ", monsterId=" + monsterId +

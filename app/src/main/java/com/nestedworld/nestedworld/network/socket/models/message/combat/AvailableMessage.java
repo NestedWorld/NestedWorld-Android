@@ -13,7 +13,7 @@ import java.util.Map;
 public class AvailableMessage extends DefaultMessage {
 
     private String type;
-    private String message_id;
+    private String combat_id;
     private String origin;
     private Integer monsterId;
     private String opponentPseudo;
@@ -30,7 +30,7 @@ public class AvailableMessage extends DefaultMessage {
             this.type = combat.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("id"))) {
-            this.message_id = combat.message_id = message.get(ValueFactory.newString("id")).asStringValue().asString();
+            this.combat_id = combat.combat_id = message.get(ValueFactory.newString("id")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("origin"))) {
             this.origin = combat.origin = message.get(ValueFactory.newString("origin")).asStringValue().asString();
@@ -51,7 +51,7 @@ public class AvailableMessage extends DefaultMessage {
     public Combat saveAsCombat() {
         Combat combat = new Combat();
         combat.type = this.type;
-        combat.message_id = this.message_id;
+        combat.combat_id = this.combat_id;
         combat.origin = this.origin;
         combat.monsterId = this.monsterId;
         combat.opponent_pseudo = this.opponentPseudo;
@@ -65,6 +65,6 @@ public class AvailableMessage extends DefaultMessage {
     ** Getter (generated)
      */
     public String getMessage_id() {
-        return message_id;
+        return combat_id;
     }
 }
