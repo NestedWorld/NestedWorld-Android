@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.event.socket;
+package com.nestedworld.nestedworld.event.socket.combat;
 
 import android.support.annotation.NonNull;
 

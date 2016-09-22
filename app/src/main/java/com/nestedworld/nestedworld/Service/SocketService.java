@@ -13,11 +13,15 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.event.socket.OnAskMessageEvent;
-import com.nestedworld.nestedworld.event.socket.OnAttackReceiveEvent;
-import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
-import com.nestedworld.nestedworld.event.socket.OnCombatStartMessageEvent;
-import com.nestedworld.nestedworld.event.socket.OnMonsterKoEvent;
+import com.nestedworld.nestedworld.event.socket.chat.OnMessageReceivedEvent;
+import com.nestedworld.nestedworld.event.socket.chat.OnUserJoinedEvent;
+import com.nestedworld.nestedworld.event.socket.chat.OnUserPartedEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnAskMessageEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnAttackReceiveEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnAvailableMessageEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnCombatEndEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnCombatStartMessageEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
@@ -26,8 +30,12 @@ import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.CombatEndMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterKoMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.message.MessageReceivedMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.message.UserJoinedMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.message.UserPartedMessage;
 import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -107,10 +115,25 @@ public class SocketService extends Service {
         //Do internal job
         switch (kind) {
             case TYPE_CHAT_USER_JOINED:
+                //Parse message
+                UserJoinedMessage userJoinedMessage = new UserJoinedMessage(content);
+
+                //Send event
+                EventBus.getDefault().post(new OnUserJoinedEvent(userJoinedMessage));
                 break;
             case TYPE_CHAT_USER_PARTED:
+                //Parse message
+                UserPartedMessage userPartedMessage = new UserPartedMessage(content);
+
+                //Send event
+                EventBus.getDefault().post(new OnUserPartedEvent(userPartedMessage));
                 break;
             case TYPE_CHAT_MESSAGE_RECEIVED:
+                //Parse message
+                MessageReceivedMessage messageReceivedMessage = new MessageReceivedMessage(content);
+
+                //Send event
+                EventBus.getDefault().post(new OnMessageReceivedEvent(messageReceivedMessage));
                 break;
             case TYPE_COMBAT_START:
                 //Parse response
@@ -147,33 +170,49 @@ public class SocketService extends Service {
             case TYPE_COMBAT_MONSTER_REPLACED:
                 break;
             case TYPE_COMBAT_END:
+                //Parse message
+                CombatEndMessage combatEndMessage = new CombatEndMessage(content);
+
+                //Send event
+                EventBus.getDefault().post(new OnCombatEndEvent(combatEndMessage));
                 break;
             case TYPE_GEO_PLACES_CAPTURED:
                 break;
             case TYPE_AUTHENTICATE:
+                //Shouldn't use it (handle by socketManager)
                 break;
             case TYPE_CHAT_JOIN_CHANNEL:
+                //It's a response (it's probably a result for chat:join:chanel)
                 break;
             case TYPE_CHAT_PART_CHANNEL:
+                //It's a response (it's probably a result for chat:part:chanel)
                 break;
             case TYPE_CHAT_SEND_MESSAGE:
+                //It's a response (it's probably a result for chat:send:message)
                 break;
             case TYPE_COMBAT_SEND_ATTACK:
+                //It's a response (it's probably a result for combat:send:atk)
                 break;
             case TYPE_COMBAT_MONSTER_KO_CAPTURE:
+                //It's a response (it's probably a result for monster:ko:capture)
                 break;
             case TYPE_COMBAT_MONSTER_KO_REPLACE:
+                //It's a response (it's probably a result for monster:ko:replace)
                 break;
             case TYPE_COMBAT_FLEE:
+                //It's a response (it's probably a result for combat:flee)
                 break;
             case TYPE_COMBAT_ASK:
-                //Parse response
+                //Parse response (it's a result for combat:ask)
                 AskMessage askMessage = new AskMessage(content);
 
                 //Send Event
                 EventBus.getDefault().post(new OnAskMessageEvent(askMessage));
                 break;
             case TYPE_RESULT:
+                //It's a response, shouldn't use it
+                break;
+            default:
                 break;
         }
     }

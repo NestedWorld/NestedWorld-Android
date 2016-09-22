@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.event.socket.OnAskMessageEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnAskMessageEvent;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.service.SocketService;
@@ -40,17 +40,13 @@ import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpAp
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
-import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
-import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
 import com.orm.query.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.msgpack.value.Value;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;

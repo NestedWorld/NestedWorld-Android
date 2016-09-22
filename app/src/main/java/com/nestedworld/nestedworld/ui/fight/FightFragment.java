@@ -1,6 +1,9 @@
 package com.nestedworld.nestedworld.ui.fight;
 
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,24 +20,29 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
+import com.nestedworld.nestedworld.event.socket.combat.OnAttackReceiveEvent;
+import com.nestedworld.nestedworld.event.socket.combat.OnMonsterKoEvent;
+import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterKoMessage;
+import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
-import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.rey.material.widget.ProgressView;
 
-import org.msgpack.value.Value;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 
-public class FightFragment extends BaseFragment implements ConnectionListener {
+public class FightFragment extends BaseFragment {
 
     private final ArrayList<Integer> mPositions = new ArrayList<>();
     @Bind(R.id.progressView)
@@ -43,7 +51,7 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
     LinearLayout layoutPlayer;
     @Bind(R.id.layout_opponent)
     LinearLayout layoutOpponent;
-    private NestedWorldSocketAPI mNestedWorldSocketAPI;
+
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage;
 
@@ -73,19 +81,14 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
 
     @Override
     protected void init(final View rootView, Bundle savedInstanceState) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        /*Update toolbar title*/
-        ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(getResources().getString(R.string.combat_title));
-        }
-
-        /*start a loading animation*/
+        //start loading animation
         progressView.start();
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+        setupActionBar();
 
         /*populate the view*/
         setupEnvironment();
@@ -94,14 +97,40 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
 
         /*Init the gestureListener*/
         initDrawingGestureView(rootView);
-
-        /*Init socket API*/
-        NestedWorldSocketAPI.getInstance(this);
     }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onAttackReceive(OnAttackReceiveEvent event) {
+        AttackReceiveMessage message = event.getMessage();
+
+        //TODO parse message
+    }
+
+    @Subscribe
+    public void onMonsterKo(OnMonsterKoEvent event) {
+        MonsterKoMessage monsterKoMessage = event.getMessage();
+
+        //TODO parse message
+    }
+
 
     /*
     ** Private method
      */
+    private void setupActionBar() {
+        //Check if fragment hasn't been detach
+        if (mContext != null) {
+            /*Update toolbar title*/
+            ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(getResources().getString(R.string.combat_title));
+            }
+        }
+    }
+
     private void setupEnvironment() {
         //TODO parse mStartMessage.env and set background
 
@@ -142,10 +171,7 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
         mDrawingGestureView.setOnFinishMoveListener(new OnFinishMoveListener() {
             @Override
             public void onFinish() {
-                SendAttackRequest data = new SendAttackRequest(mStartMessage.opponent.monster.id, 10);
-
-                mNestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
-                mPositions.clear();
+                sendAttack();
             }
         });
 
@@ -173,47 +199,27 @@ public class FightFragment extends BaseFragment implements ConnectionListener {
 //                .into(monsterPicture);
     }
 
-    /*
-    ** Connection listener implementation
-     */
-    @Override
-    public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-        /*Socket successfully init*/
-        mNestedWorldSocketAPI = nestedWorldSocketAPI;
-
-        //Check if fragment hasn't been detach
+    private void sendAttack() {
+        //check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        if (progressView != null) {
-            progressView.stop();
-        }
+        ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder)service).getService().getApiInstance();
+                if (nestedWorldSocketAPI != null) {
+                    SendAttackRequest data = new SendAttackRequest(mStartMessage.opponent.monster.id, 10);
+                    nestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
+                    mPositions.clear();
+                }
+            }
 
-        mDrawingGestureView.setEnabled(true);
-    }
-
-    @Override
-    public void onConnectionLost() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        /*Stop the loading animation and display an error message*/
-        if (progressView != null) {
-            progressView.stop();
-        }
-
-        /*Display an error message*/
-        Toast.makeText(mContext, R.string.combat_msg_connection_impossible, Toast.LENGTH_LONG).show();
-
-        /*Stop the activity (can't run without connection)*/
-        getActivity().finish();
-    }
-
-    @Override
-    public void onMessageReceived(@NonNull SocketMessageType.MessageKind messageKind, @NonNull Map<Value, Value> content) {
-
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
