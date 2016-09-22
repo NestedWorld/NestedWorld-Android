@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Menu for the toolbar under the main menu-->
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/profile_title"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_fight"
         android:icon="@drawable/ic_action_sword"
         android:title="@string/mainMenu_action_fight"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_chat"
         android:icon="@drawable/ic_action_chat"
         android:title="@string/mainMenu_action_chat"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
 
 </menu>

@@ -7,22 +7,22 @@
     <RelativeLayout
         android:id="@+id/counterValuePanel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/counterBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/GreenYellow" />
+            android:background="@color/GreenYellow"/>
 
         <TextView
-            android:textStyle="bold"
             android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:textSize="8sp"
             android:layout_centerInParent="true"
-            android:textColor="#FFFFFF" />
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
     </RelativeLayout>
 </FrameLayout>

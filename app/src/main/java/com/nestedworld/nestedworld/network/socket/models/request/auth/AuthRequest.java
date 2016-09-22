@@ -8,7 +8,7 @@ import org.msgpack.value.ValueFactory;
 
 public class AuthRequest implements DefaultRequest {
 
-    private String token;
+    private final String token;
 
     public AuthRequest(@NonNull final String token) {
         this.token = token;

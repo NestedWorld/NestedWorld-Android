@@ -189,7 +189,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     /**
      * Custom Adapter for displaying monsters
      */
-    private class MonsterAdapter extends ArrayAdapter<Monster> {
+    private static class MonsterAdapter extends ArrayAdapter<Monster> {
         /*
         ** Constructor
          */
@@ -200,18 +200,16 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         /*
         ** Inherit method
          */
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            //Check if fragment hasn't been detach
-            if (mContext == null) {
-                return null;
-            }
-
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             View view = convertView;
 
             //Get current monster
             final Monster monster = getItem(position);
+            if (monster == null) {
+                return view;
+            }
 
             //Check if an existing view is being reused, otherwise inflate the view
             if (view == null) {
@@ -231,7 +229,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
                     .into(imageViewMonster);
 
             //Add color shape around monster picture
-            view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getColorResource()));
+            view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(getContext(), monster.getColorResource()));
 
             return view;
         }

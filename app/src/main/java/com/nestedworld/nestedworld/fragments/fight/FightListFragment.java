@@ -99,27 +99,26 @@ public class FightListFragment extends BaseFragment {
 
         private static final String TAG = FightAdapter.class.getSimpleName();
         private static final int resource = R.layout.item_fight;
-        private final Context mContext;
 
         /*
         ** Constructor
          */
         public FightAdapter(@NonNull final Context context, @NonNull final List<Combat> combatList) {
             super(context, resource, combatList);
-            this.mContext = context;
         }
 
         /*
         ** ArrayAdapter implementation
          */
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
             View view;
             FightHolder fightHolder;
 
             if (convertView == null) {
-                LayoutInflater layoutInflater = ((Activity) mContext).getLayoutInflater();
+                LayoutInflater layoutInflater = ((Activity) getContext()).getLayoutInflater();
                 view = layoutInflater.inflate(resource, parent, false);
 
                 fightHolder = new FightHolder();
@@ -135,6 +134,9 @@ public class FightListFragment extends BaseFragment {
 
             //get the currentCombat
             final Combat currentCombat = getItem(position);
+            if (currentCombat == null) {
+                return view;
+            }
 
             //display the combat information
             fightHolder.textViewFightDescription.setText(currentCombat.origin);
@@ -165,7 +167,7 @@ public class FightListFragment extends BaseFragment {
             LogHelper.d(TAG, "Combat accepted: " + combat.toString());
 
             //Display the team selection
-            TeamSelectionFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), combat);
+            TeamSelectionFragment.load(((AppCompatActivity) getContext()).getSupportFragmentManager(), combat);
         }
 
         private void refuseCombat(@NonNull final Combat combat) {
@@ -191,13 +193,8 @@ public class FightListFragment extends BaseFragment {
 
                 @Override
                 public void onConnectionLost() {
-                    //Check if fragment hasn't been detach
-                    if (mContext == null) {
-                        return;
-                    }
-
                     //Display an error message
-                    Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
                 }
 
                 @Override

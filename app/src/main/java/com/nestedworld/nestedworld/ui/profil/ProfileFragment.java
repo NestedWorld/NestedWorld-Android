@@ -100,7 +100,7 @@ public class ProfileFragment extends BaseFragment {
         textViewRegisteredAt.setText(String.format(res.getString(R.string.profile_msg_registeredAt), user.registered_at));
         textViewEmail.setText(String.format(res.getString(R.string.profile_msg_email), user.email));
         textViewBackgroundUrl.setText(String.format(res.getString(R.string.profile_msg_background), user.background));
-        textViewLevel.setText(String.format(res.getString(R.string.profile_msg_level), user.level));
+        textViewLevel.setText(String.format(res.getString(R.string.profile_msg_level), String.valueOf(user.level)));
         textViewAvatar.setText(String.format(res.getString(R.string.profile_msg_avatar), user.avatar));
     }
 

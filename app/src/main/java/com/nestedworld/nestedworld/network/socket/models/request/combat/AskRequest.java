@@ -8,7 +8,7 @@ import org.msgpack.value.ValueFactory;
 
 public class AskRequest implements DefaultRequest {
 
-    private String opponentPseudo;
+    private final String opponentPseudo;
 
     public AskRequest(@NonNull final String opponentPseudo) {
         this.opponentPseudo = opponentPseudo;

@@ -99,6 +99,11 @@ public class ChatFragment extends BaseFragment {
     }
 
     private void initChat() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         //init a string adapter for our listView
         itemAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_expandable_list_item_1);
         listViewChat.setAdapter(itemAdapter);

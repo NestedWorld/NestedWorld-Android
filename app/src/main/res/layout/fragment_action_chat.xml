@@ -6,15 +6,15 @@
                 android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/chat_msg_start_chat"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/chat_msg_start_chat"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout_friend_list"
