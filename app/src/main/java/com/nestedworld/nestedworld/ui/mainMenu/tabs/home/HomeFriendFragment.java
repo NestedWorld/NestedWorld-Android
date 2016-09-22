@@ -1,11 +1,14 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -24,6 +27,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
@@ -34,6 +39,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSock
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
+import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
 import com.orm.query.Select;
 
 import org.msgpack.value.Value;
@@ -196,34 +202,23 @@ public class HomeFriendFragment extends BaseFragment {
             friendHolder.buttonDefy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    NestedWorldSocketAPI.getInstance(new ConnectionListener() {
+                    ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
                         @Override
-                        public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                            //Check if fragment hasn't been detach
-                            if (mContext == null) {
-                                return;
+                        public void onServiceConnected(ComponentName name, IBinder service) {
+                            SocketService socketService = ((SocketService.LocalBinder)service).getService();
+                            NestedWorldSocketAPI nestedWorldSocketAPI = socketService.getApiInstance();
+
+                            if (nestedWorldSocketAPI != null) {
+                                nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
+                            } else {
+                                onServiceDisconnected(null);
                             }
-
-                            nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
-
-                            //Display message
-                            Toast.makeText(mContext, R.string.tabHome_msg_requestFightSend, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
-                        public void onConnectionLost() {
-                            //Check if fragment hasn't been detach
-                            if (mContext == null) {
-                                return;
-                            }
-
+                        public void onServiceDisconnected(ComponentName name) {
                             //Display an error message
                             Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
-
                         }
                     });
                 }
