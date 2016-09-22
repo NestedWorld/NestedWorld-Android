@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.ui.friend;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.chat.ChatFragment;
 import com.nestedworld.nestedworld.models.Friend;
@@ -34,12 +38,16 @@ import java.util.List;
 import butterknife.Bind;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class FriendListFragment extends BaseFragment {
+public class FriendListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.listView_chat_list)
     ListView listView;
     @Bind(R.id.progressView)
     ProgressView progressView;
+    @Bind(R.id.swipeRefreshLayout_friend_list)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private FriendsAdapter mAdapter;
 
     /*
     ** Public method
@@ -60,29 +68,82 @@ public class FriendListFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
+        setupListView();
         populateFriendList();
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private void populateFriendList() {
+    @Override
+    public void onRefresh() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
 
-        List<Friend> friends = Select.from(Friend.class).list();
+        //Start loading animation
+        swipeRefreshLayout.setRefreshing(true);
 
-        //check if fragment hasn't been detach
+        new FriendsUpdater(mContext, new OnEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                //Check if fragment hasn't been detach
+                if (mContext != null) {
+                    //Stop loading animation
+                    swipeRefreshLayout.setRefreshing(false);
+
+                    //Update adapter
+                    populateFriendList();
+                }
+            }
+
+            @Override
+            public void onError(KIND errorKind) {
+                //check if fragment hasn't been detach
+                if (mContext != null) {
+                    //Stop loading animation
+                    swipeRefreshLayout.setRefreshing(false);
+
+                    //Display error message
+                    Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+                }
+            }
+        }).start();
+    }
+
+    /*
+    ** Internal method
+     */
+    private void setupListView() {
+        //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
         //init adapter for our listView
-        final FriendsAdapter friendAdapter = new FriendsAdapter(mContext, friends);
-        listView.setAdapter(friendAdapter);
+        mAdapter = new FriendsAdapter(mContext);
+        listView.setAdapter(mAdapter);
 
         //add listener on the listView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ChatFragment.load(getFragmentManager(), friendAdapter.getItem(position));
+                Friend selectedFriend = mAdapter.getItem(position);
+                if (selectedFriend != null) {
+                    ChatFragment.load(getFragmentManager(), selectedFriend);
+                } else {
+                    Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+                }
             }
         });
+    }
+
+    private void populateFriendList() {
+        //Retrieve friend from ORM
+        List<Friend> friends = Select.from(Friend.class).list();
+
+        //Update adapter
+        mAdapter.clear();
+        mAdapter.addAll(friends);
     }
 
     /**
@@ -91,21 +152,20 @@ public class FriendListFragment extends BaseFragment {
     private static class FriendsAdapter extends ArrayAdapter<Friend> {
 
         private static final int resource = R.layout.item_friend_home;
-        private final Context mContext;
 
-        public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
-            super(context, resource, friendList);
-            this.mContext = context;
+        public FriendsAdapter(@NonNull final Context context) {
+            super(context, 0);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
             View view;
             FriendHolder friendHolder;
 
             if (convertView == null) {
-                LayoutInflater layoutInflater = ((Activity) mContext).getLayoutInflater();
+                LayoutInflater layoutInflater = ((AppCompatActivity) getContext()).getLayoutInflater();
                 view = layoutInflater.inflate(resource, parent, false);
 
                 friendHolder = new FriendHolder();
@@ -120,26 +180,30 @@ public class FriendListFragment extends BaseFragment {
 
             //get the currentFriend
             Friend currentFriend = getItem(position);
-            User currentFriendInfo = currentFriend.info();
+            if (currentFriend == null) {
+                return view;
+            }
 
+            //get the currentFriend information
+            User currentFriendInfo = currentFriend.info();
             if (currentFriendInfo == null) {
-                return null;
+                return view;
             }
 
             //display the friend name
             friendHolder.friendName.setText(currentFriendInfo.pseudo);
 
             //display a rounded placeHolder for friend's avatar
-            Resources resources = mContext.getResources();
+            Resources resources = getContext().getResources();
             Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
             RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
             roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
 
             //display friend's avatar
-            Glide.with(mContext)
+            Glide.with(getContext())
                     .load(currentFriendInfo.avatar)
                     .placeholder(roundedBitmapDrawable)
-                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .bitmapTransform(new CropCircleTransformation(getContext()))
                     .centerCrop()
                     .into(friendHolder.friendPicture);
 

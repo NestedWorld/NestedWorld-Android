@@ -115,6 +115,8 @@
     <!--Chat-->
     <string name="chat_title">Chat</string>
     <string name="chat_msg_button">Send</string>
+    <string name="chat_msg_start_chat">Select the friend you want to chat with</string>
+
 
     <!--Friend-->
     <string name="friend_defy">Defy</string>
