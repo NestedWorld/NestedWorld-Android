@@ -14,15 +14,19 @@ import android.support.v4.content.ContextCompat;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.event.socket.OnAskMessageEvent;
+import com.nestedworld.nestedworld.event.socket.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.event.socket.OnCombatStartMessageEvent;
+import com.nestedworld.nestedworld.event.socket.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterKoMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
 
@@ -127,8 +131,18 @@ public class SocketService extends Service {
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
                 break;
             case TYPE_COMBAT_MONSTER_KO:
+                //Parse response
+                MonsterKoMessage monsterKoMessage = new MonsterKoMessage(content);
+
+                //Send Event
+                EventBus.getDefault().post(new OnMonsterKoEvent(monsterKoMessage));
                 break;
             case TYPE_COMBAT_ATTACK_RECEIVED:
+                //Parse response
+                AttackReceiveMessage attackReveiveMessage = new AttackReceiveMessage(content);
+
+                //Send Event
+                EventBus.getDefault().post(new OnAttackReceiveEvent(attackReveiveMessage));
                 break;
             case TYPE_COMBAT_MONSTER_REPLACED:
                 break;

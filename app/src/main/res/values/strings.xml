@@ -105,9 +105,9 @@
     <!--Fight.combat-->
     <string name="combat_title">Fight</string>
     <string name="combat_msg_monsterLife">Life</string>
-    <string name="combat_msg_connection_impossible">Connection impossible</string>
     <string name="combat_msg_monster_lvl">Lvl: %d</string>
     <string name="combat_msg_monster_hp">Hp: %d</string>
+    <string name="combat_msg_send_atk_failed">Cannot send your attack, try again</string>
 
     <!--Fight.fightList-->
     <string name="fightList_title">Fight list</string>
@@ -118,7 +118,6 @@
     <string name="chat_title">Chat</string>
     <string name="chat_msg_button">Send</string>
     <string name="chat_msg_start_chat">Select the friend you want to chat with</string>
-
 
     <!--Friend-->
     <string name="friend_defy">Defy</string>
