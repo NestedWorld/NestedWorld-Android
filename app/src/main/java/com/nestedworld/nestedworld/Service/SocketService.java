@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.service;
 
-import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 
 import com.nestedworld.nestedworld.R;
@@ -157,11 +156,15 @@ public class SocketService extends Service {
                 .setColor(ContextCompat.getColor(this, R.color.apptheme_color))
                 .setContentText(title);
 
+        //Add action on notification
+        Intent intentTarget = new Intent(this, LaunchActivity.class);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1, intentTarget, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setContentIntent(resultPendingIntent);
+
         //Display notification
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, builder.build());
     }
-
 
     /*
     ** Binder
