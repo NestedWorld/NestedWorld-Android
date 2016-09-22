@@ -6,13 +6,19 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
+import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
+import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.ChatActivity;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
@@ -31,7 +37,11 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUp
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,13 +78,22 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //Inflate the menu
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        //Retrieve widget
+        MenuItem menuItem = menu.findItem(R.id.action_fight);
+
+
+        //Calculate the number of fight and update icon
+        //we don't have to check for 0 (see buildCounterDrawable())
+        int numberOfFight = Select.from(Combat.class).list().size();
+        menuItem.setIcon(DrawableHelper.buildCounterDrawable(this, numberOfFight, R.drawable.ic_action_sword));
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
                 startActivity(ProfileActivity.class);
@@ -96,6 +115,16 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         super.onDestroy();
         stopSocketService();
     }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
+        //We want to redraw the toolbar
+        invalidateOptionsMenu();
+    }
+
 
     /*
     ** private method
