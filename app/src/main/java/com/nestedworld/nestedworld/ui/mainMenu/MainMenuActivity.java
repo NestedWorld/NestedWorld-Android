@@ -148,11 +148,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private void initTabs() {
         final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
-        adapter.addFragment(getString(R.string.mainMenu_title_tab_home), new HomeFragment(), R.drawable.account_balance);
-        adapter.addFragment(getString(R.string.mainMenu_title_tab_monster), new MonstersFragment(), R.drawable.ic_action_ghost);
-        adapter.addFragment(getString(R.string.mainMenu_title_tab_map), new MapFragment(), R.drawable.ic_action_map);
-        adapter.addFragment(getString(R.string.mainMenu_title_tab_inventory), new ToolsFragment(), R.drawable.ic_action_sword);
-        adapter.addFragment(getString(R.string.mainMenu_title_tab_shop), new ShopFragment(), R.drawable.ic_action_cart);
+        adapter.addFragment("", new HomeFragment(), R.drawable.account_balance);
+        adapter.addFragment("", new MonstersFragment(), R.drawable.ic_action_ghost);
+        adapter.addFragment("", new MapFragment(), R.drawable.ic_action_map);
+        adapter.addFragment("", new ToolsFragment(), R.drawable.ic_action_sword);
+        adapter.addFragment("", new ShopFragment(), R.drawable.ic_action_cart);
 
         viewPager.setAdapter(adapter);
 
