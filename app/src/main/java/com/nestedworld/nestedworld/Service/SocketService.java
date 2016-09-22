@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.event.socket.OnAskMessageEvent;
 import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.event.socket.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -20,6 +21,7 @@ import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
@@ -107,15 +109,21 @@ public class SocketService extends Service {
             case TYPE_CHAT_MESSAGE_RECEIVED:
                 break;
             case TYPE_COMBAT_START:
+                //Parse response
                 StartMessage startMessage = new StartMessage(content);
+
+                //Send notification
                 EventBus.getDefault().post(new OnCombatStartMessageEvent(startMessage));
                 break;
             case TYPE_COMBAT_AVAILABLE:
+                //Parse response
                 AvailableMessage availableMessage = new AvailableMessage(content);
                 Combat combat = availableMessage.saveAsCombat();
 
+                //Display notification
                 displayNotification("Un combat est diposnible : " + combat.origin);
 
+                //Send event
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
                 break;
             case TYPE_COMBAT_MONSTER_KO:
@@ -145,6 +153,11 @@ public class SocketService extends Service {
             case TYPE_COMBAT_FLEE:
                 break;
             case TYPE_COMBAT_ASK:
+                //Parse response
+                AskMessage askMessage = new AskMessage(content);
+
+                //Send Event
+                EventBus.getDefault().post(new OnAskMessageEvent(askMessage));
                 break;
             case TYPE_RESULT:
                 break;
