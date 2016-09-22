@@ -1,18 +1,27 @@
 package com.nestedworld.nestedworld.service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 
+import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
+import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.msgpack.value.Value;
@@ -100,7 +109,10 @@ public class SocketService extends Service {
                 break;
             case TYPE_COMBAT_AVAILABLE:
                 AvailableMessage availableMessage = new AvailableMessage(content);
-                availableMessage.saveAsCombat();
+                Combat combat = availableMessage.saveAsCombat();
+
+                displayNotification("Un combat est diposnible : " + combat.origin);
+
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
                 break;
             case TYPE_COMBAT_MONSTER_KO:
@@ -135,6 +147,21 @@ public class SocketService extends Service {
                 break;
         }
     }
+
+    private void displayNotification(@NonNull final String title) {
+        //Build notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle(getString(R.string.app_name))
+                .setAutoCancel(true)
+                .setColor(ContextCompat.getColor(this, R.color.apptheme_color))
+                .setContentText(title);
+
+        //Display notification
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, builder.build());
+    }
+
 
     /*
     ** Binder
