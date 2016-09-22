@@ -17,7 +17,7 @@ public abstract class SocketMessageEvent<T extends  DefaultMessage> {
     /*
     ** public method
      */
-    public T getmMessage() {
+    public T getMessage() {
         return mMessage;
     }
 

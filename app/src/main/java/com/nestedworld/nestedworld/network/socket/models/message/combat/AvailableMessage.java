@@ -60,4 +60,11 @@ public class AvailableMessage extends DefaultMessage {
 
         return combat;
     }
+
+    /*
+    ** Getter (generated)
+     */
+    public String getMessage_id() {
+        return message_id;
+    }
 }

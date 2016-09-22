@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -18,16 +19,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.fragments.base.BaseFragment;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
+import com.orm.query.Condition;
 import com.orm.query.Select;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
@@ -36,11 +41,18 @@ import java.util.Map;
 
 import butterknife.Bind;
 
-public class FightListFragment extends BaseFragment {
+public class FightListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.listView_fightList)
     ListView listView;
+    @Bind(R.id.swipeRefreshLayout_fight_list)
+    SwipeRefreshLayout swipeRefreshLayout;
 
+    private FightAdapter mAdapter;
+
+    /*
+    ** Public static method
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new FightListFragment());
@@ -60,27 +72,49 @@ public class FightListFragment extends BaseFragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        
+
+        //Inuit ui
         changeActionBarName();
-        populateFightList();
+        setupAdapter();
+        setupSwipeRefresh();
+
+        //populate ui
+        onRefresh();
     }
 
     /*
     ** Private method
      */
-    private void populateFightList() {
-
-        //check if fragment hasn't been detach
+    private void setupAdapter() {
+        //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
+        mAdapter = new FightAdapter(mContext);
+        listView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onRefresh() {
+        //Start loading animation
+        swipeRefreshLayout.setRefreshing(true);
+
         //Retrieve list of available combat from Orm
         List<Combat> combats = Select.from(Combat.class).list();
 
-        //init adapter for our listView
-        final FightAdapter friendAdapter = new FightAdapter(mContext, combats);
-        listView.setAdapter(friendAdapter);
+        //Clear old content
+        mAdapter.clear();
+
+        //Add new content
+        mAdapter.addAll(combats);
+
+        //Stop loading animation
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void setupSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void changeActionBarName() {
@@ -100,20 +134,23 @@ public class FightListFragment extends BaseFragment {
     /*
     ** EventBus
      */
-
+    @Subscribe
+    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
+        AvailableMessage message = event.getMessage();
+        Combat newCombat = Select.from(Combat.class).where(Condition.prop("messageid").eq(message.getMessage_id())).first();
+        mAdapter.add(newCombat);
+    }
 
     /**
      * * Custom adapter for displaying fight on the listView
      **/
-    private static class FightAdapter extends ArrayAdapter<Combat> {
+    private final static class FightAdapter extends ArrayAdapter<Combat> {
 
         private static final String TAG = FightAdapter.class.getSimpleName();
         private static final int resource = R.layout.item_fight;
-        private final Context mContext;
 
-        FightAdapter(@NonNull final Context context, @NonNull final List<Combat> combatList) {
-            super(context, resource, combatList);
-            this.mContext = context;
+        FightAdapter(@NonNull final Context context) {
+            super(context, resource);
         }
 
         @NonNull
@@ -124,7 +161,7 @@ public class FightListFragment extends BaseFragment {
             FightHolder fightHolder;
 
             if (convertView == null) {
-                LayoutInflater layoutInflater = ((Activity) mContext).getLayoutInflater();
+                LayoutInflater layoutInflater = ((Activity) getContext()).getLayoutInflater();
                 view = layoutInflater.inflate(resource, parent, false);
 
                 fightHolder = new FightHolder();
@@ -171,7 +208,7 @@ public class FightListFragment extends BaseFragment {
             LogHelper.d(TAG, "Combat accepted: " + combat.toString());
 
             //Display the team selection
-            TeamSelectionFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), combat);
+            TeamSelectionFragment.load(((AppCompatActivity) getContext()).getSupportFragmentManager(), combat);
         }
 
         private void refuseCombat(@NonNull final Combat combat) {
@@ -197,13 +234,8 @@ public class FightListFragment extends BaseFragment {
 
                 @Override
                 public void onConnectionLost() {
-                    //Check if fragment hasn't been detach
-                    if (mContext == null) {
-                        return;
-                    }
-
                     //Display an error message
-                    Toast.makeText(mContext, R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.error_network_tryAgain, Toast.LENGTH_LONG).show();
                 }
 
                 @Override

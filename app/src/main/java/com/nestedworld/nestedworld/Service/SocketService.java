@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.event.socket.OnAvaialableMessageEvent;
+import com.nestedworld.nestedworld.event.socket.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
@@ -90,7 +90,7 @@ public class SocketService extends Service {
             case TYPE_COMBAT_AVAILABLE:
                 AvailableMessage availableMessage = new AvailableMessage(content);
                 availableMessage.saveAsCombat();
-                EventBus.getDefault().post(new OnAvaialableMessageEvent(availableMessage));
+                EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
                 break;
             case TYPE_COMBAT_MONSTER_KO:
                 break;
