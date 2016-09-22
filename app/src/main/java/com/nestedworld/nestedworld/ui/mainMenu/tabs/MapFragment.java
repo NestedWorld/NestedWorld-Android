@@ -41,6 +41,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
     ProgressView progressView;
 
     private NestedWorldMap mMap;
+    private long lastUpdate = -1;
 
     /*
     ** Public method
@@ -198,6 +199,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
+        if ((lastUpdate != -1) && (lastUpdate + 2000 < Calendar.getInstance().getTimeInMillis())) {
             LogHelper.d(TAG, "onLocationChanged > ignore");
             return;
         }

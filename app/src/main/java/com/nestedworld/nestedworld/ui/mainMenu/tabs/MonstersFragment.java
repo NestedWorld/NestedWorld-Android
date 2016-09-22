@@ -3,9 +3,12 @@ package com.nestedworld.nestedworld.ui.mainMenu.tabs;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +20,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
+import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.models.Monster;
 import com.orm.query.Select;
@@ -27,16 +36,21 @@ import com.orm.query.Select;
 import java.util.List;
 
 import butterknife.Bind;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MonstersFragment extends BaseFragment {
+public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public final static String FRAGMENT_NAME = MonstersFragment.class.getSimpleName();
 
     @Bind(R.id.listview_monsters_list)
     ListView listViewMonstersList;
+    @Bind(R.id.swipeRefreshLayout_monster_list)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private MonsterAdapter mAdapter;
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -55,36 +69,99 @@ public class MonstersFragment extends BaseFragment {
 
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
-        populateMonsters();
+        //init Adapter and ListView listener
+        setupListView();
+
+        //Populate adapter with monster in BDD
+        updateAdapterContent();
+
+        //Init swipe listener
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    /*
-    ** Utils
-     */
-    private void populateMonsters() {
-        //Retrieve monsters from ORM
-        final List<Monster> monsters = Select.from(Monster.class).list();
-
-        //check if fragment hasn't been detach
+    @Override
+    public void onRefresh() {
+        //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        //create adapter
-        final MonsterAdapter adapter = new MonsterAdapter(mContext, monsters);
+        //Start loading animation
+        swipeRefreshLayout.setRefreshing(true);
 
-        listViewMonstersList.setAdapter(adapter);
+        //Retrieve monster
+        new MonsterUpdater(mContext, new OnEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                //Update adapter
+                updateAdapterContent();
+
+                //Stop loading animation
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(KIND errorKind) {
+                @StringRes int errorRes;
+
+                switch (errorKind) {
+                    case NETWORK:
+                        errorRes = R.string.error_network;
+                        break;
+                    case SERVER:
+                        errorRes = R.string.error_unexpected;
+                        break;
+                    default:
+                        errorRes = R.string.error_unexpected;
+                        break;
+                }
+
+                //Check if fragment hasn't been detach
+                //And display error message
+                if (mContext != null) {
+                    Toast.makeText(mContext, errorRes, Toast.LENGTH_LONG).show();
+
+                    //Stop loading animation
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        }).start();
+    }
+
+    /*
+    ** Internal method
+     */
+    private void setupListView() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        mAdapter = new MonsterAdapter(mContext);
+        listViewMonstersList.setAdapter(mAdapter);
         listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Monster selectedMonster = monsters.get(position);
-                populateMonsterDetail(selectedMonster, view);
+                Monster selectedMonster = mAdapter.getItem(position);
+                if (selectedMonster != null) {
+                    populateMonsterDetail(selectedMonster, view);
+                }
             }
         });
     }
 
-    private void populateMonsterDetail(@NonNull Monster monster, @NonNull final View view) {
+    private void updateAdapterContent() {
+        //Retrieve monsters from ORM
+        final List<Monster> monsters = Select.from(Monster.class).list();
 
+        //Rove old content
+        mAdapter.clear();
+
+        //update query
+        mAdapter.addAll(monsters);
+    }
+
+    private void populateMonsterDetail(@NonNull Monster monster, @NonNull final View view) {
         //Create a popup for displaying monster information
         PopupWindow popup = new PopupWindow(mContext);
 
@@ -121,8 +198,8 @@ public class MonstersFragment extends BaseFragment {
         /*
         ** Constructor
          */
-        public MonsterAdapter(@NonNull Context context, @NonNull List<Monster> objects) {
-            super(context, 0, objects);
+        public MonsterAdapter(@NonNull Context context) {
+            super(context, 0);
         }
 
         /*
