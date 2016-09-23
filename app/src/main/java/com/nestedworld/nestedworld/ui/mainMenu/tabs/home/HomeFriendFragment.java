@@ -154,7 +154,14 @@ public class HomeFriendFragment extends BaseFragment {
 
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<AddFriendResponse> response) {
-                        Toast.makeText(mContext, R.string.tab_home_msg_addFriendFailed, Toast.LENGTH_LONG).show();
+
+                        String errorMessage = getString(R.string.tab_home_msg_addFriendFailed);
+
+                        if (response != null && response.body() != null && response.body().message != null) {
+                            errorMessage += " : " + response.body().message;
+                        }
+
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
             }

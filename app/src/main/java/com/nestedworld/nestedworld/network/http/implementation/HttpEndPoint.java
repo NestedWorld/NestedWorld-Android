@@ -21,7 +21,7 @@ public final class HttpEndPoint {
     //User related endpoint
     private final static String USER_PREFIX = "users/";
     public final static String USER_INFO = USER_PREFIX;
-    public final static String USER_FRIENDS = USER_PREFIX + "friends";
+    public final static String USER_FRIENDS = USER_PREFIX + "friends/";
     public final static String USER_MONSTERS = USER_PREFIX + "monsters";
 
     //Auth related endpoint
