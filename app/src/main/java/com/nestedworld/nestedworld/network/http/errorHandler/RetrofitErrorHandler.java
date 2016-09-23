@@ -30,7 +30,14 @@ public final class RetrofitErrorHandler {
     /*
     ** Public method
      */
+    @NonNull
     public static String getErrorMessage(@NonNull final Context context, @NonNull final Callback.KIND errorType, @NonNull final String defaultMessage, @Nullable Response response) {
+        String errorMessage = getErrorMessage(context, errorType, response);
+        return errorMessage == null ? defaultMessage : errorMessage;
+    }
+
+    @Nullable
+    public static String getErrorMessage(@NonNull final Context context, @NonNull final Callback.KIND errorType, @Nullable Response response) {
         //try to get error message from the response
         if (response != null) {
             try {
@@ -60,8 +67,10 @@ public final class RetrofitErrorHandler {
             default:
                 break;
         }
-        return defaultMessage;
+        return null;
     }
+
+
 
     /*
     ** Utils
