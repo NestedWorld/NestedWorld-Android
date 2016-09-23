@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,6 @@ import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpAp
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.orm.query.Condition;
 import com.orm.query.Select;
-import com.rey.material.widget.ListView;
 import com.rey.material.widget.ProgressView;
 
 import retrofit2.Response;
@@ -91,6 +91,7 @@ public class MonsterDetailDialog extends DialogFragment {
     }
 
     private void retrieveWidget(@NonNull final View view) {
+        //TODO should use butterknife (butterknife.bind(this, view)
         textViewName = (TextView) view.findViewById(R.id.textView_monsterName);
         textViewAttack = (TextView) view.findViewById(R.id.textView_monsterAttack);
         textViewDefence = (TextView) view.findViewById(R.id.textView_monsterDefence);
