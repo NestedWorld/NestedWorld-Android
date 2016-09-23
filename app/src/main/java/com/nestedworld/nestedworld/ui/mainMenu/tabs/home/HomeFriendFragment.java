@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.event.socket.combat.OnAskMessageEvent;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
@@ -154,13 +157,18 @@ public class HomeFriendFragment extends BaseFragment {
 
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<AddFriendResponse> response) {
-
+                        //Initialise a default error message
                         String errorMessage = getString(R.string.tab_home_msg_addFriendFailed);
 
-                        if (response != null && response.body() != null && response.body().message != null) {
-                            errorMessage += " : " + response.body().message;
+                        //Try to retrieve response.body.message
+                        String serverError = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, response);
+
+                        //If we have a serverError we complete our default error message
+                        if (serverError != null) {
+                            errorMessage += " : " + serverError;
                         }
 
+                        //Display the message
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
