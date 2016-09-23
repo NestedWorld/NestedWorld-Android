@@ -291,6 +291,15 @@ public class HomeFriendFragment extends BaseFragment {
                 return view;
             }
 
+            populateView(friendHolder, currentFriendInfo);
+
+            return view;
+        }
+
+        /*
+        ** Internal method
+         */
+        private void populateView(@NonNull final FriendHolder friendHolder, @NonNull final User currentFriendInfo) {
             //display the friend name
             friendHolder.friendName.setText(currentFriendInfo.pseudo);
 
@@ -312,32 +321,40 @@ public class HomeFriendFragment extends BaseFragment {
             friendHolder.buttonDefy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ServiceHelper.bindToSocketService(getContext(), new ServiceConnection() {
-                        @Override
-                        public void onServiceConnected(ComponentName name, IBinder service) {
-                            SocketService socketService = ((SocketService.LocalBinder) service).getService();
-                            NestedWorldSocketAPI nestedWorldSocketAPI = socketService.getApiInstance();
-
-                            if (nestedWorldSocketAPI != null) {
-                                nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
-                                Toast.makeText(getContext(), R.string.tabHome_msg_requestFightSend, Toast.LENGTH_LONG).show();
-                            } else {
-                                onServiceDisconnected(null);
-                            }
-                        }
-
-                        @Override
-                        public void onServiceDisconnected(ComponentName name) {
-                            //Display an error message
-                            Toast.makeText(getContext(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    onDefyFriendClick(currentFriendInfo);
                 }
             });
-
-            return view;
         }
 
+        private void onDefyFriendClick(@NonNull final User currentFriendInfo) {
+            //Retrieve SocketService for using NestedworldSocketAPI
+            ServiceHelper.bindToSocketService(getContext(), new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    //Retrieve NestedworldSocketApi from service instance
+                    SocketService socketService = ((SocketService.LocalBinder) service).getService();
+                    NestedWorldSocketAPI nestedWorldSocketAPI = socketService.getApiInstance();
+
+                    if (nestedWorldSocketAPI != null) {
+                        //Send request and display message
+                        nestedWorldSocketAPI.sendRequest(new AskRequest(currentFriendInfo.pseudo), SocketMessageType.MessageKind.TYPE_COMBAT_ASK);
+                        Toast.makeText(getContext(), R.string.tabHome_msg_requestFightSend, Toast.LENGTH_LONG).show();
+                    } else {
+                        onServiceDisconnected(null);
+                    }
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    //Display an error message
+                    Toast.makeText(getContext(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        /*
+        ** Inner class
+         */
         private static class FriendHolder {
             public ImageView friendPicture;
             public TextView friendName;
