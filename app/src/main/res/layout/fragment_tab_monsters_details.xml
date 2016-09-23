@@ -65,7 +65,7 @@
                     style="@style/TypefaceStyle.ProximaNova"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tabMonster_msg_monsterHp"/>
+                    android:text="@string/tabMonster_msg_monsterSpeed"/>
 
             </LinearLayout>
 
