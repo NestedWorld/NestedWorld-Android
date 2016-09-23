@@ -4,8 +4,10 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
+import com.orm.SugarRecord;
 
 import java.io.IOException;
 
@@ -21,7 +23,7 @@ public abstract class EntityUpdater<T> extends Thread {
     /*
     ** Constructor
      */
-    public EntityUpdater(@NonNull final Context context, @NonNull final OnEntityUpdated callback) {
+    public EntityUpdater(@NonNull final Context context, @Nullable final OnEntityUpdated callback) {
         mContext = context;
         mCallback = callback;
     }
@@ -74,20 +76,24 @@ public abstract class EntityUpdater<T> extends Thread {
     }
 
     private void onError(@NonNull final OnEntityUpdated.KIND kind) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                mCallback.onError(kind);
-            }
-        });
+        if (mCallback != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    mCallback.onError(kind);
+                }
+            });
+        }
     }
 
     private void onSuccess() {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                mCallback.onSuccess();
-            }
-        });
+        if (mCallback != null) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    mCallback.onSuccess();
+                }
+            });
+        }
     }
 }

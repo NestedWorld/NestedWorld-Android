@@ -87,11 +87,11 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             public void onSuccess() {
                 //Check if fragment hasn't been detach
                 if (mContext != null) {
-                    //Stop loading animation
-                    swipeRefreshLayout.setRefreshing(false);
-
                     //Update adapter
                     populateFriendList();
+
+                    //Stop loading animation
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 

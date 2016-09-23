@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.helpers.database.updater.entity;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.event.http.OnAttacksUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
@@ -16,7 +17,7 @@ import retrofit2.Response;
 
 public class AttacksUpdater extends EntityUpdater<AttacksResponse> {
 
-    public AttacksUpdater(@NonNull Context context, @NonNull OnEntityUpdated callback) {
+    public AttacksUpdater(@NonNull Context context, @Nullable OnEntityUpdated callback) {
         super(context, callback);
     }
 
