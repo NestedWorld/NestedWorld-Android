@@ -30,6 +30,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.event.socket.combat.OnAskMessageEvent;
+import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.models.Friend;
@@ -45,6 +47,7 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.AskReque
 import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
+import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,6 +63,10 @@ public class HomeFriendFragment extends BaseFragment {
 
     @Bind(R.id.listView_home_friends)
     ListView listView;
+    @Bind(R.id.progressView)
+    ProgressView progressView;
+
+    private FriendsAdapter mAdapter;
 
     /*
     ** Life cycle
@@ -75,6 +82,7 @@ public class HomeFriendFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         }
 
+        setupListView();
         populateFriendList();
     }
 
@@ -107,21 +115,53 @@ public class HomeFriendFragment extends BaseFragment {
         }
     }
 
-
     /*
     ** Private method
      */
-    private void populateFriendList() {
-        //Check if fragment hasn't been detach
+    private void setupListView() {
+        //Check if framgnent hasn't been detach
         if (mContext == null) {
             return;
         }
 
+        //init adapter for our listView
+        mAdapter = new FriendsAdapter(mContext);
+        listView.setAdapter(mAdapter);
+    }
+
+    private void updateFriendList() {
+        //Check if framgnent hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Start loading animation
+        progressView.start();
+
+        new FriendsUpdater(mContext, new OnEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                populateFriendList();
+
+                //Stop loading animation
+                progressView.stop();
+            }
+
+            @Override
+            public void onError(KIND errorKind) {
+                //Stop loading animation
+                progressView.stop();
+            }
+        }).start();
+    }
+
+    private void populateFriendList() {
+        //Retrieve entity from orm
         List<Friend> friends = Select.from(Friend.class).list();
 
-        //init adapter for our listView
-        final FriendsAdapter friendAdapter = new FriendsAdapter(mContext, friends);
-        listView.setAdapter(friendAdapter);
+        //Remove old entitu and add new one
+        mAdapter.clear();
+        mAdapter.addAll(friends);
     }
 
     /*
@@ -148,11 +188,24 @@ public class HomeFriendFragment extends BaseFragment {
         alertDialog.setPositiveButton(getString(R.string.tabHome_msg_addFriend), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                //Start loading animation
+                progressView.start();
+
+                //Retrieve input
                 String pseudo = editTextPseudo.getText().toString();
+
+                //Send request
                 NestedWorldHttpApi.getInstance(mContext).addFriend(pseudo).enqueue(new Callback<AddFriendResponse>() {
                     @Override
                     public void onSuccess(Response<AddFriendResponse> response) {
+                        //Update Orm and adapter
+                        updateFriendList();
+
+                        //Display message
                         Toast.makeText(mContext, R.string.tab_home_msg_addFriendSuccess, Toast.LENGTH_LONG).show();
+
+                        //Stop loading animation
+                        progressView.stop();
                     }
 
                     @Override
@@ -170,6 +223,9 @@ public class HomeFriendFragment extends BaseFragment {
 
                         //Display the message
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+
+                        //Stop loading animation
+                        progressView.stop();
                     }
                 });
             }
@@ -195,8 +251,8 @@ public class HomeFriendFragment extends BaseFragment {
         /*
         ** Constructor
          */
-        public FriendsAdapter(@NonNull final Context context, @NonNull final List<Friend> friendList) {
-            super(context, resource, friendList);
+        public FriendsAdapter(@NonNull final Context context) {
+            super(context, resource);
         }
 
         /*

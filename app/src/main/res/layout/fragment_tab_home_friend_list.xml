@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/listView_home_friends"
@@ -17,5 +19,15 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="8dip"
         android:src="@drawable/ic_action_add"/>
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/progressView"
+        android:layout_width="48dip"
+        android:layout_height="48dip"
+        android:layout_centerInParent="true"
+        app:pv_autostart="false"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
 
 </RelativeLayout>
