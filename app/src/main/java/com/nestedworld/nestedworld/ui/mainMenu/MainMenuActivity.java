@@ -37,6 +37,7 @@ import com.nestedworld.nestedworld.ui.profil.ProfileActivity;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -66,6 +67,10 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         setUpToolbar();
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
         progressView.start();
         updateDataBase();
