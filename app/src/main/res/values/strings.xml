@@ -63,6 +63,7 @@
     <string name="tabMonster_msg_monsterAttack">Attack : %d</string>
     <string name="tabMonster_msg_monsterDefence">Defense : %d</string>
     <string name="tabMonster_msg_monsterHp">Hp : %s</string>
+    <string name="tabMonster_msg_monsterSpeed">Speed : %s</string>
 
     <!--MainMenu.tab.home-->
     <string name="tabHome_title_creditsNumber">Credits</string>
