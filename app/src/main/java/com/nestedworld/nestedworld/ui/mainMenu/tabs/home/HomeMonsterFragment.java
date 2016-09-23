@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.models.UserMonster;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.mainMenu.tabs.monster.MonsterDetailDialog;
 import com.orm.query.Select;
 
 import java.util.List;
@@ -46,6 +48,18 @@ public class HomeMonsterFragment extends BaseFragment {
     private void populateMonstersList() {
         List<UserMonster> monsters = Select.from(UserMonster.class).list();
         gridView.setAdapter(new UserMonsterAdapter(monsters));
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UserMonster selectedUserMonster = (UserMonster) parent.getItemAtPosition(position);
+                if (selectedUserMonster != null) {
+                    Monster selectedMonster = selectedUserMonster.info();
+                    if (selectedMonster != null) {
+                        MonsterDetailDialog.newInstance(selectedMonster).show(getChildFragmentManager(), TAG);
+                    }
+                }
+            }
+        });
     }
 
     /*
