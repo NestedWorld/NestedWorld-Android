@@ -77,6 +77,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         initSocketService();
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -123,6 +125,10 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         stopSocketService();
+
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /*

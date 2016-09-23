@@ -139,9 +139,17 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
     /*
-    ** Eventbus
-     */
+        ** Eventbus
+         */
     @Subscribe
     public void onNewCombatStart(OnCombatStartMessageEvent event) {
         //Check if fragment hasn't been detach

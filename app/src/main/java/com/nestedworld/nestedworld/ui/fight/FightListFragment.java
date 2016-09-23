@@ -83,9 +83,17 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         onRefresh();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
     /*
-    ** Private method
-     */
+        ** Private method
+         */
     private void setupAdapter() {
         //Check if fragment hasn't been detach
         if (mContext == null) {

@@ -84,9 +84,17 @@ public class HomeFriendFragment extends BaseFragment {
         populateFriendList();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
     /*
-    ** EventBus
-     */
+        ** EventBus
+         */
     @Subscribe
     public void onAskMessage(OnAskMessageEvent messageEvent) {
         //Check if fragment hasn't been detach

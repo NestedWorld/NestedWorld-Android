@@ -99,9 +99,17 @@ public class FightFragment extends BaseFragment {
         initDrawingGestureView(rootView);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
     /*
-    ** EventBus
-     */
+        ** EventBus
+         */
     @Subscribe
     public void onAttackReceive(OnAttackReceiveEvent event) {
         AttackReceiveMessage message = event.getMessage();
