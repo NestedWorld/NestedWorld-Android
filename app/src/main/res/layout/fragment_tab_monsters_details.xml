@@ -70,10 +70,19 @@
 
         </LinearLayout>
 
+        <TextView
+            style="@style/TypefaceStyle.ProximaNova.bold"
+            android:id="@+id/textview_monster_no_attack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Your monster didn't have any attack"/>
+
         <ListView
             android:id="@+id/listview_monter_attack"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

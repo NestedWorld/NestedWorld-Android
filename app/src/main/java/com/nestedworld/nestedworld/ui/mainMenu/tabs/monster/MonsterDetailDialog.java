@@ -20,19 +20,30 @@ import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit2.Response;
 
 public class MonsterDetailDialog extends DialogFragment {
 
-    private Monster mMonster;
-    private TextView textViewName;
-    private TextView textViewAttack;
-    private TextView textViewDefence;
-    private TextView textViewHp;
-    private TextView textViewSpeed;
-    private ProgressView progressView;
-    private ListView listView;
+    @Bind(R.id.textView_monsterName)
+    TextView textViewName;
+    @Bind(R.id.textView_monsterAttack)
+    TextView textViewAttack;
+    @Bind(R.id.textView_monsterDefence)
+    TextView textViewDefence;
+    @Bind(R.id.textView_monsterHp)
+    TextView textViewHp;
+    @Bind(R.id.textView_monsterSpeed)
+    TextView textViewSpeed;
+    @Bind(R.id.progressView)
+    ProgressView progressView;
+    @Bind(R.id.textview_monster_no_attack)
+    TextView textViewMonterNoAttack;
+    @Bind(R.id.listview_monter_attack)
+    ListView listView;
 
+    private Monster mMonster;
     /*
     ** Static method
      */
@@ -55,6 +66,7 @@ public class MonsterDetailDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Retrieve monster by parsing fragment args
         parseArg();
     }
 
@@ -66,11 +78,21 @@ public class MonsterDetailDialog extends DialogFragment {
 
         if (mMonster != null) {
             getDialog().setTitle(mMonster.name);
-            retrieveWidget(view);
+
+            //Retrieve widget
+            ButterKnife.bind(this, view);
+
+            //Start loading animation
+            progressView.start();
+
+            //Populate
             populateView();
             populateAttack();
         } else {
+            //Display error message
             Toast.makeText(getActivity(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
+
+            //Close dialog
             getDialog().dismiss();
         }
 
@@ -89,17 +111,6 @@ public class MonsterDetailDialog extends DialogFragment {
                 mMonster = monster;
             }
         }
-    }
-
-    private void retrieveWidget(@NonNull final View view) {
-        //TODO should use butterknife (butterknife.bind(this, view)
-        textViewName = (TextView) view.findViewById(R.id.textView_monsterName);
-        textViewAttack = (TextView) view.findViewById(R.id.textView_monsterAttack);
-        textViewDefence = (TextView) view.findViewById(R.id.textView_monsterDefence);
-        textViewHp = (TextView) view.findViewById(R.id.textView_monsterHp);
-        textViewSpeed = (TextView) view.findViewById(R.id.textView_monsterSpeed);
-        progressView = (ProgressView) view.findViewById(R.id.progressView);
-        listView = (ListView) view.findViewById(R.id.listview_monter_attack);
     }
 
     private void populateView() {
@@ -126,9 +137,13 @@ public class MonsterDetailDialog extends DialogFragment {
 
                         if (response != null && response.body() != null) {
                             if (response.body().attacks.isEmpty()) {
-                                //TODO display message "your monster didn't have any attack"
+                                textViewMonterNoAttack.setVisibility(View.VISIBLE);
+                                listView.setVisibility(View.INVISIBLE);
                             } else {
-                                //TODO display monster attack inside listview
+                                textViewMonterNoAttack.setVisibility(View.GONE);
+                                listView.setVisibility(View.VISIBLE);
+
+                                //TODO populate listview
                             }
                         } else {
                             onError(KIND.UNEXPECTED, response);
