@@ -71,7 +71,6 @@ public final class RetrofitErrorHandler {
     }
 
 
-
     /*
     ** Utils
      */

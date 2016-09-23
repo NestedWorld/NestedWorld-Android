@@ -32,6 +32,7 @@ public class MonsterDetailDialog extends DialogFragment {
     private TextView textViewSpeed;
     private ProgressView progressView;
     private ListView listView;
+
     /*
     ** Static method
      */
