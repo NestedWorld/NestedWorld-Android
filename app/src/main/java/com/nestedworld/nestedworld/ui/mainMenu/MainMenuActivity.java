@@ -29,7 +29,7 @@ import com.nestedworld.nestedworld.ui.chat.ChatActivity;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
 import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.MapFragment;
-import com.nestedworld.nestedworld.ui.mainMenu.tabs.MonstersFragment;
+import com.nestedworld.nestedworld.ui.mainMenu.tabs.monster.MonstersFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.ShopFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.ToolsFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;

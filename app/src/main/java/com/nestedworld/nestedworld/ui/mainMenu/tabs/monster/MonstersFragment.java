@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.mainMenu.tabs;
+package com.nestedworld.nestedworld.ui.mainMenu.tabs.monster;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -139,7 +139,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Monster selectedMonster = mAdapter.getItem(position);
                 if (selectedMonster != null) {
-                    populateMonsterDetail(selectedMonster, view);
+                    MonsterDetailDialog.newInstance(selectedMonster).show(getChildFragmentManager(), TAG);
                 }
             }
         });
@@ -154,36 +154,6 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
 
         //update query
         mAdapter.addAll(monsters);
-    }
-
-    private void populateMonsterDetail(@NonNull Monster monster, @NonNull final View view) {
-        //Create a popup for displaying monster information
-        PopupWindow popup = new PopupWindow(mContext);
-
-        if (mContext == null) {
-            return;
-        }
-        //Create inflater
-        View layout = ((AppCompatActivity) mContext).getLayoutInflater().inflate(R.layout.fragment_tab_monsters_details, null);
-
-        //Populate inflater
-        ((TextView) layout.findViewById(R.id.textView_monsterName)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterName), monster.name));
-        ((TextView) layout.findViewById(R.id.textView_monsterAttack)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), monster.attack));
-        ((TextView) layout.findViewById(R.id.textView_monsterDefence)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), monster.defense));
-        ((TextView) layout.findViewById(R.id.textView_monsterHp)).setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), monster.hp));
-
-        //Populate popup with inflater
-        popup.setContentView(layout);
-
-        // Set content width and height
-        popup.setHeight(LayoutParams.WRAP_CONTENT);
-        popup.setWidth(LayoutParams.WRAP_CONTENT);
-
-        // Closes the popup window when touch outside of it - when looses focus
-        popup.setOutsideTouchable(true);
-        popup.setFocusable(true);
-
-        popup.showAsDropDown(view);
     }
 
     /**
