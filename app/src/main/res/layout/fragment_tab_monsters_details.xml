@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Your monster didn't have any attack"/>
+            android:text="@string/monsterDetail_no_attack"/>
 
         <ListView
             android:id="@+id/listview_monter_attack"

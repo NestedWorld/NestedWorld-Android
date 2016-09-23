@@ -48,6 +48,9 @@
     <string name="profile_msg_avatar">Avatar: %s</string>
     <string name="profile_msg_logout">Log out</string>
 
+    <!-- MonsterDetail-->
+    <string name="monsterDetail_no_attack">This monster didn\'t have any attack</string>
+
     <!--MainMenu-->
     <string name="mainMenu_title_tab_home">Home</string>
     <string name="mainMenu_title_tab_inventory">Inventory</string>
