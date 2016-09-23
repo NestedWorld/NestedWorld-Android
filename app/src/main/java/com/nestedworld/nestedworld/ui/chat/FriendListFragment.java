@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.friend;
+package com.nestedworld.nestedworld.ui.chat;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -29,7 +29,6 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdate
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.chat.ChatFragment;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
