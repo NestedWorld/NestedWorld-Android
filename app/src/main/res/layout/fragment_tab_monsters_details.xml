@@ -2,18 +2,19 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
     <LinearLayout
         android:padding="8dip"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:padding="8dip"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -71,6 +72,7 @@
         </LinearLayout>
 
         <TextView
+            android:padding="8dip"
             style="@style/TypefaceStyle.ProximaNova.bold"
             android:id="@+id/textview_monster_no_attack"
             android:layout_width="wrap_content"

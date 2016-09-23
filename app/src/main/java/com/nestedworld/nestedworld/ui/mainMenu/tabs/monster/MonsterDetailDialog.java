@@ -138,7 +138,7 @@ public class MonsterDetailDialog extends DialogFragment {
                         if (response != null && response.body() != null) {
                             if (response.body().attacks.isEmpty()) {
                                 textViewMonterNoAttack.setVisibility(View.VISIBLE);
-                                listView.setVisibility(View.INVISIBLE);
+                                listView.setVisibility(View.GONE);
                             } else {
                                 textViewMonterNoAttack.setVisibility(View.GONE);
                                 listView.setVisibility(View.VISIBLE);
