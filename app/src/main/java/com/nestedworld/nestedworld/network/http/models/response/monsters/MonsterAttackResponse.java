@@ -7,4 +7,6 @@ import java.util.List;
 public class MonsterAttackResponse {
     @Expose
     public List<String> attacks;
+
+
 }

@@ -21,6 +21,7 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdate
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUpdater;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionManager;
 import com.nestedworld.nestedworld.models.Combat;

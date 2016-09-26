@@ -118,7 +118,7 @@ public class MonsterDetailDialog extends DialogFragment {
         textViewAttack.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), mMonster.attack));
         textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), mMonster.defense));
         textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mMonster.hp));
-        textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mMonster.speed));
+        textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mMonster.speed));
     }
 
     private void populateAttack() {
@@ -128,7 +128,7 @@ public class MonsterDetailDialog extends DialogFragment {
         //Retrieve monster spell
         NestedWorldHttpApi
                 .getInstance(getContext())
-                .getMonsterAttack(mMonster.getId())
+                .getMonsterAttack(mMonster.monster_id)
                 .enqueue(new Callback<MonsterAttackResponse>() {
                     @Override
                     public void onSuccess(Response<MonsterAttackResponse> response) {
