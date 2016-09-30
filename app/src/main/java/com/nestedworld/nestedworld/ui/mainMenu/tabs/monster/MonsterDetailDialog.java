@@ -1,17 +1,22 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.monster;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Text;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.models.Attack;
 import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -19,6 +24,8 @@ import com.nestedworld.nestedworld.network.http.models.response.monsters.Monster
 import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -142,8 +149,7 @@ public class MonsterDetailDialog extends DialogFragment {
                             } else {
                                 textViewMonterNoAttack.setVisibility(View.GONE);
                                 listView.setVisibility(View.VISIBLE);
-
-                                //TODO populate listview
+                                listView.setAdapter(new AttackAdapter(getContext(), response.body().attacks));
                             }
                         } else {
                             onError(KIND.UNEXPECTED, response);
@@ -156,5 +162,56 @@ public class MonsterDetailDialog extends DialogFragment {
                         progressView.stop();
                     }
                 });
+    }
+
+    private static class AttackAdapter extends ArrayAdapter<Attack> {
+
+        @LayoutRes
+        private final static int layoutRes = R.layout.item_attack;
+
+        /*
+        ** Constructor
+         */
+        public AttackAdapter(@NonNull final Context context, @NonNull final List<Attack> objects) {
+            super(context, layoutRes, objects);
+        }
+
+        /*
+        ** Life cycle
+         */
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            View view = convertView;
+
+            //Check if an existing view is being reused, otherwise inflate the view
+            if (view == null) {
+                view = LayoutInflater.from(getContext()).inflate(layoutRes, parent, false);
+            }
+
+            //Get current attack
+            Attack currentAttack = getItem(position);
+            if (currentAttack == null) {
+                return view;
+            }
+
+            populateView(view, currentAttack);
+
+            return view;
+        }
+
+        /*
+        ** Internal method
+         */
+        private void populateView(@NonNull final View view, @NonNull final Attack attack) {
+            TextView textViewAttackType = (TextView) view.findViewById(R.id.textview_attackType);
+            TextView textViewAttackName = (TextView) view.findViewById(R.id.textView_attackName);
+
+            String attackType = attack.type == null ? "unknown" : attack.type;
+            String attackName = attack.name == null ? "unknown" : attack.name;
+
+            textViewAttackType.setText(String.format(getContext().getString(R.string.item_attack_msg_attackType), attackType));
+            textViewAttackName.setText(String.format(getContext().getString(R.string.item_attack_msg_attackName), attackName));
+        }
     }
 }

@@ -172,15 +172,15 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             View view = convertView;
 
+            //Check if an existing view is being reused, otherwise inflate the view
+            if (view == null) {
+                view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
+            }
+
             //Get current monster
             final Monster monster = getItem(position);
             if (monster == null) {
                 return view;
-            }
-
-            //Check if an existing view is being reused, otherwise inflate the view
-            if (view == null) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
             }
 
             //Populate name & lvl
