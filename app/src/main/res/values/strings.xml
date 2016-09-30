@@ -1,6 +1,5 @@
 <resources>
     <string name="app_token" translatable="false">test</string>
-    <string name="app_name" translatable="false">NestedWorld</string>
     <string name="desc" translatable="false">desc</string>
 
     <!--Error message-->

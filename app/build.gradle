@@ -23,10 +23,36 @@ android {
             minSdkVersion 16
         }
     }
+    signingConfigs {
+        release {
+
+        }
+        debug {
+
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            buildConfigField "com.nestedworld.nestedworld.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.network.NetworkConstant.Environement.PROD"
+            resValue "string", "app_name", "Nestedworld"
+            buildConfigField "Boolean", "LOG", 'false'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {//Same as dev (without app_name and environement)
+            buildConfigField "Boolean", "LOG", 'true'
+            versionNameSuffix "-SNAPSHOT"
+            signingConfig signingConfigs.debug
+        }
+        with_back_dev {
+            initWith debug // inherit from debug (attribute and signing configurations).
+            buildConfigField "com.nestedworld.nestedworld.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.network.NetworkConstant.Environement.DEV"
+            resValue "string", "app_name", "Nestedworld Dev"
+        }
+        with_back_prod {
+            initWith debug // inherit from debug (attribute and signing configurations).
+            buildConfigField "com.nestedworld.nestedworld.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.network.NetworkConstant.Environement.PROD"
+            resValue "string", "app_name", "Nestedworld Prod"
         }
     }
 }
