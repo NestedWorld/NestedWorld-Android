@@ -31,6 +31,12 @@ android {
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+ext {
+    supportLibVersion = '24.2.1'
+    retrofitVersion = '2.1.0'
+    okHttpVersion = '3.4.1'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -41,16 +47,18 @@ dependencies {
     //Annotation replacing findViewById()
     compile 'com.jakewharton:butterknife:7.0.1'
 
-    //Material design support
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
+    //Support library
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+
+    //Material design support helper
     compile 'com.github.rey5137:material:1.2.2'
 
     //API
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'//send request
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'//use Json converter
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'//display log
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"//send request
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"//use Json converter
+    compile "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"//display log
+    compile "com.squareup.okhttp3:okhttp:${okHttpVersion}"
 
     //ORM
     //compile 'com.github.satyan:sugar:1.5'
