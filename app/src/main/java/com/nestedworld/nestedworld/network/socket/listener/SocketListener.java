@@ -7,5 +7,7 @@ public interface SocketListener {
 
     void onSocketDisconnected();
 
+    void onSocketListening();
+
     void onMessageReceived(ImmutableValue message);
 }

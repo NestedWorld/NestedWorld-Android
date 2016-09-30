@@ -137,13 +137,15 @@ public final class SocketManager implements Runnable {
         }
 
         try {
+            /*Send notification*/
+            notifySocketListening();
+
             LogHelper.d(TAG, "Listening on socket...");
             while (true) {
                 if (messageUnpacker != null) {
                     ImmutableValue message = messageUnpacker.unpackValue();
                     notifyMessageReceived(message);
                 }
-
             }
 
         } catch (IOException | MessageInsufficientBufferException e) {
@@ -157,7 +159,7 @@ public final class SocketManager implements Runnable {
 
         try {
             messagePacker.packValue(message);
-            messagePacker.flush();
+            //messagePacker.flush();
         } catch (IOException e) {
             LogHelper.d(TAG, "Can't send message");
             e.printStackTrace();
@@ -169,13 +171,26 @@ public final class SocketManager implements Runnable {
      */
     //Thread safe (callback in main thread)
     private void notifySocketConnected() {
+        LogHelper.d(TAG, "notifySocketConnected");
+
         for (final SocketListener listener : listeners) {
             listener.onSocketConnected();
         }
     }
 
+    //Thread safe (callback in main thread)
+    private void notifySocketListening() {
+        LogHelper.d(TAG, "notifySocketListening");
+
+        for (final SocketListener listener : listeners) {
+            listener.onSocketListening();
+        }
+    }
+
     //Thread unsafe (callback in current thread)
     private void notifySocketDisconnected() {
+        LogHelper.d(TAG, "notifySocketDisconnected");
+
         for (final SocketListener listener : listeners) {
             listener.onSocketDisconnected();
         }

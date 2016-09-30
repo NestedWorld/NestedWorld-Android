@@ -75,11 +75,14 @@ public final class NestedWorldSocketAPI implements SocketListener {
     ** Public method
      */
     public void addListener(@NonNull final ConnectionListener connectionListener) {
+        LogHelper.d(TAG, "addListener");
+
         //Add listener to the list of listener
         mConnectionListener.add(connectionListener);
 
         //If we have an authenticated connection, we directly call onConnectionReady()
         if (isAuth) {
+            LogHelper.d(TAG, "addListener > calling onConnectionReady");
             connectionListener.onConnectionReady(mSingleton);
         }
     }
@@ -104,10 +107,14 @@ public final class NestedWorldSocketAPI implements SocketListener {
     private void authRequest() {
         Session session = SessionManager.get().getSession();
         if (session != null) {
+            LogHelper.d(TAG, "authRequest > sending");
+
             AuthRequest authRequest = new AuthRequest(session.authToken);
             sendMessage(authRequest.serialise(),
                     SocketMessageType.MessageKind.TYPE_AUTHENTICATE,
                     SocketMessageType.messageType.getValueFromKey(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
+        } else {
+            LogHelper.d(TAG, "authRequest > session null");
         }
     }
 
@@ -173,19 +180,30 @@ public final class NestedWorldSocketAPI implements SocketListener {
      */
     @Override
     public void onSocketConnected() {
-        LogHelper.d(TAG, "Successfully got a connection");
+        LogHelper.d(TAG, "onSocketConnected");
 
         //Connection success, we can init the singleton
         mSingleton = NestedWorldSocketAPI.this;
 
-        //Auth the connection
-        authRequest();
+        //!\ Do not send request here see onSocketListening) /!\
     }
 
     @Override
     public void onSocketDisconnected() {
+        LogHelper.d(TAG, "onSocketDisconnected");
+
         mSingleton = null;
         notifySocketDisconnected();
+    }
+
+    @Override
+    public void onSocketListening() {
+        LogHelper.d(TAG, "onSocketListening");
+
+        //The socket is listening, we can send our request
+
+        //Auth the connection
+        authRequest();
     }
 
     @Override
@@ -248,6 +266,5 @@ public final class NestedWorldSocketAPI implements SocketListener {
             }
         });
     }
-
 }
 

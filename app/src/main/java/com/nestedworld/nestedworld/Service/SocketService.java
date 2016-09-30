@@ -105,6 +105,7 @@ public class SocketService extends Service {
      */
     @Nullable
     public NestedWorldSocketAPI getApiInstance() {
+        LogHelper.d(TAG, "returning instance (isNull=" + (mNestedWorldSocketAPI == null) + ")");
         return mNestedWorldSocketAPI;
     }
 
