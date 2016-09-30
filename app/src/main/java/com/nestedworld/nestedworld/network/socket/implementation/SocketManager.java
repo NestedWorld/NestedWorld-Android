@@ -17,11 +17,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.LinkedList;
 
-public final class SocketManager implements Runnable {
+public final class SocketManager {
     private final String TAG = getClass().getSimpleName();
     private final String hostname;
     private final int port;
-    private final Thread listeningThread;/* Stores the Thread used to listen for incoming data. */
     private final LinkedList<SocketListener> listeners; /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private int timeOut;
     private Socket socket;
@@ -43,7 +42,6 @@ public final class SocketManager implements Runnable {
         this.timeOut = timeOut;
 
         this.socket = new Socket();
-        this.listeningThread = new Thread(this);
         this.listeners = new LinkedList<>();
 
         this.messagePacker = null;
@@ -87,8 +85,8 @@ public final class SocketManager implements Runnable {
             /*Send notification*/
             notifySocketConnected();
 
-            /*Init reading listeningThread*/
-            listeningThread.start();
+            /*Init a listeningThread*/
+            startListeningTask();
         } catch (IOException | IllegalArgumentException e) {
             socket = null;
             messagePacker = null;
@@ -130,46 +128,60 @@ public final class SocketManager implements Runnable {
      * Listens for messages while the socket is connected.
 	 * use the connect() method before.
      */
-    @Override
-    public void run() {
-        if (socket == null || !socket.isConnected()) {
-            throw new UnsupportedOperationException("You should call connect() before");
-        }
-
-        try {
-            /*Send notification*/
-            notifySocketListening();
-
-            LogHelper.d(TAG, "Listening on socket...");
-            while (true) {
-                if (messageUnpacker != null) {
-                    ImmutableValue message = messageUnpacker.unpackValue();
-                    notifyMessageReceived(message);
-                }
-            }
-
-        } catch (IOException | MessageInsufficientBufferException e) {
-            LogHelper.d(TAG, "Connection close by server");
-            notifySocketDisconnected();
-        }
+    public synchronized void send(@NonNull final MapValue message) {
+        LogHelper.d(TAG, "Sending: " + message);
+        startSendingTask(message);
     }
 
-    public synchronized void send(@NonNull MapValue message) {
-        LogHelper.d(TAG, "Sending: " + message);
+    /*
+    ** Internal method
+     */
+    private void startSendingTask(@NonNull final MapValue message) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    messagePacker.packValue(message);
+                    messagePacker.flush();
+                } catch (IOException e) {
+                    LogHelper.d(TAG, "Can't send message");
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 
-        try {
-            messagePacker.packValue(message);
-            //messagePacker.flush();
-        } catch (IOException e) {
-            LogHelper.d(TAG, "Can't send message");
-            e.printStackTrace();
-        }
+    private void startListeningTask() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (socket == null || !socket.isConnected()) {
+                    throw new UnsupportedOperationException("You should call connect() before");
+                }
+
+                try {
+                /*Send notification*/
+                    notifySocketListening();
+
+                    LogHelper.d(TAG, "Listening on socket...");
+                    while (true) {
+                        if (messageUnpacker != null) {
+                            ImmutableValue message = messageUnpacker.unpackValue();
+                            notifyMessageReceived(message);
+                        }
+                    }
+
+                } catch (IOException | MessageInsufficientBufferException e) {
+                    LogHelper.d(TAG, "Connection close by server");
+                    notifySocketDisconnected();
+                }
+            }
+        }).start();
     }
 
     /*
     ** Utils
      */
-    //Thread safe (callback in main thread)
     private void notifySocketConnected() {
         LogHelper.d(TAG, "notifySocketConnected");
 
@@ -178,7 +190,6 @@ public final class SocketManager implements Runnable {
         }
     }
 
-    //Thread safe (callback in main thread)
     private void notifySocketListening() {
         LogHelper.d(TAG, "notifySocketListening");
 
@@ -187,7 +198,6 @@ public final class SocketManager implements Runnable {
         }
     }
 
-    //Thread unsafe (callback in current thread)
     private void notifySocketDisconnected() {
         LogHelper.d(TAG, "notifySocketDisconnected");
 
@@ -196,7 +206,6 @@ public final class SocketManager implements Runnable {
         }
     }
 
-    //Thread unsafe (callback in current thread)
     private void notifyMessageReceived(@NonNull final ImmutableValue message) {
         LogHelper.d(TAG, "Message receive: " + message.toString());
 
