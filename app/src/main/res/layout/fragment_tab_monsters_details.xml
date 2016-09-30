@@ -16,6 +16,7 @@
             android:padding="8dip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -81,13 +82,13 @@
             android:text="@string/monsterDetail_no_attack"/>
 
         <ListView
+            android:padding="8dip"
             android:id="@+id/listview_monter_attack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"/>
 
     </LinearLayout>
-
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progressView"
