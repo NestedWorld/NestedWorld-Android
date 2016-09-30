@@ -5,7 +5,7 @@ import android.util.Log;
 import com.nestedworld.nestedworld.BuildConfig;
 
 public final class LogHelper {
-    private static final boolean IS_ENABLE = BuildConfig.DEBUG;
+    private static final boolean IS_ENABLE = BuildConfig.LOG;
 
     private LogHelper() {
         //Empty constructor for avoiding this class to be construct

@@ -1,11 +1,20 @@
 package com.nestedworld.nestedworld.network.http.implementation;
 
 import com.nestedworld.nestedworld.BuildConfig;
+import com.nestedworld.nestedworld.network.NetworkConstant;
 
 public final class HttpEndPoint {
 
     private final static String API_VERSION = "v1/";
-    private final static String BASE_URL = BuildConfig.DEBUG ? "http://eip-api-dev.kokakiwi.net/" : "http://eip-api.kokakiwi.net/";
+
+    private final static String DEV_URL = "http://eip-api-dev.kokakiwi.net/";
+    private final static String PROD_URL = "http://eip-api.kokakiwi.net/";
+
+    private final static String BASE_URL =
+            (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_URL
+            : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
+            : DEV_URL;
+
     public final static String BASE_END_POINT = BASE_URL + API_VERSION;
 
     //Monster related endpoint
