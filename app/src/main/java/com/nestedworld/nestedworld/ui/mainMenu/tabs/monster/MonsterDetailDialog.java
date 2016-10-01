@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.monster;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -14,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.models.Attack;
 import com.nestedworld.nestedworld.models.Monster;
@@ -25,6 +25,7 @@ import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -69,6 +70,13 @@ public class MonsterDetailDialog extends DialogFragment {
     /*
     ** Life cycle
      */
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setTitle("My Title");
+        return dialog;    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +89,7 @@ public class MonsterDetailDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Create view
-        View view = inflater.inflate(R.layout.fragment_tab_monsters_details, container, false);
+        View view = inflater.inflate(R.layout.dialog_monsterdetail, container, false);
 
         if (mMonster != null) {
             getDialog().setTitle(mMonster.name);
@@ -94,7 +102,7 @@ public class MonsterDetailDialog extends DialogFragment {
 
             //Populate
             populateView();
-            populateAttack();
+            retrieveMonsterAttack();
         } else {
             //Display error message
             Toast.makeText(getActivity(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
@@ -128,7 +136,31 @@ public class MonsterDetailDialog extends DialogFragment {
         textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mMonster.speed));
     }
 
-    private void populateAttack() {
+    private void populateMonsterAttack(ArrayList<MonsterAttackResponse.MonsterAttack> monsterAttacks){
+        if (monsterAttacks.isEmpty()) {
+            textViewMonterNoAttack.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+        } else {
+            textViewMonterNoAttack.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+
+            List<Attack> attacks = new ArrayList<>();
+            for (MonsterAttackResponse.MonsterAttack monsterAttack : monsterAttacks) {
+                attacks.add(monsterAttack.infos);
+            }
+
+            if (listView.getAdapter() == null) {
+                listView.setAdapter(new AttackAdapter(getContext(), attacks));
+            } else {
+                AttackAdapter attackAdapter = (AttackAdapter) listView.getAdapter();
+                attackAdapter.clear();
+                attackAdapter.addAll(attacks);
+            }
+
+        }
+    }
+
+    private void retrieveMonsterAttack() {
         //Start loading animation
         progressView.start();
 
@@ -143,14 +175,7 @@ public class MonsterDetailDialog extends DialogFragment {
                         progressView.stop();
 
                         if (response != null && response.body() != null) {
-                            if (response.body().attacks.isEmpty()) {
-                                textViewMonterNoAttack.setVisibility(View.VISIBLE);
-                                listView.setVisibility(View.GONE);
-                            } else {
-                                textViewMonterNoAttack.setVisibility(View.GONE);
-                                listView.setVisibility(View.VISIBLE);
-                                listView.setAdapter(new AttackAdapter(getContext(), response.body().attacks));
-                            }
+                            populateMonsterAttack(response.body().attacks);
                         } else {
                             onError(KIND.UNEXPECTED, response);
                         }
