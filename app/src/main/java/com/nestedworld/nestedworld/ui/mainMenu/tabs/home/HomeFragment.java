@@ -15,6 +15,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +60,8 @@ public class HomeFragment extends BaseFragment {
     ViewPager viewPager;
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
+    @Bind(R.id.imageView_user_background)
+    ImageView imageViewUserBackground;
 
     /*
     ** Public method
@@ -123,13 +126,10 @@ public class HomeFragment extends BaseFragment {
 
         //Display user information
         Resources res = getResources();
-        textViewUserLevel.setText(String.format(res.getString(R.string.tabHome_msg_userLvl),
-                user.level));
-        textViewAllyOnline.setText(String.format(res.getString(R.string.tabHome_msg_allyOnline),
-                Friend.getNumberOfAllyOnline()));
+        textViewUserLevel.setText(String.format(res.getString(R.string.tabHome_msg_userLvl), user.level));
+        textViewAllyOnline.setText(String.format(res.getString(R.string.tabHome_msg_allyOnline), Friend.getNumberOfAllyOnline()));
         textViewUsername.setText(user.pseudo);
-        textViewMonsterCaptured.setText(String.format(res.getString(R.string.tabHome_msg_monsterCaptured),
-                Select.from(UserMonster.class).list().size()));
+        textViewMonsterCaptured.setText(String.format(res.getString(R.string.tabHome_msg_monsterCaptured), Select.from(UserMonster.class).list().size()));
 
         //TODO display credits and areaCaptured
         textViewCreditsNumber.setText("0");
@@ -148,6 +148,12 @@ public class HomeFragment extends BaseFragment {
                 .bitmapTransform(new CropCircleTransformation(mContext))
                 .centerCrop()
                 .into(imageViewUser);
+
+        //Display user background
+        Glide.with(mContext)
+                .load(user.background)
+                .placeholder(R.color.apptheme_color)
+                .into(imageViewUserBackground);
     }
 
     /**

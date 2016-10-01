@@ -78,8 +78,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         initSocketService();
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
