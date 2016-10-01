@@ -270,6 +270,8 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                 sendAcceptRequest();
             }
         });
+
+        button_select_monster.setVisibility(View.GONE);
     }
 
     private void sendAcceptRequest() {
