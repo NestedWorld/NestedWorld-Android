@@ -138,8 +138,15 @@ public class ViewPagerWithIndicator extends LinearLayout {
             mLeftArrow.setImageResource(mLeftArrowDrawable);
             mRightArrow.setImageResource(mRightArrowDrawable);
 
-            mRightArrow.setLayoutParams(new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight));
-            mLeftArrow.setLayoutParams(new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight));
+            //Set right arrow param
+            LinearLayout.LayoutParams rightArrowParams = new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight);
+            rightArrowParams.gravity = Gravity.CENTER;
+            mRightArrow.setLayoutParams(rightArrowParams);
+
+            //Set left arrow param
+            LinearLayout.LayoutParams leftArrowParams = new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight);
+            leftArrowParams.gravity = Gravity.CENTER;
+            mLeftArrow.setLayoutParams(leftArrowParams);
 
             //Init arrow+viewPager container
             arrowContainer = new LinearLayout(getContext());
