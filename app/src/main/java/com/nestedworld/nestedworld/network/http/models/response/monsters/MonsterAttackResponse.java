@@ -8,5 +8,10 @@ import java.util.List;
 
 public class MonsterAttackResponse {
     @Expose
-    public ArrayList<Attack> attacks;
+    public ArrayList<MonsterAttack> attacks;
+
+    public static class MonsterAttack {
+        @Expose
+        public Attack infos;
+    }
 }
