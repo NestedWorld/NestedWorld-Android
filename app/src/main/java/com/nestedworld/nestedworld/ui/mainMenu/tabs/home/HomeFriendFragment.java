@@ -52,16 +52,16 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 public class HomeFriendFragment extends BaseFragment {
 
-    @Bind(R.id.listView_home_friends)
+    @BindView(R.id.listView_home_friends)
     ListView listView;
-    @Bind(R.id.progressView)
+    @BindView(R.id.progressView)
     ProgressView progressView;
 
     private FriendsAdapter mAdapter;

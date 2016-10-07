@@ -52,21 +52,21 @@ import org.msgpack.value.ValueFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
-    @Bind(R.id.ViewPagerArrowIndicator)
+    @BindView(R.id.ViewPagerArrowIndicator)
     ViewPagerWithIndicator viewPagerArrowIndicator;
-    @Bind(R.id.button_select_monster)
+    @BindView(R.id.button_select_monster)
     Button button_select_monster;
-    @Bind(R.id.tablerow_selected_monster)
+    @BindView(R.id.tablerow_selected_monster)
     TableRow tableRow_selected_monster;
-    @Bind(R.id.button_go_fight)
+    @BindView(R.id.button_go_fight)
     Button button_go_fight;
-    @Bind(R.id.progressView)
+    @BindView(R.id.progressView)
     ProgressView progressView;
 
     private List<UserMonster> mUserMonsters;

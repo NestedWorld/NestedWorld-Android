@@ -32,7 +32,7 @@ import com.orm.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -42,25 +42,25 @@ public class HomeFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
 
-    @Bind(R.id.textView_username)
+    @BindView(R.id.textView_username)
     TextView textViewUsername;
-    @Bind(R.id.textView_userLevel)
+    @BindView(R.id.textView_userLevel)
     TextView textViewUserLevel;
-    @Bind(R.id.textView_creditsNumber)
+    @BindView(R.id.textView_creditsNumber)
     TextView textViewCreditsNumber;
-    @Bind(R.id.textView_monsterCaptured)
+    @BindView(R.id.textView_monsterCaptured)
     TextView textViewMonsterCaptured;
-    @Bind(R.id.textView_areaCaptured)
+    @BindView(R.id.textView_areaCaptured)
     TextView textViewAreaCaptured;
-    @Bind(R.id.textView_allyOnline)
+    @BindView(R.id.textView_allyOnline)
     TextView textViewAllyOnline;
-    @Bind(R.id.imageView_user)
+    @BindView(R.id.imageView_user)
     ImageView imageViewUser;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
-    @Bind(R.id.sliding_tabs)
+    @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-    @Bind(R.id.imageView_user_background)
+    @BindView(R.id.imageView_user_background)
     ImageView imageViewUserBackground;
 
     /*

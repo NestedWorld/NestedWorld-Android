@@ -23,11 +23,11 @@ import com.orm.query.Select;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class HomeMonsterFragment extends BaseFragment {
 
-    @Bind(R.id.gridLayout_home_monsters)
+    @BindView(R.id.gridLayout_home_monsters)
     GridView gridView;
 
     /*

@@ -28,27 +28,27 @@ import com.rey.material.widget.ProgressView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
 public class MonsterDetailDialog extends DialogFragment {
 
-    @Bind(R.id.textView_monsterName)
+    @BindView(R.id.textView_monsterName)
     TextView textViewName;
-    @Bind(R.id.textView_monsterAttack)
+    @BindView(R.id.textView_monsterAttack)
     TextView textViewAttack;
-    @Bind(R.id.textView_monsterDefence)
+    @BindView(R.id.textView_monsterDefence)
     TextView textViewDefence;
-    @Bind(R.id.textView_monsterHp)
+    @BindView(R.id.textView_monsterHp)
     TextView textViewHp;
-    @Bind(R.id.textView_monsterSpeed)
+    @BindView(R.id.textView_monsterSpeed)
     TextView textViewSpeed;
-    @Bind(R.id.progressView)
+    @BindView(R.id.progressView)
     ProgressView progressView;
-    @Bind(R.id.textview_monster_no_attack)
+    @BindView(R.id.textview_monster_no_attack)
     TextView textViewMonterNoAttack;
-    @Bind(R.id.listview_monter_attack)
+    @BindView(R.id.listview_monter_attack)
     ListView listView;
 
     private Monster mMonster;

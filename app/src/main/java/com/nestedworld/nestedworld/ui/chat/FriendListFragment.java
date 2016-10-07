@@ -35,16 +35,16 @@ import com.rey.material.widget.ProgressView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class FriendListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.listView_chat_list)
+    @BindView(R.id.listView_chat_list)
     ListView listView;
-    @Bind(R.id.progressView)
+    @BindView(R.id.progressView)
     ProgressView progressView;
-    @Bind(R.id.swipeRefreshLayout_friend_list)
+    @BindView(R.id.swipeRefreshLayout_friend_list)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private FriendsAdapter mAdapter;

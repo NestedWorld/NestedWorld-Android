@@ -23,7 +23,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSock
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Response;
 
@@ -34,23 +34,23 @@ public class ProfileFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = ProfileFragment.class.getSimpleName();
 
-    @Bind(R.id.textView_gender)
+    @BindView(R.id.textView_gender)
     TextView textViewGender;
-    @Bind(R.id.textView_pseudo)
+    @BindView(R.id.textView_pseudo)
     TextView textViewPseudo;
-    @Bind(R.id.textView_birthDate)
+    @BindView(R.id.textView_birthDate)
     TextView textViewBirthDate;
-    @Bind(R.id.textView_city)
+    @BindView(R.id.textView_city)
     TextView textViewCity;
-    @Bind(R.id.textView_registeredAt)
+    @BindView(R.id.textView_registeredAt)
     TextView textViewRegisteredAt;
-    @Bind(R.id.textView_email)
+    @BindView(R.id.textView_email)
     TextView textViewEmail;
-    @Bind(R.id.textView_backgroundUrl)
+    @BindView(R.id.textView_backgroundUrl)
     TextView textViewBackgroundUrl;
-    @Bind(R.id.textView_level)
+    @BindView(R.id.textView_level)
     TextView textViewLevel;
-    @Bind(R.id.textView_avatar)
+    @BindView(R.id.textView_avatar)
     TextView textViewAvatar;
 
     /*

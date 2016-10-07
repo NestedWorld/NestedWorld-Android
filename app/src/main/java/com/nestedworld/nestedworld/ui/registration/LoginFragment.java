@@ -21,7 +21,7 @@ import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
 import com.rey.material.widget.ProgressView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Response;
 
@@ -32,11 +32,11 @@ public class LoginFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = LoginFragment.class.getSimpleName();
 
-    @Bind(R.id.editText_userEmail)
+    @BindView(R.id.editText_userEmail)
     EditText etEmail;
-    @Bind(R.id.editText_userPassword)
+    @BindView(R.id.editText_userPassword)
     EditText etPassword;
-    @Bind(R.id.progressView)
+    @BindView(R.id.progressView)
     ProgressView progressView;
 
     /*

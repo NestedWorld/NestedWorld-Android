@@ -19,15 +19,15 @@ import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
     private static Friend mFriend;
-    @Bind(R.id.editText_chat)
+    @BindView(R.id.editText_chat)
     EditText editTextChat;
-    @Bind(R.id.listView_chat)
+    @BindView(R.id.listView_chat)
     ListView listViewChat;
     private ArrayAdapter<String> itemAdapter;
 

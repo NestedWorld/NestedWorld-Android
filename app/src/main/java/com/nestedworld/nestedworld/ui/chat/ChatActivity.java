@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.ui.chat;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -9,10 +8,10 @@ import android.support.v7.widget.Toolbar;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class ChatActivity extends BaseAppCompatActivity {
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     /*

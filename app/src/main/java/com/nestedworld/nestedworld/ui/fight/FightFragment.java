@@ -41,16 +41,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class FightFragment extends BaseFragment {
 
     private final ArrayList<Integer> mPositions = new ArrayList<>();
-    @Bind(R.id.progressView)
+    @BindView(R.id.progressView)
     ProgressView progressView;
-    @Bind(R.id.layout_player)
+    @BindView(R.id.layout_player)
     LinearLayout layoutPlayer;
-    @Bind(R.id.layout_opponent)
+    @BindView(R.id.layout_opponent)
     LinearLayout layoutOpponent;
 
     private DrawingGestureView mDrawingGestureView;

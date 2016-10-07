@@ -27,7 +27,7 @@ import com.rey.material.widget.ProgressView;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -36,9 +36,9 @@ public class MapFragment extends BaseFragment implements LocationListener {
 
     public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
 
-    @Bind(R.id.mapView)
+    @BindView(R.id.mapView)
     MapView mMapView;
-    @Bind(R.id.progressView)
+    @BindView(R.id.progressView)
     ProgressView progressView;
 
     private NestedWorldMap mMap;

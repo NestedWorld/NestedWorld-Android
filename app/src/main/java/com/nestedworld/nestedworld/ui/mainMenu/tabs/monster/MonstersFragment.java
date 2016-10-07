@@ -29,7 +29,7 @@ import com.orm.query.Select;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,9 +38,9 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
 
     public final static String FRAGMENT_NAME = MonstersFragment.class.getSimpleName();
 
-    @Bind(R.id.listview_monsters_list)
+    @BindView(R.id.listview_monsters_list)
     ListView listViewMonstersList;
-    @Bind(R.id.swipeRefreshLayout_monster_list)
+    @BindView(R.id.swipeRefreshLayout_monster_list)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private MonsterAdapter mAdapter;

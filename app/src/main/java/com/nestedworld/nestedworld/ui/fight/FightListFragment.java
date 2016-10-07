@@ -41,13 +41,13 @@ import org.msgpack.value.ValueFactory;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class FightListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.listView_fightList)
+    @BindView(R.id.listView_fightList)
     ListView listView;
-    @Bind(R.id.swipeRefreshLayout_fight_list)
+    @BindView(R.id.swipeRefreshLayout_fight_list)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private FightAdapter mAdapter;
