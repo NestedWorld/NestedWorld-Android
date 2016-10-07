@@ -21,6 +21,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSock
 import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Abstract class for Fragment
@@ -32,6 +33,8 @@ public abstract class BaseFragment extends Fragment {
     protected final String TAG = getClass().getSimpleName();
     @Nullable
     protected Context mContext;
+    @Nullable
+    private Unbinder mUnbinder;
 
     /*
     ** Method every child will have to implement
@@ -57,7 +60,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutResource(), container, false);
-        ButterKnife.bind(this, rootView);
+        mUnbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -71,7 +74,10 @@ public abstract class BaseFragment extends Fragment {
     @CallSuper
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
     }
 
     @Override

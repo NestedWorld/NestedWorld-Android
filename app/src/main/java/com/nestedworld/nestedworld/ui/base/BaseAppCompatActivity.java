@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -20,7 +21,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
-
+    @Nullable
+    private Unbinder mUnbinder;
     /*
     ** Method that every child will have to implement
      */
@@ -47,13 +49,21 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(getLayoutResource());
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
 
         try {
             Trace.beginSection(TAG + " init");
             init(savedInstanceState);
         } finally {
             Trace.endSection();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
         }
     }
 
