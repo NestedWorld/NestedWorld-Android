@@ -1,6 +1,8 @@
 package com.nestedworld.nestedworld.ui.fight;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
@@ -22,7 +24,7 @@ public class FightProcessActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void init(@Nullable Bundle savedInstanceState) {
         setUpToolbar();
         FightListFragment.load(getSupportFragmentManager());
     }

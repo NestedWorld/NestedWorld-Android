@@ -153,10 +153,16 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
 
         private static final int resource = R.layout.item_friend_home;
 
+        /*
+        ** Constructor
+         */
         public FriendsAdapter(@NonNull final Context context) {
             super(context, 0);
         }
 
+        /*
+        ** Life cycle
+         */
         @NonNull
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {

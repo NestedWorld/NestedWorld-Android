@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.ui.mainMenu;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -65,7 +66,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void init(@Nullable Bundle savedInstanceState) {
         setUpToolbar();
 
         if (!EventBus.getDefault().isRegistered(this)) {
