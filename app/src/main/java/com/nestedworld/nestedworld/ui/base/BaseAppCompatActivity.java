@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Trace;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -27,19 +30,20 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      * it will be use under onCreate()
      * as setContentView(getLayoutResource());
      */
+    @LayoutRes
     protected abstract int getLayoutResource();
 
     /**
      * init the activity here
      * This method is equivalent to onCreate()
      */
-    protected abstract void init(Bundle savedInstanceState);
+    protected abstract void init(@Nullable Bundle savedInstanceState);
 
     /*
     ** Life cycle
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(getLayoutResource());
@@ -82,19 +86,15 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         return TAG;
     }
 
-    protected void startActivity(Class clazz, Bundle bundle) {
-        try {
-            final Intent intent = new Intent(this, clazz);
-            if (bundle != null) {
-                intent.putExtras(bundle);
-            }
-            startActivity(intent);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    protected void startActivity(@NonNull final Class clazz, @Nullable Bundle bundle) {
+        final Intent intent = new Intent(this, clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
         }
+        startActivity(intent);
     }
 
-    protected void startActivity(Class clazz) {
+    protected void startActivity(@NonNull final Class clazz) {
         startActivity(clazz, null);
     }
 }
