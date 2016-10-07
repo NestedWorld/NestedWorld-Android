@@ -22,6 +22,7 @@ import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
+import com.nestedworld.nestedworld.gcm.NestedWorldGcm;
 import com.nestedworld.nestedworld.helpers.gcm.GcmHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.database.models.Combat;
@@ -64,7 +65,6 @@ public class SocketService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, final int flags, final int startId) {
-
         //Display some log
         LogHelper.d(TAG, "onStartCommand()");
 
@@ -114,6 +114,9 @@ public class SocketService extends Service {
     ** Internal method
      */
     private void parseMessage(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+        //Handle notification
+        NestedWorldGcm.onMessageReceived(this, kind, content);
+
         //Do internal job
         switch (kind) {
             case TYPE_CHAT_USER_JOINED:
@@ -147,10 +150,7 @@ public class SocketService extends Service {
             case TYPE_COMBAT_AVAILABLE:
                 //Parse response
                 AvailableMessage availableMessage = new AvailableMessage(content);
-                Combat combat = availableMessage.saveAsCombat();
-
-                //Display notification
-                GcmHelper.displayNotification(this, "Un combat est diposnible : " + combat.origin, LaunchActivity.class);
+                availableMessage.saveAsCombat();
 
                 //Send event
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
@@ -179,6 +179,7 @@ public class SocketService extends Service {
                 EventBus.getDefault().post(new OnCombatEndEvent(combatEndMessage));
                 break;
             case TYPE_GEO_PLACES_CAPTURED:
+                //Who know ?
                 break;
             case TYPE_AUTHENTICATE:
                 //Shouldn't use it (handle by socketManager)
