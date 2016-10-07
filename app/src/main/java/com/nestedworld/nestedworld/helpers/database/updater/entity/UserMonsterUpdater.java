@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.event.http.OnUserMonstersUpdatedEvent;
+import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.models.UserMonster;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;

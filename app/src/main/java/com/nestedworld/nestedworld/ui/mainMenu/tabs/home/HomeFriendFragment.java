@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.event.socket.combat.OnAskMessageEvent;
+import com.nestedworld.nestedworld.events.socket.combat.OnAskMessageEvent;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
