@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.ui.mainMenu.tabs.monster;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -60,7 +61,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     @Override
-    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         //init Adapter and ListView listener
         setupListView();
 

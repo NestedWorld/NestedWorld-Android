@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public class HomeMonsterFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         populateMonstersList();
     }
 

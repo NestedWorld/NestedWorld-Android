@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.ui.chat;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +56,7 @@ public class ChatFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
 
         mFriend = Friend.findById(Friend.class, getArguments().getLong("FRIEND_ID"));
 

@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -62,7 +63,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
     }
 
     @Override
-    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
 
         //we start the loading animation
         if (progressView != null) {
