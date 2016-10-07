@@ -49,6 +49,6 @@ public class LaunchActivity extends BaseAppCompatActivity {
     ** Utils
      */
     private boolean checkForExistingSession() {
-        return (SessionManager.get().getSession() != null);
+        return (SessionManager.getSession() != null);
     }
 }

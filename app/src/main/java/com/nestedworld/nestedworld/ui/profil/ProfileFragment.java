@@ -76,7 +76,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
         //Retrieve the session
-        Session session = SessionManager.get().getSession();
+        Session session = SessionManager.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
             onFatalError();
@@ -128,7 +128,7 @@ public class ProfileFragment extends BaseFragment {
         });
 
         //remove user
-        SessionManager.get().deleteSession();
+        SessionManager.deleteSession();
 
         //avoid leak with the static instance
         NestedWorldHttpApi.reset();

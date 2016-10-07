@@ -103,7 +103,7 @@ public final class NestedWorldHttpApi {
 
                 Request.Builder requestBuilder = chain.request().newBuilder();
 
-                Session session = SessionManager.get().getSession();
+                Session session = SessionManager.getSession();
                 if (session != null) {
                     requestBuilder.addHeader("X-User-Email", session.email);
                     requestBuilder.addHeader("Authorization", session.authToken);

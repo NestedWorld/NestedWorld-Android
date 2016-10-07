@@ -89,7 +89,7 @@ public class LoginFragment extends BaseFragment {
                 progressView.stop();
 
                 //Create a new session
-                SessionManager.get().newSession(email, password, response.body().token);
+                SessionManager.newSession(email, password, response.body().token);
 
                 //display the mainMenu and stop the launchActivity
                 startActivity(MainMenuActivity.class);

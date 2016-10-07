@@ -14,23 +14,11 @@ import com.orm.query.Select;
 public final class SessionManager {
     //private static field
     private final static String TAG = SessionManager.class.getSimpleName();
-    //singleton
-    private static SessionManager mUserManager = null;
 
     /*
     ** Constructor
      */
     private SessionManager() {
-    }
-
-    /*
-    ** singleton
-     */
-    public static SessionManager get() {
-        if (mUserManager == null) {
-            mUserManager = new SessionManager();
-        }
-        return mUserManager;
     }
 
     /*

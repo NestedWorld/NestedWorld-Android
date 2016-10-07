@@ -209,7 +209,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
                 //remove user
-                SessionManager.get().deleteSession();
+                SessionManager.deleteSession();
 
                 //Go to launch screen
                 startActivity(LaunchActivity.class);

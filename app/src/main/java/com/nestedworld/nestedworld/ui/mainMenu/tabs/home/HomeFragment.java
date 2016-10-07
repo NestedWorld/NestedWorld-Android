@@ -109,7 +109,7 @@ public class HomeFragment extends BaseFragment {
 
     private void populateUserInfo() {
         //Retrieve the session
-        Session session = SessionManager.get().getSession();
+        Session session = SessionManager.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
             onFatalError();

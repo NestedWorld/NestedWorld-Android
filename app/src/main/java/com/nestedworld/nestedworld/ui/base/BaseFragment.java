@@ -99,7 +99,7 @@ public abstract class BaseFragment extends Fragment {
         NestedWorldSocketAPI.reset();
 
         //clean session
-        SessionManager.get().deleteSession();
+        SessionManager.deleteSession();
 
         Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 

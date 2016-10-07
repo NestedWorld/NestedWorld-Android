@@ -105,7 +105,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     ** Private method
      */
     private void authRequest() {
-        Session session = SessionManager.get().getSession();
+        Session session = SessionManager.getSession();
         if (session != null) {
             LogHelper.d(TAG, "authRequest > sending");
 

@@ -130,7 +130,7 @@ public class CreateAccountFragment extends BaseFragment {
                 }
 
                 //Create a new session
-                SessionManager.get().newSession(email, password, response.body().token);
+                SessionManager.newSession(email, password, response.body().token);
 
                 //display MainMenu and stop this activity
                 startActivity(MainMenuActivity.class);
