@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -92,6 +94,12 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     /*
     ** Utils
      */
+    protected boolean isUiBinded() {
+        boolean isBinded = mUnbinder != null;
+        LogHelper.d(TAG, "isUiBinded > " + isBinded);
+        return isBinded;
+    }
+
     public String toString() {
         return TAG;
     }
