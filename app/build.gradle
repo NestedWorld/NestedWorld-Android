@@ -78,7 +78,7 @@ dependencies {
     compile "com.android.support:design:${supportLibVersion}"
 
     //Material design support helper
-    compile 'com.github.rey5137:material:1.2.2'
+    compile 'com.github.rey5137:material:1.2.4'
 
     //API
     compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"//send request
@@ -91,7 +91,7 @@ dependencies {
     compile 'com.github.satyan:sugar:b16e65326a'
 
     //MessagePack (real time API)
-    compile 'org.msgpack:msgpack-core:0.8.9'
+    compile 'org.msgpack:msgpack-core:0.8.11'
 
     //Customize typeface
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
