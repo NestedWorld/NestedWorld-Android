@@ -55,7 +55,7 @@ public class ChatFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
 
         mFriend = Friend.findById(Friend.class, getArguments().getLong("FRIEND_ID"));
 

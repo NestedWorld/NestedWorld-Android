@@ -62,7 +62,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
 
         //we start the loading animation
         if (progressView != null) {

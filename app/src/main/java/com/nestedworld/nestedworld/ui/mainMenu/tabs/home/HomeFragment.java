@@ -81,7 +81,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
         initTabs();
         populateUserInfo();
     }

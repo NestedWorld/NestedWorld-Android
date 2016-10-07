@@ -80,7 +80,7 @@ public class FightFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(final View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull final View rootView, @NonNull Bundle savedInstanceState) {
         //start loading animation
         progressView.start();
 

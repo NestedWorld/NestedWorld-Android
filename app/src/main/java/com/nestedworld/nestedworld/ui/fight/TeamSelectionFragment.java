@@ -101,7 +101,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }

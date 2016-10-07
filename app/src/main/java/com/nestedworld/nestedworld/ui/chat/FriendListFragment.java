@@ -66,7 +66,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
         setupListView();
         populateFriendList();
         swipeRefreshLayout.setOnRefreshListener(this);

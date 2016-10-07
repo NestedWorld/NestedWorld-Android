@@ -3,6 +3,8 @@ package com.nestedworld.nestedworld.ui.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -44,14 +46,14 @@ public abstract class BaseFragment extends Fragment {
     /**
      * init the fragment, this is the equivalent of onCreateView
      */
-    protected abstract void init(View rootView, Bundle savedInstanceState);
+    protected abstract void init(@NonNull final View rootView, @Nullable final Bundle savedInstanceState);
 
     /*
     ** Life cycle
      */
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutResource(), container, false);
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -64,18 +66,21 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
+    @CallSuper
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
 
     @Override
+    @CallSuper
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
     }
 
     @Override
+    @CallSuper
     public void onDetach() {
         super.onDetach();
         mContext = null;
@@ -112,6 +117,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void startActivity(Class clazz) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         final Intent intent = new Intent(mContext, clazz);
         startActivity(intent);
     }

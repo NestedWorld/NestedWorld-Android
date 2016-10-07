@@ -59,7 +59,7 @@ public class LoginFragment extends BaseFragment {
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
 
     }
 

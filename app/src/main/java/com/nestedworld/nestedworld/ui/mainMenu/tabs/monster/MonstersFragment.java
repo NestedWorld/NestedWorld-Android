@@ -60,7 +60,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     @Override
-    protected void init(View rootView, Bundle savedInstanceState) {
+    protected void init(@NonNull View rootView, @NonNull Bundle savedInstanceState) {
         //init Adapter and ListView listener
         setupListView();
 
