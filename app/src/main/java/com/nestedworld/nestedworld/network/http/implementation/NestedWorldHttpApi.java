@@ -51,18 +51,17 @@ public final class NestedWorldHttpApi {
     private static NestedWorldHttpApi mSingleton;
     private final String TAG = getClass().getSimpleName();
     private ApiInterface mClient;
-    private Context mContext;
 
     /*
     ** Constructor
      */
-    private NestedWorldHttpApi(@NonNull final Context context) {
+    private NestedWorldHttpApi() {
         if (mSingleton != null) {
             return;
         }
 
         //init API
-        init(context);
+        init();
     }
 
     /*
@@ -70,7 +69,7 @@ public final class NestedWorldHttpApi {
      */
     public static NestedWorldHttpApi getInstance(@NonNull final Context context) {
         if (mSingleton == null) {
-            mSingleton = new NestedWorldHttpApi(context);
+            mSingleton = new NestedWorldHttpApi();
         }
         return mSingleton;
     }
@@ -85,12 +84,8 @@ public final class NestedWorldHttpApi {
     /*
     ** Private method
      */
-    private void init(@NonNull final Context context) {
+    private void init() {
         LogHelper.d(TAG, "Init API(http) (end_point = " + HttpEndPoint.BASE_END_POINT + ")");
-
-        //set the context to null for avoiding any leaks and then set the new context
-        mContext = null;
-        mContext = context;
 
         // Define a request interceptor for displaying some log
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
@@ -142,8 +137,7 @@ public final class NestedWorldHttpApi {
     }
 
     public Call<SignInResponse> signIn(@NonNull final String email, @NonNull final String password) {
-        String appToken = mContext.getString(R.string.app_token);
-
+        String appToken = "test";
         return mClient.signIn(new SignInRequest(email, password, appToken));
     }
 

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_token" translatable="false">test</string>
     <string name="desc" translatable="false">desc</string>
 
     <!--Error message-->
