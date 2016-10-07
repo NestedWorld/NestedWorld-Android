@@ -94,7 +94,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
             }
 
             @Override
-            public void onError(KIND errorKind) {
+            public void onError(@NonNull KIND errorKind) {
                 @StringRes int errorRes;
 
                 switch (errorKind) {

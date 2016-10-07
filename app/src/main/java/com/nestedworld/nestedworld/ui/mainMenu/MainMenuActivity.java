@@ -196,7 +196,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             }
 
             @Override
-            public void onError(KIND kind) {
+            public void onError(@NonNull KIND kind) {
                 //Stop every thread
                 for (Thread t : tasks) {
                     t.interrupt();
@@ -233,7 +233,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             }
 
             @Override
-            public void onError(KIND errorKind) {
+            public void onError(@NonNull KIND errorKind) {
                 callback.onError(errorKind);
             }
         }));

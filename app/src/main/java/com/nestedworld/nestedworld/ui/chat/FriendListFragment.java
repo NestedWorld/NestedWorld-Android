@@ -97,7 +97,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             }
 
             @Override
-            public void onError(KIND errorKind) {
+            public void onError(@NonNull KIND errorKind) {
                 //check if fragment hasn't been detach
                 if (mContext != null) {
                     //Stop loading animation

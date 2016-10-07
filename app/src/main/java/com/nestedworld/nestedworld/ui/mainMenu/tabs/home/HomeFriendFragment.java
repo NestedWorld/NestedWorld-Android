@@ -154,7 +154,7 @@ public class HomeFriendFragment extends BaseFragment {
             }
 
             @Override
-            public void onError(KIND errorKind) {
+            public void onError(@NonNull KIND errorKind) {
                 //Stop loading animation
                 progressView.stop();
             }
