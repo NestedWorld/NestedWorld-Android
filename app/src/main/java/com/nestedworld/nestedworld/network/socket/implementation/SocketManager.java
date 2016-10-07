@@ -30,7 +30,7 @@ public final class SocketManager {
     /*
     ** Constructor (Creates a new unconnected socket).
      */
-    public SocketManager(@NonNull final String hostname, int port) {
+    public SocketManager(@NonNull final String hostname, final int port) {
         this(hostname, port, 0);
     }
 
@@ -51,7 +51,7 @@ public final class SocketManager {
     /*
     ** Setter
      */
-    public void setTimeOut(final int timeOut) {
+    public synchronized void setTimeOut(final int timeOut) {
         this.timeOut = timeOut;
     }
 
