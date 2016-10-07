@@ -9,16 +9,13 @@
     <string name="error_conversion">Unexpected error.</string>
     <string name="error_createAccount">Can\'t create your account</string>
     <string name="error_network">Connection lost</string>
-    <string name="error_network_tryAgain">Connection lost, please try again later</string>
     <string name="error_unexpected">An error occur, please try again</string>
 
     <!--Error message (request failed)-->
     <string name="error_request_login">Cannot login.</string>
     <string name="error_request_place">Cannot retrieve places.</string>
-    <string name="error_request_logout">Cannot logout.</string>
     <string name="error_request_forgotPassword">Cannot reset your password.</string>
     <string name="error_request_user">Cannot retrieve your data.</string>
-    <string name="error_request_monster">Cannot retrieve monsters.</string>
 
     <!--Registration-->
     <string name="registration_msg_punchLine">catch them all and became the champion !</string>
@@ -50,14 +47,9 @@
     <string name="monsterDetail_no_attack">This monster didn\'t have any attack</string>
 
     <!--MainMenu-->
-    <string name="mainMenu_title_tab_home">Home</string>
     <string name="mainMenu_title_tab_inventory">Inventory</string>
-    <string name="mainMenu_title_tab_map">Map</string>
-    <string name="mainMenu_title_tab_monster">Monster</string>
-    <string name="mainMenu_title_tab_shop">Shop</string>
     <string name="mainMenu_action_chat">Chat</string>
     <string name="mainMenu_action_fight">fight</string>
-    <string name="mainMenu_action_settings">Settings</string>
 
     <!--MainMenu.tab.monsters-->
     <string name="tabMonster_msg_monsterName">Name : %s</string>
@@ -71,7 +63,6 @@
     <string name="tabHome_title_monsterCaptured">Monster captured</string>
     <string name="tabHome_title_areaCaptured">Area captured</string>
     <string name="tabHome_title_allyOnline">Area captured</string>
-    <string name="tabHome_msg_creditsNumber">Credits</string>
     <string name="tabHome_msg_allyOnline">%d</string>
     <string name="tabHome_msg_monsterCaptured">%d</string>
 
