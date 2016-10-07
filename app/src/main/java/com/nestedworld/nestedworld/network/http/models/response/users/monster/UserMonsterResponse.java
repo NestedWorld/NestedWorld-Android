@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.network.http.models.response.users.monster;
 
 import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.models.UserMonster;
+import com.nestedworld.nestedworld.database.models.UserMonster;
 
 import java.util.ArrayList;
 

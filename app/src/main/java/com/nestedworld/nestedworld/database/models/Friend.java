@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.models;
+package com.nestedworld.nestedworld.database.models;
 
 import android.support.annotation.Nullable;
 

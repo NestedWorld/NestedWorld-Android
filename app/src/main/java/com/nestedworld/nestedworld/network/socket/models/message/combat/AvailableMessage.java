@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.network.socket.models.message.combat;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.models.Combat;
+import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
 
 import org.msgpack.value.Value;

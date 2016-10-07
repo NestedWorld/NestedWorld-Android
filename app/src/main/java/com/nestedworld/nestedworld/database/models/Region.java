@@ -1,9 +1,7 @@
-package com.nestedworld.nestedworld.models;
+package com.nestedworld.nestedworld.database.models;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
-import com.orm.dsl.Unique;
 
 /**
  * Simple model for :
@@ -11,29 +9,24 @@ import com.orm.dsl.Unique;
  * - mapping a sql table with SugarORM
  * /!\ Keep the default constructor empty (see sugarOrm doc)
  */
-public class Attack extends SugarRecord {
-
+public class Region extends SugarRecord {
     @Expose
-    @SerializedName("id")
-    @Unique
-    public Long attack_id;// the sql table will be called attackid (see sugarOrm doc)
+    public String url;
+
     @Expose
     public String name;
-    @Expose
-    public String type;
 
     //Empty constructor for SugarRecord
-    public Attack() {
-        //Keep empty
+    public Region() {
+        //keep empty
     }
 
     //Generated
     @Override
     public String toString() {
-        return "Attack{" +
-                "attack_id=" + attack_id +
+        return "Region{" +
+                "url='" + url + '\'' +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
                 '}';
     }
 }

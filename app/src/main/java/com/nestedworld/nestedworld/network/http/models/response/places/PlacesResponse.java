@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.network.http.models.response.places;
 
 import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.models.Place;
+import com.nestedworld.nestedworld.database.models.Place;
 
 import java.util.ArrayList;
 

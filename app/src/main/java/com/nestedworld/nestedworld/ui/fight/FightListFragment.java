@@ -25,7 +25,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.models.Combat;
+import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;

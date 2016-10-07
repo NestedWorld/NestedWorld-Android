@@ -20,9 +20,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.MonsterUpdater;
-import com.nestedworld.nestedworld.models.Monster;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
+import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 

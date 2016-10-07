@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.helpers.database.updater.callback;
+package com.nestedworld.nestedworld.database.updater.callback;
 
 import android.support.annotation.NonNull;
 

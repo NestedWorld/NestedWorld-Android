@@ -24,10 +24,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.helpers.database.updater.entity.FriendsUpdater;
-import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
+import com.nestedworld.nestedworld.database.models.Friend;
+import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;

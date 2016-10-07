@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.network.http.models.response.users.friend;
 
 import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.models.Friend;
+import com.nestedworld.nestedworld.database.models.Friend;
 
 import java.util.ArrayList;
 

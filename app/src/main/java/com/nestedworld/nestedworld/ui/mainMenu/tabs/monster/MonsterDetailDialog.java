@@ -16,8 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.models.Attack;
-import com.nestedworld.nestedworld.models.Monster;
+import com.nestedworld.nestedworld.database.models.Attack;
+import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;

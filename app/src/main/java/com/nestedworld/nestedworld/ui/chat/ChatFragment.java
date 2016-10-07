@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.database.models.Friend;
+import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 
 import butterknife.Bind;

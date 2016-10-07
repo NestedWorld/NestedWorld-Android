@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.models.Session;
-import com.nestedworld.nestedworld.models.User;
+import com.nestedworld.nestedworld.database.models.Session;
+import com.nestedworld.nestedworld.database.models.User;
 import com.orm.query.Select;
 
 /**

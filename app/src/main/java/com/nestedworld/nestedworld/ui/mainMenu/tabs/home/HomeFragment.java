@@ -21,10 +21,10 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
-import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.Session;
-import com.nestedworld.nestedworld.models.User;
-import com.nestedworld.nestedworld.models.UserMonster;
+import com.nestedworld.nestedworld.database.models.Friend;
+import com.nestedworld.nestedworld.database.models.Session;
+import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 

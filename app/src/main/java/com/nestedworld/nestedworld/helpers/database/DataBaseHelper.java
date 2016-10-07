@@ -1,14 +1,14 @@
 package com.nestedworld.nestedworld.helpers.database;
 
-import com.nestedworld.nestedworld.models.Attack;
-import com.nestedworld.nestedworld.models.Combat;
-import com.nestedworld.nestedworld.models.Friend;
-import com.nestedworld.nestedworld.models.Monster;
-import com.nestedworld.nestedworld.models.Place;
-import com.nestedworld.nestedworld.models.Region;
-import com.nestedworld.nestedworld.models.Session;
-import com.nestedworld.nestedworld.models.User;
-import com.nestedworld.nestedworld.models.UserMonster;
+import com.nestedworld.nestedworld.database.models.Attack;
+import com.nestedworld.nestedworld.database.models.Combat;
+import com.nestedworld.nestedworld.database.models.Friend;
+import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.Place;
+import com.nestedworld.nestedworld.database.models.Region;
+import com.nestedworld.nestedworld.database.models.Session;
+import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.orm.SugarRecord;
 
 public final class DataBaseHelper {
