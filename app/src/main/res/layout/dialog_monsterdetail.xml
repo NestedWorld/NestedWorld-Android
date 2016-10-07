@@ -13,7 +13,7 @@
 
         <include layout="@layout/dialog_monsterdetail_characteristics"/>
 
-        <include layout="@layout/dialog_monsterdetail_attacks" />
+        <include layout="@layout/dialog_monsterdetail_attacks"/>
 
     </LinearLayout>
 

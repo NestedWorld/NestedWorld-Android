@@ -6,9 +6,9 @@
 
     <ImageView
         android:id="@+id/imageView_user_background"
-        android:background="@color/apptheme_color"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/apptheme_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,12 +59,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:padding="8dip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:divider="@drawable/divider_horizontal_white"
             android:orientation="horizontal"
+            android:padding="8dip"
             android:showDividers="middle">
 
             <LinearLayout

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="8dip">
 
     <TextView
-        style="@style/TypefaceStyle.ProximaNova.light"
         android:id="@+id/textview_attackType"
+        style="@style/TypefaceStyle.ProximaNova.light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_attack_msg_attackType"/>
 
     <TextView
-        style="@style/TypefaceStyle.ProximaNova.light"
         android:id="@+id/textView_attackName"
+        style="@style/TypefaceStyle.ProximaNova.light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_attack_msg_attackName"/>

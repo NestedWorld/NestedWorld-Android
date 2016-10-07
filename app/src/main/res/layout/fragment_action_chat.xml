@@ -13,11 +13,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:padding="8dip"
             style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="8dip"
             android:text="@string/chat_msg_start_chat"/>
 
         <android.support.v4.widget.SwipeRefreshLayout

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dip"
+    android:layout_margin="8dip"
     android:background="@color/white"
-    android:layout_margin="8dip">
+    android:orientation="vertical"
+    android:padding="8dip">
 
     <TextView
         style="@style/TypefaceStyle.ProximaNova.bold"
@@ -15,19 +15,19 @@
         android:text="Monster attacks: "/>
 
     <TextView
-        android:padding="8dip"
-        style="@style/TypefaceStyle.ProximaNova.bold"
         android:id="@+id/textview_monster_no_attack"
+        style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:padding="8dip"
         android:text="@string/monsterDetail_no_attack"/>
 
     <ListView
-        android:padding="8dip"
         android:id="@+id/listview_monter_attack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="8dip"
         android:visibility="gone"/>
 
 </LinearLayout>
