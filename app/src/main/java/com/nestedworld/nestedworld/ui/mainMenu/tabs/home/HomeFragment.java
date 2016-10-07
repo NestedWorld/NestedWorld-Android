@@ -15,13 +15,12 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
@@ -109,7 +108,7 @@ public class HomeFragment extends BaseFragment {
 
     private void populateUserInfo() {
         //Retrieve the session
-        Session session = SessionManager.getSession();
+        Session session = SessionHelper.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
             onFatalError();

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
@@ -99,7 +99,7 @@ public abstract class BaseFragment extends Fragment {
         NestedWorldSocketAPI.reset();
 
         //clean session
-        SessionManager.deleteSession();
+        SessionHelper.deleteSession();
 
         Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 

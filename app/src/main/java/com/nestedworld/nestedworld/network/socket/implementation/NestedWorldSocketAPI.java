@@ -5,7 +5,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
@@ -105,7 +105,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     ** Private method
      */
     private void authRequest() {
-        Session session = SessionManager.getSession();
+        Session session = SessionHelper.getSession();
         if (session != null) {
             LogHelper.d(TAG, "authRequest > sending");
 

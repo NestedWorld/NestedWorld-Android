@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -130,7 +130,7 @@ public class CreateAccountFragment extends BaseFragment {
                 }
 
                 //Create a new session
-                SessionManager.newSession(email, password, response.body().token);
+                SessionHelper.newSession(email, password, response.body().token);
 
                 //display MainMenu and stop this activity
                 startActivity(MainMenuActivity.class);

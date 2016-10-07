@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.database.DataBaseHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.models.User;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
@@ -76,7 +76,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     protected void init(View rootView, Bundle savedInstanceState) {
         //Retrieve the session
-        Session session = SessionManager.getSession();
+        Session session = SessionHelper.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
             onFatalError();
@@ -128,7 +128,7 @@ public class ProfileFragment extends BaseFragment {
         });
 
         //remove user
-        SessionManager.deleteSession();
+        SessionHelper.deleteSession();
 
         //avoid leak with the static instance
         NestedWorldHttpApi.reset();

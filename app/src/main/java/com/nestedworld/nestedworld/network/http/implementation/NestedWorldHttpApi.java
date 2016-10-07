@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.models.Region;
 import com.nestedworld.nestedworld.models.Session;
 import com.nestedworld.nestedworld.network.http.models.request.friends.AddFriendRequest;
@@ -103,7 +103,7 @@ public final class NestedWorldHttpApi {
 
                 Request.Builder requestBuilder = chain.request().newBuilder();
 
-                Session session = SessionManager.getSession();
+                Session session = SessionHelper.getSession();
                 if (session != null) {
                     requestBuilder.addHeader("X-User-Email", session.email);
                     requestBuilder.addHeader("Authorization", session.authToken);

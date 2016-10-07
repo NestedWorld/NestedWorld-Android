@@ -22,7 +22,7 @@ import com.nestedworld.nestedworld.helpers.database.updater.entity.UserMonsterUp
 import com.nestedworld.nestedworld.helpers.database.updater.entity.UserUpdater;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionManager;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.models.Combat;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.ChatActivity;
@@ -209,7 +209,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
                 //remove user
-                SessionManager.deleteSession();
+                SessionHelper.deleteSession();
 
                 //Go to launch screen
                 startActivity(LaunchActivity.class);

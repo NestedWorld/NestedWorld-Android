@@ -11,14 +11,14 @@ import com.orm.query.Select;
 /**
  * /!\ this implementation only allow one session per application (it's a personal choice) /!\
  */
-public final class SessionManager {
+public final class SessionHelper {
     //private static field
-    private final static String TAG = SessionManager.class.getSimpleName();
+    private final static String TAG = SessionHelper.class.getSimpleName();
 
     /*
     ** Constructor
      */
-    private SessionManager() {
+    private SessionHelper() {
     }
 
     /*
