@@ -21,7 +21,7 @@ public class MessageReceivedMessage extends DefaultMessage {
     ** Life cycle
      */
     @Override
-    protected void unSerialise(Map<Value, Value> message) {
+    protected void unSerialise(@NonNull Map<Value, Value> message) {
 
     }
 }

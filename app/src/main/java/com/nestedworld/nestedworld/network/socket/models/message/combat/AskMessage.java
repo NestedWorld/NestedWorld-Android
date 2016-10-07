@@ -28,7 +28,7 @@ public class AskMessage extends DefaultMessage {
     ** Life cycle
      */
     @Override
-    protected void unSerialise(Map<Value, Value> message) {
+    protected void unSerialise(@NonNull Map<Value, Value> message) {
         if (message.containsKey(ValueFactory.newString("type"))) {
             this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         }

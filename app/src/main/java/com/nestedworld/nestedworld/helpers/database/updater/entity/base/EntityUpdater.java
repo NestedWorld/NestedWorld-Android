@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.helpers.database.updater.entity;
+package com.nestedworld.nestedworld.helpers.database.updater.entity.base;
 
 import android.content.Context;
 import android.os.Handler;
@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
-import com.orm.SugarRecord;
 
 import java.io.IOException;
 
@@ -34,7 +33,7 @@ public abstract class EntityUpdater<T> extends Thread {
     @NonNull
     public abstract Call<T> getRequest();
 
-    public abstract void updateEntity(@NonNull Response<T> response);
+    public abstract void updateEntity(@NonNull final Response<T> response);
 
     /*
     ** Thread implementation

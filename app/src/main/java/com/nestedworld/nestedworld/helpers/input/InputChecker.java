@@ -9,12 +9,18 @@ import java.util.regex.Pattern;
 
 public final class InputChecker {
 
-    public final static int SHORTEST_PASSWORD_LENGTH = 6;
+    private final static int SHORTEST_PASSWORD_LENGTH = 6;
 
+    /*
+    ** Constructor
+     */
     private InputChecker() {
         //Empty constructor for avoiding this class to be construct
     }
 
+    /*
+    ** Public method
+     */
     public static boolean checkEmailFormat(@NonNull final String email) {
         boolean isValid = false;
 

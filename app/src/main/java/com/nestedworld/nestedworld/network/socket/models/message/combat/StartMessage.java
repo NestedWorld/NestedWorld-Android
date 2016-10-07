@@ -25,7 +25,7 @@ public class StartMessage extends DefaultMessage {
     }
 
     @Override
-    protected void unSerialise(Map<Value, Value> message) {
+    protected void unSerialise(@NonNull Map<Value, Value> message) {
         this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         this.id = message.get(ValueFactory.newString("id")).asStringValue().asString();
         this.combat_id = message.get(ValueFactory.newString("combat_id")).asIntegerValue().asInt();

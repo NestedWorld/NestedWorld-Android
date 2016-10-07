@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.network.socket.listener;
 
+import android.support.annotation.NonNull;
+
 import org.msgpack.value.ImmutableValue;
 
 public interface SocketListener {
@@ -9,5 +11,5 @@ public interface SocketListener {
 
     void onSocketListening();
 
-    void onMessageReceived(ImmutableValue message);
+    void onMessageReceived(@NonNull final ImmutableValue message);
 }

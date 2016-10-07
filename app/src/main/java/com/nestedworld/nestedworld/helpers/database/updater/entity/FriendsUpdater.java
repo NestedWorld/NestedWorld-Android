@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.base.EntityUpdater;
 import com.nestedworld.nestedworld.models.Friend;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
@@ -17,10 +18,16 @@ import retrofit2.Response;
 
 public class FriendsUpdater extends EntityUpdater<FriendsResponse> {
 
-    public FriendsUpdater(@NonNull Context context, @Nullable OnEntityUpdated callback) {
+    /*
+    ** Constructor
+     */
+    public FriendsUpdater(@NonNull final Context context, @Nullable final OnEntityUpdated callback) {
         super(context, callback);
     }
 
+    /*
+    ** Life cycle
+     */
     @NonNull
     @Override
     public Call<FriendsResponse> getRequest() {
@@ -28,7 +35,7 @@ public class FriendsUpdater extends EntityUpdater<FriendsResponse> {
     }
 
     @Override
-    public void updateEntity(@NonNull Response<FriendsResponse> response) {
+    public void updateEntity(@NonNull final Response<FriendsResponse> response) {
         //Delete old entity
         Friend.deleteAll(Friend.class);
 

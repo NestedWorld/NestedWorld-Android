@@ -13,11 +13,16 @@ import com.nestedworld.nestedworld.R;
 
 public final class DrawableHelper {
 
-
+    /*
+    ** Constructor
+     */
     private DrawableHelper() {
         //Private constructor for avoiding this class to be construct
     }
 
+    /*
+    ** Public method
+     */
     public static Drawable buildCounterDrawable(@NonNull final Context context, final int count, final int backgroundImageId) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.menuitem_counter_layout, null);

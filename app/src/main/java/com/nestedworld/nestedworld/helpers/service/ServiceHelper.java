@@ -8,10 +8,16 @@ import android.support.annotation.NonNull;
 import com.nestedworld.nestedworld.service.SocketService;
 
 public final class ServiceHelper {
+    /*
+    ** Constructor
+     */
     private ServiceHelper() {
         //Empty constructor for avoiding this class to be construct
     }
 
+    /*
+    ** Life cycle
+     */
     public static void startSocketService(@NonNull final Context context) {
         //Start the service
         Intent intent = new Intent(context, SocketService.class);

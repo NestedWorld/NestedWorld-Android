@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -40,11 +41,11 @@ public class ViewPagerWithIndicator extends LinearLayout {
     /*
     ** Constructor
      */
-    public ViewPagerWithIndicator(Context context) {
+    public ViewPagerWithIndicator(@NonNull final Context context) {
         this(context, null);
     }
 
-    public ViewPagerWithIndicator(Context context, AttributeSet attrs) {
+    public ViewPagerWithIndicator(@NonNull final Context context, @Nullable final AttributeSet attrs) {
         super(context, attrs);
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ViewPagerWithIndicator, 0, 0);

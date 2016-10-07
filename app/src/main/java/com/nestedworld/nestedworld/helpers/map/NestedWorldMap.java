@@ -34,6 +34,9 @@ public class NestedWorldMap {
     private final GoogleMap mGoogleMap;
     private final Context mContext;
 
+    /*
+    ** Constructor
+     */
     public NestedWorldMap(@NonNull final Context context, @NonNull final GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mContext = context;

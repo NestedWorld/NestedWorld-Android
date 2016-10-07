@@ -23,7 +23,7 @@ public class AvailableMessage extends DefaultMessage {
     }
 
     @Override
-    protected void unSerialise(Map<Value, Value> message) {
+    protected void unSerialise(@NonNull Map<Value, Value> message) {
         Combat combat = new Combat();
 
         if (message.containsKey(ValueFactory.newString("type"))) {

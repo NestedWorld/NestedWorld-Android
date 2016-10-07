@@ -13,10 +13,16 @@ import com.orm.SugarRecord;
 
 public final class DataBaseHelper {
 
+    /*
+    ** Constructor
+     */
     private DataBaseHelper() {
         //Empty constructor for avoiding this class to be construct
     }
 
+    /*
+    ** Public method
+     */
     public static void cleanDataBase() {
         SugarRecord.deleteAll(Attack.class);
         SugarRecord.deleteAll(Combat.class);

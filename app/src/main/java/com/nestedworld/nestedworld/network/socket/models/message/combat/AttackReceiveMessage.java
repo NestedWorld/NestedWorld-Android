@@ -16,7 +16,7 @@ public class AttackReceiveMessage extends DefaultMessage {
     }
 
     @Override
-    protected void unSerialise(Map<Value, Value> message) {
+    protected void unSerialise(@NonNull Map<Value, Value> message) {
 
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.events.http.OnMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.helpers.database.updater.entity.base.EntityUpdater;
 import com.nestedworld.nestedworld.models.Monster;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
@@ -17,10 +18,16 @@ import retrofit2.Response;
 
 public class MonsterUpdater extends EntityUpdater<MonstersResponse> {
 
-    public MonsterUpdater(@NonNull Context context, @Nullable OnEntityUpdated callback) {
+    /*
+    ** Constructor
+     */
+    public MonsterUpdater(@NonNull final Context context, @Nullable final OnEntityUpdated callback) {
         super(context, callback);
     }
 
+    /*
+    ** Life cycle
+     */
     @NonNull
     @Override
     public Call<MonstersResponse> getRequest() {

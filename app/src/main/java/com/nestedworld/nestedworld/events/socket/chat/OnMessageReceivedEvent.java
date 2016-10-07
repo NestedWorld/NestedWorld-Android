@@ -8,7 +8,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.message.Message
 
 public class OnMessageReceivedEvent extends SocketMessageEvent<MessageReceivedMessage> {
 
-    public OnMessageReceivedEvent(@NonNull MessageReceivedMessage message) {
+    public OnMessageReceivedEvent(@NonNull final MessageReceivedMessage message) {
         super(message);
     }
 }

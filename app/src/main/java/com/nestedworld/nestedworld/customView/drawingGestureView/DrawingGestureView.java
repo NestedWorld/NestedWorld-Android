@@ -41,7 +41,10 @@ public class DrawingGestureView extends View {
     @Nullable
     private OnFinishMoveListener mOnFinishMoveListener = null;
 
-    public DrawingGestureView(@NonNull Context c) {
+    /*
+    ** Constructor
+     */
+    public DrawingGestureView(@NonNull final Context c) {
         super(c);
 
         mPath = new Path();
@@ -65,18 +68,24 @@ public class DrawingGestureView extends View {
         mPaint.setStrokeWidth(12);
     }
 
-    public void setOnTileTouchListener(@NonNull DrawingGestureListener listener) {
+    /*
+    ** Public method
+     */
+    public void setOnTileTouchListener(@NonNull final DrawingGestureListener listener) {
         mOnTileTouchListener = listener;
     }
 
-    public void setOnFinishMoveListener(@NonNull OnFinishMoveListener listener) {
+    public void setOnFinishMoveListener(@NonNull final OnFinishMoveListener listener) {
         mOnFinishMoveListener = listener;
     }
 
-    public void setTiles(List<ImageView> tiles) {
+    public void setTiles(@NonNull final List<ImageView> tiles) {
         mTiles = tiles;
     }
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -128,14 +137,17 @@ public class DrawingGestureView extends View {
         return true;
     }
 
-    private void initPath(float x, float y) {
+    /*
+    ** Internal method
+     */
+    private void initPath(final float x, final float y) {
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
         mY = y;
     }
 
-    private void updatePath(float x, float y) {
+    private void updatePath(final float x, final float y) {
         float dx = Math.abs(x - mX);
         float dy = Math.abs(y - mY);
 
@@ -149,7 +161,7 @@ public class DrawingGestureView extends View {
         }
     }
 
-    private void updateTiles(float x, float y) {
+    private void updateTiles(final float x, final float y) {
         //We check if the user touch a tiles
         for (ImageView view : mTiles) {
 

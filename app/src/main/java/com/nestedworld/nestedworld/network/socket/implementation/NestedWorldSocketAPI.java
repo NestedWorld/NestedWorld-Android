@@ -207,7 +207,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
     }
 
     @Override
-    public void onMessageReceived(ImmutableValue message) {
+    public void onMessageReceived(@NonNull final ImmutableValue message) {
         switch (message.getValueType()) {
             case MAP:
                 final Map<Value, Value> map = message.asMapValue().map();

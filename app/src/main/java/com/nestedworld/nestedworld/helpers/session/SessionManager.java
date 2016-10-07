@@ -36,7 +36,7 @@ public final class SessionManager {
     /*
     ** public method
      */
-    public void newSession(@NonNull final String email, @NonNull final String password, @NonNull final String authToken) {
+    public static void newSession(@NonNull final String email, @NonNull final String password, @NonNull final String authToken) {
 
         //Display some log
         LogHelper.d(TAG, "newSession : "
@@ -56,7 +56,7 @@ public final class SessionManager {
         session.save();
     }
 
-    public void deleteSession() {
+    public static void deleteSession() {
         //Display some log
         LogHelper.d(TAG, "deleteSession()");
 
@@ -75,7 +75,7 @@ public final class SessionManager {
     }
 
     @Nullable
-    public Session getSession() {
+    public static Session getSession() {
         return Select.from(Session.class).first();
     }
 }

@@ -12,5 +12,5 @@ public abstract class DefaultMessage {
         this.unSerialise(message);
     }
 
-    protected abstract void unSerialise(Map<Value, Value> message);
+    protected abstract void unSerialise(@NonNull final Map<Value, Value> message);
 }

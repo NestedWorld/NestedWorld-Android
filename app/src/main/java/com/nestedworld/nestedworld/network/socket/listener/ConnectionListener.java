@@ -12,11 +12,11 @@ import java.util.Map;
 public interface ConnectionListener {
 
     /*Will be called when the socket is  available and authenticate*/
-    void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI);
+    void onConnectionReady(@NonNull final NestedWorldSocketAPI nestedWorldSocketAPI);
 
     /*Will be called when the socket is closed*/
     void onConnectionLost();
 
     /*Will be called when something is read on the socket*/
-    void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content);
+    void onMessageReceived(@NonNull final SocketMessageType.MessageKind kind, @NonNull final Map<Value, Value> content);
 }

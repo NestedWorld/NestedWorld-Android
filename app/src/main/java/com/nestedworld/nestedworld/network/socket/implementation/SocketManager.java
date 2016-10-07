@@ -30,11 +30,11 @@ public final class SocketManager {
     /*
     ** Constructor (Creates a new unconnected socket).
      */
-    public SocketManager(@NonNull String hostname, int port) {
+    public SocketManager(@NonNull final String hostname, int port) {
         this(hostname, port, 0);
     }
 
-    public SocketManager(@NonNull String hostname, int port, int timeOut) {
+    public SocketManager(@NonNull final String hostname, final int port, final int timeOut) {
         LogHelper.d(TAG, "init SocketManager: hostname=" + hostname + " port=" + port + " timeOut=" + timeOut);
 
         this.hostname = hostname;
@@ -51,18 +51,18 @@ public final class SocketManager {
     /*
     ** Setter
      */
-    public void setTimeOut(int timeOut) {
+    public void setTimeOut(final int timeOut) {
         this.timeOut = timeOut;
     }
 
     /*
     ** Public method
      */
-    public synchronized void addSocketListener(@NonNull SocketListener socketListener) {
+    public synchronized void addSocketListener(@NonNull final SocketListener socketListener) {
         listeners.add(socketListener);
     }
 
-    public synchronized void removeSocketListener(@NonNull SocketListener socketListener) {
+    public synchronized void removeSocketListener(@NonNull final SocketListener socketListener) {
         listeners.remove(socketListener);
     }
 

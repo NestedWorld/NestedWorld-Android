@@ -7,10 +7,16 @@ import com.nestedworld.nestedworld.BuildConfig;
 public final class LogHelper {
     private static final boolean IS_ENABLE = BuildConfig.LOG;
 
+    /*
+    ** Constructor
+     */
     private LogHelper() {
         //Empty constructor for avoiding this class to be construct
     }
 
+    /*
+    ** Public method
+     */
     public static void v(final String tag, final String msg) {
         if (IS_ENABLE) {
             Log.v(tag, msg);
