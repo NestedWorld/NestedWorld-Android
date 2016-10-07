@@ -22,6 +22,7 @@ import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
+import com.nestedworld.nestedworld.helpers.gcm.GcmHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
@@ -149,7 +150,7 @@ public class SocketService extends Service {
                 Combat combat = availableMessage.saveAsCombat();
 
                 //Display notification
-                displayNotification("Un combat est diposnible : " + combat.origin);
+                GcmHelper.displayNotification(this, "Un combat est diposnible : " + combat.origin, LaunchActivity.class);
 
                 //Send event
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
@@ -216,25 +217,6 @@ public class SocketService extends Service {
             default:
                 break;
         }
-    }
-
-    private void displayNotification(@NonNull final String title) {
-        //Build notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle(getString(R.string.app_name))
-                .setAutoCancel(true)
-                .setColor(ContextCompat.getColor(this, R.color.apptheme_color))
-                .setContentText(title);
-
-        //Add action on notification
-        Intent intentTarget = new Intent(this, LaunchActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1, intentTarget, PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(resultPendingIntent);
-
-        //Display notification
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, builder.build());
     }
 
     /*
