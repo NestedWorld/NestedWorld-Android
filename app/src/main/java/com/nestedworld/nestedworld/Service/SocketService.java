@@ -1,18 +1,12 @@
 package com.nestedworld.nestedworld.service;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 
-import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.events.socket.chat.OnMessageReceivedEvent;
 import com.nestedworld.nestedworld.events.socket.chat.OnUserJoinedEvent;
 import com.nestedworld.nestedworld.events.socket.chat.OnUserPartedEvent;
@@ -23,9 +17,7 @@ import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.gcm.NestedWorldGcm;
-import com.nestedworld.nestedworld.helpers.gcm.GcmHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
@@ -38,7 +30,6 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMes
 import com.nestedworld.nestedworld.network.socket.models.message.message.MessageReceivedMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.message.UserJoinedMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.message.UserPartedMessage;
-import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.msgpack.value.Value;

@@ -12,8 +12,8 @@ public final class HttpEndPoint {
 
     private final static String BASE_URL =
             (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_URL
-            : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
-            : DEV_URL;
+                    : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
+                    : DEV_URL;
 
     public final static String BASE_END_POINT = BASE_URL + API_VERSION;
 

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.events.http.OnAttacksUpdatedEvent;
-import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.database.models.Attack;
+import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.events.http.OnAttacksUpdatedEvent;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
 

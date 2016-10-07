@@ -11,11 +11,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.database.models.Session;
+import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.helpers.database.DataBaseHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
-import com.nestedworld.nestedworld.database.models.Session;
-import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;

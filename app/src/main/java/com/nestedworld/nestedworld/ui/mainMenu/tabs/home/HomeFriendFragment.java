@@ -28,12 +28,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.events.socket.combat.OnAskMessageEvent;
-import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
-import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.events.socket.combat.OnAskMessageEvent;
+import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.network.http.callback.Callback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;

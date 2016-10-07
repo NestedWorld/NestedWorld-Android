@@ -5,10 +5,10 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.database.models.Region;
 import com.nestedworld.nestedworld.database.models.Session;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.models.request.friends.AddFriendRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.RegisterRequest;

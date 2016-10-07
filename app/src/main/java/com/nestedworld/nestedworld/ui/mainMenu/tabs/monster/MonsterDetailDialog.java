@@ -52,6 +52,7 @@ public class MonsterDetailDialog extends DialogFragment {
     ListView listView;
 
     private Monster mMonster;
+
     /*
     ** Static method
      */
@@ -75,7 +76,8 @@ public class MonsterDetailDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setTitle("My Title");
-        return dialog;    }
+        return dialog;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,7 +138,7 @@ public class MonsterDetailDialog extends DialogFragment {
         textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mMonster.speed));
     }
 
-    private void populateMonsterAttack(ArrayList<MonsterAttackResponse.MonsterAttack> monsterAttacks){
+    private void populateMonsterAttack(ArrayList<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
         if (monsterAttacks.isEmpty()) {
             textViewMonterNoAttack.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
