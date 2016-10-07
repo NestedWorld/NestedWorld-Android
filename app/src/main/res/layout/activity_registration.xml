@@ -6,7 +6,6 @@
              android:fitsSystemWindows="true">
 
     <ImageView
-        android:id="@+id/default_background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/desc"
