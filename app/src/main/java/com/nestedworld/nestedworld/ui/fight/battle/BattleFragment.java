@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.fight;
+package com.nestedworld.nestedworld.ui.fight.battle;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
@@ -17,10 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
+import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
@@ -44,7 +46,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class FightFragment extends BaseFragment {
+public class BattleFragment extends BaseFragment {
 
     private final ArrayList<Integer> mPositions = new ArrayList<>();
     @BindView(R.id.progressView)
@@ -62,7 +64,7 @@ public class FightFragment extends BaseFragment {
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final StartMessage startMessage, @NonNull final List<UserMonster> selectedMonster) {
-        FightFragment fightFragment = new FightFragment();
+        BattleFragment fightFragment = new BattleFragment();
         fightFragment.setStartMessage(startMessage);
         fightFragment.setTeam(selectedMonster);
 
@@ -211,12 +213,16 @@ public class FightFragment extends BaseFragment {
         monsterLvl.setText(String.format(getResources().getString(R.string.combat_msg_monster_lvl), monster.level));
         monsterHp.setText(String.format(getResources().getString(R.string.combat_msg_monster_hp), monster.hp));
 
-        //TODO retrieve sprite and populate picture
-//        Glide.with(mContext)
-//                .load(monster.sprite)
-//                .placeholder(R.drawable.default_monster)
-//                .centerCrop()
-//                .into(monsterPicture);
+        //Populate monster sprit
+        Monster monsterInfos = monster.infos();
+        if (monsterInfos != null) {
+            Glide.with(mContext)
+                    .load(monsterInfos.sprite)
+                    .placeholder(R.drawable.default_monster)
+                    .error(R.drawable.default_monster)
+                    .centerCrop()
+                    .into(monsterPicture);
+        }
     }
 
     private void sendAttack() {

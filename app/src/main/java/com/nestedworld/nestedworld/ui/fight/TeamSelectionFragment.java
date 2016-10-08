@@ -40,6 +40,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMes
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.fight.battle.BattleFragment;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
@@ -168,7 +169,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             mCurrentCombat.delete();
 
             //Start fight fragment
-            FightFragment.load(getFragmentManager(), startMessage, mSelectedMonster);
+            BattleFragment.load(getFragmentManager(), startMessage, mSelectedMonster);
         } else {
             LogHelper.d(TAG, "onNewCombatStart > refuse");
         }
