@@ -187,7 +187,12 @@ public class BattleFragment extends BaseFragment {
             }
 
             @Override
-            protected void onCancelled() {
+            protected void onPostExecute(Void aVoid) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
                 //Enable drawingGestureView (allow user to send attack)
                 enableDrawingGestureView(true);
 
@@ -267,43 +272,6 @@ public class BattleFragment extends BaseFragment {
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
     }
 
-    private void enableDrawingGestureView(final boolean enable) {
-        if (enable) {
-            mDrawingGestureView.setEnabled(true);
-            mDrawingGestureView.setOnFinishMoveListener(mOnFinishMoveListener);
-            mDrawingGestureView.setOnTileTouchListener(mDrawingGestureListener);
-        } else {
-            mDrawingGestureView.setEnabled(false);
-            mDrawingGestureView.setOnFinishMoveListener(null);
-            mDrawingGestureView.setOnTileTouchListener(null);
-        }
-    }
-
-    private void updateMonsterContainer(@NonNull final View container, @NonNull final StartMessage.PlayerMonster monster) {
-        //Retrieve widget
-        TextView monsterLvl = (TextView) container.findViewById(R.id.textview_monster_lvl);
-        TextView monsterName = (TextView) container.findViewById(R.id.textview_monster_name);
-        ImageView monsterPicture = (ImageView) container.findViewById(R.id.imageView_monster);
-        ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
-
-        //Populate widget
-        monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
-        progressBarMonsterHp.setMax(monster.hp);
-        progressBarMonsterHp.setProgress(monster.hp);
-
-        //Populate monster sprite
-        Monster monsterInfos = monster.infos();
-        if (monsterInfos != null) {
-            Glide.with(mContext)
-                    .load(monsterInfos.sprite)
-                    .placeholder(R.drawable.default_monster)
-                    .error(R.drawable.default_monster)
-                    .centerCrop()
-                    .into(monsterPicture);
-        }
-    }
-
     private void setupOpponentInfos(@NonNull final StartMessage.Opponent opponent) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
@@ -350,60 +318,107 @@ public class BattleFragment extends BaseFragment {
         updateMonsterContainer(layoutPlayer, player.monster);
     }
 
+    private void updateMonsterContainer(@NonNull final View container, @NonNull final StartMessage.PlayerMonster monster) {
+        //Retrieve widget
+        TextView monsterLvl = (TextView) container.findViewById(R.id.textview_monster_lvl);
+        TextView monsterName = (TextView) container.findViewById(R.id.textview_monster_name);
+        ImageView monsterPicture = (ImageView) container.findViewById(R.id.imageView_monster);
+        ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
+
+        //Populate widget
+        monsterName.setText(monster.name);
+        monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
+        progressBarMonsterHp.setMax(monster.hp);
+        progressBarMonsterHp.setProgress(monster.hp);
+
+        //Populate monster sprite
+        Monster monsterInfos = monster.infos();
+        if (monsterInfos != null) {
+            Glide.with(mContext)
+                    .load(monsterInfos.sprite)
+                    .placeholder(R.drawable.default_monster)
+                    .error(R.drawable.default_monster)
+                    .centerCrop()
+                    .into(monsterPicture);
+        }
+    }
+
+    private void enableDrawingGestureView(final boolean enable) {
+        if (enable) {
+            mDrawingGestureView.setEnabled(true);
+            mDrawingGestureView.setOnFinishMoveListener(mOnFinishMoveListener);
+            mDrawingGestureView.setOnTileTouchListener(mDrawingGestureListener);
+        } else {
+            mDrawingGestureView.setEnabled(false);
+            mDrawingGestureView.setOnFinishMoveListener(null);
+            mDrawingGestureView.setOnTileTouchListener(null);
+        }
+    }
+
     private void sendAttack() {
         //check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
+        //Retrieve and clear user gesture
         Attack.AttackType attackTypeWanted = gestureToAttackType(mUserGestureInput);
+        mUserGestureInput = "";
+
+        //Parse user gesture
         switch (attackTypeWanted) {
             case UNKNOWN:
-                Toast.makeText(mContext, "Unknown attack type", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Unknown attack type", Toast.LENGTH_SHORT).show();
                 return;
             case OBJECT_USE:
-                Toast.makeText(mContext, "Feature incomming", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Feature incomming", Toast.LENGTH_SHORT).show();
                 return;
             default:
-                break;
-        }
-
-        Attack attack = getCurrentMonterAttackByType(attackTypeWanted);
-        if (attack == null) {
-            Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_LONG).show();
-        } else {
-            sendAttackRequest(attack.attack_id);
+                sendAttackRequest(attackTypeWanted);
         }
     }
 
-    private void sendAttackRequest(final long attackId) {
+    private void sendAttackRequest(@NonNull final Attack.AttackType attackTypeWanted) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
+        //Check if the current monster has an attack of the wanted type
+        final Attack attack = getCurrentMonsterAttackByType(attackTypeWanted);
+        if (attack == null) {
+            //Current monster don't have any attack of the wantend type, just display error message
+            Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //Current monster have an attack with the wanted type
+        //We bind this fragment to the socketService for sending the attackRequest
         ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
+                //Service connected, retrieving socketApi instance
                 NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
-                if (nestedWorldSocketAPI != null) {
-                    SendAttackRequest data = new SendAttackRequest(mStartMessage.opponent.monster.id, attackId);
-                    nestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
 
-                    mUserGestureInput = "";
+                if (nestedWorldSocketAPI != null) {
+                    //Sending request
+                    SendAttackRequest data = new SendAttackRequest(mCurrentUserMonster.fkmonster, attack.attack_id);
+                    nestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 }
             }
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
+                //Cannot send attack (api not available)
+                //Display error mesage
                 Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
-                ((BaseAppCompatActivity) mContext).finish();
             }
         });
     }
 
     @Nullable
-    private Attack getCurrentMonterAttackByType(@NonNull final Attack.AttackType attackTypeWanted) {
+    private Attack getCurrentMonsterAttackByType(@NonNull final Attack.AttackType attackTypeWanted) {
+        //Parse currentMonster.attack for finding an attack of the given type
         ArrayList<MonsterAttackResponse.MonsterAttack> currentMonsterAttack = mTeamAttack.get(mCurrentUserMonster);
 
         for (MonsterAttackResponse.MonsterAttack monsterAttack : currentMonsterAttack) {
@@ -421,9 +436,12 @@ public class BattleFragment extends BaseFragment {
         }
 
         NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(mContext);
+
+        //Loop over every team member for retrieving his attacks
         for (int i = 0; i < mTeam.size(); i++) {
             LogHelper.d(TAG, "Retrieve attacks (task: " + i + ")");
 
+            //Get current monster information
             final UserMonster userMonster = mTeam.get(i);
             final Monster userMonsterInfo = userMonster.info();
             if (userMonsterInfo == null) {
@@ -431,7 +449,11 @@ public class BattleFragment extends BaseFragment {
             }
 
             try {
-                mTeamAttack.put(userMonster, nestedWorldHttpApi.getMonsterAttack(userMonsterInfo.getId()).execute().body().attacks);
+                //Retrieve the current monster attack
+                ArrayList<MonsterAttackResponse.MonsterAttack> attacks = nestedWorldHttpApi.getMonsterAttack(userMonsterInfo.monster_id).execute().body().attacks;
+
+                //Link attacks to his monster
+                mTeamAttack.put(userMonster, attacks);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -443,20 +465,29 @@ public class BattleFragment extends BaseFragment {
      */
     @NonNull
     private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
+
+        Attack.AttackType attackType;
         switch (gestureInput) {
             case "41":
-                return Attack.AttackType.ATTACK;
-            case "62":
-                return Attack.AttackType.DEFENSE;
-            case "456123":
-                return Attack.AttackType.ATTACK_SP;
-            case "432165":
-                return Attack.AttackType.DEFENSE_SP;
-            case "6253":
-                return Attack.AttackType.OBJECT_USE;
-            default:
+                attackType = Attack.AttackType.ATTACK;
                 break;
+            case "62":
+                attackType = Attack.AttackType.DEFENSE;
+                break;
+            case "456123":
+                attackType = Attack.AttackType.ATTACK_SP;
+                break;
+            case "432165":
+                attackType = Attack.AttackType.DEFENSE_SP;
+                break;
+            case "6253":
+                attackType = Attack.AttackType.OBJECT_USE;
+                break;
+            default:
+                attackType = Attack.AttackType.UNKNOWN;
         }
-        return Attack.AttackType.UNKNOWN;
+
+        return attackType;
     }
 }
