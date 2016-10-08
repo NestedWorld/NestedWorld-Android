@@ -44,7 +44,7 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     @Override
     public BattleMonsterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fight_playermonster, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fight_battlemonster, parent, false);
         BattleMonsterViewHolder battleMonsterViewHolder = new BattleMonsterViewHolder(v);
         ButterKnife.bind(battleMonsterViewHolder, v);
 

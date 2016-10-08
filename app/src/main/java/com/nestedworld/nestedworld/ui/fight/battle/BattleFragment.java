@@ -15,7 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,9 +55,9 @@ public class BattleFragment extends BaseFragment {
     @BindView(R.id.progressView)
     ProgressView progressView;
     @BindView(R.id.layout_player)
-    LinearLayout layoutPlayer;
+    View layoutPlayer;
     @BindView(R.id.layout_opponent)
-    LinearLayout layoutOpponent;
+    View layoutOpponent;
 
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
@@ -89,7 +89,7 @@ public class BattleFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_action_fight;
+        return R.layout.fragment_fight_battle;
     }
 
     @Override
@@ -204,15 +204,18 @@ public class BattleFragment extends BaseFragment {
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
     }
 
-    private void updateMonsterContainer(@NonNull final LinearLayout container, @NonNull final StartMessage.PlayerMonster monster) {
+    private void updateMonsterContainer(@NonNull final View container, @NonNull final StartMessage.PlayerMonster monster) {
         //Retrieve widget
         TextView monsterLvl = (TextView) container.findViewById(R.id.textview_monster_lvl);
-        TextView monsterHp = (TextView) container.findViewById(R.id.textview_monster_hp);
+        TextView monsterName = (TextView) container.findViewById(R.id.textview_monster_name);
         ImageView monsterPicture = (ImageView) container.findViewById(R.id.imageView_monster);
+        ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
 
         //Populate widget
-        monsterLvl.setText(String.format(getResources().getString(R.string.combat_msg_monster_lvl), monster.level));
-        monsterHp.setText(String.format(getResources().getString(R.string.combat_msg_monster_hp), monster.hp));
+        monsterName.setText(monster.name);
+        monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
+        progressBarMonsterHp.setMax(monster.hp);
+        progressBarMonsterHp.setProgress(monster.hp);
 
         //Populate monster sprite
         Monster monsterInfos = monster.infos();
@@ -226,7 +229,7 @@ public class BattleFragment extends BaseFragment {
         }
     }
 
-    private void initOpponentInfos( @NonNull final StartMessage.Opponent opponent) {
+    private void initOpponentInfos(@NonNull final StartMessage.Opponent opponent) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -235,17 +238,14 @@ public class BattleFragment extends BaseFragment {
         //Retrieve his monster
         StartMessage.PlayerMonster monster = opponent.monster;
 
-        //Populate opponent name
-        TextView opponentName = (TextView) layoutOpponent.findViewById(R.id.textViewOpponentName);
-        opponentName.setText(monster.name);
-
         //Init monster list
         RecyclerView monstersList = (RecyclerView) layoutOpponent.findViewById(R.id.listview_opponentMonster);
         monstersList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
 
         //Populate monster list
         BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-        for (int i = 0; i < opponent.monsterCount; i++) {
+        battleMonsterAdapter.add(opponent.monster.infos());
+        for (int i = 1; i < opponent.monsterCount; i++) {
             battleMonsterAdapter.add(null);
         }
         monstersList.setAdapter(battleMonsterAdapter);
@@ -259,10 +259,6 @@ public class BattleFragment extends BaseFragment {
         if (mContext == null) {
             return;
         }
-
-        //Populate player name
-        TextView opponentName = (TextView) layoutPlayer.findViewById(R.id.textViewPlayerName);
-        opponentName.setText(player.monster.name);
 
         //Init player monster list
         RecyclerView monstersList = (RecyclerView) layoutPlayer.findViewById(R.id.listview_playerMonster);
