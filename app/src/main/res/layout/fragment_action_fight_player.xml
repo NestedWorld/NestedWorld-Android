@@ -5,8 +5,7 @@
               android:layout_marginEnd="25dip"
               android:layout_marginStart="25dip"
               android:background="@color/white"
-              android:orientation="vertical"
-              android:padding="8dip">
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textViewOpponentName"
+            android:id="@+id/textViewPlayerName"
             style="@style/TypefaceStyle.ProximaNova.semibold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
 
     <include layout="@layout/item_monster"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listview_playerMonster"
         android:layout_width="match_parent"
         android:layout_height="38dip"/>

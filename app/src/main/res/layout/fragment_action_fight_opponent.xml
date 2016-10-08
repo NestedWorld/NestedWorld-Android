@@ -5,13 +5,12 @@
               android:layout_marginEnd="25dip"
               android:layout_marginStart="25dip"
               android:background="@color/white"
-              android:orientation="vertical"
-              android:padding="8dip">
+              android:orientation="vertical">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listview_opponentMonster"
         android:layout_width="match_parent"
-        android:layout_height="38dip"/>
+        android:layout_height="29dip"/>
 
     <LinearLayout
         android:layout_width="match_parent"

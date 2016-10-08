@@ -1,72 +1,108 @@
 package com.nestedworld.nestedworld.ui.fight.battle;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BattleMonsterAdapter extends ArrayAdapter<Monster> {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.orm.util.ContextUtil.getContext;
+
+
+public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdapter.BattleMonsterViewHolder> {
+
+    private final List<Monster> mMonsters = new ArrayList<>();
 
     /*
     ** Constructor
      */
-    public BattleMonsterAdapter(@NonNull final Context context, @NonNull final List<Monster> objects) {
-        super(context, R.layout.item_fight_monster, objects);
+    public BattleMonsterAdapter() {
+
+    }
+
+    public BattleMonsterAdapter(@NonNull final List<Monster> monsters) {
+        mMonsters.addAll(monsters);
     }
 
     /*
     ** Life cycle
      */
-    @NonNull
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public BattleMonsterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fight_monster, parent, false);
+        BattleMonsterViewHolder battleMonsterViewHolder = new BattleMonsterViewHolder(v);
+        ButterKnife.bind(battleMonsterViewHolder, v);
 
-        View view = convertView;
+        return battleMonsterViewHolder;
+    }
 
-        //Check if and existing view is being reused, otherwise inflate the view
-        if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.item_fight_monster, parent, false);
-        }
-
+    @Override
+    public void onBindViewHolder(BattleMonsterViewHolder holder, int position) {
         //Get selectedMonster
-        Monster monster = getItem(position);
-        if (monster == null) {
-            return view;
+        Monster monster = mMonsters.get(position);
+
+        if (monster != null) {
+            populateMonsterInfo(holder, monster);
         }
+    }
 
-        populateView(view, monster);
+    @Override
+    public int getItemCount() {
+        return mMonsters.size();
+    }
 
-        return view;
+    /*
+    ** Public method
+     */
+    public void addAll(@NonNull final List<Monster> monsters) {
+        mMonsters.clear();
+        mMonsters.addAll(monsters);
+    }
+
+    public void add(@Nullable final Monster monster) {
+        mMonsters.add(monster);
     }
 
     /*
     ** Internal method
      */
-    private void populateView(@NonNull final View view, @NonNull final Monster monster) {
+    private void populateMonsterInfo(@NonNull final BattleMonsterViewHolder holder, @NonNull final Monster monster) {
         //Populate name & lvl
-        ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monster.name);
+        LogHelper.d("populateMonsterInfo > ", "name=" + monster.name);
+        holder.textViewMonsterName.setText(monster.name);
 
         //Display monster picture
-        final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
         Glide.with(getContext())
                 .load(monster.sprite)
                 .placeholder(R.drawable.default_monster)
                 .centerCrop()
-                .into(imageViewMonster);
-
-        //Add color shape around monster picture
-        view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(getContext(), monster.getColorResource()));
+                .into(holder.imageViewMonster);
     }
 
+    public class BattleMonsterViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.textview_monster_name)
+        TextView textViewMonsterName;
+        @BindView(R.id.imageView_monster)
+        ImageView imageViewMonster;
+
+        public BattleMonsterViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
 }
