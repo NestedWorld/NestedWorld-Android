@@ -22,9 +22,36 @@ public class Attack extends SugarRecord {
     @Expose
     public String type;
 
+    public enum AttackType {
+        ATTACK,
+        ATTACK_SP,
+        DEFENSE,
+        DEFENSE_SP,
+        OBJECT_USE,
+        UNKNOWN
+    }
+
     //Empty constructor for SugarRecord
     public Attack() {
         //Keep empty
+    }
+
+    public AttackType getType() {
+        if (this.type != null) {
+            switch (this.type) {
+                case "attack":
+                    return AttackType.ATTACK;
+                case "attacksp":
+                    return AttackType.ATTACK_SP;
+                case "defense":
+                    return AttackType.DEFENSE;
+                case "defensesp":
+                    return AttackType.DEFENSE_SP;
+                default:
+                    break;
+            }
+        }
+        return AttackType.UNKNOWN;
     }
 
     //Generated
@@ -33,7 +60,7 @@ public class Attack extends SugarRecord {
         return "Attack{" +
                 "attack_id=" + attack_id +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                ", type='" + getType() + '\'' +
                 '}';
     }
 }
