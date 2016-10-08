@@ -13,7 +13,7 @@
 
         <include
             android:id="@+id/layout_opponent"
-            layout="@layout/fragment_action_fight_player"/>
+            layout="@layout/fragment_action_fight_opponent"/>
 
         <include
             android:id="@+id/layout_fight_body"

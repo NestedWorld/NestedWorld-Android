@@ -8,6 +8,11 @@
               android:orientation="vertical"
               android:padding="8dip">
 
+    <ListView
+        android:id="@+id/listview_opponentMonster"
+        android:layout_width="match_parent"
+        android:layout_height="38dip"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,11 +38,5 @@
     </LinearLayout>
 
     <include layout="@layout/item_monster"/>
-
-    <ListView
-        android:id="@+id/listview_playerMonster"
-        android:layout_width="match_parent"
-        android:layout_height="38dip"/>
-
 
 </LinearLayout>
