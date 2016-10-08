@@ -82,7 +82,7 @@ public class StartMessage extends DefaultMessage {
         public Integer id;
         public String name;
         public Integer monsterId;
-        public Integer userMonsterId;
+        public long userMonsterId;
         public Integer hp;
         public Integer level;
 
@@ -101,7 +101,7 @@ public class StartMessage extends DefaultMessage {
             this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asInt();
             this.name = message.get(ValueFactory.newString("name")).asStringValue().asString();
             this.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asInt();
-            this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asInt();
+            this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asLong();
             this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
             this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();
         }
