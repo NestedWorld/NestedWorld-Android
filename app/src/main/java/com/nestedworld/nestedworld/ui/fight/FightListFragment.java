@@ -146,6 +146,8 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
      */
     @Subscribe
     public void onNewCombatAvailable(OnAvailableMessageEvent event) {
+        LogHelper.d(TAG, "onNewCombatAvailable");
+
         AvailableMessage message = event.getMessage();
         Combat newCombat = Select.from(Combat.class).where(Condition.prop("combatid").eq(message.getMessageId())).first();
         mAdapter.add(newCombat);
@@ -157,7 +159,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     private final static class FightAdapter extends ArrayAdapter<Combat> {
 
         private static final String TAG = FightAdapter.class.getSimpleName();
-        private static final int resource = R.layout.item_fight;
+        private static final int resource = R.layout.item_fight_list;
 
         FightAdapter(@NonNull final Context context) {
             super(context, resource);

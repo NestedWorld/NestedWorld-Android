@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="3dip"
     android:layout_marginRight="3dip"
-    android:orientation="vertical"
-    android:weightSum="2">
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_weight="1"
@@ -21,7 +21,6 @@
         style="@style/TypefaceStyle.ProximaNova.light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NAME"
         android:textColor="@color/apptheme_color"
         android:textSize="12sp"/>
 </LinearLayout>
