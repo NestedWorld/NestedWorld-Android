@@ -48,12 +48,12 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 
 public class BattleFragment extends BaseFragment {
 
@@ -66,7 +66,14 @@ public class BattleFragment extends BaseFragment {
     View layoutPlayer;
     @BindView(R.id.layout_opponent)
     View layoutOpponent;
-
+    @BindViews({
+            R.id.imageView_top,
+            R.id.imageView_top_right,
+            R.id.imageView_bottom_right,
+            R.id.imageView_bottom,
+            R.id.imageView_bottom_left,
+            R.id.imageView_top_left})
+    List<ImageView> mTitles;
     /*
     ** Private field
      */
@@ -132,18 +139,36 @@ public class BattleFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         }
 
+        /*Hide action bar*/
         setupActionBar();
 
         /*populate the view*/
         setupEnvironment();
-        initOpponentInfos(mStartMessage.opponent);
-        initPlayerInfos(mStartMessage.user);
+        setupOpponentInfos(mStartMessage.opponent);
+        setupPlayerInfos(mStartMessage.user);
 
         /*Init the gestureListener*/
         initDrawingGestureView(rootView);
 
-        /*Retrieve mTeams attacks (and populate mTeamAttack) */
-        retrieveMonstersAttacks();
+        /*Load pre-requisite*/
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                /*Retrieve mTeams attacks (and populate mTeamAttack) */
+                retrieveMonstersAttacks();
+                return null;
+            }
+
+            @Override
+            protected void onCancelled() {
+                //Enable drawingGestureView (allow user to send attack)
+                enableDrawingGestureView(true);
+
+                //Stop loading animation
+                progressView.stop();
+            }
+        }.execute();
     }
 
     @Override
@@ -171,7 +196,6 @@ public class BattleFragment extends BaseFragment {
         //TODO parse message
     }
 
-
     /*
     ** Private method
      */
@@ -197,27 +221,37 @@ public class BattleFragment extends BaseFragment {
         }
     }
 
-    private void initDrawingGestureView(View rootView) {
+    private void initDrawingGestureView(@NonNull final View rootView) {
+        //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        /*We create a list with every tile*/
-        final List<ImageView> tiles = Arrays.asList(
-                (ImageView) rootView.findViewById(R.id.imageView_top),
-                (ImageView) rootView.findViewById(R.id.imageView_top_right),
-                (ImageView) rootView.findViewById(R.id.imageView_bottom_right),
-                (ImageView) rootView.findViewById(R.id.imageView_bottom),
-                (ImageView) rootView.findViewById(R.id.imageView_bottom_left),
-                (ImageView) rootView.findViewById(R.id.imageView_top_left));
-
-        /*Create and init the custom view*/
+        /*Create and init the drawingGestureView*/
         mDrawingGestureView = new DrawingGestureView(mContext);
         mDrawingGestureView.setEnabled(false);
-        mDrawingGestureView.setTiles(tiles);
+        mDrawingGestureView.setTiles(mTitles);
+
+        /*
+        ** We don't add listener into the gestureView now
+        *  We'll add the listener after the pre-requisite loading
+        */
 
         /*Add the custom view under the rootView*/
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
+    }
+
+    private void enableDrawingGestureView(final boolean enable) {
+        if (enable) {
+            mDrawingGestureView.setEnabled(true);
+            mDrawingGestureView.setOnFinishMoveListener(mOnFinishMoveListener);
+            mDrawingGestureView.setOnTileTouchListener(mDrawingGestureListener);
+        } else {
+            mTitles.clear();
+            mDrawingGestureView.setEnabled(false);
+            mDrawingGestureView.setOnFinishMoveListener(null);
+            mDrawingGestureView.setOnTileTouchListener(null);
+        }
     }
 
     private void updateMonsterContainer(@NonNull final View container, @NonNull final StartMessage.PlayerMonster monster) {
@@ -245,7 +279,7 @@ public class BattleFragment extends BaseFragment {
         }
     }
 
-    private void initOpponentInfos(@NonNull final StartMessage.Opponent opponent) {
+    private void setupOpponentInfos(@NonNull final StartMessage.Opponent opponent) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -270,7 +304,7 @@ public class BattleFragment extends BaseFragment {
         updateMonsterContainer(layoutOpponent, monster);
     }
 
-    private void initPlayerInfos(@NonNull final StartMessage.Player player) {
+    private void setupPlayerInfos(@NonNull final StartMessage.Player player) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -321,50 +355,21 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        final NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(mContext);
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                for (int i = 0; i < mTeam.size(); i++) {
-                    LogHelper.d(TAG, "Retrieve attacks (task: " + i + ")");
+        NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(mContext);
+        for (int i = 0; i < mTeam.size(); i++) {
+            LogHelper.d(TAG, "Retrieve attacks (task: " + i + ")");
 
-                    final UserMonster userMonster = mTeam.get(i);
-                    final Monster userMonsterInfo = userMonster.info();
-                    if (userMonsterInfo == null) {
-                        throw new IllegalArgumentException("UserMonter not link to any monster");
-                    }
-
-                    try {
-                         mTeamAttack.put(userMonster, nestedWorldHttpApi.getMonsterAttack(userMonsterInfo.getId()).execute().body().attacks);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                return null;
+            final UserMonster userMonster = mTeam.get(i);
+            final Monster userMonsterInfo = userMonster.info();
+            if (userMonsterInfo == null) {
+                throw new IllegalArgumentException("UserMonter not link to any monster");
             }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                //Enable drawingGestureView (allow user to send attack)
-                enableDrawingGestureView(true);
-
-                //Stop loading animation
-                progressView.stop();
+            try {
+                mTeamAttack.put(userMonster, nestedWorldHttpApi.getMonsterAttack(userMonsterInfo.getId()).execute().body().attacks);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }.execute();
-    }
-
-    private void enableDrawingGestureView(final boolean enable) {
-        if (enable) {
-            mDrawingGestureView.setEnabled(true);
-            mDrawingGestureView.setOnFinishMoveListener(mOnFinishMoveListener);
-            mDrawingGestureView.setOnTileTouchListener(mDrawingGestureListener);
-        } else {
-            //Didnd't need to remove listener
-            mDrawingGestureView.setEnabled(false);
-            mDrawingGestureView.setOnFinishMoveListener(null);
-            mDrawingGestureView.setOnTileTouchListener(null);
         }
     }
 }
