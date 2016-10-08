@@ -1,8 +1,12 @@
 package com.nestedworld.nestedworld.network.socket.models.message.combat;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
@@ -82,10 +86,16 @@ public class StartMessage extends DefaultMessage {
         public Integer hp;
         public Integer level;
 
+        /*
+        ** Constructor
+         */
         public PlayerMonster(@NonNull Map<Value, Value> message) {
             super(message);
         }
 
+        /*
+        ** Life cycle
+         */
         @Override
         protected void unSerialise(@NonNull Map<Value, Value> message) {
             this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asInt();
@@ -94,6 +104,14 @@ public class StartMessage extends DefaultMessage {
             this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asInt();
             this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
             this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();
+        }
+
+        /*
+        ** Utils
+         */
+        @Nullable
+        public Monster infos() {
+            return Select.from(Monster.class).where(Condition.prop("monsterid").eq(monsterId)).first();
         }
     }
 
