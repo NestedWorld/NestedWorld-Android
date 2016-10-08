@@ -118,7 +118,7 @@ public class BattleFragment extends BaseFragment {
         }
     };
     private UserMonster mCurrentUserMonster;
-
+    private StartMessage.PlayerMonster mCurrentOpponentMonster;
 
     /*
     ** Public method
@@ -167,6 +167,7 @@ public class BattleFragment extends BaseFragment {
 
         /*Init field*/
         mCurrentUserMonster = mTeam.get(0);
+        mCurrentOpponentMonster = mStartMessage.opponent.monster;
 
         /*populate the view*/
         setupEnvironment();
@@ -400,7 +401,7 @@ public class BattleFragment extends BaseFragment {
         }
 
         //Check if the current monster has an attack of the wanted type
-        final Attack attack = getCurrentMonsterAttackByType(attackTypeWanted);
+        final MonsterAttackResponse.MonsterAttack attack = getCurrentMonsterAttackByType(attackTypeWanted);
         if (attack == null) {
             //Current monster don't have any attack of the wantend type, just display error message
             Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
@@ -422,7 +423,7 @@ public class BattleFragment extends BaseFragment {
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
-                    SendAttackRequest data = new SendAttackRequest(mCurrentUserMonster.fkmonster, attack.attack_id);
+                    SendAttackRequest data = new SendAttackRequest(mCurrentOpponentMonster.id, attack.attack_id);
                     nestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 }
             }
@@ -441,13 +442,13 @@ public class BattleFragment extends BaseFragment {
     }
 
     @Nullable
-    private Attack getCurrentMonsterAttackByType(@NonNull final Attack.AttackType attackTypeWanted) {
+    private MonsterAttackResponse.MonsterAttack getCurrentMonsterAttackByType(@NonNull final Attack.AttackType attackTypeWanted) {
         //Parse currentMonster.attack for finding an attack of the given type
         ArrayList<MonsterAttackResponse.MonsterAttack> currentMonsterAttack = mTeamAttack.get(mCurrentUserMonster);
 
         for (MonsterAttackResponse.MonsterAttack monsterAttack : currentMonsterAttack) {
             if (monsterAttack.infos.getType() == attackTypeWanted) {
-                return monsterAttack.infos;
+                return monsterAttack;
             }
         }
         return null;
