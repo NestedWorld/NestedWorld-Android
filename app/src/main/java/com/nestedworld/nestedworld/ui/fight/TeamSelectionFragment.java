@@ -70,7 +70,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     ProgressView progressView;
 
     private List<UserMonster> mUserMonsters;
-    private List<UserMonster> mSelectedMonster;
+    private List<UserMonster> mSelectedMonster = new ArrayList<>();
     private UserMonsterPagerAdapter mUserMonsterPagerAdapter;
     private Combat mCurrentCombat;
 
@@ -122,7 +122,6 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
         //Retrieve monster and init selectedMonster list
         mUserMonsters = Select.from(UserMonster.class).list();
-        mSelectedMonster = new ArrayList<>();
 
         //Init the viewPager (it will display user's monster)
         setUpViewPager();
@@ -149,8 +148,8 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     }
 
     /*
-        ** Eventbus
-         */
+    ** Eventbus
+     */
     @Subscribe
     public void onNewCombatStart(OnCombatStartMessageEvent event) {
         //Check if fragment hasn't been detach
@@ -169,7 +168,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             mCurrentCombat.delete();
 
             //Start fight fragment
-            FightFragment.load(((AppCompatActivity) mContext).getSupportFragmentManager(), startMessage);
+            FightFragment.load(getChildFragmentManager(), startMessage, mSelectedMonster);
         } else {
             LogHelper.d(TAG, "onNewCombatStart > refuse");
         }
@@ -272,7 +271,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             }
         });
 
-        button_select_monster.setVisibility(View.GONE);
+        button_select_monster.setOnClickListener(null);
     }
 
     private void sendAcceptRequest() {

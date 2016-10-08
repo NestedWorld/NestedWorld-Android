@@ -21,6 +21,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
+import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
@@ -54,14 +55,16 @@ public class FightFragment extends BaseFragment {
     LinearLayout layoutOpponent;
 
     private DrawingGestureView mDrawingGestureView;
-    private StartMessage mStartMessage;
+    private StartMessage mStartMessage = null;
+    private List<UserMonster> mTeam = null;
 
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final StartMessage startMessage) {
+    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final StartMessage startMessage, @NonNull final List<UserMonster> selectedMonster) {
         FightFragment fightFragment = new FightFragment();
         fightFragment.setStartMessage(startMessage);
+        fightFragment.setTeam(selectedMonster);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fightFragment);
@@ -70,6 +73,10 @@ public class FightFragment extends BaseFragment {
 
     public void setStartMessage(@NonNull final StartMessage startMessage) {
         mStartMessage = startMessage;
+    }
+
+    public void setTeam(@NonNull final List<UserMonster> team) {
+        mTeam = team;
     }
 
     /*
@@ -82,6 +89,10 @@ public class FightFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull final View rootView, @Nullable Bundle savedInstanceState) {
+        if (mTeam == null || mStartMessage == null) {
+            throw new IllegalArgumentException("You should call setStartMessage() and setTeam() before binding the fragment");
+        }
+
         //start loading animation
         progressView.start();
 
@@ -109,8 +120,8 @@ public class FightFragment extends BaseFragment {
     }
 
     /*
-        ** EventBus
-         */
+    ** EventBus
+     */
     @Subscribe
     public void onAttackReceive(OnAttackReceiveEvent event) {
         AttackReceiveMessage message = event.getMessage();
