@@ -71,11 +71,11 @@ public class DrawingGestureView extends View {
     /*
     ** Public method
      */
-    public void setOnTileTouchListener(@NonNull final DrawingGestureListener listener) {
+    public void setOnTileTouchListener(@Nullable final DrawingGestureListener listener) {
         mOnTileTouchListener = listener;
     }
 
-    public void setOnFinishMoveListener(@NonNull final OnFinishMoveListener listener) {
+    public void setOnFinishMoveListener(@Nullable final OnFinishMoveListener listener) {
         mOnFinishMoveListener = listener;
     }
 
