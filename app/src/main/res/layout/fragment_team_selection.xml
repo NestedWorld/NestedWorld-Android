@@ -7,16 +7,6 @@
     android:background="@color/WhiteSmoke"
     android:orientation="vertical">
 
-    <com.rey.material.widget.ProgressView
-        android:id="@+id/progressView"
-        android:layout_width="48dip"
-        android:layout_height="48dip"
-        android:layout_centerInParent="true"
-        app:pv_autostart="false"
-        app:pv_circular="true"
-        app:pv_progressMode="indeterminate"
-        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -113,5 +103,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/progressView"
+        android:layout_width="48dip"
+        android:layout_height="48dip"
+        android:layout_centerInParent="true"
+        app:pv_autostart="false"
+        app:pv_circular="true"
+        app:pv_progressMode="indeterminate"
+        app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
 
 </RelativeLayout>
