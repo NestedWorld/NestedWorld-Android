@@ -23,6 +23,7 @@
             android:padding="8dip"
             app:left_arrow.drawable="@drawable/ic_arrow_left"
             app:right_arrow.drawable="@drawable/ic_arrow_right"
+            app:arrow.width="25dip"
             app:round.size="15dip">
 
             <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
