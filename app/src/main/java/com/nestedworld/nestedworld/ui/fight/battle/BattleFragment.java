@@ -181,7 +181,7 @@ public class BattleFragment extends BaseFragment {
             /*Update toolbar title*/
             ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setTitle(getResources().getString(R.string.combat_title));
+                actionBar.hide();
             }
         }
     }
