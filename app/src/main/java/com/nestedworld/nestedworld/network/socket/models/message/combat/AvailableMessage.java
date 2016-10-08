@@ -18,10 +18,16 @@ public class AvailableMessage extends DefaultMessage {
     private Integer monsterId;
     private String opponentPseudo;
 
+    /*
+    ** Constructor
+     */
     public AvailableMessage(@NonNull Map<Value, Value> message) {
         super(message);
     }
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected void unSerialise(@NonNull Map<Value, Value> message) {
         Combat combat = new Combat();

@@ -10,11 +10,16 @@ import java.util.Map;
 
 public class AttackReceiveMessage extends DefaultMessage {
 
-
+    /*
+    ** Constructor
+     */
     public AttackReceiveMessage(@NonNull Map<Value, Value> message) {
         super(message);
     }
 
+    /*
+    ** Life cycle
+     */
     @Override
     protected void unSerialise(@NonNull Map<Value, Value> message) {
 

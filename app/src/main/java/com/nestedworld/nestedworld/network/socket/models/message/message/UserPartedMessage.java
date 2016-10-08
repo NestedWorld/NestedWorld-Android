@@ -24,6 +24,4 @@ public class UserPartedMessage extends DefaultMessage {
     protected void unSerialise(@NonNull Map<Value, Value> message) {
 
     }
-
-
 }
