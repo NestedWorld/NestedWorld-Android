@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
  * * Custom view used for drawing path simplification
  **/
 public class DrawingGestureView extends View {
+    private final static String TAG = DrawingGestureView.class.getSimpleName();
 
     private static final float TOUCH_TOLERANCE = 4;
     private final Paint mPaint;
@@ -36,6 +38,7 @@ public class DrawingGestureView extends View {
     private Bitmap mBitmap;
     private float mX, mY;
     private List<ImageView> mTiles = new ArrayList<>();
+    private Integer mLastTilesTouch = null;
     @Nullable
     private DrawingGestureListener mOnTileTouchListener = null;
     @Nullable
@@ -72,14 +75,17 @@ public class DrawingGestureView extends View {
     ** Public method
      */
     public void setOnTileTouchListener(@Nullable final DrawingGestureListener listener) {
+        LogHelper.i(TAG, "setOnTileTouchListener");
         mOnTileTouchListener = listener;
     }
 
     public void setOnFinishMoveListener(@Nullable final OnFinishMoveListener listener) {
+        LogHelper.i(TAG, "setOnFinishMoveListener");
         mOnFinishMoveListener = listener;
     }
 
     public void setTiles(@NonNull final List<ImageView> tiles) {
+        LogHelper.i(TAG, "setTiles");
         mTiles = tiles;
     }
 
@@ -125,6 +131,7 @@ public class DrawingGestureView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 if (mOnFinishMoveListener != null) {
+                    LogHelper.i(TAG, "onTouchEvent > mOnFinishMoveListener.onFinish()");
                     mOnFinishMoveListener.onFinish();
                 }
                 invalidate();
@@ -174,7 +181,11 @@ public class DrawingGestureView extends View {
                 //if he touch, we change the tile background color and we call the listener
                 view.setBackgroundResource(R.drawable.background_rounded);
                 if (mOnTileTouchListener != null) {
-                    mOnTileTouchListener.onTouch(mTiles.indexOf(view));
+                    LogHelper.i(TAG, "onTouchEvent > mOnFinishMoveListener.onTouch(id=" + view.getId() + ")");
+                    if (mLastTilesTouch == null || mLastTilesTouch != view.getId()) {
+                        mLastTilesTouch = view.getId();
+                        mOnTileTouchListener.onTouch(view.getId());
+                    }
                 }
             }
         }
