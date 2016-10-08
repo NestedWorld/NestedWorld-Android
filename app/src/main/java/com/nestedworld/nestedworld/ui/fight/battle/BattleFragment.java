@@ -361,6 +361,10 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
+        //Start loading animation and disable drawingGesture view (prevent multiple attack sending)
+        progressView.start();
+        enableDrawingGestureView(false);
+
         //Retrieve and clear user gesture
         Attack.AttackType attackTypeWanted = gestureToAttackType(mUserGestureInput);
         mUserGestureInput = "";
@@ -368,10 +372,21 @@ public class BattleFragment extends BaseFragment {
         //Parse user gesture
         switch (attackTypeWanted) {
             case UNKNOWN:
+                //Unknow attack, display error message
                 Toast.makeText(mContext, "Unknown attack type", Toast.LENGTH_SHORT).show();
+
+                //Stop loading animation and re-enable drawingGestureView
+                progressView.stop();
+                enableDrawingGestureView(true);
+
                 return;
             case OBJECT_USE:
-                Toast.makeText(mContext, "Feature incomming", Toast.LENGTH_SHORT).show();
+                //Feature not supported yet, display error message
+                Toast.makeText(mContext, "Feature incoming", Toast.LENGTH_SHORT).show();
+
+                //Stop loading animation and re-enable drawingGestureView
+                progressView.stop();
+                enableDrawingGestureView(true);
                 return;
             default:
                 sendAttackRequest(attackTypeWanted);
@@ -389,6 +404,11 @@ public class BattleFragment extends BaseFragment {
         if (attack == null) {
             //Current monster don't have any attack of the wantend type, just display error message
             Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
+
+            //Stop loading animation and re-enable drawingGestureView
+            progressView.stop();
+            enableDrawingGestureView(true);
+
             return;
         }
 
@@ -410,8 +430,12 @@ public class BattleFragment extends BaseFragment {
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 //Cannot send attack (api not available)
-                //Display error mesage
+                //Display error message
                 Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
+
+                //Stop loading animation and re-enable drawingGestureView
+                progressView.stop();
+                enableDrawingGestureView(true);
             }
         });
     }
