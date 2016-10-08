@@ -93,8 +93,8 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     /*
-        ** Private method
-         */
+    ** Private method
+     */
     private void setupAdapter() {
         //Check if fragment hasn't been detach
         if (mContext == null) {

@@ -168,7 +168,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             mCurrentCombat.delete();
 
             //Start fight fragment
-            FightFragment.load(getChildFragmentManager(), startMessage, mSelectedMonster);
+            FightFragment.load(getFragmentManager(), startMessage, mSelectedMonster);
         } else {
             LogHelper.d(TAG, "onNewCombatStart > refuse");
         }
