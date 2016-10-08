@@ -6,9 +6,9 @@ import org.msgpack.value.ValueFactory;
 
 public class SendAttackRequest implements DefaultRequest {
     private final int target;
-    private final int attack;
+    private final long attack;
 
-    public SendAttackRequest(final int target, final int attack) {
+    public SendAttackRequest(final int target, final long attack) {
         this.target = target;
         this.attack = attack;
     }

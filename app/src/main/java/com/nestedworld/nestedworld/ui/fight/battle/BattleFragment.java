@@ -25,6 +25,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
+import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
@@ -40,6 +41,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterK
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -77,7 +79,7 @@ public class BattleFragment extends BaseFragment {
     /*
     ** Private field
      */
-    private final ArrayList<Integer> mPositions = new ArrayList<>();
+    private String mUserGestureInput = "";
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
     private List<UserMonster> mTeam = null;
@@ -91,11 +93,32 @@ public class BattleFragment extends BaseFragment {
     private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
         @Override
         public void onTouch(int tileId) {
-            if (!mPositions.contains(tileId)) {
-                mPositions.add(tileId);
+                switch (tileId) {
+                    case R.id.imageView_top:
+                        mUserGestureInput += "1";
+                        break;
+                    case R.id.imageView_top_right:
+                        mUserGestureInput += "2";
+                        break;
+                    case R.id.imageView_bottom_right:
+                        mUserGestureInput += "3";
+                        break;
+                    case R.id.imageView_bottom:
+                        mUserGestureInput += "4";
+                        break;
+                    case R.id.imageView_bottom_left:
+                        mUserGestureInput += "5";
+                        break;
+                    case R.id.imageView_top_left:
+                        mUserGestureInput += "6";
+                        break;
+                    default:
+                        break;
             }
         }
     };
+    private UserMonster mCurrentUserMonster;
+
 
     /*
     ** Public method
@@ -141,6 +164,9 @@ public class BattleFragment extends BaseFragment {
 
         /*Hide action bar*/
         setupActionBar();
+
+        /*Init field*/
+        mCurrentUserMonster = mTeam.get(0);
 
         /*populate the view*/
         setupEnvironment();
@@ -247,7 +273,6 @@ public class BattleFragment extends BaseFragment {
             mDrawingGestureView.setOnFinishMoveListener(mOnFinishMoveListener);
             mDrawingGestureView.setOnTileTouchListener(mDrawingGestureListener);
         } else {
-            mTitles.clear();
             mDrawingGestureView.setEnabled(false);
             mDrawingGestureView.setOnFinishMoveListener(null);
             mDrawingGestureView.setOnTileTouchListener(null);
@@ -331,22 +356,62 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
+        Attack.AttackType attackTypeWanted = gestureToAttackType(mUserGestureInput);
+        switch (attackTypeWanted) {
+            case UNKNOWN:
+                Toast.makeText(mContext, "Unknown attack type", Toast.LENGTH_LONG).show();
+                return;
+            case OBJECT_USE:
+                Toast.makeText(mContext, "Feature incomming", Toast.LENGTH_LONG).show();
+                return;
+            default:
+                break;
+        }
+
+        Attack attack = getCurrentMonterAttackByType(attackTypeWanted);
+        if (attack == null) {
+            Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_LONG).show();
+        } else {
+            sendAttackRequest(attack.attack_id);
+        }
+    }
+
+    private void sendAttackRequest(final long attackId) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
                 if (nestedWorldSocketAPI != null) {
-                    SendAttackRequest data = new SendAttackRequest(mStartMessage.opponent.monster.id, 10);
+                    SendAttackRequest data = new SendAttackRequest(mStartMessage.opponent.monster.id, attackId);
                     nestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
-                    mPositions.clear();
+
+                    mUserGestureInput = "";
                 }
             }
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
+                ((BaseAppCompatActivity) mContext).finish();
             }
         });
+    }
+
+    @Nullable
+    private Attack getCurrentMonterAttackByType(@NonNull final Attack.AttackType attackTypeWanted) {
+        ArrayList<MonsterAttackResponse.MonsterAttack> currentMonsterAttack = mTeamAttack.get(mCurrentUserMonster);
+
+        for (MonsterAttackResponse.MonsterAttack monsterAttack : currentMonsterAttack) {
+            if (monsterAttack.infos.getType() == attackTypeWanted) {
+                return monsterAttack.infos;
+            }
+        }
+        return null;
     }
 
     private void retrieveMonstersAttacks() {
@@ -371,5 +436,27 @@ public class BattleFragment extends BaseFragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    /*
+    ** Utils
+     */
+    @NonNull
+    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        switch (gestureInput) {
+            case "41":
+                return Attack.AttackType.ATTACK;
+            case "62":
+                return Attack.AttackType.DEFENSE;
+            case "456123":
+                return Attack.AttackType.ATTACK_SP;
+            case "432165":
+                return Attack.AttackType.DEFENSE_SP;
+            case "6253":
+                return Attack.AttackType.OBJECT_USE;
+            default:
+                break;
+        }
+        return Attack.AttackType.UNKNOWN;
     }
 }
