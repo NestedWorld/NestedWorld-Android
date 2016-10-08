@@ -5,10 +5,10 @@ import com.nestedworld.nestedworld.network.socket.models.request.DefaultRequest;
 import org.msgpack.value.ValueFactory;
 
 public class SendAttackRequest implements DefaultRequest {
-    private final int target;
+    private final long target;
     private final long attack;
 
-    public SendAttackRequest(final int target, final long attack) {
+    public SendAttackRequest(final long target, final long attack) {
         this.target = target;
         this.attack = attack;
     }
