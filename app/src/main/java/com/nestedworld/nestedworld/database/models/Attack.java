@@ -22,15 +22,6 @@ public class Attack extends SugarRecord {
     @Expose
     public String type;
 
-    public enum AttackType {
-        ATTACK,
-        ATTACK_SP,
-        DEFENSE,
-        DEFENSE_SP,
-        OBJECT_USE,
-        UNKNOWN
-    }
-
     //Empty constructor for SugarRecord
     public Attack() {
         //Keep empty
@@ -62,5 +53,14 @@ public class Attack extends SugarRecord {
                 ", name='" + name + '\'' +
                 ", type='" + getType() + '\'' +
                 '}';
+    }
+
+    public enum AttackType {
+        ATTACK,
+        ATTACK_SP,
+        DEFENSE,
+        DEFENSE_SP,
+        OBJECT_USE,
+        UNKNOWN
     }
 }

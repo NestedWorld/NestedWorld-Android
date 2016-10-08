@@ -41,7 +41,6 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterK
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.service.SocketService;
-import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -59,6 +58,7 @@ import butterknife.BindViews;
 
 public class BattleFragment extends BaseFragment {
 
+    private final Map<UserMonster, ArrayList<MonsterAttackResponse.MonsterAttack>> mTeamAttack = new HashMap<>();
     /*
     ** Butterknife binding
      */
@@ -80,45 +80,44 @@ public class BattleFragment extends BaseFragment {
     ** Private field
      */
     private String mUserGestureInput = "";
+    private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
+        @Override
+        public void onTouch(int tileId) {
+            switch (tileId) {
+                case R.id.imageView_top:
+                    mUserGestureInput += "1";
+                    break;
+                case R.id.imageView_top_right:
+                    mUserGestureInput += "2";
+                    break;
+                case R.id.imageView_bottom_right:
+                    mUserGestureInput += "3";
+                    break;
+                case R.id.imageView_bottom:
+                    mUserGestureInput += "4";
+                    break;
+                case R.id.imageView_bottom_left:
+                    mUserGestureInput += "5";
+                    break;
+                case R.id.imageView_top_left:
+                    mUserGestureInput += "6";
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
     private List<UserMonster> mTeam = null;
-    private final Map<UserMonster, ArrayList<MonsterAttackResponse.MonsterAttack>> mTeamAttack = new HashMap<>();
+    private UserMonster mCurrentUserMonster;
+    private StartMessage.PlayerMonster mCurrentOpponentMonster;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
             sendAttack();
         }
     };
-    private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
-        @Override
-        public void onTouch(int tileId) {
-                switch (tileId) {
-                    case R.id.imageView_top:
-                        mUserGestureInput += "1";
-                        break;
-                    case R.id.imageView_top_right:
-                        mUserGestureInput += "2";
-                        break;
-                    case R.id.imageView_bottom_right:
-                        mUserGestureInput += "3";
-                        break;
-                    case R.id.imageView_bottom:
-                        mUserGestureInput += "4";
-                        break;
-                    case R.id.imageView_bottom_left:
-                        mUserGestureInput += "5";
-                        break;
-                    case R.id.imageView_top_left:
-                        mUserGestureInput += "6";
-                        break;
-                    default:
-                        break;
-            }
-        }
-    };
-    private UserMonster mCurrentUserMonster;
-    private StartMessage.PlayerMonster mCurrentOpponentMonster;
 
     /*
     ** Public method
@@ -131,6 +130,37 @@ public class BattleFragment extends BaseFragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fightFragment);
         fragmentTransaction.commit();
+    }
+
+    /*
+    ** Utils
+     */
+    @NonNull
+    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
+
+        Attack.AttackType attackType;
+        switch (gestureInput) {
+            case "41":
+                attackType = Attack.AttackType.ATTACK;
+                break;
+            case "62":
+                attackType = Attack.AttackType.DEFENSE;
+                break;
+            case "456123":
+                attackType = Attack.AttackType.ATTACK_SP;
+                break;
+            case "432165":
+                attackType = Attack.AttackType.DEFENSE_SP;
+                break;
+            case "6253":
+                attackType = Attack.AttackType.OBJECT_USE;
+                break;
+            default:
+                attackType = Attack.AttackType.UNKNOWN;
+        }
+
+        return attackType;
     }
 
     public void setStartMessage(@NonNull final StartMessage startMessage) {
@@ -483,36 +513,5 @@ public class BattleFragment extends BaseFragment {
                 e.printStackTrace();
             }
         }
-    }
-
-    /*
-    ** Utils
-     */
-    @NonNull
-    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
-        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
-
-        Attack.AttackType attackType;
-        switch (gestureInput) {
-            case "41":
-                attackType = Attack.AttackType.ATTACK;
-                break;
-            case "62":
-                attackType = Attack.AttackType.DEFENSE;
-                break;
-            case "456123":
-                attackType = Attack.AttackType.ATTACK_SP;
-                break;
-            case "432165":
-                attackType = Attack.AttackType.DEFENSE_SP;
-                break;
-            case "6253":
-                attackType = Attack.AttackType.OBJECT_USE;
-                break;
-            default:
-                attackType = Attack.AttackType.UNKNOWN;
-        }
-
-        return attackType;
     }
 }

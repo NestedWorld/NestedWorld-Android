@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:layout_marginLeft="3dip"
     android:layout_marginRight="3dip"
-    android:layout_gravity="center"
     android:orientation="vertical">
 
     <ImageView
-        android:layout_weight="1"
         android:id="@+id/imageView_monster"
         android:layout_width="38dip"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:src="@drawable/default_monster"/>
 
