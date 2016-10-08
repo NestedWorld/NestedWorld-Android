@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.ui.fight.battle;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -14,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +29,10 @@ import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
@@ -43,15 +46,20 @@ import com.rey.material.widget.ProgressView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
 public class BattleFragment extends BaseFragment {
 
-    private final ArrayList<Integer> mPositions = new ArrayList<>();
+    /*
+    ** Butterknife binding
+     */
     @BindView(R.id.progressView)
     ProgressView progressView;
     @BindView(R.id.layout_player)
@@ -59,9 +67,28 @@ public class BattleFragment extends BaseFragment {
     @BindView(R.id.layout_opponent)
     View layoutOpponent;
 
+    /*
+    ** Private field
+     */
+    private final ArrayList<Integer> mPositions = new ArrayList<>();
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
     private List<UserMonster> mTeam = null;
+    private final Map<UserMonster, ArrayList<MonsterAttackResponse.MonsterAttack>> mTeamAttack = new HashMap<>();
+    private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
+        @Override
+        public void onFinish() {
+            sendAttack();
+        }
+    };
+    private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
+        @Override
+        public void onTouch(int tileId) {
+            if (!mPositions.contains(tileId)) {
+                mPositions.add(tileId);
+            }
+        }
+    };
 
     /*
     ** Public method
@@ -114,6 +141,9 @@ public class BattleFragment extends BaseFragment {
 
         /*Init the gestureListener*/
         initDrawingGestureView(rootView);
+
+        /*Retrieve mTeams attacks (and populate mTeamAttack) */
+        retrieveMonstersAttacks();
     }
 
     @Override
@@ -185,20 +215,6 @@ public class BattleFragment extends BaseFragment {
         mDrawingGestureView = new DrawingGestureView(mContext);
         mDrawingGestureView.setEnabled(false);
         mDrawingGestureView.setTiles(tiles);
-        mDrawingGestureView.setOnTileTouchListener(new DrawingGestureListener() {
-            @Override
-            public void onTouch(int tileId) {
-                if (!mPositions.contains(tileId)) {
-                    mPositions.add(tileId);
-                }
-            }
-        });
-        mDrawingGestureView.setOnFinishMoveListener(new OnFinishMoveListener() {
-            @Override
-            public void onFinish() {
-                sendAttack();
-            }
-        });
 
         /*Add the custom view under the rootView*/
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
@@ -297,5 +313,58 @@ public class BattleFragment extends BaseFragment {
                 Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void retrieveMonstersAttacks() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        final NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(mContext);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                for (int i = 0; i < mTeam.size(); i++) {
+                    LogHelper.d(TAG, "Retrieve attacks (task: " + i + ")");
+
+                    final UserMonster userMonster = mTeam.get(i);
+                    final Monster userMonsterInfo = userMonster.info();
+                    if (userMonsterInfo == null) {
+                        throw new IllegalArgumentException("UserMonter not link to any monster");
+                    }
+
+                    try {
+                         mTeamAttack.put(userMonster, nestedWorldHttpApi.getMonsterAttack(userMonsterInfo.getId()).execute().body().attacks);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                //Enable drawingGestureView (allow user to send attack)
+                enableDrawingGestureView(true);
+
+                //Stop loading animation
+                progressView.stop();
+            }
+        }.execute();
+    }
+
+    private void enableDrawingGestureView(final boolean enable) {
+        if (enable) {
+            mDrawingGestureView.setEnabled(true);
+            mDrawingGestureView.setOnFinishMoveListener(mOnFinishMoveListener);
+            mDrawingGestureView.setOnTileTouchListener(mDrawingGestureListener);
+        } else {
+            //Didnd't need to remove listener
+            mDrawingGestureView.setEnabled(false);
+            mDrawingGestureView.setOnFinishMoveListener(null);
+            mDrawingGestureView.setOnTileTouchListener(null);
+        }
     }
 }
