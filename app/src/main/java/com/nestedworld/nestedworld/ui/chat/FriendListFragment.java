@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        setupActionBar();
         setupListView();
         populateFriendList();
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -113,6 +115,20 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
     /*
     ** Internal method
      */
+    private void setupActionBar() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.mainMenu_action_chat));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+    }
+
     private void setupListView() {
         //Check if fragment hasn't been detach
         if (mContext == null) {

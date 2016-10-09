@@ -60,7 +60,7 @@ public class ChatFragment extends BaseFragment {
 
         mFriend = Friend.findById(Friend.class, getArguments().getLong("FRIEND_ID"));
 
-        initActionBar();
+        setupActionBar();
         initChat();
     }
 
@@ -80,9 +80,9 @@ public class ChatFragment extends BaseFragment {
     }
 
     /*
-    ** Utils
+    ** Internal method
      */
-    private void initActionBar() {
+    private void setupActionBar() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;

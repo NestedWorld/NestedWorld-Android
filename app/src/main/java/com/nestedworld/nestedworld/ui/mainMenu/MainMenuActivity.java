@@ -26,7 +26,7 @@ import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.chat.ChatActivity;
+import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
 import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.MapFragment;
@@ -109,7 +109,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 startActivity(ProfileActivity.class);
                 return true;
             case R.id.action_chat:
-                startActivity(ChatActivity.class);
+                FriendListFragment.load(getSupportFragmentManager());
                 return true;
             case R.id.action_fight:
                 startActivity(FightProcessActivity.class);
