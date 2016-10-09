@@ -105,10 +105,8 @@ public class SocketService extends Service {
     ** Internal method
      */
     private void parseMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
-        //TODO use idKind
-
         //Handle notification
-        NestedWorldGcm.onMessageReceived(this, messageKind, message);
+        NestedWorldGcm.onMessageReceived(this, message, messageKind, idKind);
 
         //Do internal job
         switch (messageKind) {

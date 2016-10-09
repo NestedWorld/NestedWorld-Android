@@ -26,10 +26,10 @@ public final class NestedWorldGcm {
     /*
     ** Public method
      */
-    public static void onMessageReceived(@NonNull final Context context, @NonNull final SocketMessageType.MessageKind kind, @NonNull final Map<Value, Value> content) {
+    public static void onMessageReceived(@NonNull final Context context, @NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
         NotificationMessage notificationMessage = new NotificationMessage();
-        notificationMessage.type = kind;
-        notificationMessage.content = content;
+        notificationMessage.type = messageKind;
+        notificationMessage.content = message;
 
         handleMessage(context, notificationMessage);
     }
