@@ -160,8 +160,6 @@ public class SocketService extends Service {
                 //Send Event
                 EventBus.getDefault().post(new OnAttackReceiveEvent(attackReveiveMessage));
                 break;
-            case TYPE_COMBAT_MONSTER_REPLACED:
-                break;
             case TYPE_COMBAT_END:
                 //Parse message
                 CombatEndMessage combatEndMessage = new CombatEndMessage(message, messageKind, idKind);
@@ -174,6 +172,9 @@ public class SocketService extends Service {
                 break;
             case TYPE_AUTHENTICATE:
                 //Shouldn't use it (handle by socketManager)
+                break;
+            case TYPE_COMBAT_MONSTER_REPLACED:
+                //It's a response (it's probably a result for chat:join:chanel)
                 break;
             case TYPE_CHAT_JOIN_CHANNEL:
                 //It's a response (it's probably a result for chat:join:chanel)

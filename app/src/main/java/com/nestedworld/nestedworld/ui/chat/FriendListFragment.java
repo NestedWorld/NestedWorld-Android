@@ -209,8 +209,8 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             Glide.with(getContext())
                     .load(currentFriendInfo.avatar)
                     .placeholder(roundedBitmapDrawable)
-                    .bitmapTransform(new CropCircleTransformation(getContext()))
                     .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(friendHolder.friendPicture);
 
             return view;
