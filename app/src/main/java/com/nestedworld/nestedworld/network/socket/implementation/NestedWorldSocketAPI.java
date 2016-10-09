@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.network.socket.implementation;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -130,34 +131,18 @@ public final class NestedWorldSocketAPI implements SocketListener {
     }
 
     private void parseSocketMessage(@NonNull final Map<Value, Value> message) {
-        //Check if the message is a response
-        if (message.containsKey(ValueFactory.newString("id"))) {
-            //get the messageId
-            final String messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
+        SocketMessageType.MessageKind kind = getMessageKind(message);
+        SocketMessageType.MessageKind idKind = getMessageIdKind(message);
 
-            //check if we know this id
-            if (SocketMessageType.messageType.containsValue(messageId)) {
-                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getKeyFromValue(messageId);
-                //Check it it's an auth response
-                if (kind == SocketMessageType.MessageKind.TYPE_AUTHENTICATE) {
+        if (kind != null) {
+            //If we're not auth, we check if it's our auth response
+            if (!isAuth) {
+                if (idKind == SocketMessageType.MessageKind.TYPE_AUTHENTICATE) {
                     parseAuthMessage(message);
                     return;
-                } else {
-                    notifyMessageReceive(kind, message);
-                    return;
                 }
-            }
-        }
-
-        //It's a spontaneous message, try to found the type
-        if (message.containsKey(ValueFactory.newString("type"))) {
-            final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
-
-            //check if we know the type
-            if (SocketMessageType.messageType.containsValue(type)) {
-                final SocketMessageType.MessageKind kind = SocketMessageType.messageType.getKeyFromValue(type);
+            } else {
                 notifyMessageReceive(kind, message);
-                return;
             }
         }
 
@@ -266,5 +251,32 @@ public final class NestedWorldSocketAPI implements SocketListener {
             }
         });
     }
+
+    /*
+    ** Utils
+     */
+    @Nullable
+    private static SocketMessageType.MessageKind getMessageKind(@NonNull final Map<Value, Value> message) {
+        if (message.containsKey(ValueFactory.newString("type"))) {
+            final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
+
+            //check if we know the type
+            if (SocketMessageType.messageType.containsValue(type)) {
+                return SocketMessageType.messageType.getKeyFromValue(type);
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private static SocketMessageType.MessageKind getMessageIdKind(@NonNull final Map<Value, Value> message) {
+        if (message.containsKey(ValueFactory.newString("id"))) {
+            //get the messageId
+            String messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
+            return SocketMessageType.messageType.getKeyFromValue(messageId);
+        }
+        return null;
+    }
+
 }
 
