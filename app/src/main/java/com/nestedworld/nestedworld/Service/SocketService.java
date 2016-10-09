@@ -78,7 +78,7 @@ public class SocketService extends Service {
             }
 
             @Override
-            public void onMessageReceived(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @NonNull SocketMessageType.MessageKind idKind) {
+            public void onMessageReceived(@NonNull Map<Value, Value> message, @Nullable SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Do internal job
                 parseMessage(message, messageKind, idKind);
             }
