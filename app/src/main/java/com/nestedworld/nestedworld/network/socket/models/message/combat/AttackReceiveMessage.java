@@ -10,6 +10,12 @@ import java.util.Map;
 
 public class AttackReceiveMessage extends DefaultMessage {
 
+    String type;
+    String id;
+    int attack;
+    int combat;
+    AttackReceiveMessageMonster monster;
+    AttackReceiveMessagetarget target;
     /*
     ** Constructor
      */
@@ -24,4 +30,18 @@ public class AttackReceiveMessage extends DefaultMessage {
     protected void unSerialise(@NonNull Map<Value, Value> message) {
 
     }
+
+    /*
+    /** Inner class used for parsing
+     */
+    public class AttackReceiveMessageMonster {
+        int id;
+        int hp;
+    }
+
+    public class AttackReceiveMessagetarget {
+        int id;
+        int hp;
+    }
+
 }
