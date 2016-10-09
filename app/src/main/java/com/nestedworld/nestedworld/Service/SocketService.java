@@ -78,7 +78,7 @@ public class SocketService extends Service {
             }
 
             @Override
-            public void onMessageReceived(@NonNull Map<Value, Value> message, @Nullable SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            public void onMessageReceived(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Do internal job
                 parseMessage(message, messageKind, idKind);
             }
@@ -104,7 +104,7 @@ public class SocketService extends Service {
     /*
     ** Internal method
      */
-    private void parseMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
+    private void parseMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
         //Handle notification
         NestedWorldGcm.onMessageReceived(this, message, messageKind, idKind);
 

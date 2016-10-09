@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.network.socket.models.message.combat;
 
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
@@ -18,7 +19,7 @@ public class MonsterKoMessage extends DefaultMessage {
     /*
     ** Constructor
      */
-    public MonsterKoMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @NonNull SocketMessageType.MessageKind idKind) {
+    public MonsterKoMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
     }
 

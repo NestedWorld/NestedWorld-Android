@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.network.socket.models.message.combat;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
@@ -21,7 +22,7 @@ public class AttackReceiveMessage extends DefaultMessage {
     /*
     ** Constructor
      */
-    public AttackReceiveMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @NonNull SocketMessageType.MessageKind idKind) {
+    public AttackReceiveMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
     }
 
@@ -36,12 +37,12 @@ public class AttackReceiveMessage extends DefaultMessage {
     /*
     /** Inner class used for parsing
      */
-    public class AttackReceiveMessageMonster {
+    public final static class AttackReceiveMessageMonster {
         public int id;
         public int hp;
     }
 
-    public class AttackReceiveMessageTarget {
+    public final static class AttackReceiveMessageTarget {
         public int id;
         public int hp;
     }

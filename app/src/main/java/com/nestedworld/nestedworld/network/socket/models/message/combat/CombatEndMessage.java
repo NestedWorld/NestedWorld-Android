@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.network.socket.models.message.combat;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
@@ -15,7 +16,7 @@ public class CombatEndMessage extends DefaultMessage {
     /*
     ** Constructor
      */
-    public CombatEndMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @NonNull SocketMessageType.MessageKind idKind) {
+    public CombatEndMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
     }
 

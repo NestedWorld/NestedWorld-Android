@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.network.socket.models.message.combat;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
@@ -22,7 +23,7 @@ public class AvailableMessage extends DefaultMessage {
     /*
     ** Constructor
      */
-    public AvailableMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @NonNull SocketMessageType.MessageKind idKind) {
+    public AvailableMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
     }
 

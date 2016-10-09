@@ -95,10 +95,8 @@
     <string name="teamSelection_msg_monsterHp">Hp: %s</string>
 
     <!--Fight.combat-->
-    <string name="combat_title">Fight</string>
     <string name="combat_msg_monsterLife">Life</string>
     <string name="combat_msg_monster_lvl">Lvl: %d</string>
-    <string name="combat_msg_monster_hp">Hp: %d</string>
     <string name="combat_msg_send_atk_failed">Cannot send your attack, try again</string>
 
     <!--Fight.fightList-->
@@ -117,4 +115,5 @@
     <!--Attack adapter-->
     <string name="item_attack_msg_attackType">Attack type: %s</string>
     <string name="item_attack_msg_attackName">Attack name: %s</string>
+    <string name="monsterDetail_title_attack">Monster attacks:</string>
 </resources>

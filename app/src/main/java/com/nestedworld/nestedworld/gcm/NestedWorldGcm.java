@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.gcm;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.gcm.model.NotificationMessage;
@@ -26,7 +27,7 @@ public final class NestedWorldGcm {
     /*
     ** Public method
      */
-    public static void onMessageReceived(@NonNull final Context context, @NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
+    public static void onMessageReceived(@NonNull final Context context, @NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
         NotificationMessage notificationMessage = new NotificationMessage();
         notificationMessage.type = messageKind;
         notificationMessage.content = message;
@@ -37,7 +38,7 @@ public final class NestedWorldGcm {
     /*
     ** Internal method
      */
-    private static void handleMessage(@NonNull final Context context, @NonNull final NotificationMessage notification, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
+    private static void handleMessage(@NonNull final Context context, @NonNull final NotificationMessage notification, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
         switch (notification.type) {
             case TYPE_COMBAT_AVAILABLE:
                 AvailableMessage availableMessage = new AvailableMessage(notification.content, messageKind, idKind);

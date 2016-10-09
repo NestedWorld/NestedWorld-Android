@@ -11,8 +11,8 @@ import java.util.Map;
 
 public abstract class DefaultMessage {
 
-    protected SocketMessageType.MessageKind mMessageKind;
-    protected SocketMessageType.MessageKind mIdKind;
+    protected final SocketMessageType.MessageKind mMessageKind;
+    protected final SocketMessageType.MessageKind mIdKind;
 
     /*
     ** Constructor

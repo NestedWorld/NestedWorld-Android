@@ -19,5 +19,5 @@ public interface ConnectionListener {
     void onConnectionLost();
 
     /*Will be called when something is read on the socket*/
-    void onMessageReceived(@NonNull final Map<Value, Value> message, @Nullable final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind);
+    void onMessageReceived(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind);
 }
