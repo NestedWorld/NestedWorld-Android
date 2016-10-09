@@ -453,7 +453,7 @@ public class BattleFragment extends BaseFragment {
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
-                    SendAttackRequest data = new SendAttackRequest(mCurrentOpponentMonster.id, attack.attack_id);
+                    SendAttackRequest data = new SendAttackRequest(mStartMessage.combatId, mCurrentOpponentMonster.id, attack.infos.attack_id);
                     nestedWorldSocketAPI.sendRequest(data, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 }
             }
