@@ -5,12 +5,12 @@
     android:layout_height="175dip">
 
     <ImageView
-        android:alpha="0.5"
-        android:scaleType="fitXY"
         android:id="@+id/imageView_user_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/apptheme_color"/>
+        android:alpha="0.5"
+        android:background="@color/apptheme_color"
+        android:scaleType="fitXY"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,9 +70,9 @@
             android:showDividers="middle">
 
             <LinearLayout
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -80,15 +80,15 @@
                 android:paddingStart="8dip">
 
                 <TextView
-                    android:gravity="center"
-                    android:maxLines="2"
-                    android:lines="2"
+                    android:id="@+id/textView"
                     style="@style/TypefaceStyle.ProximaNova.bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:maxLines="2"
                     android:text="@string/tabHome_title_creditsNumber"
-                    android:textColor="@color/DarkGray"
-                    android:id="@+id/textView"/>
+                    android:textColor="@color/DarkGray"/>
 
                 <TextView
                     android:id="@+id/textView_creditsNumber"
@@ -103,9 +103,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -113,12 +113,12 @@
                 android:paddingStart="8dip">
 
                 <TextView
-                    android:maxLines="2"
-                    android:lines="2"
                     style="@style/TypefaceStyle.ProximaNova.bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:lines="2"
+                    android:maxLines="2"
                     android:text="@string/tabHome_title_monsterCaptured"
                     android:textColor="@color/DarkGray"/>
 
@@ -134,9 +134,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -144,12 +144,12 @@
                 android:paddingStart="8dip">
 
                 <TextView
-                    android:maxLines="2"
-                    android:lines="2"
                     style="@style/TypefaceStyle.ProximaNova.bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:lines="2"
+                    android:maxLines="2"
                     android:text="@string/tabHome_title_areaCaptured"
                     android:textColor="@color/DarkGray"/>
 
@@ -167,20 +167,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:orientation="vertical"
                 android:paddingEnd="8dip"
                 android:paddingStart="8dip">
 
                 <TextView
-                    android:maxLines="2"
-                    android:lines="2"
                     style="@style/TypefaceStyle.ProximaNova.bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:lines="2"
+                    android:maxLines="2"
                     android:text="@string/tabHome_title_allyOnline"
                     android:textColor="@color/DarkGray"/>
 

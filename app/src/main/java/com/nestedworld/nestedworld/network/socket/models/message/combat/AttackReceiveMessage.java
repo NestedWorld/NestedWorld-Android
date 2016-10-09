@@ -17,6 +17,7 @@ public class AttackReceiveMessage extends DefaultMessage {
     public int combat;
     public AttackReceiveMessageMonster monster;
     public AttackReceiveMessageTarget target;
+
     /*
     ** Constructor
      */

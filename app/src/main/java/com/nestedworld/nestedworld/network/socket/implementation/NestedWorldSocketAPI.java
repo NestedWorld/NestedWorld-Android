@@ -73,6 +73,32 @@ public final class NestedWorldSocketAPI implements SocketListener {
     }
 
     /*
+    ** Utils
+     */
+    @Nullable
+    private static SocketMessageType.MessageKind getMessageKind(@NonNull final Map<Value, Value> message) {
+        if (message.containsKey(ValueFactory.newString("type"))) {
+            final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
+
+            //check if we know the type
+            if (SocketMessageType.messageType.containsValue(type)) {
+                return SocketMessageType.messageType.getKeyFromValue(type);
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private static SocketMessageType.MessageKind getMessageIdKind(@NonNull final Map<Value, Value> message) {
+        if (message.containsKey(ValueFactory.newString("id"))) {
+            //get the messageId
+            String messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
+            return SocketMessageType.messageType.getKeyFromValue(messageId);
+        }
+        return null;
+    }
+
+    /*
     ** Public method
      */
     public void addListener(@NonNull final ConnectionListener connectionListener) {
@@ -254,32 +280,6 @@ public final class NestedWorldSocketAPI implements SocketListener {
                 }
             }
         });
-    }
-
-    /*
-    ** Utils
-     */
-    @Nullable
-    private static SocketMessageType.MessageKind getMessageKind(@NonNull final Map<Value, Value> message) {
-        if (message.containsKey(ValueFactory.newString("type"))) {
-            final String type = message.get(ValueFactory.newString("type")).asStringValue().asString();
-
-            //check if we know the type
-            if (SocketMessageType.messageType.containsValue(type)) {
-                return SocketMessageType.messageType.getKeyFromValue(type);
-            }
-        }
-        return null;
-    }
-
-    @Nullable
-    private static SocketMessageType.MessageKind getMessageIdKind(@NonNull final Map<Value, Value> message) {
-        if (message.containsKey(ValueFactory.newString("id"))) {
-            //get the messageId
-            String messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
-            return SocketMessageType.messageType.getKeyFromValue(messageId);
-        }
-        return null;
     }
 
 }

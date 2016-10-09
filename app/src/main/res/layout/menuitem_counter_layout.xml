@@ -14,8 +14,8 @@
             android:background="@color/GreenYellow"/>
 
         <TextView
-            style="@style/TypefaceStyle.ProximaNova.bold"
             android:id="@+id/count"
+            style="@style/TypefaceStyle.ProximaNova.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

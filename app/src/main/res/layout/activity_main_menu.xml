@@ -43,15 +43,15 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_weight="0.8"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"/>
 
                 <FrameLayout
-                    android:layout_weight="0.2"
                     android:id="@+id/container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"/>
 
             </LinearLayout>
 
