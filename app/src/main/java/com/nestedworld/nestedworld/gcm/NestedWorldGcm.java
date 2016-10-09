@@ -31,16 +31,16 @@ public final class NestedWorldGcm {
         notificationMessage.type = messageKind;
         notificationMessage.content = message;
 
-        handleMessage(context, notificationMessage);
+        handleMessage(context, notificationMessage, messageKind, idKind);
     }
 
     /*
     ** Internal method
      */
-    private static void handleMessage(@NonNull final Context context, @NonNull final NotificationMessage notification) {
+    private static void handleMessage(@NonNull final Context context, @NonNull final NotificationMessage notification, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
         switch (notification.type) {
             case TYPE_COMBAT_AVAILABLE:
-                AvailableMessage availableMessage = new AvailableMessage(notification.content);
+                AvailableMessage availableMessage = new AvailableMessage(notification.content, messageKind, idKind);
                 Combat combat = availableMessage.saveAsCombat();
 
                 //Display notification
