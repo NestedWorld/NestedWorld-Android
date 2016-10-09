@@ -54,9 +54,10 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new FriendListFragment());
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new FriendListFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     /*
