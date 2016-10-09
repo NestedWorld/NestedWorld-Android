@@ -62,7 +62,7 @@
     <string name="tabHome_title_creditsNumber">Credits</string>
     <string name="tabHome_title_monsterCaptured">Monster captured</string>
     <string name="tabHome_title_areaCaptured">Area captured</string>
-    <string name="tabHome_title_allyOnline">Area captured</string>
+    <string name="tabHome_title_allyOnline">Ally online</string>
     <string name="tabHome_msg_allyOnline">%d</string>
     <string name="tabHome_msg_monsterCaptured">%d</string>
 

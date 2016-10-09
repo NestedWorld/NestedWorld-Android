@@ -8,54 +8,15 @@
     <color name="apptheme_color">#03a9f4</color>
     <color name="apptheme_color_dark">#0288d1</color>
 
-    <!-- Android Holo style -->
     <color name="holo_blue_light">#ff33b5e5</color>
     <color name="holo_green_light">#ff99cc00</color>
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="holo_red_light">#ffff4444</color>
-
-    <!-- Windows 8 style -->
-
-    <!-- Common -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <!-- Generic -->
-    <!-- Generic Dark -->
     <color name="DarkKhaki">#BDB76B</color>
-    <!-- Generic Light -->
-    <!-- Generic Medium -->
-
-    <!-- a -->
-    <!-- b -->
-    <!-- c -->
-    <!-- d -->
-    <!-- e -->
-    <!-- f -->
-    <!-- g -->
     <color name="GreenYellow">#ADFF2F</color>
-    <!-- h -->
-    <!-- i -->
-    <!-- j -->
-    <!-- k -->
-    <!-- l -->
-    <!-- m -->
-    <!-- n -->
-    <!-- o -->
-
-    <!-- p -->
-    <!-- q -->
-    <!-- r -->
-    <!-- s -->
-
-    <!-- t -->
-    <!-- u -->
-    <!-- v -->
-    <!-- w -->
     <color name="WhiteSmoke">#F5F5F5</color>
-    <!-- x -->
-    <!-- y -->
-
-    <!-- z -->
-
+    <color name="DarkGray">#a9a9a9</color>
 
 </resources>

@@ -14,13 +14,13 @@
             android:background="@color/GreenYellow"/>
 
         <TextView
+            style="@style/TypefaceStyle.ProximaNova.bold"
             android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="0"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:textStyle="bold"/>
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
     </RelativeLayout>
 </FrameLayout>

@@ -145,8 +145,8 @@ public class HomeFragment extends BaseFragment {
         Glide.with(mContext)
                 .load(user.avatar)
                 .placeholder(roundedBitmapDrawable)
-                .bitmapTransform(new CropCircleTransformation(mContext))
                 .centerCrop()
+                .bitmapTransform(new CropCircleTransformation(mContext))
                 .into(imageViewUser);
 
         //Display user background
