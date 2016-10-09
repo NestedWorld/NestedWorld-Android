@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -27,8 +28,8 @@ public class StartMessage extends DefaultMessage {
     /*
     ** Constructor
      */
-    public StartMessage(@NonNull Map<Value, Value> message) {
-        super(message);
+    public StartMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @NonNull SocketMessageType.MessageKind idKind) {
+        super(message, messageKind, idKind);
     }
 
     /*
@@ -46,14 +47,14 @@ public class StartMessage extends DefaultMessage {
         if (message.containsKey(ValueFactory.newString("user"))) {
             Map<Value, Value> userMap = message.get(ValueFactory.newString("user")).asMapValue().map();
             if (userMap != null) {
-                this.user = new Player(userMap);
+                this.user = new Player(userMap, getMessageKind(), null);
             }
         }
 
         if (message.containsKey(ValueFactory.newString("opponent"))) {
             Map<Value, Value> opponentMap = message.get(ValueFactory.newString("opponent")).asMapValue().map();
             if (opponentMap != null) {
-                this.opponent = new Opponent(opponentMap);
+                this.opponent = new Opponent(opponentMap, getMessageKind(), null);
             }
         }
     }
@@ -89,8 +90,8 @@ public class StartMessage extends DefaultMessage {
         /*
         ** Constructor
          */
-        public PlayerMonster(@NonNull Map<Value, Value> message) {
-            super(message);
+        public PlayerMonster(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            super(message, messageKind, idKind);
         }
 
         /*
@@ -119,13 +120,13 @@ public class StartMessage extends DefaultMessage {
 
         public PlayerMonster monster;
 
-        public Player(@NonNull Map<Value, Value> message) {
-            super(message);
+        public Player(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            super(message, messageKind, idKind);
         }
 
         @Override
         protected void unSerialise(@NonNull Map<Value, Value> message) {
-            this.monster = new PlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map());
+            this.monster = new PlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
         }
     }
 
@@ -133,13 +134,19 @@ public class StartMessage extends DefaultMessage {
         public PlayerMonster monster;
         public Integer monsterCount;
 
-        public Opponent(@NonNull Map<Value, Value> message) {
-            super(message);
+        /*
+        ** Constructor
+         */
+        public Opponent(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            super(message, messageKind, idKind);
         }
 
+        /*
+        ** Life cycle
+         */
         @Override
         protected void unSerialise(@NonNull Map<Value, Value> message) {
-            this.monster = new PlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map());
+            this.monster = new PlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
             this.monsterCount = message.get(ValueFactory.newString("monsters_count")).asIntegerValue().asInt();
         }
     }
