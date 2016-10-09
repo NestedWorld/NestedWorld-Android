@@ -19,8 +19,8 @@ public class StartMessage extends DefaultMessage {
     public String type;
     public String id;
     public Integer combatId;
-    public Player user;
-    public Opponent opponent;
+    public StartMessagePlayer user;
+    public StartMessageOpponent opponent;
     public String combatType;
     public String env;
     public boolean first;
@@ -47,14 +47,14 @@ public class StartMessage extends DefaultMessage {
         if (message.containsKey(ValueFactory.newString("user"))) {
             Map<Value, Value> userMap = message.get(ValueFactory.newString("user")).asMapValue().map();
             if (userMap != null) {
-                this.user = new Player(userMap, getMessageKind(), null);
+                this.user = new StartMessagePlayer(userMap, getMessageKind(), null);
             }
         }
 
         if (message.containsKey(ValueFactory.newString("opponent"))) {
             Map<Value, Value> opponentMap = message.get(ValueFactory.newString("opponent")).asMapValue().map();
             if (opponentMap != null) {
-                this.opponent = new Opponent(opponentMap, getMessageKind(), null);
+                this.opponent = new StartMessageOpponent(opponentMap, getMessageKind(), null);
             }
         }
     }
@@ -79,7 +79,42 @@ public class StartMessage extends DefaultMessage {
     /*
     ** Inner class (used for parsing)
      */
-    public static class PlayerMonster extends DefaultMessage {
+    public static class StartMessagePlayer extends DefaultMessage {
+
+        public StartMessagePlayerMonster monster;
+
+        public StartMessagePlayer(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            super(message, messageKind, idKind);
+        }
+
+        @Override
+        protected void unSerialise(@NonNull Map<Value, Value> message) {
+            this.monster = new StartMessagePlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
+        }
+    }
+
+    public static class StartMessageOpponent extends DefaultMessage {
+        public StartMessagePlayerMonster monster;
+        public Integer monsterCount;
+
+        /*
+        ** Constructor
+         */
+        public StartMessageOpponent(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            super(message, messageKind, idKind);
+        }
+
+        /*
+        ** Life cycle
+         */
+        @Override
+        protected void unSerialise(@NonNull Map<Value, Value> message) {
+            this.monster = new StartMessagePlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
+            this.monsterCount = message.get(ValueFactory.newString("monsters_count")).asIntegerValue().asInt();
+        }
+    }
+
+    public static class StartMessagePlayerMonster extends DefaultMessage {
         public Integer id;
         public String name;
         public Integer monsterId;
@@ -90,7 +125,7 @@ public class StartMessage extends DefaultMessage {
         /*
         ** Constructor
          */
-        public PlayerMonster(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+        public StartMessagePlayerMonster(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
             super(message, messageKind, idKind);
         }
 
@@ -113,41 +148,6 @@ public class StartMessage extends DefaultMessage {
         @Nullable
         public Monster infos() {
             return Select.from(Monster.class).where(Condition.prop("monsterid").eq(monsterId)).first();
-        }
-    }
-
-    public static class Player extends DefaultMessage {
-
-        public PlayerMonster monster;
-
-        public Player(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
-            super(message, messageKind, idKind);
-        }
-
-        @Override
-        protected void unSerialise(@NonNull Map<Value, Value> message) {
-            this.monster = new PlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
-        }
-    }
-
-    public static class Opponent extends DefaultMessage {
-        public PlayerMonster monster;
-        public Integer monsterCount;
-
-        /*
-        ** Constructor
-         */
-        public Opponent(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
-            super(message, messageKind, idKind);
-        }
-
-        /*
-        ** Life cycle
-         */
-        @Override
-        protected void unSerialise(@NonNull Map<Value, Value> message) {
-            this.monster = new PlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
-            this.monsterCount = message.get(ValueFactory.newString("monsters_count")).asIntegerValue().asInt();
         }
     }
 }

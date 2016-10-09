@@ -111,7 +111,7 @@ public class BattleFragment extends BaseFragment {
     private StartMessage mStartMessage = null;
     private List<UserMonster> mTeam = null;
     private UserMonster mCurrentUserMonster;
-    private StartMessage.PlayerMonster mCurrentOpponentMonster;
+    private StartMessage.StartMessagePlayerMonster mCurrentOpponentMonster;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
@@ -303,14 +303,14 @@ public class BattleFragment extends BaseFragment {
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
     }
 
-    private void setupOpponentInfos(@NonNull final StartMessage.Opponent opponent) {
+    private void setupOpponentInfos(@NonNull final StartMessage.StartMessageOpponent opponent) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
         //Retrieve his monster
-        StartMessage.PlayerMonster monster = opponent.monster;
+        StartMessage.StartMessagePlayerMonster monster = opponent.monster;
 
         //Init monster list
         RecyclerView monstersList = (RecyclerView) layoutOpponent.findViewById(R.id.listview_opponentMonster);
@@ -328,7 +328,7 @@ public class BattleFragment extends BaseFragment {
         updateMonsterContainer(layoutOpponent, monster);
     }
 
-    private void setupPlayerInfos(@NonNull final StartMessage.Player player) {
+    private void setupPlayerInfos(@NonNull final StartMessage.StartMessagePlayer player) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -349,7 +349,7 @@ public class BattleFragment extends BaseFragment {
         updateMonsterContainer(layoutPlayer, player.monster);
     }
 
-    private void updateMonsterContainer(@NonNull final View container, @NonNull final StartMessage.PlayerMonster monster) {
+    private void updateMonsterContainer(@NonNull final View container, @NonNull final StartMessage.StartMessagePlayerMonster monster) {
         //Retrieve widget
         TextView monsterLvl = (TextView) container.findViewById(R.id.textview_monster_lvl);
         TextView monsterName = (TextView) container.findViewById(R.id.textview_monster_name);
