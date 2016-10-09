@@ -134,6 +134,9 @@ public final class NestedWorldSocketAPI implements SocketListener {
         SocketMessageType.MessageKind kind = getMessageKind(message);
         SocketMessageType.MessageKind idKind = getMessageIdKind(message);
 
+        LogHelper.d(TAG, "kind=" + kind);
+        LogHelper.d(TAG, "idKind=" + idKind);
+
         if (kind != null) {
             //If we're not auth, we check if it's our auth response
             if (!isAuth) {
@@ -143,6 +146,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
                 }
             } else {
                 notifyMessageReceive(message, kind, idKind);
+                return;
             }
         }
 
@@ -222,7 +226,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         });
     }
 
-    private void notifyMessageReceive(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
+    private void notifyMessageReceive(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
         LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getValueFromKey(messageKind));
 
         //Call connectionListener.onMessageReceived() inside the main thread
