@@ -142,7 +142,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
                     return;
                 }
             } else {
-                notifyMessageReceive(kind, message);
+                notifyMessageReceive(message, kind, idKind);
             }
         }
 
@@ -222,7 +222,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         });
     }
 
-    private void notifyMessageReceive(@NonNull final SocketMessageType.MessageKind messageKind, @NonNull final Map<Value, Value> message) {
+    private void notifyMessageReceive(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
         LogHelper.d(TAG, "Notify: " + SocketMessageType.messageType.getValueFromKey(messageKind));
 
         //Call connectionListener.onMessageReceived() inside the main thread
@@ -231,7 +231,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
             public void run() {
                 for (ConnectionListener connectionListener : mConnectionListener) {
                     if (connectionListener != null) {
-                        connectionListener.onMessageReceived(messageKind, message);
+                        connectionListener.onMessageReceived(message, messageKind, idKind);
                     }
                 }
             }

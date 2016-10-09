@@ -78,9 +78,9 @@ public class SocketService extends Service {
             }
 
             @Override
-            public void onMessageReceived(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+            public void onMessageReceived(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @NonNull SocketMessageType.MessageKind idKind) {
                 //Do internal job
-                parseMessage(kind, content);
+                parseMessage(message, messageKind, idKind);
             }
         });
 
@@ -104,43 +104,45 @@ public class SocketService extends Service {
     /*
     ** Internal method
      */
-    private void parseMessage(@NonNull SocketMessageType.MessageKind kind, @NonNull Map<Value, Value> content) {
+    private void parseMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final SocketMessageType.MessageKind idKind) {
+        //TODO use idKind
+
         //Handle notification
-        NestedWorldGcm.onMessageReceived(this, kind, content);
+        NestedWorldGcm.onMessageReceived(this, messageKind, message);
 
         //Do internal job
-        switch (kind) {
+        switch (messageKind) {
             case TYPE_CHAT_USER_JOINED:
                 //Parse message
-                UserJoinedMessage userJoinedMessage = new UserJoinedMessage(content);
+                UserJoinedMessage userJoinedMessage = new UserJoinedMessage(message);
 
                 //Send event
                 EventBus.getDefault().post(new OnUserJoinedEvent(userJoinedMessage));
                 break;
             case TYPE_CHAT_USER_PARTED:
                 //Parse message
-                UserPartedMessage userPartedMessage = new UserPartedMessage(content);
+                UserPartedMessage userPartedMessage = new UserPartedMessage(message);
 
                 //Send event
                 EventBus.getDefault().post(new OnUserPartedEvent(userPartedMessage));
                 break;
             case TYPE_CHAT_MESSAGE_RECEIVED:
                 //Parse message
-                MessageReceivedMessage messageReceivedMessage = new MessageReceivedMessage(content);
+                MessageReceivedMessage messageReceivedMessage = new MessageReceivedMessage(message);
 
                 //Send event
                 EventBus.getDefault().post(new OnMessageReceivedEvent(messageReceivedMessage));
                 break;
             case TYPE_COMBAT_START:
                 //Parse response
-                StartMessage startMessage = new StartMessage(content);
+                StartMessage startMessage = new StartMessage(message);
 
                 //Send notification
                 EventBus.getDefault().post(new OnCombatStartMessageEvent(startMessage));
                 break;
             case TYPE_COMBAT_AVAILABLE:
                 //Parse response
-                AvailableMessage availableMessage = new AvailableMessage(content);
+                AvailableMessage availableMessage = new AvailableMessage(message);
                 availableMessage.saveAsCombat();
 
                 //Send event
@@ -148,14 +150,14 @@ public class SocketService extends Service {
                 break;
             case TYPE_COMBAT_MONSTER_KO:
                 //Parse response
-                MonsterKoMessage monsterKoMessage = new MonsterKoMessage(content);
+                MonsterKoMessage monsterKoMessage = new MonsterKoMessage(message);
 
                 //Send Event
                 EventBus.getDefault().post(new OnMonsterKoEvent(monsterKoMessage));
                 break;
             case TYPE_COMBAT_ATTACK_RECEIVED:
                 //Parse response
-                AttackReceiveMessage attackReveiveMessage = new AttackReceiveMessage(content);
+                AttackReceiveMessage attackReveiveMessage = new AttackReceiveMessage(message);
 
                 //Send Event
                 EventBus.getDefault().post(new OnAttackReceiveEvent(attackReveiveMessage));
@@ -164,7 +166,7 @@ public class SocketService extends Service {
                 break;
             case TYPE_COMBAT_END:
                 //Parse message
-                CombatEndMessage combatEndMessage = new CombatEndMessage(content);
+                CombatEndMessage combatEndMessage = new CombatEndMessage(message);
 
                 //Send event
                 EventBus.getDefault().post(new OnCombatEndEvent(combatEndMessage));
@@ -198,7 +200,7 @@ public class SocketService extends Service {
                 break;
             case TYPE_COMBAT_ASK:
                 //Parse response (it's a result for combat:ask)
-                AskMessage askMessage = new AskMessage(content);
+                AskMessage askMessage = new AskMessage(message);
 
                 //Send Event
                 EventBus.getDefault().post(new OnAskMessageEvent(askMessage));
