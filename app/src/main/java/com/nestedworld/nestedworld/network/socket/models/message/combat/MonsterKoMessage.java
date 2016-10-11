@@ -13,8 +13,9 @@ import org.msgpack.value.ValueFactory;
 import java.util.Map;
 
 public class MonsterKoMessage extends DefaultMessage {
+    public long combat;
+    public long monster;
 
-    private long monster;
 
     /*
     ** Constructor
@@ -28,13 +29,7 @@ public class MonsterKoMessage extends DefaultMessage {
      */
     @Override
     protected void unSerialise(@NonNull Map<Value, Value> message) {
-        message.get(ValueFactory.newString("monster")).asIntegerValue().asInt();
-    }
-
-    /*
-    ** Getter / Setter
-     */
-    public long getMonster() {
-        return monster;
+        this.combat = message.get(ValueFactory.newString("combat")).asIntegerValue().asLong();
+        this.monster = message.get(ValueFactory.newString("monster")).asIntegerValue().asLong();
     }
 }
