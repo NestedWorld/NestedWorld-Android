@@ -148,7 +148,7 @@ public final class NestedWorldHttpApi {
         return mClient.addFriends(new AddFriendRequest(pseudo));
     }
 
-    public Call<MonsterAttackResponse> getMonsterAttack(@NonNull final Long monsterId) {
+    public Call<MonsterAttackResponse> getMonsterAttack(@NonNull final long monsterId) {
         return mClient.getMonsterAttack(monsterId);
     }
 
@@ -233,6 +233,6 @@ public final class NestedWorldHttpApi {
         Call<AttacksResponse> getAttacks();
 
         @GET(HttpEndPoint.MONSTER_ATTACK)
-        Call<MonsterAttackResponse> getMonsterAttack(@Path("monster_id") Long monsterId);
+        Call<MonsterAttackResponse> getMonsterAttack(@Path("monster_id") long monsterId);
     }
 }
