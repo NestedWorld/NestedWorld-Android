@@ -44,6 +44,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterK
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -52,16 +53,14 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.BindViews;
+import retrofit2.Response;
 
 public class BattleFragment extends BaseFragment {
 
-    private final Map<UserMonster, ArrayList<MonsterAttackResponse.MonsterAttack>> mTeamAttack = new HashMap<>();
     /*
     ** Butterknife binding
      */
@@ -82,6 +81,7 @@ public class BattleFragment extends BaseFragment {
     /*
     ** Private field
      */
+    private final ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = new ArrayList<>();
     private String mUserGestureInput = "";
     private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
         @Override
@@ -112,7 +112,7 @@ public class BattleFragment extends BaseFragment {
     };
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
-    private List<UserMonster> mTeam = null;
+    private List<UserMonster> mTeamSelected = null;
     private StartMessage.StartMessagePlayerMonster mCurrentUserMonster;
     private StartMessage.StartMessagePlayerMonster mCurrentOpponentMonster;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
@@ -170,10 +170,6 @@ public class BattleFragment extends BaseFragment {
         mStartMessage = startMessage;
     }
 
-    public void setTeam(@NonNull final List<UserMonster> team) {
-        mTeam = team;
-    }
-
     /*
     ** Life cycle
      */
@@ -184,7 +180,7 @@ public class BattleFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull final View rootView, @Nullable Bundle savedInstanceState) {
-        if (mTeam == null || mStartMessage == null) {
+        if (mTeamSelected == null || mStartMessage == null) {
             throw new IllegalArgumentException("You should call setStartMessage() and setTeam() before binding the fragment");
         }
 
@@ -210,13 +206,11 @@ public class BattleFragment extends BaseFragment {
         /*Init the gestureListener*/
         initDrawingGestureView(rootView);
 
-        /*Load pre-requisite*/
         new AsyncTask<Void, Void, Void>() {
-
             @Override
             protected Void doInBackground(Void... params) {
-                /*Retrieve mTeams attacks (and populate mTeamAttack) */
-                retrieveMonstersAttacks();
+               /*Load pre-requisite*/
+                retrieveCurrentUserMonsterAttacks();
                 return null;
             }
 
@@ -375,8 +369,8 @@ public class BattleFragment extends BaseFragment {
 
         //Populate player monster list
         BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-        for (int i = 0; i < mTeam.size(); i++) {
-            battleMonsterAdapter.add(mTeam.get(i).info());
+        for (int i = 0; i < mTeamSelected.size(); i++) {
+            battleMonsterAdapter.add(mTeamSelected.get(i).info());
         }
         monstersList.setAdapter(battleMonsterAdapter);
 
@@ -543,10 +537,8 @@ public class BattleFragment extends BaseFragment {
 
     @Nullable
     private MonsterAttackResponse.MonsterAttack getCurrentMonsterAttackByType(@NonNull final Attack.AttackType attackTypeWanted) {
-        //Parse currentMonster.attack for finding an attack of the given type
-        ArrayList<MonsterAttackResponse.MonsterAttack> currentMonsterAttack = mTeamAttack.get(mCurrentUserMonster);
-
-        for (MonsterAttackResponse.MonsterAttack monsterAttack : currentMonsterAttack) {
+        //Loop over current monster attack for finding an attack of the given type
+        for (MonsterAttackResponse.MonsterAttack monsterAttack : mCurrentMonsterAttacks) {
             if (monsterAttack.infos.getType() == attackTypeWanted) {
                 return monsterAttack;
             }
@@ -554,34 +546,45 @@ public class BattleFragment extends BaseFragment {
         return null;
     }
 
-    private void retrieveMonstersAttacks() {
+    private void retrieveCurrentUserMonsterAttacks() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        NestedWorldHttpApi nestedWorldHttpApi = NestedWorldHttpApi.getInstance(mContext);
+        try {
+            //Retrieve the current monster attack
+            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(mContext).getMonsterAttack(mCurrentUserMonster.monsterId).execute();
+            if (response == null || response.body() == null) {
+                //Can not retrieve monster attack
+                //Display error message to warn the user
+                Toast.makeText(mContext, "Can not retrieve your monster attack", Toast.LENGTH_LONG).show();
 
-        //Loop over every team member for retrieving his attacks
-        for (int i = 0; i < mTeam.size(); i++) {
-            LogHelper.d(TAG, "Retrieve attacks (task: " + i + ")");
+                //Finish the battle
+                ((BaseAppCompatActivity)mContext).finish();
+            } else if (response.body().attacks.isEmpty()) {
+                //The monster didn't have any attack, just warn the user
+                Toast.makeText(mContext, "Your monster didn't have any attack", Toast.LENGTH_LONG).show();
+            } else {
+                //Clear hold attack
+                mCurrentMonsterAttacks.clear();
 
-            //Get current monster information
-            final UserMonster userMonster = mTeam.get(i);
-            final Monster userMonsterInfo = userMonster.info();
-            if (userMonsterInfo == null) {
-                throw new IllegalArgumentException("UserMonter not link to any monster");
+                //Populate attack list
+                mCurrentMonsterAttacks.addAll(response.body().attacks);
             }
+        } catch (IOException e) {
+            //Something wrong happen, we can't retrieve monster attack
+            e.printStackTrace();
 
-            try {
-                //Retrieve the current monster attack
-                ArrayList<MonsterAttackResponse.MonsterAttack> attacks = nestedWorldHttpApi.getMonsterAttack(userMonsterInfo.monster_id).execute().body().attacks;
+            //Display error message to warn the user
+            Toast.makeText(mContext, "Can not retrieve your monster attack", Toast.LENGTH_LONG).show();
 
-                //Link attacks to his monster
-                mTeamAttack.put(userMonster, attacks);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //Finish the battle
+            ((BaseAppCompatActivity)mContext).finish();
         }
+    }
+
+    public void setTeam(List<UserMonster> team) {
+        mTeamSelected = team;
     }
 }
