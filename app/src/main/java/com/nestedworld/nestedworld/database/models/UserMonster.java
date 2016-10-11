@@ -55,7 +55,7 @@ public class UserMonster extends SugarRecord {
     public String toString() {
         return "UserMonster{" +
                 "user_monster_id=" + user_monster_id +
-                ", infos=" + infos +
+                ", info=" + infos +
                 ", level=" + level +
                 ", surname='" + surname + '\'' +
                 ", experience='" + experience + '\'' +

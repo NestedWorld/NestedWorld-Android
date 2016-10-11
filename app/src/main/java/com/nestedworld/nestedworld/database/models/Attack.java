@@ -51,7 +51,7 @@ public class Attack extends SugarRecord {
         return "Attack{" +
                 "attack_id=" + attack_id +
                 ", name='" + name + '\'' +
-                ", type='" + getType() + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 

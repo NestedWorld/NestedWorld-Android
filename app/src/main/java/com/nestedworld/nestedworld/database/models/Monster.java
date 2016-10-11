@@ -48,14 +48,15 @@ public class Monster extends SugarRecord {
     //Generated
     @Override
     public String toString() {
-
         return "Monster{" +
-                "monsterId=" + monster_id +
+                "attack=" + attack +
+                ", monster_id=" + monster_id +
                 ", hp='" + hp + '\'' +
                 ", defense=" + defense +
-                ", attack=" + attack +
                 ", name='" + name + '\'' +
                 ", sprite='" + sprite + '\'' +
+                ", type='" + type + '\'' +
+                ", speed='" + speed + '\'' +
                 '}';
     }
 
