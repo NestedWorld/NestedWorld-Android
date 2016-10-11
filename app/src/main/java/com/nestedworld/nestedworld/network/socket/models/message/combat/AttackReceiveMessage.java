@@ -72,7 +72,7 @@ public class AttackReceiveMessage extends DefaultMessage {
         @Override
         protected void unSerialise(@NonNull Map<Value, Value> message) {
             this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
-            this.hp = message.get(ValueFactory.newString("id")).asIntegerValue().asInt();
+            this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
         }
 
         /*
