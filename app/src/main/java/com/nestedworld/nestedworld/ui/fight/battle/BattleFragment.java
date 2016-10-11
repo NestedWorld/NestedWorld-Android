@@ -39,8 +39,8 @@ import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentViewManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerViewManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.UserViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerViewManager;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,6 +56,10 @@ import retrofit2.Response;
 
 public class BattleFragment extends BaseFragment {
 
+    /*
+    ** Private field
+     */
+    private final ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = new ArrayList<>();
     /*
     ** Butterknife binding
      */
@@ -73,10 +77,6 @@ public class BattleFragment extends BaseFragment {
             R.id.imageView_bottom_left,
             R.id.imageView_top_left})
     List<ImageView> mTitles;
-    /*
-    ** Private field
-     */
-    private final ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = new ArrayList<>();
     private String mUserGestureInput = "";
     private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
         @Override
@@ -110,15 +110,14 @@ public class BattleFragment extends BaseFragment {
     private List<UserMonster> mUserMonsterAlive = null;
     private StartMessage.StartMessagePlayerMonster mCurrentUserMonster;
     private StartMessage.StartMessagePlayerMonster mCurrentOpponentMonster;
-    private PlayerViewManager userViewManager;
-    private PlayerViewManager opponentViewManager;
-
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
             sendAttack();
         }
     };
+    private PlayerViewManager userViewManager;
+    private PlayerViewManager opponentViewManager;
 
     /*
     ** Public method
@@ -133,9 +132,41 @@ public class BattleFragment extends BaseFragment {
         fragmentTransaction.commit();
     }
 
+    /*
+    ** Utils
+     */
+    @NonNull
+    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
+
+        Attack.AttackType attackType;
+        switch (gestureInput) {
+            case "41":
+                attackType = Attack.AttackType.ATTACK;
+                break;
+            case "62":
+                attackType = Attack.AttackType.DEFENSE;
+                break;
+            case "456123":
+                attackType = Attack.AttackType.ATTACK_SP;
+                break;
+            case "432165":
+                attackType = Attack.AttackType.DEFENSE_SP;
+                break;
+            case "6253":
+                attackType = Attack.AttackType.OBJECT_USE;
+                break;
+            default:
+                attackType = Attack.AttackType.UNKNOWN;
+        }
+
+        return attackType;
+    }
+
     public void setStartMessage(@NonNull final StartMessage startMessage) {
         mStartMessage = startMessage;
     }
+
     public void setTeam(@NonNull final List<UserMonster> team) {
         mUserMonsterAlive = team;
     }
@@ -420,7 +451,7 @@ public class BattleFragment extends BaseFragment {
                 Toast.makeText(mContext, "Can not retrieve your monster attack", Toast.LENGTH_LONG).show();
 
                 //Finish the battle
-                ((BaseAppCompatActivity)mContext).finish();
+                ((BaseAppCompatActivity) mContext).finish();
             } else if (response.body().attacks.isEmpty()) {
                 //The monster didn't have any attack, just warn the user
                 Toast.makeText(mContext, "Your monster didn't have any attack", Toast.LENGTH_LONG).show();
@@ -439,38 +470,7 @@ public class BattleFragment extends BaseFragment {
             Toast.makeText(mContext, "Can not retrieve your monster attack", Toast.LENGTH_LONG).show();
 
             //Finish the battle
-            ((BaseAppCompatActivity)mContext).finish();
+            ((BaseAppCompatActivity) mContext).finish();
         }
-    }
-
-    /*
-    ** Utils
-     */
-    @NonNull
-    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
-        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
-
-        Attack.AttackType attackType;
-        switch (gestureInput) {
-            case "41":
-                attackType = Attack.AttackType.ATTACK;
-                break;
-            case "62":
-                attackType = Attack.AttackType.DEFENSE;
-                break;
-            case "456123":
-                attackType = Attack.AttackType.ATTACK_SP;
-                break;
-            case "432165":
-                attackType = Attack.AttackType.DEFENSE_SP;
-                break;
-            case "6253":
-                attackType = Attack.AttackType.OBJECT_USE;
-                break;
-            default:
-                attackType = Attack.AttackType.UNKNOWN;
-        }
-
-        return attackType;
     }
 }

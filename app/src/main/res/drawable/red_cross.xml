@@ -9,7 +9,7 @@
             <shape android:shape="line">
                 <stroke
                     android:width="5dp"
-                        android:color="@color/holo_red_light" />
+                    android:color="@color/holo_red_light"/>
             </shape>
         </rotate>
     </item>
@@ -20,7 +20,9 @@
             android:pivotY="50%"
             android:toDegrees="-90">
             <shape android:shape="line">
-                <stroke android:width="5dp" android:color="@color/holo_red_light" />
+                <stroke
+                    android:width="5dp"
+                    android:color="@color/holo_red_light"/>
             </shape>
         </rotate>
     </item>

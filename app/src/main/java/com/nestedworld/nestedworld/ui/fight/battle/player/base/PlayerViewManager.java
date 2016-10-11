@@ -10,8 +10,12 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackRe
 
 public interface PlayerViewManager {
     void updateCurrentMonsterLife(@NonNull final AttackReceiveMessage.AttackReceiveMessageMonster monster);
+
     void displayAttackReceive();
+
     void displayAttackSend();
+
     void onMonsterKo(@Nullable final Monster monster);
+
     void setupUI(@NonNull final Context context);
 }

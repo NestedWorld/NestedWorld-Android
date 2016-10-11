@@ -29,8 +29,6 @@ public class OpponentViewManager implements PlayerViewManager {
     private final static String TAG = PlayerViewManager.class.getSimpleName();
     private final StartMessage.StartMessageOpponent mPlayer;
     private final View mViewContainer;
-    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -43,6 +41,7 @@ public class OpponentViewManager implements PlayerViewManager {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
+    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
 
     /*
     ** Constructor

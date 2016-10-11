@@ -25,6 +25,7 @@ import static com.orm.util.ContextUtil.getContext;
 
 public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdapter.BattleMonsterViewHolder> {
     private final List<BattleMonster> mMonsters = new ArrayList<>();
+
     /*
     ** Constructor
      */
