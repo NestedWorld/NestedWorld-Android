@@ -15,7 +15,7 @@ public class Combat extends SugarRecord {
     public String combat_id;// the sql table will be called combatid (see sugarOrm doc)
     public String type;
     public String origin;
-    public Integer monsterId;
+    public long monsterId;
     public String opponent_pseudo;// the sql table will be called opponentpseudo (see sugarOrm doc)
 
     //Empty constructor for SugarRecord
