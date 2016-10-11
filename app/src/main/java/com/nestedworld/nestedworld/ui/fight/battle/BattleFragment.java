@@ -29,6 +29,7 @@ import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
+import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
@@ -41,6 +42,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterK
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
@@ -246,9 +248,20 @@ public class BattleFragment extends BaseFragment {
      */
     @Subscribe
     public void onAttackReceive(OnAttackReceiveEvent event) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         AttackReceiveMessage message = event.getMessage();
 
-        //TODO parse message
+        if (message.target.id == mCurrentUserMonster.info().monster_id) {
+            //TODO display opponentMonster attack userMonster
+            updateMonsterLife(layoutOpponent, message.target.hp);
+        } else {
+            //TODO display userMonster attack opponentMonster
+            updateMonsterLife(layoutOpponent, message.target.hp);
+        }
     }
 
     @Subscribe
@@ -256,6 +269,19 @@ public class BattleFragment extends BaseFragment {
         MonsterKoMessage monsterKoMessage = event.getMessage();
 
         //TODO parse message
+        //TODO add possibility to replace monster if it's our monster
+    }
+
+    @Subscribe
+    public void onCombatEnd(OnCombatEndEvent onCombatEndEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        Toast.makeText(mContext, "Fight ended", Toast.LENGTH_LONG).show();
+
+        //TODO parse message and display result page
     }
 
     /*
@@ -325,7 +351,7 @@ public class BattleFragment extends BaseFragment {
         monstersList.setAdapter(battleMonsterAdapter);
 
         //Populate opponent monster infos with his current monster
-        updateMonsterContainer(layoutOpponent, monster);
+        setUpMonsterContainer(layoutOpponent, monster);
     }
 
     private void setupPlayerInfos(@NonNull final StartMessage.StartMessagePlayer player) {
@@ -346,10 +372,10 @@ public class BattleFragment extends BaseFragment {
         monstersList.setAdapter(battleMonsterAdapter);
 
         //Populate player monster infos with his currentMonster
-        updateMonsterContainer(layoutPlayer, player.monster);
+        setUpMonsterContainer(layoutPlayer, player.monster);
     }
 
-    private void updateMonsterContainer(@NonNull final View container, @NonNull final StartMessage.StartMessagePlayerMonster monster) {
+    private void setUpMonsterContainer(@NonNull final View container, @NonNull final StartMessage.StartMessagePlayerMonster monster) {
         //Retrieve widget
         TextView monsterLvl = (TextView) container.findViewById(R.id.textview_monster_lvl);
         TextView monsterName = (TextView) container.findViewById(R.id.textview_monster_name);
@@ -374,6 +400,14 @@ public class BattleFragment extends BaseFragment {
         }
     }
 
+    private void updateMonsterLife(@NonNull final View container, final int life) {
+        //Retrieve widget
+        ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
+
+        //Populate widget
+        progressBarMonsterHp.setProgress(life);
+    }
+
     private void enableDrawingGestureView(final boolean enable) {
         if (enable) {
             mDrawingGestureView.setEnabled(true);
@@ -391,10 +425,6 @@ public class BattleFragment extends BaseFragment {
         if (mContext == null) {
             return;
         }
-
-        //Start loading animation and disable drawingGesture view (prevent multiple attack sending)
-        progressView.start();
-        enableDrawingGestureView(false);
 
         //Retrieve and clear user gesture
         Attack.AttackType attackTypeWanted = gestureToAttackType(mUserGestureInput);
