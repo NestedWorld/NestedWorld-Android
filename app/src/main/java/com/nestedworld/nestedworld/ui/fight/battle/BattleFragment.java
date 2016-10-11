@@ -50,6 +50,7 @@ import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -135,39 +136,11 @@ public class BattleFragment extends BaseFragment {
         fragmentTransaction.commit();
     }
 
-    /*
-    ** Utils
-     */
-    @NonNull
-    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
-        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
-
-        Attack.AttackType attackType;
-        switch (gestureInput) {
-            case "41":
-                attackType = Attack.AttackType.ATTACK;
-                break;
-            case "62":
-                attackType = Attack.AttackType.DEFENSE;
-                break;
-            case "456123":
-                attackType = Attack.AttackType.ATTACK_SP;
-                break;
-            case "432165":
-                attackType = Attack.AttackType.DEFENSE_SP;
-                break;
-            case "6253":
-                attackType = Attack.AttackType.OBJECT_USE;
-                break;
-            default:
-                attackType = Attack.AttackType.UNKNOWN;
-        }
-
-        return attackType;
-    }
-
     public void setStartMessage(@NonNull final StartMessage startMessage) {
         mStartMessage = startMessage;
+    }
+    public void setTeam(@NonNull final List<UserMonster> team) {
+        mTeamSelected = team;
     }
 
     /*
@@ -388,12 +361,14 @@ public class BattleFragment extends BaseFragment {
         TextView monsterName = (TextView) container.findViewById(R.id.textview_monster_name);
         ImageView monsterPicture = (ImageView) container.findViewById(R.id.imageView_monster);
         ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
+        TextView monsterLife = (TextView) container.findViewById(R.id.textview_MonsterLife);
 
         //Populate widget;
         monsterName.setText(monster.name);
         monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
         progressBarMonsterHp.setMax(monster.hp);
         progressBarMonsterHp.setProgress(monster.hp);
+        monsterLife.setText(String.valueOf(monster.hp));
 
         //Populate monster sprite
         Monster monsterInfos = monster.info();
@@ -412,9 +387,11 @@ public class BattleFragment extends BaseFragment {
 
         //Retrieve widget
         ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
+        TextView monsterLife = (TextView) container.findViewById(R.id.textview_MonsterLife);
 
         //Populate widget
         progressBarMonsterHp.setProgress(monster.hp);
+        monsterLife.setText(String.valueOf(monster.hp));
     }
 
     private void displayAttackAnimation(@NonNull final View targetLayout, @NonNull final View attackerLayout, @NonNull final Monster monster) {
@@ -573,8 +550,35 @@ public class BattleFragment extends BaseFragment {
             ((BaseAppCompatActivity)mContext).finish();
         }
     }
+    
+    /*
+    ** Utils
+     */
+    @NonNull
+    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
 
-    public void setTeam(List<UserMonster> team) {
-        mTeamSelected = team;
+        Attack.AttackType attackType;
+        switch (gestureInput) {
+            case "41":
+                attackType = Attack.AttackType.ATTACK;
+                break;
+            case "62":
+                attackType = Attack.AttackType.DEFENSE;
+                break;
+            case "456123":
+                attackType = Attack.AttackType.ATTACK_SP;
+                break;
+            case "432165":
+                attackType = Attack.AttackType.DEFENSE_SP;
+                break;
+            case "6253":
+                attackType = Attack.AttackType.OBJECT_USE;
+                break;
+            default:
+                attackType = Attack.AttackType.UNKNOWN;
+        }
+
+        return attackType;
     }
 }

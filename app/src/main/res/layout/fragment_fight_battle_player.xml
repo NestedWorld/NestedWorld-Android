@@ -77,13 +77,25 @@
                         android:padding="8dip"
                         android:text="@string/combat_msg_monsterLife"/>
 
-                    <ProgressBar
-                        android:id="@+id/progressBar_MonsterLife"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dip"
-                        android:progress="50"/>
+                        android:layout_height="wrap_content">
+
+                        <ProgressBar
+                            android:id="@+id/progressBar_MonsterLife"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dip"
+                            android:progress="100"/>
+
+                        <TextView
+                            android:id="@+id/textview_MonsterLife"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
