@@ -146,8 +146,23 @@ public class StartMessage extends DefaultMessage {
         ** Utils
          */
         @Nullable
-        public Monster infos() {
+        public Monster info() {
             return Select.from(Monster.class).where(Condition.prop("monsterid").eq(monsterId)).first();
+        }
+
+        /*
+        ** Generated
+         */
+        @Override
+        public String toString() {
+            return "StartMessagePlayerMonster{" +
+                    "hp=" + hp +
+                    ", id=" + id +
+                    ", name='" + name + '\'' +
+                    ", monsterId=" + monsterId +
+                    ", userMonsterId=" + userMonsterId +
+                    ", level=" + level +
+                    '}';
         }
     }
 }

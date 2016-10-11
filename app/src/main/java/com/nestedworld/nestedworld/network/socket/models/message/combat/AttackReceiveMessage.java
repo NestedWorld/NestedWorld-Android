@@ -18,7 +18,7 @@ public class AttackReceiveMessage extends DefaultMessage {
     public long attack;
     public long combat;
     public AttackReceiveMessageMonster monster;
-    public AttackReceiveMessageTarget target;
+    public AttackReceiveMessageMonster target;
 
     /*
     ** Constructor
@@ -36,7 +36,7 @@ public class AttackReceiveMessage extends DefaultMessage {
         this.id = message.get(ValueFactory.newString("id")).asStringValue().asString();
         this.attack = message.get(ValueFactory.newString("attack")).asIntegerValue().asLong();
         this.monster = new AttackReceiveMessageMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
-        this.target = new AttackReceiveMessageTarget(message.get(ValueFactory.newString("target")).asMapValue().map(), getMessageKind(), null);
+        this.target = new AttackReceiveMessageMonster(message.get(ValueFactory.newString("target")).asMapValue().map(), getMessageKind(), null);
         this.combat = message.get(ValueFactory.newString("combat")).asIntegerValue().asLong();
     }
 
@@ -63,26 +63,4 @@ public class AttackReceiveMessage extends DefaultMessage {
             this.hp = message.get(ValueFactory.newString("id")).asIntegerValue().asInt();
         }
     }
-
-    public final static class AttackReceiveMessageTarget  extends DefaultMessage{
-        public long id;
-        public int hp;
-
-        /*
-        ** Constructor
-         */
-        public AttackReceiveMessageTarget(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
-            super(message, messageKind, idKind);
-        }
-
-        /*
-        ** Life cycle
-         */
-        @Override
-        protected void unSerialise(@NonNull Map<Value, Value> message) {
-            this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
-            this.hp = message.get(ValueFactory.newString("id")).asIntegerValue().asInt();
-        }
-    }
-
 }
