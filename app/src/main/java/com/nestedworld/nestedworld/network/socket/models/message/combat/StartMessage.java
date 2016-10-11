@@ -18,7 +18,7 @@ public class StartMessage extends DefaultMessage {
 
     public String type;
     public String id;
-    public Integer combatId;
+    public long combatId;
     public StartMessagePlayer user;
     public StartMessageOpponent opponent;
     public String combatType;
@@ -39,7 +39,7 @@ public class StartMessage extends DefaultMessage {
     protected void unSerialise(@NonNull Map<Value, Value> message) {
         this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         this.id = message.get(ValueFactory.newString("id")).asStringValue().asString();
-        this.combatId = message.get(ValueFactory.newString("combat_id")).asIntegerValue().asInt();
+        this.combatId = message.get(ValueFactory.newString("combat_id")).asIntegerValue().asLong();
         this.combatType = message.get(ValueFactory.newString("combat_type")).asStringValue().asString();
         this.env = message.get(ValueFactory.newString("env")).asStringValue().asString();
         this.first = message.get(ValueFactory.newString("first")).asBooleanValue().getBoolean();
@@ -95,7 +95,7 @@ public class StartMessage extends DefaultMessage {
 
     public static class StartMessageOpponent extends DefaultMessage {
         public StartMessagePlayerMonster monster;
-        public Integer monsterCount;
+        public long monsterCount;
 
         /*
         ** Constructor
@@ -115,12 +115,12 @@ public class StartMessage extends DefaultMessage {
     }
 
     public static class StartMessagePlayerMonster extends DefaultMessage {
-        public Integer id;
+        public long id;
         public String name;
-        public Integer monsterId;
+        public long monsterId;
         public long userMonsterId;
-        public Integer hp;
-        public Integer level;
+        public int hp;
+        public int level;
 
         /*
         ** Constructor
@@ -134,9 +134,9 @@ public class StartMessage extends DefaultMessage {
          */
         @Override
         protected void unSerialise(@NonNull Map<Value, Value> message) {
-            this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asInt();
+            this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
             this.name = message.get(ValueFactory.newString("name")).asStringValue().asString();
-            this.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asInt();
+            this.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asLong();
             this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asLong();
             this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
             this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();

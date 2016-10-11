@@ -14,7 +14,7 @@ import java.util.Map;
 public class AskMessage extends DefaultMessage {
 
     private String type;
-    private String message_id;
+    private String messageId;
     private String result;
     private String kind;
     private String message;
@@ -35,7 +35,7 @@ public class AskMessage extends DefaultMessage {
             this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("id"))) {
-            this.message_id = message.get(ValueFactory.newString("id")).asStringValue().asString();
+            this.messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("result"))) {
             this.result = message.get(ValueFactory.newString("result")).asStringValue().asString();
@@ -61,7 +61,7 @@ public class AskMessage extends DefaultMessage {
     }
 
     public String getMessageId() {
-        return message_id;
+        return messageId;
     }
 
     public String getResult() {

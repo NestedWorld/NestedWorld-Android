@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class MonsterKoMessage extends DefaultMessage {
 
-    private Integer monster;
+    private long monster;
 
     /*
     ** Constructor
@@ -32,9 +32,9 @@ public class MonsterKoMessage extends DefaultMessage {
     }
 
     /*
-    ** Getter / Stter
+    ** Getter / Setter
      */
-    public Integer getMonster() {
+    public long getMonster() {
         return monster;
     }
 }
