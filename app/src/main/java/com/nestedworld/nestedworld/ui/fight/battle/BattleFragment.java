@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -50,7 +51,6 @@ import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,7 +113,7 @@ public class BattleFragment extends BaseFragment {
     };
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
-    private List<UserMonster> mTeamSelected = null;
+    private List<UserMonster> mUserMonsterAlive = null;
     private StartMessage.StartMessagePlayerMonster mCurrentUserMonster;
     private StartMessage.StartMessagePlayerMonster mCurrentOpponentMonster;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
@@ -140,7 +140,7 @@ public class BattleFragment extends BaseFragment {
         mStartMessage = startMessage;
     }
     public void setTeam(@NonNull final List<UserMonster> team) {
-        mTeamSelected = team;
+        mUserMonsterAlive = team;
     }
 
     /*
@@ -153,7 +153,7 @@ public class BattleFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull final View rootView, @Nullable Bundle savedInstanceState) {
-        if (mTeamSelected == null || mStartMessage == null) {
+        if (mUserMonsterAlive == null || mStartMessage == null) {
             throw new IllegalArgumentException("You should call setStartMessage() and setTeam() before binding the fragment");
         }
 
@@ -246,6 +246,14 @@ public class BattleFragment extends BaseFragment {
     public void onMonsterKo(OnMonsterKoEvent event) {
         MonsterKoMessage monsterKoMessage = event.getMessage();
 
+        if (monsterKoMessage.monster == mCurrentUserMonster.id) {
+            for (UserMonster userMonster : mUserMonsterAlive) {
+                if (userMonster.user_monster_id == mCurrentUserMonster.userMonsterId) {
+                    mUserMonsterAlive.remove(userMonster);
+                }
+            }
+        }
+
         //TODO parse message
         //TODO add possibility to replace monster if it's our monster
     }
@@ -322,9 +330,9 @@ public class BattleFragment extends BaseFragment {
 
         //Populate monster list
         BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-        battleMonsterAdapter.add(opponent.monster.info());
+        battleMonsterAdapter.add(opponent.monster.info(), BattleMonsterAdapter.Status.SELECTED);
         for (int i = 1; i < opponent.monsterCount; i++) {
-            battleMonsterAdapter.add(null);
+            battleMonsterAdapter.add(null, BattleMonsterAdapter.Status.DEFAULT);
         }
         monstersList.setAdapter(battleMonsterAdapter);
 
@@ -344,8 +352,13 @@ public class BattleFragment extends BaseFragment {
 
         //Populate player monster list
         BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-        for (int i = 0; i < mTeamSelected.size(); i++) {
-            battleMonsterAdapter.add(mTeamSelected.get(i).info());
+        for (int i = 0; i < mUserMonsterAlive.size(); i++) {
+            UserMonster userMonster = mUserMonsterAlive.get(i);
+            if (userMonster.user_monster_id == mCurrentUserMonster.userMonsterId) {
+                battleMonsterAdapter.add(userMonster.info(), BattleMonsterAdapter.Status.SELECTED);
+            } else {
+                battleMonsterAdapter.add(userMonster.info(), BattleMonsterAdapter.Status.DEFAULT);
+            }
         }
         monstersList.setAdapter(battleMonsterAdapter);
 
@@ -417,8 +430,6 @@ public class BattleFragment extends BaseFragment {
                 targetLayout.setBackgroundColor(Color.TRANSPARENT);
             }
         }, 1000);
-
-        Toast.makeText(mContext, String.format("%s a attaqué !", monster.name), Toast.LENGTH_SHORT).show();
     }
 
     private void enableDrawingGestureView(final boolean enable) {
@@ -550,7 +561,7 @@ public class BattleFragment extends BaseFragment {
             ((BaseAppCompatActivity)mContext).finish();
         }
     }
-    
+
     /*
     ** Utils
      */
