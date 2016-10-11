@@ -16,7 +16,7 @@ public class Attack extends SugarRecord {
     @Expose
     @SerializedName("id")
     @Unique
-    public Long attack_id;// the sql table will be called attackid (see sugarOrm doc)
+    public Long attackId;// the sql table will be called attackid (see sugarOrm doc)
     @Expose
     public String name;
     @Expose
@@ -49,7 +49,7 @@ public class Attack extends SugarRecord {
     @Override
     public String toString() {
         return "Attack{" +
-                "attack_id=" + attack_id +
+                "attackId=" + attackId +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 '}';

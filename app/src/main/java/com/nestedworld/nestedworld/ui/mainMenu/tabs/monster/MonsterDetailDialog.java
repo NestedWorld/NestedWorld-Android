@@ -61,7 +61,7 @@ public class MonsterDetailDialog extends DialogFragment {
 
         // Supply monsterId as an argument.
         Bundle args = new Bundle();
-        args.putLong("monsterId", monster.monster_id);
+        args.putLong("monsterId", monster.monsterId);
 
         monsterDetailDialog.setArguments(args);
 
@@ -169,7 +169,7 @@ public class MonsterDetailDialog extends DialogFragment {
         //Retrieve monster spell
         NestedWorldHttpApi
                 .getInstance(getContext())
-                .getMonsterAttack(mMonster.monster_id)
+                .getMonsterAttack(mMonster.monsterId)
                 .enqueue(new Callback<MonsterAttackResponse>() {
                     @Override
                     public void onSuccess(Response<MonsterAttackResponse> response) {

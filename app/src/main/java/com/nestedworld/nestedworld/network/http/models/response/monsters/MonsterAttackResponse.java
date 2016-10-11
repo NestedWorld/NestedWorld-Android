@@ -16,6 +16,6 @@ public class MonsterAttackResponse {
 
         @Expose
         @SerializedName("id")
-        public long attack_id;
+        public long attackId;
     }
 }

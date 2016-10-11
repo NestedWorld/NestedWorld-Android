@@ -20,7 +20,7 @@ public final class HttpEndPoint {
     //Monster related endpoint
     private final static String MONSTERS_PREFIX = "monsters";
     public final static String MONSTERS_LIST = MONSTERS_PREFIX;
-    public final static String MONSTER_ATTACK = MONSTERS_PREFIX + "/{monster_id}/attacks";
+    public final static String MONSTER_ATTACK = MONSTERS_PREFIX + "/{monsterId}/attacks";
 
     //Place related endpoint
     private final static String PLACES_PREFIX = "places";

@@ -16,7 +16,7 @@ public class Monster extends SugarRecord {
     @Expose
     @SerializedName("id")
     @Unique
-    public Long monster_id;// the sql table will be called monsterid (see sugarOrm doc)
+    public Long monsterId;// the sql table will be called monsterid (see sugarOrm doc)
 
     @Expose
     public String hp;
@@ -50,7 +50,7 @@ public class Monster extends SugarRecord {
     public String toString() {
         return "Monster{" +
                 "attack=" + attack +
-                ", monster_id=" + monster_id +
+                ", monsterId=" + monsterId +
                 ", hp='" + hp + '\'' +
                 ", defense=" + defense +
                 ", name='" + name + '\'' +

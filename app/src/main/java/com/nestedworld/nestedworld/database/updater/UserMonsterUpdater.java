@@ -41,7 +41,7 @@ public class UserMonsterUpdater extends EntityUpdater<UserMonsterResponse> {
 
         //Update foreign key
         for (UserMonster userMonster : response.body().monsters) {
-            userMonster.fkmonster = userMonster.infos.monster_id;
+            userMonster.fkmonster = userMonster.infos.monsterId;
         }
 
         //Save entity

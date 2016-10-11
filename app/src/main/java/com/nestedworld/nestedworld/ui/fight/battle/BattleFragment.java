@@ -247,7 +247,7 @@ public class BattleFragment extends BaseFragment {
 
         if (monsterKoMessage.monster == mCurrentUserMonster.id) {
             for (UserMonster userMonster : mUserMonsterAlive) {
-                if (userMonster.user_monster_id == mCurrentUserMonster.userMonsterId) {
+                if (userMonster.userMonsterId == mCurrentUserMonster.userMonsterId) {
                     mUserMonsterAlive.remove(userMonster);
 
                     userViewManager.onMonsterKo(userMonster.info());
@@ -376,7 +376,7 @@ public class BattleFragment extends BaseFragment {
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
-                    SendAttackRequest request = new SendAttackRequest(mStartMessage.combatId, mCurrentOpponentMonster.id, attack.infos.attack_id);
+                    SendAttackRequest request = new SendAttackRequest(mStartMessage.combatId, mCurrentOpponentMonster.id, attack.infos.attackId);
                     nestedWorldSocketAPI.sendRequest(request, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 }
             }

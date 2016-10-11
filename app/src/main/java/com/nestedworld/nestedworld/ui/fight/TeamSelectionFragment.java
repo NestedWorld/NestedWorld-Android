@@ -161,7 +161,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
         StartMessage startMessage = event.getMessage();
 
-        if (startMessage.id.equals(mCurrentCombat.combat_id)) {
+        if (startMessage.id.equals(mCurrentCombat.combatId)) {
             LogHelper.d(TAG, "onNewCombatStart > accept");
 
             //Delete the combat from Orm
@@ -292,14 +292,14 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
                     List<Value> selectedMonsterIdList = new ArrayList<>();
                     for (UserMonster userMonster : mSelectedMonster) {
-                        selectedMonsterIdList.add(ValueFactory.newInteger(userMonster.user_monster_id));
+                        selectedMonsterIdList.add(ValueFactory.newInteger(userMonster.userMonsterId));
                     }
 
                     map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(true));
                     map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
 
                     ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCurrentCombat.combat_id);
+                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCurrentCombat.combatId);
 
                 } else {
                     onServiceDisconnected(null);

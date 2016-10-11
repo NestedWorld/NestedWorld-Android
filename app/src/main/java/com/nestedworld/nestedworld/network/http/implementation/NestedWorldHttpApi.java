@@ -233,6 +233,6 @@ public final class NestedWorldHttpApi {
         Call<AttacksResponse> getAttacks();
 
         @GET(HttpEndPoint.MONSTER_ATTACK)
-        Call<MonsterAttackResponse> getMonsterAttack(@Path("monster_id") long monsterId);
+        Call<MonsterAttackResponse> getMonsterAttack(@Path("monsterId") long monsterId);
     }
 }

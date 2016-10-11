@@ -244,7 +244,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
                         map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
 
                         ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                        socketService.getApiInstance().sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.combat_id);
+                        socketService.getApiInstance().sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.combatId);
                     } else {
                         onServiceDisconnected(null);
                     }
