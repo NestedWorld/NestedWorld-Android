@@ -23,7 +23,7 @@
             android:layout_weight="1"/>
 
         <include
-            android:id="@+id/layout_player"
+            android:id="@+id/layout_user"
             layout="@layout/fragment_fight_battle_player"/>
 
     </LinearLayout>

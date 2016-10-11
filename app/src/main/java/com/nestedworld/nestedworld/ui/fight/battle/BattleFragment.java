@@ -2,34 +2,25 @@ package com.nestedworld.nestedworld.ui.fight.battle;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.database.models.Attack;
-import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
@@ -67,8 +58,8 @@ public class BattleFragment extends BaseFragment {
      */
     @BindView(R.id.progressView)
     ProgressView progressView;
-    @BindView(R.id.layout_player)
-    View layoutPlayer;
+    @BindView(R.id.layout_user)
+    View layoutUser;
     @BindView(R.id.layout_opponent)
     View layoutOpponent;
     @BindViews({
@@ -116,6 +107,9 @@ public class BattleFragment extends BaseFragment {
     private List<UserMonster> mUserMonsterAlive = null;
     private StartMessage.StartMessagePlayerMonster mCurrentUserMonster;
     private StartMessage.StartMessagePlayerMonster mCurrentOpponentMonster;
+    private PlayerViewManager userViewManager;
+    private PlayerViewManager opponentViewManager;
+
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
@@ -164,17 +158,15 @@ public class BattleFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         }
 
-        /*Hide action bar*/
-        setupActionBar();
-
-        /*Init field*/
+        /*init internal field*/
         mCurrentUserMonster = mStartMessage.user.monster;
         mCurrentOpponentMonster = mStartMessage.opponent.monster;
 
-        /*populate the view*/
+        /*setup the view*/
         setupEnvironment();
-        setupOpponentInfos(mStartMessage.opponent);
-        setupPlayerInfos(mStartMessage.user);
+        setupActionBar();
+        userViewManager = new PlayerViewManager(mContext, mStartMessage.opponent, layoutUser);
+        opponentViewManager = new PlayerViewManager(mContext, mStartMessage.opponent, layoutOpponent);
 
         /*Init the gestureListener*/
         initDrawingGestureView(rootView);
@@ -221,25 +213,27 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
+        //Retrieve message
         AttackReceiveMessage message = event.getMessage();
 
+        PlayerViewManager attacker;
+        PlayerViewManager target;
         if (message.target.id == mCurrentUserMonster.id) {
-            LogHelper.d(TAG, "UserMonster is attacked:" + message.toString());
-            //If UserMonster is the target (IE opponentMonster is attacking)
-
-            //Update userMonster Life
-            updateMonsterLife(layoutPlayer, message.target);
-
-            //Show opponentMonster attacking
-            displayAttackAnimation(layoutPlayer, layoutOpponent, mCurrentOpponentMonster.info());
+            //Attack sender is the user
+            attacker = userViewManager;
+            target = opponentViewManager;
         } else {
-            LogHelper.d(TAG, "Opponent monster is attacked:" + message.toString());
-            //If Opponent is the target (IE userMonster is Attacking)
-
-            //Update opponentMonster Life
-            updateMonsterLife(layoutOpponent, message.target);
-            displayAttackAnimation(layoutOpponent, layoutPlayer, mCurrentUserMonster.info());
+            target = userViewManager;
+            attacker = opponentViewManager;
         }
+
+        //Update monsters life
+        target.updateCurrentMonsterLife(message.target);
+        attacker.updateCurrentMonsterLife(message.monster);
+
+        //Display animation
+        attacker.displayAttackSend();
+        target.displayAttackReceive();
     }
 
     @Subscribe
@@ -253,9 +247,6 @@ public class BattleFragment extends BaseFragment {
                 }
             }
         }
-
-        //TODO parse message
-        //TODO add possibility to replace monster if it's our monster
     }
 
     @Subscribe
@@ -313,123 +304,6 @@ public class BattleFragment extends BaseFragment {
 
         /*Add the custom view under the rootView*/
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
-    }
-
-    private void setupOpponentInfos(@NonNull final StartMessage.StartMessageOpponent opponent) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        //Retrieve his monster
-        StartMessage.StartMessagePlayerMonster monster = opponent.monster;
-
-        //Init monster list
-        RecyclerView monstersList = (RecyclerView) layoutOpponent.findViewById(R.id.listview_opponentMonster);
-        monstersList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-
-        //Populate monster list
-        BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-        battleMonsterAdapter.add(opponent.monster.info(), BattleMonsterAdapter.Status.SELECTED);
-        for (int i = 1; i < opponent.monsterCount; i++) {
-            battleMonsterAdapter.add(null, BattleMonsterAdapter.Status.DEFAULT);
-        }
-        monstersList.setAdapter(battleMonsterAdapter);
-
-        //Populate opponent monster info with his current monster
-        setUpMonsterContainer(layoutOpponent, monster);
-    }
-
-    private void setupPlayerInfos(@NonNull final StartMessage.StartMessagePlayer player) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        //Init player monster list
-        RecyclerView monstersList = (RecyclerView) layoutPlayer.findViewById(R.id.listview_playerMonster);
-        monstersList.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-
-        //Populate player monster list
-        BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-        for (int i = 0; i < mUserMonsterAlive.size(); i++) {
-            UserMonster userMonster = mUserMonsterAlive.get(i);
-            if (userMonster.user_monster_id == mCurrentUserMonster.userMonsterId) {
-                battleMonsterAdapter.add(userMonster.info(), BattleMonsterAdapter.Status.SELECTED);
-            } else {
-                battleMonsterAdapter.add(userMonster.info(), BattleMonsterAdapter.Status.DEFAULT);
-            }
-        }
-        monstersList.setAdapter(battleMonsterAdapter);
-
-        //Populate player monster info with his currentMonster
-        setUpMonsterContainer(layoutPlayer, player.monster);
-    }
-
-    private void setUpMonsterContainer(@NonNull final View container, @NonNull final StartMessage.StartMessagePlayerMonster monster) {
-        LogHelper.d(TAG, "setUpMonsterContainer: " + monster.toString());
-
-        //Retrieve widget
-        TextView monsterLvl = (TextView) container.findViewById(R.id.textview_monster_lvl);
-        TextView monsterName = (TextView) container.findViewById(R.id.textview_monster_name);
-        ImageView monsterPicture = (ImageView) container.findViewById(R.id.imageView_monster);
-        ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
-        TextView monsterLife = (TextView) container.findViewById(R.id.textview_MonsterLife);
-
-        //Populate widget;
-        monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
-        progressBarMonsterHp.setMax(monster.hp);
-        progressBarMonsterHp.setProgress(monster.hp);
-        monsterLife.setText(String.valueOf(monster.hp));
-
-        //Populate monster sprite
-        Monster monsterInfos = monster.info();
-        if (monsterInfos != null) {
-            Glide.with(mContext)
-                    .load(monsterInfos.sprite)
-                    .placeholder(R.drawable.default_monster)
-                    .error(R.drawable.default_monster)
-                    .centerCrop()
-                    .into(monsterPicture);
-        }
-    }
-
-    private void updateMonsterLife(@NonNull final View container, @NonNull final AttackReceiveMessage.AttackReceiveMessageMonster monster) {
-        LogHelper.d(TAG, "updateMonsterLife: " + monster.toString());
-
-        //Retrieve widget
-        ProgressBar progressBarMonsterHp = (ProgressBar) container.findViewById(R.id.progressBar_MonsterLife);
-        TextView monsterLife = (TextView) container.findViewById(R.id.textview_MonsterLife);
-
-        //Populate widget
-        progressBarMonsterHp.setProgress(monster.hp);
-        monsterLife.setText(String.valueOf(monster.hp));
-    }
-
-    private void displayAttackAnimation(@NonNull final View targetLayout, @NonNull final View attackerLayout, @NonNull final Monster monster) {
-        LogHelper.d(TAG, "displayAttackAnimation");
-
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        //Set background to red
-        targetLayout.setBackgroundColor(Color.RED);
-
-        //Set background to normal after 1s
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
-
-                // Actions to do after 1s
-                targetLayout.setBackgroundColor(Color.TRANSPARENT);
-            }
-        }, 1000);
     }
 
     private void enableDrawingGestureView(final boolean enable) {
