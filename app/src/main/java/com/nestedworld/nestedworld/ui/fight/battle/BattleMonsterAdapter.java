@@ -67,6 +67,17 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
         mMonsters.add(new BattleMonster(monster, status));
     }
 
+    public void replace(@Nullable final Monster monster, @NonNull final Status status) {
+        for (BattleMonster battleMonster : mMonsters) {
+            if (battleMonster.monster == monster) {
+                battleMonster.monster = monster;
+                battleMonster.status = status;
+
+                notifyDataSetChanged();
+            }
+        }
+    }
+
     /*
     ** Internal method
      */
@@ -95,6 +106,7 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
         }
     }
 
+
     public enum Status {
         DEAD,
         SELECTED,
@@ -102,10 +114,12 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     }
 
     private static class BattleMonster {
+        @Nullable
         public Monster monster;
+        @NonNull
         public Status status;
 
-        public BattleMonster(@NonNull final Monster monster, @NonNull final Status status) {
+        public BattleMonster(@Nullable final Monster monster, @NonNull final Status status) {
             this.monster = monster;
             this.status = status;
         }

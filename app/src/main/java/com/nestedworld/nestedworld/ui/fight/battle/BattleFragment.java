@@ -38,6 +38,9 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAtta
 import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.UserViewManager;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -161,12 +164,14 @@ public class BattleFragment extends BaseFragment {
         /*init internal field*/
         mCurrentUserMonster = mStartMessage.user.monster;
         mCurrentOpponentMonster = mStartMessage.opponent.monster;
+        userViewManager = new UserViewManager(mStartMessage.user, layoutUser).setTeam(mUserMonsterAlive);
+        opponentViewManager = new OpponentViewManager(mStartMessage.opponent, layoutOpponent);
 
         /*setup the view*/
         setupEnvironment();
         setupActionBar();
-        userViewManager = new PlayerViewManager(mContext, mStartMessage.opponent, layoutUser);
-        opponentViewManager = new PlayerViewManager(mContext, mStartMessage.opponent, layoutOpponent);
+        userViewManager.setupUI(mContext);
+        opponentViewManager.setupUI(mContext);
 
         /*Init the gestureListener*/
         initDrawingGestureView(rootView);
@@ -220,11 +225,11 @@ public class BattleFragment extends BaseFragment {
         PlayerViewManager target;
         if (message.target.id == mCurrentUserMonster.id) {
             //Attack sender is the user
+            attacker = opponentViewManager;
+            target = userViewManager;
+        } else {
             attacker = userViewManager;
             target = opponentViewManager;
-        } else {
-            target = userViewManager;
-            attacker = opponentViewManager;
         }
 
         //Update monsters life
@@ -244,6 +249,8 @@ public class BattleFragment extends BaseFragment {
             for (UserMonster userMonster : mUserMonsterAlive) {
                 if (userMonster.user_monster_id == mCurrentUserMonster.userMonsterId) {
                     mUserMonsterAlive.remove(userMonster);
+
+                    userViewManager.onMonsterKo(userMonster.info());
                 }
             }
         }

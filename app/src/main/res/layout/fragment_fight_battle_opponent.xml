@@ -63,7 +63,7 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/listview_opponentMonster"
+                    android:id="@+id/RecyclerView_battle_monster"
                     android:layout_width="match_parent"
                     android:layout_height="38dip"/>
 
