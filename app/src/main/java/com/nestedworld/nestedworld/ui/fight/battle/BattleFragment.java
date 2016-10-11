@@ -251,6 +251,7 @@ public class BattleFragment extends BaseFragment {
         AttackReceiveMessage message = event.getMessage();
 
         if (message.target.id == mCurrentUserMonster.id) {
+            LogHelper.d(TAG, "UserMonster is attacked:" + message.toString());
             //If UserMonster is the target (IE opponentMonster is attacking)
 
             //Update userMonster Life
@@ -259,6 +260,7 @@ public class BattleFragment extends BaseFragment {
             //Show opponentMonster attacking
             displayAttackAnimation(layoutPlayer, layoutOpponent, mCurrentOpponentMonster.info());
         } else {
+            LogHelper.d(TAG, "Opponent monster is attacked:" + message.toString());
             //If Opponent is the target (IE userMonster is Attacking)
 
             //Update opponentMonster Life
@@ -469,22 +471,15 @@ public class BattleFragment extends BaseFragment {
             case UNKNOWN:
                 //Unknow attack, display error message
                 Toast.makeText(mContext, "Unknown attack type", Toast.LENGTH_SHORT).show();
-
-                //Stop loading animation and re-enable drawingGestureView
-                progressView.stop();
-                enableDrawingGestureView(true);
-
-                return;
+                break;
             case OBJECT_USE:
                 //Feature not supported yet, display error message
                 Toast.makeText(mContext, "Feature incoming", Toast.LENGTH_SHORT).show();
-
-                //Stop loading animation and re-enable drawingGestureView
-                progressView.stop();
-                enableDrawingGestureView(true);
-                return;
+                break;
             default:
+                //If we're here, it means the user want to send: attack || attackSp || defense || defenceSp
                 sendAttackRequest(attackTypeWanted);
+                break;
         }
     }
 
@@ -499,11 +494,6 @@ public class BattleFragment extends BaseFragment {
         if (attack == null) {
             //Current monster don't have any attack of the wantend type, just display error message
             Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
-
-            //Stop loading animation and re-enable drawingGestureView
-            progressView.stop();
-            enableDrawingGestureView(true);
-
             return;
         }
 
@@ -517,7 +507,7 @@ public class BattleFragment extends BaseFragment {
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
-                    SendAttackRequest request = new SendAttackRequest(mStartMessage.combatId, mCurrentOpponentMonster.monsterId, attack.infos.attack_id);
+                    SendAttackRequest request = new SendAttackRequest(mStartMessage.combatId, mCurrentOpponentMonster.id, attack.infos.attack_id);
                     nestedWorldSocketAPI.sendRequest(request, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 }
             }

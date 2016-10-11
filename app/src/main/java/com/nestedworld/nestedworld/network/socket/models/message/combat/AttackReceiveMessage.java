@@ -40,10 +40,22 @@ public class AttackReceiveMessage extends DefaultMessage {
         this.combat = message.get(ValueFactory.newString("combat")).asIntegerValue().asLong();
     }
 
+    @Override
+    public String toString() {
+        return "AttackReceiveMessage{" +
+                "attack=" + attack +
+                ", type='" + type + '\'' +
+                ", id='" + id + '\'' +
+                ", combat=" + combat +
+                ", monster=" + monster +
+                ", target=" + target +
+                '}';
+    }
+
     /*
     /** Inner class used for parsing
      */
-    public final static class AttackReceiveMessageMonster extends DefaultMessage{
+    public final static class AttackReceiveMessageMonster extends DefaultMessage {
         public long id;
         public int hp;
 
@@ -61,6 +73,17 @@ public class AttackReceiveMessage extends DefaultMessage {
         protected void unSerialise(@NonNull Map<Value, Value> message) {
             this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
             this.hp = message.get(ValueFactory.newString("id")).asIntegerValue().asInt();
+        }
+
+        /*
+        ** Generated
+         */
+        @Override
+        public String toString() {
+            return "AttackReceiveMessageMonster{" +
+                    "hp=" + hp +
+                    ", id=" + id +
+                    '}';
         }
     }
 }
