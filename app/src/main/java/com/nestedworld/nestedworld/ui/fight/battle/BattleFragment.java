@@ -156,6 +156,7 @@ public class BattleFragment extends BaseFragment {
 
             //Stop current activity
             ((BaseAppCompatActivity) mContext).finish();
+            return;
         }
 
         //start loading animation
