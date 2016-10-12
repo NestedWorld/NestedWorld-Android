@@ -19,16 +19,15 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OpponentViewManager implements PlayerViewManager {
+public class OpponentViewManager extends BasePlayerViewManager {
 
-    private final static String TAG = PlayerViewManager.class.getSimpleName();
+    private final static String TAG = BasePlayerViewManager.class.getSimpleName();
     private final StartMessage.StartMessageOpponent mPlayer;
-    private final View mViewContainer;
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -47,12 +46,10 @@ public class OpponentViewManager implements PlayerViewManager {
     ** Constructor
      */
     public OpponentViewManager(@NonNull final StartMessage.StartMessageOpponent player, @NonNull final View viewContainer) {
+        super(viewContainer);
+
         //Init internal field
         mPlayer = player;
-        mViewContainer = viewContainer;
-
-        //Retrieve widget
-        ButterKnife.bind(this, viewContainer);
     }
 
     /*
@@ -105,25 +102,5 @@ public class OpponentViewManager implements PlayerViewManager {
             battleMonsterAdapter.add(null, BattleMonsterAdapter.Status.DEFAULT);
         }
         recyclerViewMonsters.setAdapter(battleMonsterAdapter);
-
-        StartMessage.StartMessagePlayerMonster monster = mPlayer.monster;
-
-        //Populate widget;
-        monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
-        progressBarMonsterHp.setMax(monster.hp);
-        progressBarMonsterHp.setProgress(monster.hp);
-        monsterLife.setText(String.valueOf(monster.hp));
-
-        //Populate monster sprite
-        Monster monsterInfos = monster.info();
-        if (monsterInfos != null) {
-            Glide.with(context)
-                    .load(monsterInfos.sprite)
-                    .placeholder(R.drawable.default_monster)
-                    .error(R.drawable.default_monster)
-                    .centerCrop()
-                    .into(monsterPicture);
-        }
     }
 }

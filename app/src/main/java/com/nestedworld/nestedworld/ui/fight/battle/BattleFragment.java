@@ -40,7 +40,7 @@ import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentViewManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.UserViewManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -116,8 +116,8 @@ public class BattleFragment extends BaseFragment {
             sendAttack();
         }
     };
-    private PlayerViewManager userViewManager;
-    private PlayerViewManager opponentViewManager;
+    private BasePlayerViewManager userViewManager;
+    private BasePlayerViewManager opponentViewManager;
 
     /*
     ** Public method
@@ -252,8 +252,8 @@ public class BattleFragment extends BaseFragment {
         //Retrieve message
         AttackReceiveMessage message = event.getMessage();
 
-        PlayerViewManager attacker;
-        PlayerViewManager target;
+        BasePlayerViewManager attacker;
+        BasePlayerViewManager target;
         if (message.target.id == mCurrentUserMonster.id) {
             //Attack sender is the user
             attacker = opponentViewManager;

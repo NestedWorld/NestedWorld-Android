@@ -20,18 +20,17 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserViewManager implements PlayerViewManager {
+public class UserViewManager extends BasePlayerViewManager {
 
     private final static String TAG = UserViewManager.class.getSimpleName();
     private final StartMessage.StartMessagePlayer mPlayer;
-    private final View mViewContainer;
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -51,12 +50,8 @@ public class UserViewManager implements PlayerViewManager {
     ** Constructor
      */
     public UserViewManager(@NonNull final StartMessage.StartMessagePlayer player, @NonNull final View viewContainer) {
-        //Init internal field
+        super(viewContainer);
         mPlayer = player;
-        mViewContainer = viewContainer;
-
-        //Retrieve widget
-        ButterKnife.bind(this, viewContainer);
     }
 
     /*
