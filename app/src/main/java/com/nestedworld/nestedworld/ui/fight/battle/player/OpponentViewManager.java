@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 
 public class OpponentViewManager extends BasePlayerViewManager {
 
-    private final static String TAG = BasePlayerViewManager.class.getSimpleName();
+    private final static String TAG = OpponentViewManager.class.getSimpleName();
     private final StartMessage.StartMessageOpponent mPlayer;
     private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
 

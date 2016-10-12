@@ -29,6 +29,7 @@ public class UserViewManager extends BasePlayerViewManager {
 
     private final static String TAG = UserViewManager.class.getSimpleName();
     private final StartMessage.StartMessagePlayer mPlayer;
+
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
