@@ -93,8 +93,8 @@ public class HomeFriendFragment extends BaseFragment {
     }
 
     /*
-        ** EventBus
-         */
+    ** EventBus
+     */
     @Subscribe
     public void onAskMessage(OnAskMessageEvent messageEvent) {
         //Check if fragment hasn't been detach
@@ -125,7 +125,7 @@ public class HomeFriendFragment extends BaseFragment {
     ** Private method
      */
     private void setupListView() {
-        //Check if framgnent hasn't been detach
+        //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
@@ -319,8 +319,8 @@ public class HomeFriendFragment extends BaseFragment {
             Glide.with(getContext())
                     .load(currentFriendInfo.avatar)
                     .placeholder(roundedBitmapDrawable)
-                    .bitmapTransform(new CropCircleTransformation(getContext()))
                     .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(friendHolder.friendPicture);
 
             //set listener on defy button
