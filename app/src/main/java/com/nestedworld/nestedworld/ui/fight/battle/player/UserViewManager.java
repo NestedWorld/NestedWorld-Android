@@ -112,6 +112,8 @@ public class UserViewManager extends BasePlayerViewManager {
      */
     @Override
     public void build(@NonNull final Context context) {
+        super.build(context);
+
         //Init monster list
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 

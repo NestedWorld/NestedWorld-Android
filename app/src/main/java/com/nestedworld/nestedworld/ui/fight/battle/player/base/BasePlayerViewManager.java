@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
@@ -20,9 +21,11 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 public abstract class BasePlayerViewManager {
+    private final static String TAG = BasePlayerViewManager.class.getSimpleName();
+
     protected final View mViewContainer;
     protected StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
-    protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = new ArrayList<>();
+    protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
 
     /*
     ** Constructor
@@ -42,11 +45,17 @@ public abstract class BasePlayerViewManager {
     public abstract void displayAttackSend();
 
     public abstract void onMonsterKo(final long monster);
-
-    public abstract void build(@NonNull final Context context);
     /*
     ** Utils
      */
+    @CallSuper
+    public void build(@NonNull final Context context) {
+        if (mCurrentMonster == null || mCurrentMonsterAttacks == null) {
+            LogHelper.d(TAG, "currentMonster or currentMonsterAttacks null");
+            throw new IllegalArgumentException("You must call setCurrentUser before calling build");
+        }
+    }
+
     public boolean hasMonster(final long id)  {
         return mCurrentMonster.id == id;
     }
@@ -54,8 +63,7 @@ public abstract class BasePlayerViewManager {
     @CallSuper
     public BasePlayerViewManager setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
         mCurrentMonster = monster;
-        mCurrentMonsterAttacks.clear();
-        mCurrentMonsterAttacks.addAll(attacks);
+        mCurrentMonsterAttacks = attacks;
         return this;
     }
 

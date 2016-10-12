@@ -92,14 +92,13 @@ public class OpponentViewManager extends BasePlayerViewManager {
         LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
 
         //Only the current monster can died
-        battleMonsterAdapter.replace(getCurrentMonster().info(), BattleMonsterAdapter.Status.DEAD);
-
-        LogHelper.d(TAG, "Can not identify which monster is dead");
-        //battleMonsterAdapter.replace(monster, BattleMonsterAdapter.Status.DEAD);
-    }
+        battleMonsterAdapter.replace(mCurrentMonster.info(), BattleMonsterAdapter.Status.DEAD);
+   }
 
     @Override
     public void build(@NonNull final Context context) {
+        super.build(context);
+
         //Init monster list
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
