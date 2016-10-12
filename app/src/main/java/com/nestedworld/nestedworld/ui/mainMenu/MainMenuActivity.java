@@ -155,6 +155,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             isChatOpen = false;
         }
     }
+
     private void initSocketService() {
         //Start the service
         ServiceHelper.startSocketService(this);

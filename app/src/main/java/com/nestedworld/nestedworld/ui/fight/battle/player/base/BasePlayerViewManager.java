@@ -6,17 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Attack;
-import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -45,6 +41,7 @@ public abstract class BasePlayerViewManager {
     public abstract void displayAttackSend();
 
     public abstract void onMonsterKo(final long monster);
+
     /*
     ** Utils
      */
@@ -56,7 +53,7 @@ public abstract class BasePlayerViewManager {
         }
     }
 
-    public boolean hasMonster(final long id)  {
+    public boolean hasMonster(final long id) {
         return mCurrentMonster.id == id;
     }
 

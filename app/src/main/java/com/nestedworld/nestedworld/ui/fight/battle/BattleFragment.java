@@ -103,13 +103,13 @@ public class BattleFragment extends BaseFragment {
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
     private List<UserMonster> mUserTeam = null;
+    private BasePlayerViewManager mUserViewManager;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
             sendAttack();
         }
     };
-    private BasePlayerViewManager mUserViewManager;
     private BasePlayerViewManager mOpponentViewManager;
 
     /*
@@ -123,6 +123,56 @@ public class BattleFragment extends BaseFragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fightFragment);
         fragmentTransaction.commit();
+    }
+
+    /*
+    ** Utils
+     */
+    @NonNull
+    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
+
+        Attack.AttackType attackType;
+        switch (gestureInput) {
+            case "41":
+                attackType = Attack.AttackType.ATTACK;
+                break;
+            case "62":
+                attackType = Attack.AttackType.DEFENSE;
+                break;
+            case "456123":
+                attackType = Attack.AttackType.ATTACK_SP;
+                break;
+            case "432165":
+                attackType = Attack.AttackType.DEFENSE_SP;
+                break;
+            case "6253":
+                attackType = Attack.AttackType.OBJECT_USE;
+                break;
+            default:
+                attackType = Attack.AttackType.UNKNOWN;
+        }
+
+        return attackType;
+    }
+
+    @Nullable
+    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Context context, @NonNull final Monster monster) {
+        try {
+            //Retrieve current monster attack
+            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(context).getMonsterAttack(monster.monsterId).execute();
+            if (response == null || response.body() == null) {
+                //Can not retrieve monster attack
+                return null;
+            } else {
+                //Success, return monster attack
+                return response.body().attacks;
+            }
+        } catch (IOException e) {
+            //Something wrong happen
+            //Can not retrieve monster attack
+            return null;
+        }
     }
 
     public void setStartMessage(@NonNull final StartMessage startMessage) {
@@ -415,55 +465,5 @@ public class BattleFragment extends BaseFragment {
                 enableDrawingGestureView(true);
             }
         });
-    }
-
-    /*
-    ** Utils
-     */
-    @NonNull
-    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
-        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
-
-        Attack.AttackType attackType;
-        switch (gestureInput) {
-            case "41":
-                attackType = Attack.AttackType.ATTACK;
-                break;
-            case "62":
-                attackType = Attack.AttackType.DEFENSE;
-                break;
-            case "456123":
-                attackType = Attack.AttackType.ATTACK_SP;
-                break;
-            case "432165":
-                attackType = Attack.AttackType.DEFENSE_SP;
-                break;
-            case "6253":
-                attackType = Attack.AttackType.OBJECT_USE;
-                break;
-            default:
-                attackType = Attack.AttackType.UNKNOWN;
-        }
-
-        return attackType;
-    }
-
-    @Nullable
-    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Context context, @NonNull final Monster monster) {
-        try {
-            //Retrieve current monster attack
-            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(context).getMonsterAttack(monster.monsterId).execute();
-            if (response == null || response.body() == null) {
-                //Can not retrieve monster attack
-                return null;
-            } else {
-                //Success, return monster attack
-                return response.body().attacks;
-            }
-        } catch (IOException e) {
-            //Something wrong happen
-            //Can not retrieve monster attack
-            return null;
-        }
     }
 }

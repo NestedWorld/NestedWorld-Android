@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,25 +13,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
-import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class OpponentViewManager extends BasePlayerViewManager {
 
     private final static String TAG = OpponentViewManager.class.getSimpleName();
     private final StartMessage.StartMessageOpponent mPlayer;
-    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -45,6 +38,7 @@ public class OpponentViewManager extends BasePlayerViewManager {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
+    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
 
     /*
     ** Constructor
@@ -93,7 +87,7 @@ public class OpponentViewManager extends BasePlayerViewManager {
 
         //Only the current monster can died
         battleMonsterAdapter.replace(mCurrentMonster.info(), BattleMonsterAdapter.Status.DEAD);
-   }
+    }
 
     @Override
     public void build(@NonNull final Context context) {
