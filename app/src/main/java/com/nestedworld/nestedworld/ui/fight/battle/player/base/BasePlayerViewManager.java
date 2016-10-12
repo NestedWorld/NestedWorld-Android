@@ -44,12 +44,13 @@ public abstract class BasePlayerViewManager {
     public abstract void onMonsterKo(final long monster);
 
     public abstract void build(@NonNull final Context context);
-
-    public abstract boolean hasMonster(final long id);
-
     /*
     ** Utils
      */
+    public boolean hasMonster(final long id)  {
+        return mCurrentMonster.id == id;
+    }
+
     @CallSuper
     public BasePlayerViewManager setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
         mCurrentMonster = monster;

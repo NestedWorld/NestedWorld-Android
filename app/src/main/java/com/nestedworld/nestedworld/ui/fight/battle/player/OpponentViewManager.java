@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
@@ -88,6 +89,12 @@ public class OpponentViewManager extends BasePlayerViewManager {
 
     @Override
     public void onMonsterKo(long monster) {
+        LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
+
+        //Only the current monster can died
+        battleMonsterAdapter.replace(getCurrentMonster().info(), BattleMonsterAdapter.Status.DEAD);
+
+        LogHelper.d(TAG, "Can not identify which monster is dead");
         //battleMonsterAdapter.replace(monster, BattleMonsterAdapter.Status.DEAD);
     }
 
@@ -102,10 +109,25 @@ public class OpponentViewManager extends BasePlayerViewManager {
             battleMonsterAdapter.add(null, BattleMonsterAdapter.Status.DEFAULT);
         }
         recyclerViewMonsters.setAdapter(battleMonsterAdapter);
-    }
 
-    @Override
-    public boolean hasMonster(long id) {
-        return mCurrentMonster.id == id;
+        StartMessage.StartMessagePlayerMonster monster = mPlayer.monster;
+
+        //Populate widget;
+        monsterName.setText(monster.name);
+        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
+        progressBarMonsterHp.setMax(monster.hp);
+        progressBarMonsterHp.setProgress(monster.hp);
+        monsterLife.setText(String.valueOf(monster.hp));
+
+        //Populate monster sprite
+        Monster monsterInfos = monster.info();
+        if (monsterInfos != null) {
+            Glide.with(context)
+                    .load(monsterInfos.sprite)
+                    .placeholder(R.drawable.default_monster)
+                    .error(R.drawable.default_monster)
+                    .centerCrop()
+                    .into(monsterPicture);
+        }
     }
 }

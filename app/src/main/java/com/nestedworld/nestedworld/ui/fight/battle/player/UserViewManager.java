@@ -93,17 +93,17 @@ public class UserViewManager extends BasePlayerViewManager {
 
     @Override
     public void onMonsterKo(final long monster) {
+        LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
         for (UserMonster userMonster : mUserMonsterAlive) {
-            if (userMonster.userMonsterId == getCurrentMonster().userMonsterId) {
+            LogHelper.d(TAG, "checking with: " + userMonster.userMonsterId);
+            if (userMonster.userMonsterId == mCurrentMonster.userMonsterId) {
                 mUserMonsterAlive.remove(userMonster);
                 battleMonsterAdapter.replace(userMonster.info(), BattleMonsterAdapter.Status.DEAD);
+                return;
             }
         }
-    }
 
-    @Override
-    public boolean hasMonster(long id) {
-        return false;
+        LogHelper.d(TAG, "Can not identify which monster is dead");
     }
 
     /*

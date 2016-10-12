@@ -38,6 +38,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterK
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentViewManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.UserViewManager;
@@ -142,8 +143,19 @@ public class BattleFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull final View rootView, @Nullable Bundle savedInstanceState) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
         if (mUserTeam == null || mStartMessage == null) {
-            throw new IllegalArgumentException("You should call setStartMessage() and setTeam() before binding the fragment");
+            //Display some log
+            LogHelper.d(TAG, "You should call setStartMessage() and setTeam() before binding the fragment");
+
+            //Warm the user we can't start this battle
+            Toast.makeText(mContext, "Sorry, can't start your battle", Toast.LENGTH_LONG).show();
+
+            //Stop current activity
+            ((BaseAppCompatActivity) mContext).finish();
         }
 
         //start loading animation
