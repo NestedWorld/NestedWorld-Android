@@ -149,7 +149,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         LogHelper.d(TAG, "onNewCombatAvailable");
 
         AvailableMessage message = event.getMessage();
-        Combat newCombat = Select.from(Combat.class).where(Condition.prop("combatid").eq(message.getMessageId())).first();
+        Combat newCombat = Select.from(Combat.class).where(Condition.prop("combat_id").eq(message.getMessageId())).first();
         mAdapter.add(newCombat);
     }
 

@@ -39,7 +39,7 @@ public class StartMessage extends DefaultMessage {
     protected void unSerialise(@NonNull Map<Value, Value> message) {
         this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
         this.id = message.get(ValueFactory.newString("id")).asStringValue().asString();
-        this.combatId = message.get(ValueFactory.newString("combatId")).asIntegerValue().asLong();
+        this.combatId = message.get(ValueFactory.newString("combat_id")).asIntegerValue().asLong();
         this.combatType = message.get(ValueFactory.newString("combat_type")).asStringValue().asString();
         this.env = message.get(ValueFactory.newString("env")).asStringValue().asString();
         this.first = message.get(ValueFactory.newString("first")).asBooleanValue().getBoolean();
@@ -136,8 +136,8 @@ public class StartMessage extends DefaultMessage {
         protected void unSerialise(@NonNull Map<Value, Value> message) {
             this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
             this.name = message.get(ValueFactory.newString("name")).asStringValue().asString();
-            this.monsterId = message.get(ValueFactory.newString("monsterId")).asIntegerValue().asLong();
-            this.userMonsterId = message.get(ValueFactory.newString("userMonsterId")).asIntegerValue().asLong();
+            this.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asLong();
+            this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asLong();
             this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
             this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();
         }
@@ -147,7 +147,7 @@ public class StartMessage extends DefaultMessage {
          */
         @Nullable
         public Monster info() {
-            return Select.from(Monster.class).where(Condition.prop("monsterid").eq(monsterId)).first();
+            return Select.from(Monster.class).where(Condition.prop("monster_id").eq(monsterId)).first();
         }
 
         /*

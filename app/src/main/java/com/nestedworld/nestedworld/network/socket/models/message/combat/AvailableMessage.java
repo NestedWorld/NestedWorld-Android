@@ -43,12 +43,12 @@ public class AvailableMessage extends DefaultMessage {
         if (message.containsKey(ValueFactory.newString("origin"))) {
             this.origin = combat.origin = message.get(ValueFactory.newString("origin")).asStringValue().asString();
         }
-        if (message.containsKey(ValueFactory.newString("monsterId"))) {
-            this.monsterId = combat.monsterId = message.get(ValueFactory.newString("monsterId")).asIntegerValue().asLong();
+        if (message.containsKey(ValueFactory.newString("monster_id"))) {
+            this.monsterId = combat.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asLong();
         }
         if (message.containsKey(ValueFactory.newString("user"))) {
             Map<Value, Value> userInfo = message.get(ValueFactory.newString("user")).asMapValue().map();
-            this.opponentPseudo = combat.opponent_pseudo = userInfo.get(ValueFactory.newString("pseudo")).asStringValue().asString();
+            this.opponentPseudo = combat.opponentPseudo = userInfo.get(ValueFactory.newString("pseudo")).asStringValue().asString();
         }
         combat.save();
     }
@@ -62,7 +62,7 @@ public class AvailableMessage extends DefaultMessage {
         combat.combatId = this.combatId;
         combat.origin = this.origin;
         combat.monsterId = this.monsterId;
-        combat.opponent_pseudo = this.opponentPseudo;
+        combat.opponentPseudo = this.opponentPseudo;
 
         combat.save();
 

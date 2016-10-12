@@ -16,7 +16,7 @@ public class Combat extends SugarRecord {
     public String type;
     public String origin;
     public long monsterId;
-    public String opponent_pseudo;// the sql table will be called opponentpseudo (see sugarOrm doc)
+    public String opponentPseudo;// the sql table will be called opponentpseudo (see sugarOrm doc)
 
     //Empty constructor for SugarRecord
     public Combat() {
@@ -31,7 +31,7 @@ public class Combat extends SugarRecord {
                 ", type='" + type + '\'' +
                 ", origin='" + origin + '\'' +
                 ", monsterId=" + monsterId +
-                ", opponent_pseudo='" + opponent_pseudo + '\'' +
+                ", opponentPseudo='" + opponentPseudo + '\'' +
                 '}';
     }
 }

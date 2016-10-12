@@ -45,7 +45,7 @@ public class UserMonster extends SugarRecord {
     @Nullable
     public Monster info() {
         if (infos == null) {
-            infos = Select.from(Monster.class).where(Condition.prop("monsterid").eq(fkmonster)).first();
+            infos = Select.from(Monster.class).where(Condition.prop("monster_id").eq(fkmonster)).first();
         }
         return infos;
     }

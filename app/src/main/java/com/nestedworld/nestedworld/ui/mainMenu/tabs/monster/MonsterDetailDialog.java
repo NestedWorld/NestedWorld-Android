@@ -123,7 +123,7 @@ public class MonsterDetailDialog extends DialogFragment {
         if (getArguments().containsKey("monsterId")) {
             long monsterId = getArguments().getLong("monsterId");
 
-            Monster monster = Select.from(Monster.class).where(Condition.prop("monsterid").eq(monsterId)).first();
+            Monster monster = Select.from(Monster.class).where(Condition.prop("monster_id").eq(monsterId)).first();
             if (monster != null) {
                 mMonster = monster;
             }
