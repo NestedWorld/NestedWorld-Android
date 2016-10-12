@@ -83,7 +83,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         swipeRefreshLayout.setRefreshing(true);
 
         //Retrieve monster
-        new MonsterUpdater(mContext, new OnEntityUpdated() {
+        new MonsterUpdater(mContext).update(new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 //Update adapter
@@ -118,7 +118,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
-        }).start();
+        });
     }
 
     /*

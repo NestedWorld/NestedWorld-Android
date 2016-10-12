@@ -85,7 +85,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
         //Start loading animation
         swipeRefreshLayout.setRefreshing(true);
 
-        new FriendsUpdater(mContext, new OnEntityUpdated() {
+        new FriendsUpdater(mContext).update(new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 //Check if fragment hasn't been detach
@@ -109,7 +109,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
                     Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
                 }
             }
-        }).start();
+        });
     }
 
     /*

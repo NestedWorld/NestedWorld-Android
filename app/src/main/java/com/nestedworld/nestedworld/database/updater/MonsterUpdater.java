@@ -2,13 +2,10 @@ package com.nestedworld.nestedworld.database.updater;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
-import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnMonstersUpdatedEvent;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,8 +18,8 @@ public class MonsterUpdater extends EntityUpdater<MonstersResponse> {
     /*
     ** Constructor
      */
-    public MonsterUpdater(@NonNull final Context context, @Nullable final OnEntityUpdated callback) {
-        super(context, callback);
+    public MonsterUpdater(@NonNull final Context context) {
+        super(context);
     }
 
     /*
@@ -31,7 +28,7 @@ public class MonsterUpdater extends EntityUpdater<MonstersResponse> {
     @NonNull
     @Override
     public Call<MonstersResponse> getRequest() {
-        return NestedWorldHttpApi.getInstance(getContext()).getMonsters();
+        return getApi().getMonsters();
     }
 
     @Override

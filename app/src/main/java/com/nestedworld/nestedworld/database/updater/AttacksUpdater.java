@@ -2,13 +2,10 @@ package com.nestedworld.nestedworld.database.updater;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
-import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnAttacksUpdatedEvent;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,8 +18,8 @@ public class AttacksUpdater extends EntityUpdater<AttacksResponse> {
     /*
     ** Constructor
      */
-    public AttacksUpdater(@NonNull final Context context, @Nullable final OnEntityUpdated callback) {
-        super(context, callback);
+    public AttacksUpdater(@NonNull final Context context) {
+        super(context);
     }
 
     /*
@@ -31,7 +28,7 @@ public class AttacksUpdater extends EntityUpdater<AttacksResponse> {
     @NonNull
     @Override
     public Call<AttacksResponse> getRequest() {
-        return NestedWorldHttpApi.getInstance(getContext()).getAttacks();
+        return getApi().getAttacks();
     }
 
     @Override

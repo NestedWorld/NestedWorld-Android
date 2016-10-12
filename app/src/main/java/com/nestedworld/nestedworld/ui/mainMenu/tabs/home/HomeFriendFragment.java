@@ -144,7 +144,7 @@ public class HomeFriendFragment extends BaseFragment {
         //Start loading animation
         progressView.start();
 
-        new FriendsUpdater(mContext, new OnEntityUpdated() {
+        new FriendsUpdater(mContext).update(new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 populateFriendList();
@@ -158,7 +158,7 @@ public class HomeFriendFragment extends BaseFragment {
                 //Stop loading animation
                 progressView.stop();
             }
-        }).start();
+        });
     }
 
     private void populateFriendList() {

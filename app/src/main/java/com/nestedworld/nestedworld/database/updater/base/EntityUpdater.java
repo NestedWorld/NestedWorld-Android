@@ -1,30 +1,28 @@
 package com.nestedworld.nestedworld.database.updater.base;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
+import android.view.View;
 
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 
 import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Response;
 
-public abstract class EntityUpdater<T> extends Thread {
+public abstract class EntityUpdater<T> {
     protected final static String TAG = EntityUpdater.class.getSimpleName();
-
-    private final Context mContext;
-    private final OnEntityUpdated mCallback;
+    private final NestedWorldHttpApi mNestedWorldHttpApi;
 
     /*
     ** Constructor
      */
-    public EntityUpdater(@NonNull final Context context, @Nullable final OnEntityUpdated callback) {
-        mContext = context;
-        mCallback = callback;
+    public EntityUpdater(@NonNull final Context context) {
+        mNestedWorldHttpApi = NestedWorldHttpApi.getInstance(context);
     }
 
     /*
@@ -36,63 +34,55 @@ public abstract class EntityUpdater<T> extends Thread {
     public abstract void updateEntity(@NonNull final Response<T> response);
 
     /*
-    ** Thread implementation
+    ** Public method
      */
-    public void run() {
+    @WorkerThread
+    public boolean update() {
+        return makeRequest();
+    }
+
+    public void update(@NonNull final OnEntityUpdated onEntityUpdated) {
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                return makeRequest();
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if (result) {
+                    onEntityUpdated.onSuccess();
+                } else {
+                    onEntityUpdated.onError(OnEntityUpdated.KIND.SERVER);
+                }
+            }
+        }.execute();
+    }
+
+    /*
+    ** Utils for child
+     */
+    protected NestedWorldHttpApi getApi() {
+        return mNestedWorldHttpApi;
+    }
+
+    /*
+    ** Internal method
+     */
+    private boolean makeRequest() {
         Call<T> request = getRequest();
 
         try {
             Response<T> response = request.execute();
             if (response != null && response.isSuccessful()) {
                 updateEntity(response);
-                onSuccess();
+                return true;
             } else {
-                //We don't want to call the listener if the Thread has been interrupted
-                if (isInterrupted()) {
-                    onThreadInterrupted();
-                } else {
-                    onError(OnEntityUpdated.KIND.SERVER);
-                }
+                return false;
             }
         } catch (IOException e) {
-            request.cancel();
             e.printStackTrace();
-        }
-    }
-
-    /*
-    ** Utils or child
-     */
-    public Context getContext() {
-        return mContext;
-    }
-
-    /*
-    ** Private method
-     */
-    private void onThreadInterrupted() {
-        //Do what you want
-    }
-
-    private void onError(@NonNull final OnEntityUpdated.KIND kind) {
-        if (mCallback != null) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    mCallback.onError(kind);
-                }
-            });
-        }
-    }
-
-    private void onSuccess() {
-        if (mCallback != null) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    mCallback.onSuccess();
-                }
-            });
+            return false;
         }
     }
 }

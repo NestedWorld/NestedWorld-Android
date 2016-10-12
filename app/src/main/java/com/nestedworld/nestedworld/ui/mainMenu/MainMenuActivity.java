@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.ui.mainMenu;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,12 +21,11 @@ import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.UserUpdater;
-import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
@@ -44,7 +44,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 
@@ -188,6 +187,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             }
         }
 
+        //Stop loading animation
         progressView.stop();
     }
 
@@ -200,62 +200,47 @@ public class MainMenuActivity extends BaseAppCompatActivity {
      * Simple asyncTask implementation for updating the database
      */
     private void updateDataBase() {
-        final AtomicInteger taskEnded = new AtomicInteger(0);
-        final List<Thread> tasks = new ArrayList<>();
-        final OnEntityUpdated callback = new OnEntityUpdated() {
+        final List<EntityUpdater> tasks = new ArrayList<>();
+        tasks.add(new UserUpdater(MainMenuActivity.this));
+        tasks.add(new FriendsUpdater(MainMenuActivity.this));
+        tasks.add(new AttacksUpdater(MainMenuActivity.this));
+        tasks.add(new MonsterUpdater(MainMenuActivity.this));
+        tasks.add(new UserMonsterUpdater(MainMenuActivity.this));//Always update userMonster after monster (for avoiding any delete issue)
+
+        //Update aren't thread safe, make request in background
+        new AsyncTask<Void, Void, Boolean>() {
             @Override
-            public void onSuccess() {
-                if (taskEnded.incrementAndGet() == tasks.size()) {
+            protected Boolean doInBackground(Void... params) {
+                for (EntityUpdater entityUpdater : tasks) {
+                    if (!entityUpdater.update()) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if (result) {
                     initTabs();
+                } else {
+                    //stop loading animation
+                    progressView.stop();
+
+                    //display error message
+                    Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
+
+                    //remove user
+                    SessionHelper.deleteSession();
+
+                    //Go to launch screen
+                    startActivity(LaunchActivity.class);
+
+                    ///Finish current activity
+                    finish();
                 }
             }
-
-            @Override
-            public void onError(@NonNull KIND kind) {
-                //Stop every thread
-                for (Thread t : tasks) {
-                    t.interrupt();
-                }
-
-                //stop loading animation
-                progressView.stop();
-
-                //display error message
-                Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
-
-                //remove user
-                SessionHelper.deleteSession();
-
-                //Go to launch screen
-                startActivity(LaunchActivity.class);
-
-                ///Finish current activity
-                finish();
-            }
-        };
-
-        tasks.add(new UserUpdater(MainMenuActivity.this, callback));
-        tasks.add(new FriendsUpdater(MainMenuActivity.this, callback));
-        tasks.add(new AttacksUpdater(MainMenuActivity.this, callback));
-        tasks.add(new MonsterUpdater(MainMenuActivity.this, new OnEntityUpdated() {
-            @Override
-            public void onSuccess() {
-                Thread thread = new UserMonsterUpdater(MainMenuActivity.this, callback);
-                tasks.add(thread);
-                thread.start();
-
-                callback.onSuccess();
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind) {
-                callback.onError(errorKind);
-            }
-        }));
-
-        for (Thread t : tasks) {
-            t.run();
-        }
+        }.execute();
     }
 
     /**
