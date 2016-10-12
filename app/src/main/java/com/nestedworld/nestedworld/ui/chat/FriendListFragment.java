@@ -85,7 +85,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
         //Start loading animation
         swipeRefreshLayout.setRefreshing(true);
 
-        new FriendsUpdater(mContext).update(new OnEntityUpdated() {
+        new FriendsUpdater(mContext).start(new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 //Check if fragment hasn't been detach

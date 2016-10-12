@@ -37,11 +37,11 @@ public abstract class EntityUpdater<T> {
     ** Public method
      */
     @WorkerThread
-    public boolean update() {
+    public boolean run() {
         return makeRequest();
     }
 
-    public void update(@NonNull final OnEntityUpdated onEntityUpdated) {
+    public void start(@NonNull final OnEntityUpdated onEntityUpdated) {
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... params) {

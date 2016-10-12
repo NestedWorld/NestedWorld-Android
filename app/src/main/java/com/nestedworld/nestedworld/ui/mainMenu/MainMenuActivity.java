@@ -212,7 +212,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             @Override
             protected Boolean doInBackground(Void... params) {
                 for (EntityUpdater entityUpdater : tasks) {
-                    if (!entityUpdater.update()) {
+                    if (!entityUpdater.run()) {
                         return false;
                     }
                 }
