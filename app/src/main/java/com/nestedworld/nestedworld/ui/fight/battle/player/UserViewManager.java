@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewMan
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class UserViewManager extends BasePlayerViewManager {
 
@@ -52,6 +50,14 @@ public class UserViewManager extends BasePlayerViewManager {
     public UserViewManager(@NonNull final StartMessage.StartMessagePlayer player, @NonNull final View viewContainer) {
         super(viewContainer);
         mPlayer = player;
+    }
+
+    /*
+    ** Public method
+     */
+    public UserViewManager setTeam(@NonNull final List<UserMonster> team) {
+        mUserMonsterAlive = team;
+        return this;
     }
 
     /*
@@ -86,23 +92,25 @@ public class UserViewManager extends BasePlayerViewManager {
     }
 
     @Override
-    public void onMonsterKo(@Nullable final Monster monster) {
-        battleMonsterAdapter.replace(monster, BattleMonsterAdapter.Status.DEAD);
+    public void onMonsterKo(final long monster) {
+        for (UserMonster userMonster : mUserMonsterAlive) {
+            if (userMonster.userMonsterId == getCurrentMonster().userMonsterId) {
+                mUserMonsterAlive.remove(userMonster);
+                battleMonsterAdapter.replace(userMonster.info(), BattleMonsterAdapter.Status.DEAD);
+            }
+        }
     }
 
-    /*
-    ** Public method
-     */
-    public UserViewManager setTeam(@NonNull final List<UserMonster> team) {
-        mUserMonsterAlive = team;
-        return this;
+    @Override
+    public boolean hasMonster(long id) {
+        return false;
     }
 
     /*
     ** Internal method
      */
     @Override
-    public void setupUI(@NonNull final Context context) {
+    public void build(@NonNull final Context context) {
         //Init monster list
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 

@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.ui.fight.battle;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureV
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.database.models.Attack;
+import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
@@ -36,7 +38,6 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterK
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.service.SocketService;
-import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentViewManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.UserViewManager;
@@ -56,13 +57,6 @@ import retrofit2.Response;
 
 public class BattleFragment extends BaseFragment {
 
-    /*
-    ** Private field
-     */
-    private final ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = new ArrayList<>();
-    /*
-    ** Butterknife binding
-     */
     @BindView(R.id.progressView)
     ProgressView progressView;
     @BindView(R.id.layout_user)
@@ -107,17 +101,15 @@ public class BattleFragment extends BaseFragment {
     };
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
-    private List<UserMonster> mUserMonsterAlive = null;
-    private StartMessage.StartMessagePlayerMonster mCurrentUserMonster;
-    private StartMessage.StartMessagePlayerMonster mCurrentOpponentMonster;
+    private List<UserMonster> mUserTeam = null;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
             sendAttack();
         }
     };
-    private BasePlayerViewManager userViewManager;
-    private BasePlayerViewManager opponentViewManager;
+    private BasePlayerViewManager mUserViewManager;
+    private BasePlayerViewManager mOpponentViewManager;
 
     /*
     ** Public method
@@ -132,43 +124,12 @@ public class BattleFragment extends BaseFragment {
         fragmentTransaction.commit();
     }
 
-    /*
-    ** Utils
-     */
-    @NonNull
-    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
-        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
-
-        Attack.AttackType attackType;
-        switch (gestureInput) {
-            case "41":
-                attackType = Attack.AttackType.ATTACK;
-                break;
-            case "62":
-                attackType = Attack.AttackType.DEFENSE;
-                break;
-            case "456123":
-                attackType = Attack.AttackType.ATTACK_SP;
-                break;
-            case "432165":
-                attackType = Attack.AttackType.DEFENSE_SP;
-                break;
-            case "6253":
-                attackType = Attack.AttackType.OBJECT_USE;
-                break;
-            default:
-                attackType = Attack.AttackType.UNKNOWN;
-        }
-
-        return attackType;
-    }
-
     public void setStartMessage(@NonNull final StartMessage startMessage) {
         mStartMessage = startMessage;
     }
 
     public void setTeam(@NonNull final List<UserMonster> team) {
-        mUserMonsterAlive = team;
+        mUserTeam = team;
     }
 
     /*
@@ -181,7 +142,7 @@ public class BattleFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull final View rootView, @Nullable Bundle savedInstanceState) {
-        if (mUserMonsterAlive == null || mStartMessage == null) {
+        if (mUserTeam == null || mStartMessage == null) {
             throw new IllegalArgumentException("You should call setStartMessage() and setTeam() before binding the fragment");
         }
 
@@ -192,43 +153,10 @@ public class BattleFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         }
 
-        /*init internal field*/
-        mCurrentUserMonster = mStartMessage.user.monster;
-        mCurrentOpponentMonster = mStartMessage.opponent.monster;
-        userViewManager = new UserViewManager(mStartMessage.user, layoutUser).setTeam(mUserMonsterAlive);
-        opponentViewManager = new OpponentViewManager(mStartMessage.opponent, layoutOpponent);
-
-        /*setup the view*/
         setupEnvironment();
         setupActionBar();
-        userViewManager.setupUI(mContext);
-        opponentViewManager.setupUI(mContext);
-
-        /*Init the gestureListener*/
-        initDrawingGestureView(rootView);
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-               /*Load pre-requisite*/
-                retrieveCurrentUserMonsterAttacks();
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
-
-                //Enable drawingGestureView (allow user to send attack)
-                enableDrawingGestureView(true);
-
-                //Stop loading animation
-                progressView.stop();
-            }
-        }.execute();
+        setupDrawingGestureView(rootView);
+        setupPlayers();
     }
 
     @Override
@@ -254,13 +182,13 @@ public class BattleFragment extends BaseFragment {
 
         BasePlayerViewManager attacker;
         BasePlayerViewManager target;
-        if (message.target.id == mCurrentUserMonster.id) {
+        if (mUserViewManager.hasMonster(message.monster.id)) {
             //Attack sender is the user
-            attacker = opponentViewManager;
-            target = userViewManager;
+            attacker = mOpponentViewManager;
+            target = mUserViewManager;
         } else {
-            attacker = userViewManager;
-            target = opponentViewManager;
+            attacker = mUserViewManager;
+            target = mOpponentViewManager;
         }
 
         //Update monsters life
@@ -274,16 +202,12 @@ public class BattleFragment extends BaseFragment {
 
     @Subscribe
     public void onMonsterKo(OnMonsterKoEvent event) {
-        MonsterKoMessage monsterKoMessage = event.getMessage();
+        MonsterKoMessage message = event.getMessage();
 
-        if (monsterKoMessage.monster == mCurrentUserMonster.id) {
-            for (UserMonster userMonster : mUserMonsterAlive) {
-                if (userMonster.userMonsterId == mCurrentUserMonster.userMonsterId) {
-                    mUserMonsterAlive.remove(userMonster);
-
-                    userViewManager.onMonsterKo(userMonster.info());
-                }
-            }
+        if (mUserViewManager.hasMonster(message.monster)) {
+            mUserViewManager.onMonsterKo(message.monster);
+        } else {
+            mOpponentViewManager.onMonsterKo(message.monster);
         }
     }
 
@@ -324,7 +248,7 @@ public class BattleFragment extends BaseFragment {
         }
     }
 
-    private void initDrawingGestureView(@NonNull final View rootView) {
+    private void setupDrawingGestureView(@NonNull final View rootView) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -342,6 +266,51 @@ public class BattleFragment extends BaseFragment {
 
         /*Add the custom view under the rootView*/
         ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
+    }
+
+    private void setupPlayers() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        mUserViewManager = new UserViewManager(mStartMessage.user, layoutUser).setTeam(mUserTeam);
+        mOpponentViewManager = new OpponentViewManager(mStartMessage.opponent, layoutOpponent);
+
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return null;
+                }
+
+                //TODO check if we successfully got monster attack
+                mUserViewManager.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mContext, mStartMessage.user.monster.info()));
+                mUserViewManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mContext, mStartMessage.opponent.monster.info()));
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Setup playerUI
+                mUserViewManager.build(mContext);
+                mOpponentViewManager.build(mContext);
+
+                //Enable drawingGestureView (allow user to send attack)
+                enableDrawingGestureView(true);
+
+                //Stop loading animation
+                progressView.stop();
+            }
+        }.execute();
+
     }
 
     private void enableDrawingGestureView(final boolean enable) {
@@ -378,22 +347,22 @@ public class BattleFragment extends BaseFragment {
                 break;
             default:
                 //If we're here, it means the user want to send: attack || attackSp || defense || defenceSp
-                sendAttackRequest(attackTypeWanted);
+                //Check if the current monster has an attack of the wanted type
+                final MonsterAttackResponse.MonsterAttack attack = mUserViewManager.getMonsterAttackByType(attackTypeWanted);
+                if (attack == null) {
+                    //Current monster don't have any attack of the wantend type, just display error message
+                    Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    sendAttackRequest(mUserViewManager.getCurrentMonster().id, attack.infos.attackId);
+                }
                 break;
         }
     }
 
-    private void sendAttackRequest(@NonNull final Attack.AttackType attackTypeWanted) {
+    private void sendAttackRequest(final long targetId, final long attackId) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
-            return;
-        }
-
-        //Check if the current monster has an attack of the wanted type
-        final MonsterAttackResponse.MonsterAttack attack = getCurrentMonsterAttackByType(attackTypeWanted);
-        if (attack == null) {
-            //Current monster don't have any attack of the wantend type, just display error message
-            Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -402,18 +371,28 @@ public class BattleFragment extends BaseFragment {
         ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
                 //Service connected, retrieving socketApi instance
                 NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
-                    SendAttackRequest request = new SendAttackRequest(mStartMessage.combatId, mCurrentOpponentMonster.id, attack.infos.attackId);
+                    SendAttackRequest request = new SendAttackRequest(mStartMessage.combatId, targetId, attackId);
                     nestedWorldSocketAPI.sendRequest(request, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
                 }
             }
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
                 //Cannot send attack (api not available)
                 //Display error message
                 Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
@@ -425,52 +404,53 @@ public class BattleFragment extends BaseFragment {
         });
     }
 
-    @Nullable
-    private MonsterAttackResponse.MonsterAttack getCurrentMonsterAttackByType(@NonNull final Attack.AttackType attackTypeWanted) {
-        //Loop over current monster attack for finding an attack of the given type
-        for (MonsterAttackResponse.MonsterAttack monsterAttack : mCurrentMonsterAttacks) {
-            if (monsterAttack.infos.getType() == attackTypeWanted) {
-                return monsterAttack;
-            }
+    /*
+    ** Utils
+     */
+    @NonNull
+    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
+
+        Attack.AttackType attackType;
+        switch (gestureInput) {
+            case "41":
+                attackType = Attack.AttackType.ATTACK;
+                break;
+            case "62":
+                attackType = Attack.AttackType.DEFENSE;
+                break;
+            case "456123":
+                attackType = Attack.AttackType.ATTACK_SP;
+                break;
+            case "432165":
+                attackType = Attack.AttackType.DEFENSE_SP;
+                break;
+            case "6253":
+                attackType = Attack.AttackType.OBJECT_USE;
+                break;
+            default:
+                attackType = Attack.AttackType.UNKNOWN;
         }
-        return null;
+
+        return attackType;
     }
 
-    private void retrieveCurrentUserMonsterAttacks() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
+    @Nullable
+    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Context context, @NonNull final Monster monster) {
         try {
-            //Retrieve the current monster attack
-            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(mContext).getMonsterAttack(mCurrentUserMonster.monsterId).execute();
+            //Retrieve current monster attack
+            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(context).getMonsterAttack(monster.monsterId).execute();
             if (response == null || response.body() == null) {
                 //Can not retrieve monster attack
-                //Display error message to warn the user
-                Toast.makeText(mContext, "Can not retrieve your monster attack", Toast.LENGTH_LONG).show();
-
-                //Finish the battle
-                ((BaseAppCompatActivity) mContext).finish();
-            } else if (response.body().attacks.isEmpty()) {
-                //The monster didn't have any attack, just warn the user
-                Toast.makeText(mContext, "Your monster didn't have any attack", Toast.LENGTH_LONG).show();
+                return null;
             } else {
-                //Clear hold attack
-                mCurrentMonsterAttacks.clear();
-
-                //Populate attack list
-                mCurrentMonsterAttacks.addAll(response.body().attacks);
+                //Success, return monster attack
+                return response.body().attacks;
             }
         } catch (IOException e) {
-            //Something wrong happen, we can't retrieve monster attack
-            e.printStackTrace();
-
-            //Display error message to warn the user
-            Toast.makeText(mContext, "Can not retrieve your monster attack", Toast.LENGTH_LONG).show();
-
-            //Finish the battle
-            ((BaseAppCompatActivity) mContext).finish();
+            //Something wrong happen
+            //Can not retrieve monster attack
+            return null;
         }
     }
 }

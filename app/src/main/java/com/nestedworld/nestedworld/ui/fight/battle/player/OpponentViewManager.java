@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
@@ -28,6 +30,8 @@ public class OpponentViewManager extends BasePlayerViewManager {
 
     private final static String TAG = BasePlayerViewManager.class.getSimpleName();
     private final StartMessage.StartMessageOpponent mPlayer;
+    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
+
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -40,7 +44,6 @@ public class OpponentViewManager extends BasePlayerViewManager {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
-    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
 
     /*
     ** Constructor
@@ -84,15 +87,12 @@ public class OpponentViewManager extends BasePlayerViewManager {
     }
 
     @Override
-    public void onMonsterKo(@Nullable final Monster monster) {
-        battleMonsterAdapter.replace(monster, BattleMonsterAdapter.Status.DEAD);
+    public void onMonsterKo(long monster) {
+        //battleMonsterAdapter.replace(monster, BattleMonsterAdapter.Status.DEAD);
     }
 
-    /*
-    ** Internal method
-     */
     @Override
-    public void setupUI(@NonNull final Context context) {
+    public void build(@NonNull final Context context) {
         //Init monster list
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
@@ -102,5 +102,10 @@ public class OpponentViewManager extends BasePlayerViewManager {
             battleMonsterAdapter.add(null, BattleMonsterAdapter.Status.DEFAULT);
         }
         recyclerViewMonsters.setAdapter(battleMonsterAdapter);
+    }
+
+    @Override
+    public boolean hasMonster(long id) {
+        return mCurrentMonster.id == id;
     }
 }
