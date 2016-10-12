@@ -25,6 +25,7 @@ import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
@@ -57,6 +58,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     @BindView(R.id.progressView)
     ProgressView progressView;
 
+    private boolean isChatOpen = false;
+
     /*
     ** Life cycle
      */
@@ -73,8 +76,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             EventBus.getDefault().register(this);
         }
 
-        progressView.start();
-        updateDataBase();
         initSocketService();
     }
 
@@ -84,6 +85,10 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         //We want to redraw the toolbar
         invalidateOptionsMenu();
+
+        //Update database
+        progressView.start();
+        updateDataBase();
     }
 
     @Override
@@ -109,7 +114,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 startActivity(ProfileActivity.class);
                 return true;
             case R.id.action_chat:
-                FriendListFragment.load(getSupportFragmentManager());
+                handleChatClick();
                 return true;
             case R.id.action_fight:
                 startActivity(FightProcessActivity.class);
@@ -142,6 +147,15 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     /*
     ** private method
      */
+    private void handleChatClick() {
+        if (!isChatOpen) {
+            FriendListFragment.load(getSupportFragmentManager());
+            isChatOpen = true;
+        } else {
+            getSupportFragmentManager().popBackStack();
+            isChatOpen = false;
+        }
+    }
     private void initSocketService() {
         //Start the service
         ServiceHelper.startSocketService(this);
@@ -240,7 +254,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         }));
 
         for (Thread t : tasks) {
-            t.start();
+            t.run();
         }
     }
 
