@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.ui.mainMenu;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -98,7 +99,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         //Retrieve widget
         MenuItem menuItem = menu.findItem(R.id.action_fight);
 
-
         //Calculate the number of fight and update icon
         //we don't have to check for 0 (see buildCounterDrawable())
         int numberOfFight = Select.from(Combat.class).list().size();
@@ -196,7 +196,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-
     /**
      * Simple asyncTask implementation for updating the database
      */
@@ -208,7 +207,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         tasks.add(new MonsterUpdater(MainMenuActivity.this));
         tasks.add(new UserMonsterUpdater(MainMenuActivity.this));//Always update userMonster after monster (for avoiding any delete issue)
 
-        //Update aren't thread safe, make request in background
+        //We use run() method for convenience
+        //for being thread safe, make request in asyncTask
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... params) {

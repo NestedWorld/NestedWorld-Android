@@ -1,9 +1,13 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -29,10 +33,12 @@ import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -41,6 +47,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class HomeFragment extends BaseFragment {
 
     public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
+    private final int PICK_PROFIL_IMAGE_REQUEST = 1;
+    private final int PICK_BACKGROUND_IMAGE_REQUEST = 2;
 
     @BindView(R.id.textView_username)
     TextView textViewUsername;
@@ -87,6 +95,33 @@ public class HomeFragment extends BaseFragment {
         populateUserInfo();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if ((requestCode == PICK_BACKGROUND_IMAGE_REQUEST) || (requestCode == PICK_PROFIL_IMAGE_REQUEST)) {
+                if (data != null && data.getData() != null) {
+                    Uri uri = data.getData();
+                    handleImagePickerResult(requestCode, uri);
+                }
+            }
+        }
+    }
+
+    /*
+    ** Butterknife callback
+     */
+    @OnClick(R.id.imageView_user)
+    public void selectProfilPicture() {
+        startImagePickerIntent(PICK_PROFIL_IMAGE_REQUEST);
+    }
+
+    @OnClick(R.id.imageView_user_background)
+    public void selectBackgroundPicture() {
+        startImagePickerIntent(PICK_BACKGROUND_IMAGE_REQUEST);
+    }
+
     /*
     ** Private method
      */
@@ -105,7 +140,6 @@ public class HomeFragment extends BaseFragment {
         //Add view pager to the tabLayout
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
     private void populateUserInfo() {
         //Retrieve the session
@@ -154,6 +188,41 @@ public class HomeFragment extends BaseFragment {
                 .load(user.background)
                 .placeholder(R.color.apptheme_color)
                 .into(imageViewUserBackground);
+    }
+
+    private void startImagePickerIntent(final int requestCode) {
+        Intent intent = new Intent();
+
+        //We only want image
+        intent.setType("image/*");
+
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+        // Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCode);
+    }
+
+    private void handleImagePickerResult(final int requestCode, @NonNull final Uri uri) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
+            switch (requestCode) {
+                case PICK_BACKGROUND_IMAGE_REQUEST:
+                    imageViewUserBackground.setImageBitmap(bitmap);
+                    //TODO send bitmap to AWS
+                    break;
+                case PICK_PROFIL_IMAGE_REQUEST:
+                    imageViewUser.setImageBitmap(bitmap);
+                    //TODO send bitmap to AWS
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
