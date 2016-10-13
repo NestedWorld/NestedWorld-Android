@@ -225,7 +225,7 @@ public class BattleFragment extends BaseFragment {
             if (nextMonster == null) {
                 FightResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
             } else {
-                sendReplaceMonsterkRequest(nextMonster);
+                sendReplaceMonsterKoRequest(nextMonster);
             }
 
         } else {
@@ -420,7 +420,7 @@ public class BattleFragment extends BaseFragment {
         });
     }
 
-    private void sendReplaceMonsterkRequest(@NonNull final UserMonster nextMonster) {
+    private void sendReplaceMonsterKoRequest(@NonNull final UserMonster nextMonster) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
