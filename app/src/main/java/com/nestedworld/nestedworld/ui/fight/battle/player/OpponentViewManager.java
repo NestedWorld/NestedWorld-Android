@@ -15,10 +15,14 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -38,7 +42,7 @@ public class OpponentViewManager extends BasePlayerViewManager {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
-    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
+    private BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
 
     /*
     ** Constructor
@@ -78,16 +82,22 @@ public class OpponentViewManager extends BasePlayerViewManager {
 
     @Override
     public void displayAttackSend() {
-
+        //TODO display attack
     }
 
     @Override
     public void onMonsterKo(long monster) {
         LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
-
-        //Only the current monster can died
-        battleMonsterAdapter.replace(mCurrentMonster.info(), BattleMonsterAdapter.Status.DEAD);
+        updateAdapterContent();
     }
+
+    @Override
+    public BasePlayerViewManager setCurrentMonster(@NonNull StartMessage.StartMessagePlayerMonster monster, @NonNull ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
+        mTeam.add(monster.info());
+        return super.setCurrentMonster(monster, attacks);
+    }
+
+    private List<Monster> mTeam = new ArrayList<>();
 
     @Override
     public void build(@NonNull final Context context) {
@@ -96,16 +106,12 @@ public class OpponentViewManager extends BasePlayerViewManager {
         //Init monster list
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
-        //Populate monster list
-        battleMonsterAdapter.add(mPlayer.monster.info(), BattleMonsterAdapter.Status.SELECTED);
-        for (int i = 1; i < mPlayer.monsterCount; i++) {
-            battleMonsterAdapter.add(null, BattleMonsterAdapter.Status.DEFAULT);
-        }
-        recyclerViewMonsters.setAdapter(battleMonsterAdapter);
+        //Populate monster list and set adapter
+        updateAdapterContent();
+        recyclerViewMonsters.setAdapter(mAdapter);
 
+        //Populate widget
         StartMessage.StartMessagePlayerMonster monster = mPlayer.monster;
-
-        //Populate widget;
         monsterName.setText(monster.name);
         monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
         progressBarMonsterHp.setMax(monster.hp);
@@ -121,6 +127,22 @@ public class OpponentViewManager extends BasePlayerViewManager {
                     .error(R.drawable.default_monster)
                     .centerCrop()
                     .into(monsterPicture);
+        }
+    }
+
+    /*
+    ** Internal method
+     */
+    private void updateAdapterContent() {
+        //Clear old content
+        mAdapter.clear();
+
+        //Add known monster
+        mAdapter.addAll(mTeam);
+
+        //Complete with unknown monster
+        for (int i = mTeam.size(); i < mPlayer.monsterCount; i++) {
+            mAdapter.add(null);
         }
     }
 }
