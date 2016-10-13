@@ -25,6 +25,7 @@ import com.nestedworld.nestedworld.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
@@ -57,8 +58,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     TabLayout tabLayout;
     @BindView(R.id.progressView)
     ProgressView progressView;
-
-    private boolean isChatOpen = false;
 
     /*
     ** Life cycle
@@ -109,6 +108,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.action_settings:
                 startActivity(ProfileActivity.class);
                 return true;
@@ -119,9 +121,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 startActivity(FightProcessActivity.class);
                 return true;
             default:
-                break;
+                return super.onOptionsItemSelected(menuItem);
         }
-        return super.onOptionsItemSelected(menuItem);
     }
 
     @Override
@@ -143,17 +144,38 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         invalidateOptionsMenu();
     }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+
+            fragmentManager.popBackStackImmediate();
+
+            if (fragmentManager.getBackStackEntryCount() == 0) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                getSupportActionBar().setDisplayShowHomeEnabled(false);
+                getSupportActionBar().setHomeButtonEnabled(false);
+                getSupportActionBar().setTitle(R.string.app_name);
+            }
+        } else{
+            super.onBackPressed();
+        }
+    }
+
     /*
     ** private method
      */
-    private void handleChatClick() {
-        if (!isChatOpen) {
-            FriendListFragment.load(getSupportFragmentManager());
-            isChatOpen = true;
-        } else {
-            getSupportFragmentManager().popBackStack();
-            isChatOpen = false;
+    private void handleChatClick() {;
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment instanceof FriendListFragment) {
+                    onBackPressed();
+                    return;
+                }
+            }
         }
+        FriendListFragment.load(getSupportFragmentManager());
     }
 
     private void initSocketService() {

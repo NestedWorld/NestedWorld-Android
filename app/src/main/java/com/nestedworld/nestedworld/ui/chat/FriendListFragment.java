@@ -40,6 +40,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class FriendListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    public final static String NAME = FriendListFragment.class.getSimpleName();
+
     @BindView(R.id.listView_chat_list)
     ListView listView;
     @BindView(R.id.progressView)
@@ -54,7 +56,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
-                .replace(R.id.container, new FriendListFragment())
+                .replace(R.id.container, new FriendListFragment(), NAME)
                 .addToBackStack(null)
                 .commit();
     }
@@ -145,7 +147,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Friend selectedFriend = mAdapter.getItem(position);
                 if (selectedFriend != null) {
-                    ChatFragment.load(getChildFragmentManager(), selectedFriend);
+                    ChatFragment.load(getFragmentManager(), selectedFriend);
                 } else {
                     Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
                 }
