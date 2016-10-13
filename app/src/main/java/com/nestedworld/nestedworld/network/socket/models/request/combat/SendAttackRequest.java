@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.network.socket.models.request.combat;
 
+import android.support.annotation.NonNull;
+
 import com.nestedworld.nestedworld.network.socket.models.request.DefaultRequest;
 
 import org.msgpack.value.ValueFactory;
@@ -15,6 +17,7 @@ public class SendAttackRequest implements DefaultRequest {
         this.attackId = attackId;
     }
 
+    @NonNull
     @Override
     public ValueFactory.MapBuilder serialise() {
         ValueFactory.MapBuilder mapBuilder = ValueFactory.newMapBuilder();

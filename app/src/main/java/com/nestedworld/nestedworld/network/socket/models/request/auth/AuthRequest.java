@@ -14,6 +14,7 @@ public class AuthRequest implements DefaultRequest {
         this.token = token;
     }
 
+    @NonNull
     @Override
     public ValueFactory.MapBuilder serialise() {
         ValueFactory.MapBuilder mapBuilder = ValueFactory.newMapBuilder();

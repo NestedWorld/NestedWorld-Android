@@ -14,6 +14,7 @@ public class AskRequest implements DefaultRequest {
         this.opponentPseudo = opponentPseudo;
     }
 
+    @NonNull
     @Override
     public ValueFactory.MapBuilder serialise() {
         ValueFactory.MapBuilder mapBuilder = ValueFactory.newMapBuilder();

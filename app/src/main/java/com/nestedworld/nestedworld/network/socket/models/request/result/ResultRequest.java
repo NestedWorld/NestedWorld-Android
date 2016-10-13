@@ -19,6 +19,7 @@ public class ResultRequest implements DefaultRequest {
         this.success = success;
     }
 
+    @NonNull
     @Override
     public ValueFactory.MapBuilder serialise() {
         ValueFactory.MapBuilder mapBuilder = ValueFactory.newMapBuilder();
