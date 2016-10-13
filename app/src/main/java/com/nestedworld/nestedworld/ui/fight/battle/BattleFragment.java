@@ -41,7 +41,7 @@ import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentViewManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.UserViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.user.UserViewManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
 import com.rey.material.widget.ProgressView;
 

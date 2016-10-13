@@ -1,9 +1,10 @@
-package com.nestedworld.nestedworld.ui.fight.battle.player;
+package com.nestedworld.nestedworld.ui.fight.battle.player.user;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -105,7 +106,9 @@ public class UserViewManager extends BasePlayerViewManager {
             }
         }
 
-        //battleMonsterAdapter(0, BattleMonsterAdapter.Status.DEAD);
+        if (!mTeam.isEmpty()) {
+            DialogFragment dialogFragment = new DialogFragment();
+        }
     }
 
     /*
