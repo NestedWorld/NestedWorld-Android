@@ -59,7 +59,6 @@ public class UserPlayerManager extends PlayerManager {
         for (UserMonster userMonster : mTeam) {
             mAdapter.add(userMonster.info());
         }
-
     }
 
     /*

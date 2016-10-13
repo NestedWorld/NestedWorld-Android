@@ -103,14 +103,14 @@ public class BattleFragment extends BaseFragment {
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
     private List<UserMonster> mUserTeam = null;
-    private PlayerManager mUserViewManager;
+    private UserPlayerManager mUserPlayerManager;
+    private OpponentPlayerManager mOpponentPlayerManager;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
             sendAttack();
         }
     };
-    private PlayerManager mOpponentViewManager;
 
     /*
     ** Public method
@@ -195,13 +195,13 @@ public class BattleFragment extends BaseFragment {
 
         PlayerManager attacker;
         PlayerManager target;
-        if (mUserViewManager.hasMonster(message.monster.id)) {
+        if (mUserPlayerManager.hasMonster(message.monster.id)) {
             //Attack sender is the user
-            attacker = mUserViewManager;
-            target = mOpponentViewManager;
+            attacker = mUserPlayerManager;
+            target = mOpponentPlayerManager;
         } else {
-            attacker = mOpponentViewManager;
-            target = mUserViewManager;
+            attacker = mOpponentPlayerManager;
+            target = mUserPlayerManager;
         }
 
         //Update monsters life
@@ -217,10 +217,10 @@ public class BattleFragment extends BaseFragment {
     public void onMonsterKo(OnMonsterKoEvent event) {
         MonsterKoMessage message = event.getMessage();
 
-        if (mUserViewManager.hasMonster(message.monster)) {
-            mUserViewManager.onMonsterKo(message.monster);
+        if (mUserPlayerManager.hasMonster(message.monster)) {
+            mUserPlayerManager.onMonsterKo(message.monster);
         } else {
-            mOpponentViewManager.onMonsterKo(message.monster);
+            mOpponentPlayerManager.onMonsterKo(message.monster);
         }
     }
 
@@ -285,8 +285,8 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        mUserViewManager = new UserPlayerManager(layoutUser, mUserTeam);
-        mOpponentViewManager = new OpponentPlayerManager(layoutOpponent, (int) mStartMessage.opponent.monsterCount);
+        mUserPlayerManager = new UserPlayerManager(layoutUser, mUserTeam);
+        mOpponentPlayerManager = new OpponentPlayerManager(layoutOpponent, (int) mStartMessage.opponent.monsterCount);
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -297,8 +297,8 @@ public class BattleFragment extends BaseFragment {
                 }
 
                 //TODO check if we successfully got monster attack
-                mUserViewManager.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mContext, mStartMessage.user.monster.info()));
-                mOpponentViewManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mContext, mStartMessage.opponent.monster.info()));
+                mUserPlayerManager.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mContext, mStartMessage.user.monster.info()));
+                mOpponentPlayerManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mContext, mStartMessage.opponent.monster.info()));
                 return null;
             }
 
@@ -354,13 +354,13 @@ public class BattleFragment extends BaseFragment {
             default:
                 //If we're here, it means the user want to send: attack || attackSp || defense || defenceSp
                 //Check if the current monster has an attack of the wanted type
-                final MonsterAttackResponse.MonsterAttack attack = mUserViewManager.getMonsterAttackByType(attackTypeWanted);
+                final MonsterAttackResponse.MonsterAttack attack = mUserPlayerManager.getMonsterAttackByType(attackTypeWanted);
                 if (attack == null) {
                     //Current monster don't have any attack of the wantend type, just display error message
                     Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    sendAttackRequest(mOpponentViewManager.getCurrentMonster().id, attack.infos.attackId);
+                    sendAttackRequest(mOpponentPlayerManager.getCurrentMonster().id, attack.infos.attackId);
                 }
                 break;
         }
@@ -405,11 +405,10 @@ public class BattleFragment extends BaseFragment {
 
                 //Stop loading animation and re-enable drawingGestureView
                 progressView.stop();
-                enableDrawingGestureView(true);
             }
         });
     }
-
+    
     /*
     ** Utils
      */
