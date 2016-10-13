@@ -28,11 +28,13 @@ import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.database.models.UserMonster;
+import com.nestedworld.nestedworld.helpers.aws.AwsHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -212,12 +214,12 @@ public class HomeFragment extends BaseFragment {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
             switch (requestCode) {
                 case PICK_BACKGROUND_IMAGE_REQUEST:
+                    AwsHelper.upload(mContext, new File(uri.getPath()));
                     imageViewUserBackground.setImageBitmap(bitmap);
-                    //TODO send bitmap to AWS
                     break;
                 case PICK_PROFIL_IMAGE_REQUEST:
+                    AwsHelper.upload(mContext, new File(uri.getPath()));
                     imageViewUser.setImageBitmap(bitmap);
-                    //TODO send bitmap to AWS
                     break;
                 default:
                     break;
