@@ -20,15 +20,13 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackRe
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class OpponentPlayerManager extends PlayerManager {
 
     private final static String TAG = OpponentPlayerManager.class.getSimpleName();
-    private final StartMessage.StartMessageOpponent mPlayer;
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -45,11 +43,18 @@ public class OpponentPlayerManager extends PlayerManager {
     /*
     ** Constructor
      */
-    public OpponentPlayerManager(@NonNull final StartMessage.StartMessageOpponent player, @NonNull final View viewContainer) {
+    public OpponentPlayerManager(@NonNull final View viewContainer, final int teamSize) {
         super(viewContainer);
 
+        ButterKnife.bind(this, viewContainer);
+
         //Init internal field
-        mPlayer = player;
+        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(viewContainer.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewMonsters.setAdapter(mAdapter);
+
+        for (int i=0; i<teamSize; i++) {
+            mAdapter.add(null);
+        }
     }
 
     /*
@@ -80,44 +85,33 @@ public class OpponentPlayerManager extends PlayerManager {
 
     @Override
     public void displayAttackSend() {
-        //TODO display attack
+        LogHelper.d(TAG, "displayAttackSend");
     }
 
     @Override
     public void onMonsterKo(long monster) {
         LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
-        updateAdapterContent();
+
+        int newAdapterLenth = mAdapter.getItemCount() - 1;
+        mAdapter.clear();
+
+        for (int i = 0; i < newAdapterLenth; i++) {
+            mAdapter.add(null);
+        }
     }
 
     @Override
-    public PlayerManager setCurrentMonster(@NonNull StartMessage.StartMessagePlayerMonster monster, @NonNull ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
-        mTeam.add(monster.info());
-        return super.setCurrentMonster(monster, attacks);
-    }
+    public void onCurrentMonsterChanged() {
+        Context context = recyclerViewMonsters.getContext();
 
-    private List<Monster> mTeam = new ArrayList<>();
-
-    @Override
-    public void build(@NonNull final Context context) {
-        super.build(context);
-
-        //Init monster list
-        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-
-        //Populate monster list and set adapter
-        updateAdapterContent();
-        recyclerViewMonsters.setAdapter(mAdapter);
-
-        //Populate widget
-        StartMessage.StartMessagePlayerMonster monster = mPlayer.monster;
-        monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
-        progressBarMonsterHp.setMax(monster.hp);
-        progressBarMonsterHp.setProgress(monster.hp);
-        monsterLife.setText(String.valueOf(monster.hp));
+        monsterName.setText(mCurrentMonster.name);
+        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), mCurrentMonster.level));
+        progressBarMonsterHp.setMax(mCurrentMonster.hp);
+        progressBarMonsterHp.setProgress(mCurrentMonster.hp);
+        monsterLife.setText(String.valueOf(mCurrentMonster.hp));
 
         //Populate monster sprite
-        Monster monsterInfos = monster.info();
+        Monster monsterInfos = mCurrentMonster.info();
         if (monsterInfos != null) {
             Glide.with(context)
                     .load(monsterInfos.sprite)
@@ -125,22 +119,6 @@ public class OpponentPlayerManager extends PlayerManager {
                     .error(R.drawable.default_monster)
                     .centerCrop()
                     .into(monsterPicture);
-        }
-    }
-
-    /*
-    ** Internal method
-     */
-    private void updateAdapterContent() {
-        //Clear old content
-        mAdapter.clear();
-
-        //Add known monster
-        mAdapter.addAll(mTeam);
-
-        //Complete with unknown monster
-        for (int i = mTeam.size(); i < mPlayer.monsterCount; i++) {
-            mAdapter.add(null);
         }
     }
 }

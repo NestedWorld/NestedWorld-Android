@@ -11,6 +11,7 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
 
 import java.util.ArrayList;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 
 public abstract class PlayerManager {
-    private final static String TAG = PlayerManager.class.getSimpleName();
-
     protected final View mViewContainer;
     protected StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
     protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
@@ -42,32 +41,33 @@ public abstract class PlayerManager {
 
     public abstract void displayAttackSend();
 
+    public abstract void onCurrentMonsterChanged();
+
     public abstract void onMonsterKo(final long monster);
 
     /*
     ** Utils
      */
     @CallSuper
-    public void build(@NonNull final Context context) {
-        if (mCurrentMonster == null || mCurrentMonsterAttacks == null) {
-            LogHelper.d(TAG, "currentMonster or currentMonsterAttacks null");
-            throw new IllegalArgumentException("You must call setCurrentUser before calling build");
-        }
-    }
-
-    public boolean hasMonster(final long id) {
-        return mCurrentMonster.id == id;
-    }
-
-    @CallSuper
     public PlayerManager setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
         mCurrentMonster = monster;
         mCurrentMonsterAttacks = attacks;
+
+        ((BaseAppCompatActivity) mViewContainer.getContext()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                onCurrentMonsterChanged();
+            }
+        });
         return this;
     }
 
     public StartMessage.StartMessagePlayerMonster getCurrentMonster() {
         return mCurrentMonster;
+    }
+
+    public boolean hasMonster(final long id) {
+        return mCurrentMonster.id == id;
     }
 
     @Nullable

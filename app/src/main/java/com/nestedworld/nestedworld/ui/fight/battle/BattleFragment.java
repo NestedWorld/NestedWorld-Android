@@ -41,7 +41,7 @@ import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentPlayerManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.user.UserPlayerManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.UserPlayerManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
 import com.rey.material.widget.ProgressView;
 
@@ -285,8 +285,8 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        mUserViewManager = new UserPlayerManager(mStartMessage.user, layoutUser).setTeam(mUserTeam);
-        mOpponentViewManager = new OpponentPlayerManager(mStartMessage.opponent, layoutOpponent);
+        mUserViewManager = new UserPlayerManager(layoutUser, mUserTeam);
+        mOpponentViewManager = new OpponentPlayerManager(layoutOpponent, (int) mStartMessage.opponent.monsterCount);
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -308,10 +308,6 @@ public class BattleFragment extends BaseFragment {
                 if (mContext == null) {
                     return;
                 }
-
-                //Setup playerUI
-                mUserViewManager.build(mContext);
-                mOpponentViewManager.build(mContext);
 
                 //Enable drawingGestureView (allow user to send attack)
                 enableDrawingGestureView(true);

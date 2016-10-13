@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.fight.battle.player.user;
+package com.nestedworld.nestedworld.ui.fight.battle.player;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -27,7 +27,6 @@ import butterknife.BindView;
 public class UserPlayerManager extends PlayerManager {
 
     private final static String TAG = UserPlayerManager.class.getSimpleName();
-    private final StartMessage.StartMessagePlayer mPlayer;
 
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
@@ -46,17 +45,21 @@ public class UserPlayerManager extends PlayerManager {
     /*
     ** Constructor
      */
-    public UserPlayerManager(@NonNull final StartMessage.StartMessagePlayer player, @NonNull final View viewContainer) {
+    public UserPlayerManager(@NonNull final View viewContainer, @NonNull final List<UserMonster> team) {
         super(viewContainer);
-        mPlayer = player;
-    }
 
-    /*
-    ** Public method
-     */
-    public UserPlayerManager setTeam(@NonNull final List<UserMonster> team) {
+        //Init internal field
         mTeam = team;
-        return this;
+
+        //Setup recycler
+        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(viewContainer.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewMonsters.setAdapter(mAdapter);
+
+        //Populate monster list
+        for (UserMonster userMonster : mTeam) {
+            mAdapter.add(userMonster.info());
+        }
+
     }
 
     /*
@@ -105,33 +108,19 @@ public class UserPlayerManager extends PlayerManager {
         }
     }
 
-    /*
-    ** Internal method
-     */
     @Override
-    public void build(@NonNull final Context context) {
-        super.build(context);
-
-        //Init monster list
-        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-
-        //Populate monster list
-        for (UserMonster userMonster : mTeam) {
-            mAdapter.add(userMonster.info());
-        }
-        recyclerViewMonsters.setAdapter(mAdapter);
-
-        StartMessage.StartMessagePlayerMonster monster = mPlayer.monster;
+    public void onCurrentMonsterChanged() {
+        Context context = mViewContainer.getContext();
 
         //Populate widget;
-        monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
-        progressBarMonsterHp.setMax(monster.hp);
-        progressBarMonsterHp.setProgress(monster.hp);
-        monsterLife.setText(String.valueOf(monster.hp));
+        monsterName.setText(mCurrentMonster.name);
+        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), mCurrentMonster.level));
+        progressBarMonsterHp.setMax(mCurrentMonster.hp);
+        progressBarMonsterHp.setProgress(mCurrentMonster.hp);
+        monsterLife.setText(String.valueOf(mCurrentMonster.hp));
 
         //Populate monster sprite
-        Monster monsterInfos = monster.info();
+        Monster monsterInfos = mCurrentMonster.info();
         if (monsterInfos != null) {
             Glide.with(context)
                     .load(monsterInfos.sprite)

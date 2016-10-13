@@ -33,7 +33,6 @@
         style="@style/TypefaceStyle.ProximaNova.light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SALUT"
         android:textColor="@color/apptheme_color"
         android:textSize="12sp"/>
 </LinearLayout>
