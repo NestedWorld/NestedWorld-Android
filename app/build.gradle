@@ -63,6 +63,7 @@ ext {
     retrofitVersion = '2.1.0'
     okHttpVersion = '3.4.1'
     butterknifeVersion = '8.4.0'
+    awsVersion = '2.2.22'
 }
 
 dependencies {
@@ -108,4 +109,9 @@ dependencies {
 
     //multi dex
     compile 'com.android.support:multidex:1.0.1'
+
+    //AWS
+    compile "com.amazonaws:aws-android-sdk-core:${awsVersion}"
+    compile "com.amazonaws:aws-android-sdk-s3:${awsVersion}"
+    compile "com.amazonaws:aws-android-sdk-ddb:${awsVersion}"
 }
