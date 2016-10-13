@@ -67,7 +67,10 @@ public class UserPlayerManager extends PlayerManager {
      */
     @Nullable
     public UserMonster getNextMonster() {
-        return null;
+        if (mTeam.isEmpty()) {
+            return null;
+        }
+        return mTeam.get(0);
     }
 
     /*
