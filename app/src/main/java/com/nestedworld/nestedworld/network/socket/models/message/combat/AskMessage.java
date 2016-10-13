@@ -13,10 +13,7 @@ import java.util.Map;
 
 public class AskMessage extends DefaultMessage {
 
-    private String type;
-    private String messageId;
     private String result;
-    private String kind;
     private String message;
 
     /*
@@ -31,17 +28,8 @@ public class AskMessage extends DefaultMessage {
      */
     @Override
     protected void unSerialise(@NonNull Map<Value, Value> message) {
-        if (message.containsKey(ValueFactory.newString("type"))) {
-            this.type = message.get(ValueFactory.newString("type")).asStringValue().asString();
-        }
-        if (message.containsKey(ValueFactory.newString("id"))) {
-            this.messageId = message.get(ValueFactory.newString("id")).asStringValue().asString();
-        }
         if (message.containsKey(ValueFactory.newString("result"))) {
             this.result = message.get(ValueFactory.newString("result")).asStringValue().asString();
-        }
-        if (message.containsKey(ValueFactory.newString("kind"))) {
-            this.kind = message.get(ValueFactory.newString("kind")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("message"))) {
             this.message = message.get(ValueFactory.newString("message")).asStringValue().asString();
@@ -51,24 +39,11 @@ public class AskMessage extends DefaultMessage {
     /*
     ** Getter / Setter
      */
-
-    public String getKind() {
-        return kind;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public String getMessageId() {
-        return messageId;
-    }
-
     public String getResult() {
         return result;
-    }
-
-    public String getType() {
-        return type;
     }
 }

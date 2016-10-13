@@ -31,11 +31,11 @@ public abstract class DefaultMessage {
     /*
     ** Utils
      */
-    protected SocketMessageType.MessageKind getIdKind() {
+    public SocketMessageType.MessageKind getIdKind() {
         return mIdKind;
     }
 
-    protected SocketMessageType.MessageKind getMessageKind() {
+    public SocketMessageType.MessageKind getMessageKind() {
         return mMessageKind;
     }
 }

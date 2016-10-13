@@ -10,23 +10,23 @@ import android.support.annotation.Nullable;
 import com.nestedworld.nestedworld.events.socket.chat.OnMessageReceivedEvent;
 import com.nestedworld.nestedworld.events.socket.chat.OnUserJoinedEvent;
 import com.nestedworld.nestedworld.events.socket.chat.OnUserPartedEvent;
-import com.nestedworld.nestedworld.events.socket.combat.OnAskMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
+import com.nestedworld.nestedworld.events.socket.generic.OnResultResponseEvent;
 import com.nestedworld.nestedworld.gcm.NestedWorldGcm;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
-import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.CombatEndMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterKoMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.generic.ResultMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.message.MessageReceivedMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.message.UserJoinedMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.message.UserPartedMessage;
@@ -167,6 +167,13 @@ public class SocketService extends Service {
                 //Send event
                 EventBus.getDefault().post(new OnCombatEndEvent(combatEndMessage));
                 break;
+            case TYPE_RESULT:
+                //Generic response
+                ResultMessage resultMessage = new ResultMessage(message, messageKind, idKind);
+
+                //Send event
+                EventBus.getDefault().post(new OnResultResponseEvent(resultMessage));
+                break;
             case TYPE_GEO_PLACES_CAPTURED:
                 //Who know ?
                 break;
@@ -198,15 +205,7 @@ public class SocketService extends Service {
                 //It's a response (it's probably a result for combat:flee)
                 break;
             case TYPE_COMBAT_ASK:
-                //Parse response (it's a result for combat:ask)
-                AskMessage askMessage = new AskMessage(message, messageKind, idKind);
-
-                //Send Event
-                EventBus.getDefault().post(new OnAskMessageEvent(askMessage));
-                break;
-            case TYPE_RESULT:
-                //It's a response, shouldn't use it
-                break;
+                //It's a response (it's a result for combat:ask)
             default:
                 break;
         }
