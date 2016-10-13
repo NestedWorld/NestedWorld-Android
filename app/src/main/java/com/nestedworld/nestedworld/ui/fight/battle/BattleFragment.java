@@ -40,6 +40,7 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAtta
 import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.fight.FightResultFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentPlayerManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.UserPlayerManager;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
@@ -219,6 +220,13 @@ public class BattleFragment extends BaseFragment {
 
         if (mUserPlayerManager.hasMonster(message.monster)) {
             mUserPlayerManager.onMonsterKo(message.monster);
+            UserMonster nextMonster = mUserPlayerManager.getNextMonster();
+            if (nextMonster == null) {
+                FightResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
+            } else {
+                sendReplaceMonsterkRequest();
+            }
+
         } else {
             mOpponentPlayerManager.onMonsterKo(message.monster);
         }
@@ -231,7 +239,7 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        Toast.makeText(mContext, "Fight ended", Toast.LENGTH_LONG).show();
+        FightResultFragment.load(getFragmentManager(), "Fight Ended");
     }
 
     /*
@@ -389,6 +397,8 @@ public class BattleFragment extends BaseFragment {
                     //Sending request
                     SendAttackRequest request = new SendAttackRequest(mStartMessage.combatId, targetId, attackId);
                     nestedWorldSocketAPI.sendRequest(request, SocketMessageType.MessageKind.TYPE_COMBAT_SEND_ATTACK);
+                } else {
+                    onServiceDisconnected(null);
                 }
             }
 
@@ -408,7 +418,50 @@ public class BattleFragment extends BaseFragment {
             }
         });
     }
-    
+
+    private void sendReplaceMonsterkRequest() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Current monster have an attack with the wanted type
+        //We bind this fragment to the socketService for sending the attackRequest
+        ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Service connected, retrieving socketApi instance
+                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
+
+                if (nestedWorldSocketAPI != null) {
+                    //Sending request
+                } else {
+                    onServiceDisconnected(null);
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Cannot send attack (api not available)
+                //Display error message
+                Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
+
+                //Stop loading animation and re-enable drawingGestureView
+                progressView.stop();
+            }
+        });
+    }
+
     /*
     ** Utils
      */
