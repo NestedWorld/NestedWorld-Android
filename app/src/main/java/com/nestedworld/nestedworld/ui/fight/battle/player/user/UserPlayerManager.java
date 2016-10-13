@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.fight.battle.player;
+package com.nestedworld.nestedworld.ui.fight.battle.player.user;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,22 +14,21 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
-import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class OpponentViewManager extends BasePlayerViewManager {
+public class UserPlayerManager extends PlayerManager {
 
-    private final static String TAG = OpponentViewManager.class.getSimpleName();
-    private final StartMessage.StartMessageOpponent mPlayer;
+    private final static String TAG = UserPlayerManager.class.getSimpleName();
+    private final StartMessage.StartMessagePlayer mPlayer;
+
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -42,16 +41,22 @@ public class OpponentViewManager extends BasePlayerViewManager {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
-    private BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
+    private List<UserMonster> mTeam = null;
 
     /*
     ** Constructor
      */
-    public OpponentViewManager(@NonNull final StartMessage.StartMessageOpponent player, @NonNull final View viewContainer) {
+    public UserPlayerManager(@NonNull final StartMessage.StartMessagePlayer player, @NonNull final View viewContainer) {
         super(viewContainer);
-
-        //Init internal field
         mPlayer = player;
+    }
+
+    /*
+    ** Public method
+     */
+    public UserPlayerManager setTeam(@NonNull final List<UserMonster> team) {
+        mTeam = team;
+        return this;
     }
 
     /*
@@ -82,23 +87,27 @@ public class OpponentViewManager extends BasePlayerViewManager {
 
     @Override
     public void displayAttackSend() {
-        //TODO display attack
+        LogHelper.d(TAG, "displayAttackSend");
     }
 
     @Override
-    public void onMonsterKo(long monster) {
+    public void onMonsterKo(final long monster) {
         LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
-        updateAdapterContent();
+
+        mAdapter.clear();
+
+        for (UserMonster userMonster : mTeam) {
+            if (userMonster.userMonsterId == mCurrentMonster.userMonsterId) {
+                mTeam.remove(userMonster);
+            } else {
+                mAdapter.add(userMonster.info());
+            }
+        }
     }
 
-    @Override
-    public BasePlayerViewManager setCurrentMonster(@NonNull StartMessage.StartMessagePlayerMonster monster, @NonNull ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
-        mTeam.add(monster.info());
-        return super.setCurrentMonster(monster, attacks);
-    }
-
-    private List<Monster> mTeam = new ArrayList<>();
-
+    /*
+    ** Internal method
+     */
     @Override
     public void build(@NonNull final Context context) {
         super.build(context);
@@ -106,12 +115,15 @@ public class OpponentViewManager extends BasePlayerViewManager {
         //Init monster list
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
-        //Populate monster list and set adapter
-        updateAdapterContent();
+        //Populate monster list
+        for (UserMonster userMonster : mTeam) {
+            mAdapter.add(userMonster.info());
+        }
         recyclerViewMonsters.setAdapter(mAdapter);
 
-        //Populate widget
         StartMessage.StartMessagePlayerMonster monster = mPlayer.monster;
+
+        //Populate widget;
         monsterName.setText(monster.name);
         monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
         progressBarMonsterHp.setMax(monster.hp);
@@ -127,22 +139,6 @@ public class OpponentViewManager extends BasePlayerViewManager {
                     .error(R.drawable.default_monster)
                     .centerCrop()
                     .into(monsterPicture);
-        }
-    }
-
-    /*
-    ** Internal method
-     */
-    private void updateAdapterContent() {
-        //Clear old content
-        mAdapter.clear();
-
-        //Add known monster
-        mAdapter.addAll(mTeam);
-
-        //Complete with unknown monster
-        for (int i = mTeam.size(); i < mPlayer.monsterCount; i++) {
-            mAdapter.add(null);
         }
     }
 }

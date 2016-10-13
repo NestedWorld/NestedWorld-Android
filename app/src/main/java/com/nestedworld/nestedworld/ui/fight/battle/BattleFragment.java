@@ -40,9 +40,9 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAtta
 import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentViewManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.user.UserViewManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.BasePlayerViewManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentPlayerManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.user.UserPlayerManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -103,14 +103,14 @@ public class BattleFragment extends BaseFragment {
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
     private List<UserMonster> mUserTeam = null;
-    private BasePlayerViewManager mUserViewManager;
+    private PlayerManager mUserViewManager;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
             sendAttack();
         }
     };
-    private BasePlayerViewManager mOpponentViewManager;
+    private PlayerManager mOpponentViewManager;
 
     /*
     ** Public method
@@ -123,56 +123,6 @@ public class BattleFragment extends BaseFragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fightFragment);
         fragmentTransaction.commit();
-    }
-
-    /*
-    ** Utils
-     */
-    @NonNull
-    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
-        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
-
-        Attack.AttackType attackType;
-        switch (gestureInput) {
-            case "41":
-                attackType = Attack.AttackType.ATTACK;
-                break;
-            case "62":
-                attackType = Attack.AttackType.DEFENSE;
-                break;
-            case "456123":
-                attackType = Attack.AttackType.ATTACK_SP;
-                break;
-            case "432165":
-                attackType = Attack.AttackType.DEFENSE_SP;
-                break;
-            case "6253":
-                attackType = Attack.AttackType.OBJECT_USE;
-                break;
-            default:
-                attackType = Attack.AttackType.UNKNOWN;
-        }
-
-        return attackType;
-    }
-
-    @Nullable
-    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Context context, @NonNull final Monster monster) {
-        try {
-            //Retrieve current monster attack
-            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(context).getMonsterAttack(monster.monsterId).execute();
-            if (response == null || response.body() == null) {
-                //Can not retrieve monster attack
-                return null;
-            } else {
-                //Success, return monster attack
-                return response.body().attacks;
-            }
-        } catch (IOException e) {
-            //Something wrong happen
-            //Can not retrieve monster attack
-            return null;
-        }
     }
 
     public void setStartMessage(@NonNull final StartMessage startMessage) {
@@ -243,8 +193,8 @@ public class BattleFragment extends BaseFragment {
         //Retrieve message
         AttackReceiveMessage message = event.getMessage();
 
-        BasePlayerViewManager attacker;
-        BasePlayerViewManager target;
+        PlayerManager attacker;
+        PlayerManager target;
         if (mUserViewManager.hasMonster(message.monster.id)) {
             //Attack sender is the user
             attacker = mUserViewManager;
@@ -282,8 +232,6 @@ public class BattleFragment extends BaseFragment {
         }
 
         Toast.makeText(mContext, "Fight ended", Toast.LENGTH_LONG).show();
-
-        //TODO parse message and display result page
     }
 
     /*
@@ -324,7 +272,7 @@ public class BattleFragment extends BaseFragment {
 
         /*
         ** We don't add listener into the gestureView now
-        *  We'll add the listener after the pre-requisite loading
+        *  We'll add listeners after the pre-requisite loading
         */
 
         /*Add the custom view under the rootView*/
@@ -337,9 +285,8 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        mUserViewManager = new UserViewManager(mStartMessage.user, layoutUser).setTeam(mUserTeam);
-        mOpponentViewManager = new OpponentViewManager(mStartMessage.opponent, layoutOpponent);
-
+        mUserViewManager = new UserPlayerManager(mStartMessage.user, layoutUser).setTeam(mUserTeam);
+        mOpponentViewManager = new OpponentPlayerManager(mStartMessage.opponent, layoutOpponent);
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -465,5 +412,55 @@ public class BattleFragment extends BaseFragment {
                 enableDrawingGestureView(true);
             }
         });
+    }
+
+    /*
+    ** Utils
+     */
+    @NonNull
+    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
+        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
+
+        Attack.AttackType attackType;
+        switch (gestureInput) {
+            case "41":
+                attackType = Attack.AttackType.ATTACK;
+                break;
+            case "62":
+                attackType = Attack.AttackType.DEFENSE;
+                break;
+            case "456123":
+                attackType = Attack.AttackType.ATTACK_SP;
+                break;
+            case "432165":
+                attackType = Attack.AttackType.DEFENSE_SP;
+                break;
+            case "6253":
+                attackType = Attack.AttackType.OBJECT_USE;
+                break;
+            default:
+                attackType = Attack.AttackType.UNKNOWN;
+        }
+
+        return attackType;
+    }
+
+    @Nullable
+    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Context context, @NonNull final Monster monster) {
+        try {
+            //Retrieve current monster attack
+            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(context).getMonsterAttack(monster.monsterId).execute();
+            if (response == null || response.body() == null) {
+                //Can not retrieve monster attack
+                return null;
+            } else {
+                //Success, return monster attack
+                return response.body().attacks;
+            }
+        } catch (IOException e) {
+            //Something wrong happen
+            //Can not retrieve monster attack
+            return null;
+        }
     }
 }

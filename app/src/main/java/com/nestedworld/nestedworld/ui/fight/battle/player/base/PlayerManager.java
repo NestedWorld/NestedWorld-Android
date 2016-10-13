@@ -11,22 +11,24 @@ import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
+import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
-public abstract class BasePlayerViewManager {
-    private final static String TAG = BasePlayerViewManager.class.getSimpleName();
+public abstract class PlayerManager {
+    private final static String TAG = PlayerManager.class.getSimpleName();
 
     protected final View mViewContainer;
     protected StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
     protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
+    protected BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
 
     /*
     ** Constructor
      */
-    public BasePlayerViewManager(@NonNull final View container) {
+    public PlayerManager(@NonNull final View container) {
         mViewContainer = container;
         ButterKnife.bind(this, container);
     }
@@ -58,7 +60,7 @@ public abstract class BasePlayerViewManager {
     }
 
     @CallSuper
-    public BasePlayerViewManager setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
+    public PlayerManager setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
         mCurrentMonster = monster;
         mCurrentMonsterAttacks = attacks;
         return this;
