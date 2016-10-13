@@ -24,7 +24,7 @@ import static com.orm.util.ContextUtil.getContext;
 
 
 public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdapter.BattleMonsterViewHolder> {
-    private final List<BattleMonster> mMonsters = new ArrayList<>();
+    private final List<Monster> mMonsters = new ArrayList<>();
 
     /*
     ** Constructor
@@ -49,10 +49,10 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     @Override
     public void onBindViewHolder(BattleMonsterViewHolder holder, int position) {
         //Get selectedMonster
-        BattleMonster battleMonster = mMonsters.get(position);
+        Monster monster = mMonsters.get(position);
 
-        if (battleMonster != null) {
-            populateMonsterInfo(holder, battleMonster);
+        if (monster != null) {
+            populateMonsterInfo(holder, monster);
         }
     }
 
@@ -64,66 +64,34 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     /*
     ** Public method
      */
-    public void add(@Nullable final Monster monster, @NonNull final Status status) {
-        mMonsters.add(new BattleMonster(monster, status));
+    public void add(@Nullable final Monster monster) {
+        mMonsters.add(monster);
+        notifyItemInserted(mMonsters.size() - 1);
     }
 
-    public void replace(@Nullable final Monster monster, @NonNull final Status status) {
-        for (BattleMonster battleMonster : mMonsters) {
-            if (battleMonster.monster == monster) {
-                battleMonster.monster = monster;
-                battleMonster.status = status;
+    public void addAll(@NonNull final List<Monster> monsters) {
+        mMonsters.addAll(monsters);
+        notifyItemRangeChanged(mMonsters.size() - monsters.size(), mMonsters.size());
+    }
 
-                notifyDataSetChanged();
-            }
-        }
+    public void clear() {
+        int oldSize = mMonsters.size();
+        mMonsters.clear();
+        notifyItemRangeRemoved(0, oldSize);
     }
 
     /*
     ** Internal method
      */
-    private void populateMonsterInfo(@NonNull final BattleMonsterViewHolder holder, @NonNull final BattleMonster battleMonster) {
-        //Populate name & lvl
-        LogHelper.d("populateMonsterInfo > ", "name=" + battleMonster.monster.name);
-        holder.textViewMonsterName.setText(battleMonster.monster.name);
+    private void populateMonsterInfo(@NonNull final BattleMonsterViewHolder holder, @NonNull final Monster monster) {
+        holder.textViewMonsterName.setText(monster.name);
 
         //Display monster picture
         Glide.with(getContext())
-                .load(battleMonster.monster.sprite)
+                .load(monster.sprite)
                 .placeholder(R.drawable.default_monster)
                 .centerCrop()
                 .into(holder.imageViewMonster);
-
-        //Check if monster is alive
-        switch (battleMonster.status) {
-            case DEAD:
-                holder.imageViewMonsterStatus.setImageResource(R.drawable.red_cross);
-                break;
-            case SELECTED:
-                holder.imageViewMonsterStatus.setImageResource(R.drawable.green_selected);
-                break;
-            default:
-                break;
-        }
-    }
-
-
-    public enum Status {
-        DEAD,
-        SELECTED,
-        DEFAULT
-    }
-
-    private static class BattleMonster {
-        @Nullable
-        public Monster monster;
-        @NonNull
-        public Status status;
-
-        public BattleMonster(@Nullable final Monster monster, @NonNull final Status status) {
-            this.monster = monster;
-            this.status = status;
-        }
     }
 
     public class BattleMonsterViewHolder extends RecyclerView.ViewHolder {
