@@ -32,9 +32,9 @@ public class DrawingGestureView extends View {
     private final Paint mBitmapPaint;
     private final Paint circlePaint;
     private final Path circlePath;
-    public int width;
-    public int height;
-    protected Canvas mCanvas;
+    private int width;
+    private int height;
+    private Canvas mCanvas;
     private Bitmap mBitmap;
     private float mX, mY;
     private List<ImageView> mTiles = new ArrayList<>();

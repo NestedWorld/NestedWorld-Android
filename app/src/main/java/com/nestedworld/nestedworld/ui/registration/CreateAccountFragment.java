@@ -99,7 +99,7 @@ public class CreateAccountFragment extends BaseFragment {
         }
 
 
-        NestedWorldHttpApi.getInstance(mContext).register(email, password, pseudo).enqueue(new Callback<RegisterResponse>() {
+        NestedWorldHttpApi.getInstance().register(email, password, pseudo).enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onSuccess(Response<RegisterResponse> response) {
                 //Account successfully created, we can log in
@@ -122,7 +122,7 @@ public class CreateAccountFragment extends BaseFragment {
             return;
         }
 
-        NestedWorldHttpApi.getInstance(mContext).signIn(email, password).enqueue(new Callback<SignInResponse>() {
+        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new Callback<SignInResponse>() {
             @Override
             public void onSuccess(Response<SignInResponse> response) {
                 if (mContext == null) {

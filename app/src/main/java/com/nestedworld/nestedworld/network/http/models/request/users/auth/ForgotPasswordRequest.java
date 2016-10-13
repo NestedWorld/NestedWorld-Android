@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 
 public class ForgotPasswordRequest {
     @Expose
-    final String email;
+    private final String email;
 
     public ForgotPasswordRequest(@Nullable final String email) {
         this.email = email;

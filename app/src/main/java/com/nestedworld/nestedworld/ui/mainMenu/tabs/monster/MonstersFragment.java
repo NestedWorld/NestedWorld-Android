@@ -83,7 +83,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         swipeRefreshLayout.setRefreshing(true);
 
         //Retrieve monster
-        new MonsterUpdater(mContext).start(new OnEntityUpdated() {
+        new MonsterUpdater().start(new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 //Update adapter

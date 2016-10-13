@@ -144,7 +144,7 @@ public class HomeFriendFragment extends BaseFragment {
         //Start loading animation
         progressView.start();
 
-        new FriendsUpdater(mContext).start(new OnEntityUpdated() {
+        new FriendsUpdater().start(new OnEntityUpdated() {
             @Override
             public void onSuccess() {
                 populateFriendList();
@@ -201,7 +201,7 @@ public class HomeFriendFragment extends BaseFragment {
                 String pseudo = editTextPseudo.getText().toString();
 
                 //Send request
-                NestedWorldHttpApi.getInstance(mContext).addFriend(pseudo).enqueue(new Callback<AddFriendResponse>() {
+                NestedWorldHttpApi.getInstance().addFriend(pseudo).enqueue(new Callback<AddFriendResponse>() {
                     @Override
                     public void onSuccess(Response<AddFriendResponse> response) {
                         //Update Orm and adapter

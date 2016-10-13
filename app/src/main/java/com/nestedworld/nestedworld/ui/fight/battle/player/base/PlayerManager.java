@@ -1,13 +1,11 @@
 package com.nestedworld.nestedworld.ui.fight.battle.player.base;
 
-import android.content.Context;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.nestedworld.nestedworld.database.models.Attack;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
@@ -22,12 +20,12 @@ public abstract class PlayerManager {
     protected final View mViewContainer;
     protected StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
     protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
-    protected BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
+    protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
 
     /*
     ** Constructor
      */
-    public PlayerManager(@NonNull final View container) {
+    protected PlayerManager(@NonNull final View container) {
         mViewContainer = container;
         ButterKnife.bind(this, container);
     }
@@ -41,7 +39,7 @@ public abstract class PlayerManager {
 
     public abstract void displayAttackSend();
 
-    public abstract void onCurrentMonsterChanged();
+    protected abstract void onCurrentMonsterChanged();
 
     public abstract void onMonsterKo(final long monster);
 
@@ -49,7 +47,7 @@ public abstract class PlayerManager {
     ** Utils
      */
     @CallSuper
-    public PlayerManager setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
+    public void setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
         mCurrentMonster = monster;
         mCurrentMonsterAttacks = attacks;
 
@@ -59,7 +57,6 @@ public abstract class PlayerManager {
                 onCurrentMonsterChanged();
             }
         });
-        return this;
     }
 
     public StartMessage.StartMessagePlayerMonster getCurrentMonster() {

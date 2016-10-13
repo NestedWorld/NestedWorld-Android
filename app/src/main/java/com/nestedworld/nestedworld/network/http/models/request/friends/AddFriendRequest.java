@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 
 public class AddFriendRequest {
-    @Expose final
-    String pseudo;
+    @Expose
+    private final String pseudo;
 
     public AddFriendRequest(@NonNull final String pseudo) {
         this.pseudo = pseudo;

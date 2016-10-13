@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.network.http.implementation;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
@@ -66,7 +65,7 @@ public final class NestedWorldHttpApi {
     /*
     ** Singleton
      */
-    public static NestedWorldHttpApi getInstance(@NonNull final Context context) {
+    public static NestedWorldHttpApi getInstance() {
         if (mSingleton == null) {
             mSingleton = new NestedWorldHttpApi();
         }
@@ -148,7 +147,7 @@ public final class NestedWorldHttpApi {
         return mClient.addFriends(new AddFriendRequest(pseudo));
     }
 
-    public Call<MonsterAttackResponse> getMonsterAttack(@NonNull final long monsterId) {
+    public Call<MonsterAttackResponse> getMonsterAttack(final long monsterId) {
         return mClient.getMonsterAttack(monsterId);
     }
 

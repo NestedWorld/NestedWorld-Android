@@ -90,7 +90,7 @@ public class NestedWorldMap {
      */
     private void retrieveAndPoPopulateRegions() {
 
-        NestedWorldHttpApi.getInstance(mContext).getRegions().enqueue(new Callback<RegionsResponse>() {
+        NestedWorldHttpApi.getInstance().getRegions().enqueue(new Callback<RegionsResponse>() {
             @Override
             public void onSuccess(Response<RegionsResponse> response) {
                 for (Region region : response.body().regions) {
@@ -109,7 +109,7 @@ public class NestedWorldMap {
 
     private void retrieveAndPopulateRegion(@NonNull final Region region) {
 
-        NestedWorldHttpApi.getInstance(mContext).getRegionDetails(region).enqueue(new Callback<RegionResponse>() {
+        NestedWorldHttpApi.getInstance().getRegionDetails(region).enqueue(new Callback<RegionResponse>() {
             @Override
             public void onSuccess(Response<RegionResponse> response) {
                 if (isRegionDisplayable(response.body().region)) {
@@ -126,7 +126,7 @@ public class NestedWorldMap {
 
     private void retrieveAndPopulatePlace() {
         //retrieving places from API
-        NestedWorldHttpApi.getInstance(mContext).getPlaces().enqueue(new Callback<PlacesResponse>() {
+        NestedWorldHttpApi.getInstance().getPlaces().enqueue(new Callback<PlacesResponse>() {
             @Override
             public void onSuccess(Response<PlacesResponse> response) {
                 //request success, we display nearest places

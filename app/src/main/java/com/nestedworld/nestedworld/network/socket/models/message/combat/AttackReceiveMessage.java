@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class AttackReceiveMessage extends DefaultMessage {
 
-    public String type;
-    public String id;
-    public long attack;
-    public long combat;
+    private String type;
+    private String id;
+    private long attack;
+    private long combat;
     public AttackReceiveMessageMonster monster;
     public AttackReceiveMessageMonster target;
 

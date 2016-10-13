@@ -115,7 +115,7 @@ public class ProfileFragment extends BaseFragment {
         }
 
         /*Send logout request*/
-        NestedWorldHttpApi.getInstance(mContext).logout().enqueue(new Callback<LogoutResponse>() {
+        NestedWorldHttpApi.getInstance().logout().enqueue(new Callback<LogoutResponse>() {
             @Override
             public void onSuccess(Response<LogoutResponse> response) {
                 //Logout success

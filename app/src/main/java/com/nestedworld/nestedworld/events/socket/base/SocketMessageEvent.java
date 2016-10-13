@@ -10,7 +10,7 @@ public abstract class SocketMessageEvent<T extends DefaultMessage> {
     /*
     ** Constructor
      */
-    public SocketMessageEvent(@NonNull final T message) {
+    protected SocketMessageEvent(@NonNull final T message) {
         mMessage = message;
     }
 

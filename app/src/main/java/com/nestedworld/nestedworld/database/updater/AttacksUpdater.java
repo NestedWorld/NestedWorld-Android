@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.database.updater;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.database.models.Attack;
@@ -14,14 +13,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class AttacksUpdater extends EntityUpdater<AttacksResponse> {
-
-    /*
-    ** Constructor
-     */
-    public AttacksUpdater(@NonNull final Context context) {
-        super(context);
-    }
-
     /*
     ** Life cycle
      */

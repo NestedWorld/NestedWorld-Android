@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.ui.mainMenu;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +25,6 @@ import com.nestedworld.nestedworld.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
@@ -152,12 +151,15 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             fragmentManager.popBackStackImmediate();
 
             if (fragmentManager.getBackStackEntryCount() == 0) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                getSupportActionBar().setDisplayShowHomeEnabled(false);
-                getSupportActionBar().setHomeButtonEnabled(false);
-                getSupportActionBar().setTitle(R.string.app_name);
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setDisplayHomeAsUpEnabled(false);
+                    actionBar.setDisplayShowHomeEnabled(false);
+                    actionBar.setHomeButtonEnabled(false);
+                    actionBar.setTitle(R.string.app_name);
+                }
             }
-        } else{
+        } else {
             super.onBackPressed();
         }
     }
@@ -165,7 +167,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     /*
     ** private method
      */
-    private void handleChatClick() {;
+    private void handleChatClick() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment fragment : fragments) {
@@ -223,11 +225,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
      */
     private void updateDataBase() {
         final List<EntityUpdater> tasks = new ArrayList<>();
-        tasks.add(new UserUpdater(MainMenuActivity.this));
-        tasks.add(new FriendsUpdater(MainMenuActivity.this));
-        tasks.add(new AttacksUpdater(MainMenuActivity.this));
-        tasks.add(new MonsterUpdater(MainMenuActivity.this));
-        tasks.add(new UserMonsterUpdater(MainMenuActivity.this));//Always update userMonster after monster (for avoiding any delete issue)
+        tasks.add(new UserUpdater());
+        tasks.add(new FriendsUpdater());
+        tasks.add(new AttacksUpdater());
+        tasks.add(new MonsterUpdater());
+        tasks.add(new UserMonsterUpdater());//Always update userMonster after monster (for avoiding any delete issue)
 
         //We use run() method for convenience
         //for being thread safe, make request in asyncTask

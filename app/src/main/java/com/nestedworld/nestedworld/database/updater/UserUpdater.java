@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.database.updater;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.database.models.User;
@@ -14,13 +13,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class UserUpdater extends EntityUpdater<UserResponse> {
-
-    /*
-    ** Constructor
-     */
-    public UserUpdater(@NonNull final Context context) {
-        super(context);
-    }
 
     /*
     ** Life cycle

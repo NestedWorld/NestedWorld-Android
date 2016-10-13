@@ -15,11 +15,8 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
-import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,13 +43,11 @@ public class OpponentPlayerManager extends PlayerManager {
     public OpponentPlayerManager(@NonNull final View viewContainer, final int teamSize) {
         super(viewContainer);
 
-        ButterKnife.bind(this, viewContainer);
-
         //Init internal field
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(viewContainer.getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewMonsters.setAdapter(mAdapter);
 
-        for (int i=0; i<teamSize; i++) {
+        for (int i = 0; i < teamSize; i++) {
             mAdapter.add(null);
         }
     }

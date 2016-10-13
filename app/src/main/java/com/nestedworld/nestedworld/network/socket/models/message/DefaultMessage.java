@@ -17,7 +17,7 @@ public abstract class DefaultMessage {
     /*
     ** Constructor
      */
-    public DefaultMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
+    protected DefaultMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
         mMessageKind = messageKind;
         mIdKind = idKind;
         this.unSerialise(message);

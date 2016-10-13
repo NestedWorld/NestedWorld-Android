@@ -83,7 +83,7 @@ public class LoginFragment extends BaseFragment {
             return;
         }
 
-        NestedWorldHttpApi.getInstance(mContext).signIn(email, password).enqueue(new Callback<SignInResponse>() {
+        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new Callback<SignInResponse>() {
             @Override
             public void onSuccess(Response<SignInResponse> response) {
                 progressView.stop();
@@ -114,7 +114,7 @@ public class LoginFragment extends BaseFragment {
             return;
         }
 
-        NestedWorldHttpApi.getInstance(mContext).forgotPassword(email).enqueue(new Callback<ForgotPasswordResponse>() {
+        NestedWorldHttpApi.getInstance().forgotPassword(email).enqueue(new Callback<ForgotPasswordResponse>() {
             @Override
             public void onSuccess(Response<ForgotPasswordResponse> response) {
                 //check if fragment hasn't been detach

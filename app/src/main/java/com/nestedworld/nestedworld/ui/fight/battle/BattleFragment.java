@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.ui.fight.battle;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -127,11 +126,11 @@ public class BattleFragment extends BaseFragment {
         fragmentTransaction.commit();
     }
 
-    public void setStartMessage(@NonNull final StartMessage startMessage) {
+    private void setStartMessage(@NonNull final StartMessage startMessage) {
         mStartMessage = startMessage;
     }
 
-    public void setTeam(@NonNull final List<UserMonster> team) {
+    private void setTeam(@NonNull final List<UserMonster> team) {
         mUserTeam = team;
     }
 
@@ -306,8 +305,8 @@ public class BattleFragment extends BaseFragment {
                 }
 
                 //TODO check if we successfully got monster attack
-                mUserPlayerManager.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mContext, mStartMessage.user.monster.info()));
-                mOpponentPlayerManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mContext, mStartMessage.opponent.monster.info()));
+                mUserPlayerManager.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mStartMessage.user.monster.info()));
+                mOpponentPlayerManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mStartMessage.opponent.monster.info()));
                 return null;
             }
 
@@ -492,16 +491,17 @@ public class BattleFragment extends BaseFragment {
                 break;
             default:
                 attackType = Attack.AttackType.UNKNOWN;
+                break;
         }
 
         return attackType;
     }
 
     @Nullable
-    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Context context, @NonNull final Monster monster) {
+    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Monster monster) {
         try {
             //Retrieve current monster attack
-            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance(context).getMonsterAttack(monster.monsterId).execute();
+            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance().getMonsterAttack(monster.monsterId).execute();
             if (response == null || response.body() == null) {
                 //Can not retrieve monster attack
                 return null;

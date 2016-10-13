@@ -30,10 +30,10 @@ public class UserMonster extends SugarRecord {
     public Long level;
 
     @Expose
-    public String surname;
+    private String surname;
 
     @Expose
-    public String experience;
+    private String experience;
 
     public Long fkmonster;//key for Monster<->UserMonster relationship
 

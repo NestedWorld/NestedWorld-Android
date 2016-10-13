@@ -219,6 +219,8 @@ public class HomeFragment extends BaseFragment {
                     imageViewUser.setImageBitmap(bitmap);
                     //TODO send bitmap to AWS
                     break;
+                default:
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace();

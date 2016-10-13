@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.database.updater.base;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
@@ -20,17 +19,17 @@ public abstract class EntityUpdater<T> {
     /*
     ** Constructor
      */
-    public EntityUpdater(@NonNull final Context context) {
-        mNestedWorldHttpApi = NestedWorldHttpApi.getInstance(context);
+    protected EntityUpdater() {
+        mNestedWorldHttpApi = NestedWorldHttpApi.getInstance();
     }
 
     /*
     ** Method every child will have to implement
      */
     @NonNull
-    public abstract Call<T> getRequest();
+    protected abstract Call<T> getRequest();
 
-    public abstract void updateEntity(@NonNull final Response<T> response);
+    protected abstract void updateEntity(@NonNull final Response<T> response);
 
     /*
     ** Public method

@@ -168,7 +168,7 @@ public class MonsterDetailDialog extends DialogFragment {
 
         //Retrieve monster spell
         NestedWorldHttpApi
-                .getInstance(getContext())
+                .getInstance()
                 .getMonsterAttack(mMonster.monsterId)
                 .enqueue(new Callback<MonsterAttackResponse>() {
                     @Override
