@@ -36,6 +36,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageTy
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.MonsterKoMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
+import com.nestedworld.nestedworld.network.socket.models.request.combat.ReplaceMonsterRequest;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
@@ -224,7 +225,7 @@ public class BattleFragment extends BaseFragment {
             if (nextMonster == null) {
                 FightResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
             } else {
-                sendReplaceMonsterkRequest();
+                sendReplaceMonsterkRequest(nextMonster);
             }
 
         } else {
@@ -419,7 +420,7 @@ public class BattleFragment extends BaseFragment {
         });
     }
 
-    private void sendReplaceMonsterkRequest() {
+    private void sendReplaceMonsterkRequest(@NonNull final UserMonster nextMonster) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -440,6 +441,9 @@ public class BattleFragment extends BaseFragment {
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
+                    ReplaceMonsterRequest replaceMonsterRequest = new ReplaceMonsterRequest(nextMonster.userMonsterId, mStartMessage.combatId);
+                    nestedWorldSocketAPI.sendRequest(replaceMonsterRequest, SocketMessageType.MessageKind.TYPE_COMBAT_MONSTER_KO_REPLACE);
+
                 } else {
                     onServiceDisconnected(null);
                 }
