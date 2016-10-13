@@ -42,8 +42,8 @@ public class UserViewManager extends BasePlayerViewManager {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
-    private BattleMonsterAdapter battleMonsterAdapter = new BattleMonsterAdapter();
-    private List<UserMonster> mUserMonsterAlive = null;
+    private BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
+    private List<UserMonster> mTeam = null;
 
     /*
     ** Constructor
@@ -57,7 +57,7 @@ public class UserViewManager extends BasePlayerViewManager {
     ** Public method
      */
     public UserViewManager setTeam(@NonNull final List<UserMonster> team) {
-        mUserMonsterAlive = team;
+        mTeam = team;
         return this;
     }
 
@@ -89,22 +89,23 @@ public class UserViewManager extends BasePlayerViewManager {
 
     @Override
     public void displayAttackSend() {
-
+        LogHelper.d(TAG, "displayAttackSend");
     }
 
     @Override
     public void onMonsterKo(final long monster) {
         LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
-        for (UserMonster userMonster : mUserMonsterAlive) {
-            LogHelper.d(TAG, "checking with: " + userMonster.userMonsterId);
+
+        mAdapter.clear();
+        for (UserMonster userMonster : mTeam) {
             if (userMonster.userMonsterId == mCurrentMonster.userMonsterId) {
-                mUserMonsterAlive.remove(userMonster);
-                battleMonsterAdapter.replace(userMonster.info(), BattleMonsterAdapter.Status.DEAD);
-                return;
+                mTeam.remove(userMonster);
+            } else {
+                mAdapter.add(userMonster.info());
             }
         }
 
-        LogHelper.d(TAG, "Can not identify which monster is dead");
+        //battleMonsterAdapter(0, BattleMonsterAdapter.Status.DEAD);
     }
 
     /*
@@ -118,11 +119,10 @@ public class UserViewManager extends BasePlayerViewManager {
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
         //Populate monster list
-        battleMonsterAdapter.add(mPlayer.monster.info(), BattleMonsterAdapter.Status.SELECTED);
-        for (UserMonster userMonster : mUserMonsterAlive) {
-            battleMonsterAdapter.add(userMonster.info(), BattleMonsterAdapter.Status.DEFAULT);
+        for (UserMonster userMonster : mTeam) {
+            mAdapter.add(userMonster.info());
         }
-        recyclerViewMonsters.setAdapter(battleMonsterAdapter);
+        recyclerViewMonsters.setAdapter(mAdapter);
 
         StartMessage.StartMessagePlayerMonster monster = mPlayer.monster;
 
