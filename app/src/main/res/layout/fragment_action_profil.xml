@@ -3,88 +3,91 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/WhiteSmoke"
-    android:orientation="vertical"
-    android:padding="8dip">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="8dip">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView_gender"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            android:orientation="vertical"
+            android:padding="8dip">
 
-        <TextView
-            android:id="@+id/textView_pseudo"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_gender"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <TextView
-            android:id="@+id/textView_birthDate"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_pseudo"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <TextView
-            android:id="@+id/textView_city"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_birthDate"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <TextView
-            android:id="@+id/textView_registeredAt"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_city"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <TextView
-            android:id="@+id/textView_email"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_registeredAt"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <TextView
-            android:id="@+id/textView_backgroundUrl"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_email"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <TextView
-            android:id="@+id/textView_level"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_backgroundUrl"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <TextView
-            android:id="@+id/textView_avatar"
-            style="@style/TypefaceStyle.ProximaNova.light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"/>
+            <TextView
+                android:id="@+id/textView_level"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-        <Button
-            android:id="@+id/button_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dip"
-            android:text="@string/profile_msg_logout"
-            android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/textView_avatar"
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/button_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"
+                android:text="@string/profile_msg_logout"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
