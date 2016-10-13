@@ -247,11 +247,11 @@ public class BattleFragment extends BaseFragment {
         BasePlayerViewManager target;
         if (mUserViewManager.hasMonster(message.monster.id)) {
             //Attack sender is the user
-            attacker = mOpponentViewManager;
-            target = mUserViewManager;
-        } else {
             attacker = mUserViewManager;
             target = mOpponentViewManager;
+        } else {
+            attacker = mOpponentViewManager;
+            target = mUserViewManager;
         }
 
         //Update monsters life
@@ -351,7 +351,7 @@ public class BattleFragment extends BaseFragment {
 
                 //TODO check if we successfully got monster attack
                 mUserViewManager.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mContext, mStartMessage.user.monster.info()));
-                mUserViewManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mContext, mStartMessage.opponent.monster.info()));
+                mOpponentViewManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mContext, mStartMessage.opponent.monster.info()));
                 return null;
             }
 
@@ -417,7 +417,7 @@ public class BattleFragment extends BaseFragment {
                     Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    sendAttackRequest(mUserViewManager.getCurrentMonster().id, attack.infos.attackId);
+                    sendAttackRequest(mOpponentViewManager.getCurrentMonster().id, attack.infos.attackId);
                 }
                 break;
         }
