@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.registration;
+package com.nestedworld.nestedworld.ui.welcome;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

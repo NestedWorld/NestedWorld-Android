@@ -18,7 +18,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.ui.registration.RegistrationActivity;
+import com.nestedworld.nestedworld.ui.welcome.RegistrationActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

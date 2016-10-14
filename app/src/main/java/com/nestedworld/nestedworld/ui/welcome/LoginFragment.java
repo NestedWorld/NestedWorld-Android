@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.registration;
+package com.nestedworld.nestedworld.ui.welcome;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
