@@ -28,14 +28,11 @@ public class UserMonster extends SugarRecord {
 
     @Expose
     public Long level;
-
+    public Long fkmonster;//key for Monster<->UserMonster relationship
     @Expose
     private String surname;
-
     @Expose
     private String experience;
-
-    public Long fkmonster;//key for Monster<->UserMonster relationship
 
     //Empty constructor for SugarRecord
     public UserMonster() {

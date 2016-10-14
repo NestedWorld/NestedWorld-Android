@@ -18,9 +18,9 @@ import butterknife.ButterKnife;
 
 public abstract class PlayerManager {
     protected final View mViewContainer;
+    protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
     protected StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
     protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
-    protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
     protected int mRemaningMonster;
 
     /*

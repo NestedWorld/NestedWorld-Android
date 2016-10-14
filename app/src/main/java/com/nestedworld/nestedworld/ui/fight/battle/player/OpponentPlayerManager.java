@@ -19,7 +19,6 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackRe
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class OpponentPlayerManager extends PlayerManager {
 
