@@ -156,6 +156,10 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void sendLoginRequest(@NonNull final String email, @NonNull final String password) {
+        //Start loading animation
+        progressView.start();
+
+        //Send request
         NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new Callback<SignInResponse>() {
             @Override
             public void onSuccess(Response<SignInResponse> response) {
