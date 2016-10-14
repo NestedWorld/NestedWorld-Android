@@ -17,7 +17,7 @@ import butterknife.OnClick;
  */
 public class RegisterFragment extends BaseFragment {
 
-    public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
+    public final static String FRAGMENT_NAME = RegisterFragment.class.getSimpleName();
 
     /*
     ** Public method
