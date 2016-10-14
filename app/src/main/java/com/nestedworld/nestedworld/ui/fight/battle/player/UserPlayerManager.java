@@ -40,13 +40,16 @@ public class UserPlayerManager extends PlayerManager {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
+    @BindView(R.id.container_monster_detail)
+    View viewMonsterDetailContainer;
+
     private List<UserMonster> mTeam = null;
 
     /*
     ** Constructor
      */
     public UserPlayerManager(@NonNull final View viewContainer, @NonNull final List<UserMonster> team) {
-        super(viewContainer);
+        super(viewContainer, team.size());
 
         //Init internal field
         mTeam = team;
@@ -104,11 +107,10 @@ public class UserPlayerManager extends PlayerManager {
     }
 
     @Override
-    public void onMonsterKo(final long monster) {
-        LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
+    public void displayMonsterKo() {
+        viewMonsterDetailContainer.setBackgroundColor(Color.RED);
 
         mAdapter.clear();
-
         for (UserMonster userMonster : mTeam) {
             if (userMonster.userMonsterId == mCurrentMonster.userMonsterId) {
                 mTeam.remove(userMonster);
@@ -119,7 +121,7 @@ public class UserPlayerManager extends PlayerManager {
     }
 
     @Override
-    public void onCurrentMonsterChanged() {
+    public void displayCurrentMonster() {
         Context context = mViewContainer.getContext();
 
         //Populate widget;
@@ -128,6 +130,7 @@ public class UserPlayerManager extends PlayerManager {
         progressBarMonsterHp.setMax(mCurrentMonster.hp);
         progressBarMonsterHp.setProgress(mCurrentMonster.hp);
         monsterLife.setText(String.valueOf(mCurrentMonster.hp));
+        viewMonsterDetailContainer.setBackgroundColor(Color.TRANSPARENT);
 
         //Populate monster sprite
         Monster monsterInfos = mCurrentMonster.info();

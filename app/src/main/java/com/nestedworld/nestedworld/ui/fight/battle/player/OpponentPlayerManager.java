@@ -34,6 +34,8 @@ public class OpponentPlayerManager extends PlayerManager {
     ProgressBar progressBarMonsterHp;
     @BindView(R.id.textview_MonsterLife)
     TextView monsterLife;
+    @BindView(R.id.container_monster_detail)
+    View viewMonsterDetailContainer;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
 
@@ -41,7 +43,7 @@ public class OpponentPlayerManager extends PlayerManager {
     ** Constructor
      */
     public OpponentPlayerManager(@NonNull final View viewContainer, final int teamSize) {
-        super(viewContainer);
+        super(viewContainer, teamSize);
 
         //Init internal field
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(viewContainer.getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -84,19 +86,19 @@ public class OpponentPlayerManager extends PlayerManager {
     }
 
     @Override
-    public void onMonsterKo(long monster) {
-        LogHelper.d(TAG, "onMonsterKo > monster=" + monster);
+    public void displayMonsterKo() {
+        viewMonsterDetailContainer.setBackgroundColor(Color.RED);
 
-        int newAdapterLenth = mAdapter.getItemCount() - 1;
+        int newAdapterLength = mAdapter.getItemCount() - 1;
         mAdapter.clear();
 
-        for (int i = 0; i < newAdapterLenth; i++) {
+        for (int i = 0; i < newAdapterLength; i++) {
             mAdapter.add(null);
         }
     }
 
     @Override
-    public void onCurrentMonsterChanged() {
+    public void displayCurrentMonster() {
         Context context = recyclerViewMonsters.getContext();
 
         monsterName.setText(mCurrentMonster.name);
@@ -104,6 +106,7 @@ public class OpponentPlayerManager extends PlayerManager {
         progressBarMonsterHp.setMax(mCurrentMonster.hp);
         progressBarMonsterHp.setProgress(mCurrentMonster.hp);
         monsterLife.setText(String.valueOf(mCurrentMonster.hp));
+        viewMonsterDetailContainer.setBackgroundColor(Color.TRANSPARENT);
 
         //Populate monster sprite
         Monster monsterInfos = mCurrentMonster.info();

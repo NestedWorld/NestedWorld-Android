@@ -21,12 +21,14 @@ public abstract class PlayerManager {
     protected StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
     protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
     protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
+    protected int mRemaningMonster;
 
     /*
     ** Constructor
      */
-    protected PlayerManager(@NonNull final View container) {
+    protected PlayerManager(@NonNull final View container, final int teamSize) {
         mViewContainer = container;
+        mRemaningMonster = teamSize;
         ButterKnife.bind(this, container);
     }
 
@@ -39,13 +41,23 @@ public abstract class PlayerManager {
 
     public abstract void displayAttackSend();
 
-    protected abstract void onCurrentMonsterChanged();
+    public abstract void displayMonsterKo();
 
-    public abstract void onMonsterKo(final long monster);
+    protected abstract void displayCurrentMonster();
 
     /*
     ** Utils
      */
+    @CallSuper
+    public void onMonsterKo() {
+        mRemaningMonster -= 1;
+        displayMonsterKo();
+    }
+
+    public boolean hasRemainingMonster() {
+        return mRemaningMonster > 0;
+    }
+
     @CallSuper
     public void setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
         mCurrentMonster = monster;
@@ -54,7 +66,7 @@ public abstract class PlayerManager {
         ((BaseAppCompatActivity) mViewContainer.getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                onCurrentMonsterChanged();
+                displayCurrentMonster();
             }
         });
     }

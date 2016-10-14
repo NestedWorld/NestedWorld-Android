@@ -219,16 +219,20 @@ public class BattleFragment extends BaseFragment {
         MonsterKoMessage message = event.getMessage();
 
         if (mUserPlayerManager.hasMonster(message.monster)) {
-            mUserPlayerManager.onMonsterKo(message.monster);
-            UserMonster nextMonster = mUserPlayerManager.getNextMonster();
-            if (nextMonster == null) {
-                FightResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
-            } else {
-                sendReplaceMonsterKoRequest(nextMonster);
+            mUserPlayerManager.onMonsterKo();
+            if (mUserPlayerManager.hasRemainingMonster()) {
+                UserMonster nextMonster = mUserPlayerManager.getNextMonster();
+                if (nextMonster == null) {
+                    FightResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
+                } else {
+                    sendReplaceMonsterKoRequest(nextMonster);
+                }
             }
-
         } else {
-            mOpponentPlayerManager.onMonsterKo(message.monster);
+            mOpponentPlayerManager.onMonsterKo();
+            if (!mOpponentPlayerManager.hasRemainingMonster()) {
+                FightResultFragment.load(getFragmentManager(), "Your opponent didn't have any monster left.");
+            }
         }
     }
 
