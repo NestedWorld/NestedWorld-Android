@@ -15,16 +15,16 @@ import butterknife.OnClick;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class RegisterFragment extends BaseFragment {
+public class welcomerFragment extends BaseFragment {
 
-    public final static String FRAGMENT_NAME = RegisterFragment.class.getSimpleName();
+    public final static String FRAGMENT_NAME = welcomerFragment.class.getSimpleName();
 
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Boolean toBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new RegisterFragment());
+        fragmentTransaction.replace(R.id.container, new welcomerFragment());
         if (toBackStack) {
             fragmentTransaction.addToBackStack(FRAGMENT_NAME);
         }

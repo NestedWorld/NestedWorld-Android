@@ -117,34 +117,7 @@ public class LoginFragment extends BaseFragment {
             return;
         }
 
-        //Send request
-        NestedWorldHttpApi.getInstance().forgotPassword(email).enqueue(new Callback<ForgotPasswordResponse>() {
-            @Override
-            public void onSuccess(Response<ForgotPasswordResponse> response) {
-                //check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
-
-                //Warn user an email has been send
-                Toast.makeText(mContext, getString(R.string.registration_msg_passwordSend), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<ForgotPasswordResponse> response) {
-                //check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
-
-                //Get error message
-                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_forgotPassword), response);
-
-                //Display error message
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
-
+        sendForgotPasswordRequest(email);
     }
 
     /*
@@ -155,8 +128,7 @@ public class LoginFragment extends BaseFragment {
         if (!email.isEmpty()) {
             textInputLayoutUserEmail.setErrorEnabled(false);
         } else {
-            textInputLayoutUserEmail.setErrorEnabled(false);
-            textInputLayoutUserEmail.setError("Please enter your email");
+            textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
             return false;
         }
 
@@ -164,8 +136,7 @@ public class LoginFragment extends BaseFragment {
         if (!password.isEmpty()) {
             textInputLayoutUserPassword.setErrorEnabled(false);
         } else {
-            textInputLayoutUserPassword.setErrorEnabled(false);
-            textInputLayoutUserPassword.setError("Please enter yout password");
+            textInputLayoutUserPassword.setError(getString(R.string.error_passwordTooShort));
             return false;
         }
 
@@ -175,7 +146,7 @@ public class LoginFragment extends BaseFragment {
     private boolean checkInputForForgotPassword(@NonNull final String email) {
         if (email.isEmpty()) {
             textInputLayoutUserEmail.setErrorEnabled(true);
-            textInputLayoutUserEmail.setError("Please enter your email");
+            textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
             return false;
         } else {
             textInputLayoutUserEmail.setErrorEnabled(false);
@@ -216,6 +187,36 @@ public class LoginFragment extends BaseFragment {
 
                 //Get error message
                 String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
+
+                //Display error message
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void sendForgotPasswordRequest(@NonNull final String email) {
+        //Send request
+        NestedWorldHttpApi.getInstance().forgotPassword(email).enqueue(new Callback<ForgotPasswordResponse>() {
+            @Override
+            public void onSuccess(Response<ForgotPasswordResponse> response) {
+                //check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Warn user an email has been send
+                Toast.makeText(mContext, getString(R.string.registration_msg_passwordSend), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<ForgotPasswordResponse> response) {
+                //check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Get error message
+                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_forgotPassword), response);
 
                 //Display error message
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();

@@ -21,7 +21,7 @@ import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpAp
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.welcome.RegistrationActivity;
+import com.nestedworld.nestedworld.ui.welcome.welcomeActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -138,7 +138,7 @@ public class ProfileFragment extends BaseFragment {
         DataBaseHelper.cleanDataBase();
 
         //go to launch screen & kill the current context
-        Intent intent = new Intent(mContext, RegistrationActivity.class);
+        Intent intent = new Intent(mContext, welcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

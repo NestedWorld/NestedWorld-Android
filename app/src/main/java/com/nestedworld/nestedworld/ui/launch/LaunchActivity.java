@@ -9,7 +9,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
-import com.nestedworld.nestedworld.ui.welcome.RegistrationActivity;
+import com.nestedworld.nestedworld.ui.welcome.welcomeActivity;
 
 import butterknife.BindView;
 
@@ -40,7 +40,7 @@ public class LaunchActivity extends BaseAppCompatActivity {
         if (!checkForExistingSession()) {
             //we don't have a session
             //So we start the registration activity & kill current activity
-            startActivity(RegistrationActivity.class);
+            startActivity(welcomeActivity.class);
             finish();
         } else {
             //We have a session so we start the main activity

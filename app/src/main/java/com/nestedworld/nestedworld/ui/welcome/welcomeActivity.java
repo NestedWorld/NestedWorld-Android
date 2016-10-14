@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 
-public class RegistrationActivity extends BaseAppCompatActivity {
+public class welcomeActivity extends BaseAppCompatActivity {
     /*
     ** Life cycle
      */
@@ -17,6 +17,6 @@ public class RegistrationActivity extends BaseAppCompatActivity {
 
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
-        RegisterFragment.load(this.getSupportFragmentManager(), false);
+        welcomerFragment.load(this.getSupportFragmentManager(), false);
     }
 }
