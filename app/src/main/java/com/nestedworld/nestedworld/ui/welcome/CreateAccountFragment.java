@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
@@ -26,9 +26,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-import static com.nestedworld.nestedworld.helpers.input.InputChecker.checkEmailFormat;
-import static com.nestedworld.nestedworld.helpers.input.InputChecker.checkPasswordFormat;
-
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -37,11 +34,17 @@ public class CreateAccountFragment extends BaseFragment {
     public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
 
     @BindView(R.id.editText_pseudo)
-    EditText etPseudo;
+    TextInputEditText etPseudo;
+    @BindView(R.id.textInputLayout_pseudo)
+    TextInputLayout textInputLayoutPseudo;
     @BindView(R.id.editText_userEmail)
-    EditText etEmail;
+    TextInputEditText etEmail;
+    @BindView(R.id.textInputLayout_userEmail)
+    TextInputLayout textInputLayoutUserEmail;
     @BindView(R.id.editText_userPassword)
-    EditText etPassword;
+    TextInputEditText etPassword;
+    @BindView(R.id.textInputLayout_userPassword)
+    TextInputLayout textInputLayoutUserPassword;
     @BindView(R.id.progressView)
     ProgressView progressView;
 
@@ -78,53 +81,105 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     @OnClick(R.id.button_inscription)
-    public void createAccount() {
-        final String email = etEmail.getText().toString();
-        final String password = etPassword.getText().toString();
-        final String pseudo = etPseudo.getText().toString();
+    public void sendCreateAccountRequest() {
 
-        if (checkInput(email, password, pseudo)) {
-            createAccount(email, password, pseudo);
+        //Retrieve user input
+        String email = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        String pseudo = etPseudo.getText().toString();
+
+        //Check input
+        if (!checkInputRegistration(email, password, pseudo)) {
+            return;
         }
+
+        //Send request
+        sendCreateAccountRequest(email, password, pseudo);
     }
 
     /*
-    ** Utils
+    ** Internal method
      */
-    private void createAccount(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
-        progressView.start();
+    private boolean checkInputRegistration(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
+        //Check email
+        if (!email.isEmpty()) {
+            textInputLayoutUserEmail.setErrorEnabled(false);
+        } else {
+            textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
+            return false;
+        }
 
+        //Check password
+        if (!password.isEmpty()) {
+            textInputLayoutUserPassword.setErrorEnabled(false);
+        } else {
+            textInputLayoutUserPassword.setError(getString(R.string.error_passwordTooShort));
+            return false;
+        }
+
+        //Check pseudo
+        if (!pseudo.isEmpty()) {
+            textInputLayoutPseudo.setErrorEnabled(false);
+        } else {
+            textInputLayoutPseudo.setError(getString(R.string.error_pseudoEmpty));
+            return false;
+        }
+
+        return true;
+    }
+
+    private void sendCreateAccountRequest(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
+        //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
+        //Start loading animation
+        progressView.start();
 
+        //Send request
         NestedWorldHttpApi.getInstance().register(email, password, pseudo).enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onSuccess(Response<RegisterResponse> response) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
                 //Account successfully created, we can log in
-                login(email, password);
+                sendLoginRequest(email, password);
             }
 
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Stop loading animation
                 progressView.stop();
 
-                final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_createAccount), response);
+                //Get error message
+                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_createAccount), response);
+
+                //Display error message
                 Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void login(@NonNull final String email, @NonNull final String password) {
-
+    private void sendLoginRequest(@NonNull final String email, @NonNull final String password) {
+        //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
+        //Send request
         NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new Callback<SignInResponse>() {
             @Override
             public void onSuccess(Response<SignInResponse> response) {
+                //Check if fragment hasn't been detach
                 if (mContext == null) {
                     return;
                 }
@@ -139,32 +194,20 @@ public class CreateAccountFragment extends BaseFragment {
 
             @Override
             public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
-                if (progressView != null) {
-                    progressView.stop();
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
                 }
 
-                if (mContext != null) {
-                    final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
-                    Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-                }
+                //Stop loading animation
+                progressView.stop();
+
+                //Get error message
+                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
+
+                //Display error message
+                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    /*
-    ** Utils
-     */
-    private boolean checkInput(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
-        if (!checkEmailFormat(email)) {
-            etEmail.setError(getString(R.string.error_emailInvalid));
-            return false;
-        } else if (!checkPasswordFormat(password)) {
-            etPassword.setError(getString(R.string.error_passwordTooShort));
-            return false;
-        } else if (TextUtils.isEmpty(pseudo)) {
-            etPseudo.setError(getString(R.string.error_pseudoEmpty));
-            return false;
-        }
-        return true;
     }
 }
