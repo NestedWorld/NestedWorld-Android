@@ -18,7 +18,7 @@
     <string name="error_request_user">Cannot retrieve your data.</string>
 
     <!--Registration-->
-    <string name="registration_msg_punchLine">catch them all and became the champion !</string>
+    <string name="registration_msg_punchLine">Catch them all and became the champion !</string>
     <string name="registration_editText_pseudo">Pseudo</string>
     <string name="registration_editText_email">Email</string>
     <string name="registration_editText_password">Password</string>
