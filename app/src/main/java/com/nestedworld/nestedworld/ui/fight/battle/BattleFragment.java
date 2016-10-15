@@ -219,7 +219,7 @@ public class BattleFragment extends BaseFragment {
         MonsterKoMessage message = event.getMessage();
 
         if (mUserPlayerManager.hasMonster(message.monster)) {
-            mUserPlayerManager.onMonsterKo();
+            mUserPlayerManager.onCurrentMonsterKo();
             if (mUserPlayerManager.hasRemainingMonster()) {
                 UserMonster nextMonster = mUserPlayerManager.getNextMonster();
                 if (nextMonster == null) {
@@ -229,7 +229,7 @@ public class BattleFragment extends BaseFragment {
                 }
             }
         } else {
-            mOpponentPlayerManager.onMonsterKo();
+            mOpponentPlayerManager.onCurrentMonsterKo();
             if (!mOpponentPlayerManager.hasRemainingMonster()) {
                 FightResultFragment.load(getFragmentManager(), "Your opponent didn't have any monster left.");
             }
@@ -353,10 +353,19 @@ public class BattleFragment extends BaseFragment {
         Attack.AttackType attackTypeWanted = gestureToAttackType(mUserGestureInput);
         mUserGestureInput = "";
 
+        //Check if the user monster is alive
+        if (mUserPlayerManager.getCurrentMonster() == null) {
+            Toast.makeText(mContext, "Your monster is dead, he can't attack !", Toast.LENGTH_LONG).show();
+            return;
+        } else if (mOpponentPlayerManager.getCurrentMonster() == null) {
+            Toast.makeText(mContext, "You can't attack a dead monster !", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         //Parse user gesture
         switch (attackTypeWanted) {
             case UNKNOWN:
-                //Unknow attack, display error message
+                //Unknown attack, display error message
                 Toast.makeText(mContext, "Unknown attack type", Toast.LENGTH_SHORT).show();
                 break;
             case OBJECT_USE:
@@ -366,7 +375,7 @@ public class BattleFragment extends BaseFragment {
             default:
                 //If we're here, it means the user want to send: attack || attackSp || defense || defenceSp
                 //Check if the current monster has an attack of the wanted type
-                final MonsterAttackResponse.MonsterAttack attack = mUserPlayerManager.getMonsterAttackByType(attackTypeWanted);
+               MonsterAttackResponse.MonsterAttack attack = mUserPlayerManager.getCurrentMonsterAttack(attackTypeWanted);
                 if (attack == null) {
                     //Current monster don't have any attack of the wantend type, just display error message
                     Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();

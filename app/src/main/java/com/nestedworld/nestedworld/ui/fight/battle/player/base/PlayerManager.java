@@ -13,22 +13,30 @@ import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
 public abstract class PlayerManager {
     protected final View mViewContainer;
     protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
-    protected StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
-    protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
-    protected int mRemaningMonster;
+    private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
+    @Nullable protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
+    protected final List<StartMessage.StartMessagePlayerMonster> mMonstersAlive = new ArrayList<>();
+    protected final List<StartMessage.StartMessagePlayerMonster> mMonstersDead = new ArrayList<>();
+    protected final int mTeamSize;
+    protected int mRemainingMonster;
 
     /*
     ** Constructor
      */
     protected PlayerManager(@NonNull final View container, final int teamSize) {
+        //Init internal field
         mViewContainer = container;
-        mRemaningMonster = teamSize;
+        mTeamSize = teamSize;
+        mRemainingMonster = teamSize;
+
+        //Retrieve widget
         ButterKnife.bind(this, container);
     }
 
@@ -43,19 +51,25 @@ public abstract class PlayerManager {
 
     public abstract void displayMonsterKo();
 
-    protected abstract void displayCurrentMonster();
+    protected abstract void displayMonsterDetails(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 
     /*
     ** Utils
      */
     @CallSuper
-    public void onMonsterKo() {
-        mRemaningMonster -= 1;
-        displayMonsterKo();
+    public void onCurrentMonsterKo() {
+        if (!mMonstersDead.contains(mCurrentMonster)) {
+            mMonstersAlive.remove(mCurrentMonster);
+            mMonstersDead.add(mCurrentMonster);
+
+            mAdapter.clear();
+            mRemainingMonster -= 1;
+            displayMonsterKo();
+        }
     }
 
     public boolean hasRemainingMonster() {
-        return mRemaningMonster > 0;
+        return mRemainingMonster > 0;
     }
 
     @CallSuper
@@ -63,16 +77,22 @@ public abstract class PlayerManager {
         mCurrentMonster = monster;
         mCurrentMonsterAttacks = attacks;
 
+        mMonstersAlive.add(monster);
+
         ((BaseAppCompatActivity) mViewContainer.getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                displayCurrentMonster();
+                displayMonsterDetails(monster);
             }
         });
     }
 
+    @Nullable
     public StartMessage.StartMessagePlayerMonster getCurrentMonster() {
-        return mCurrentMonster;
+        if (mMonstersAlive.contains(mCurrentMonster)) {
+            return mCurrentMonster;
+        }
+        return null;
     }
 
     public boolean hasMonster(final long id) {
@@ -80,7 +100,11 @@ public abstract class PlayerManager {
     }
 
     @Nullable
-    public MonsterAttackResponse.MonsterAttack getMonsterAttackByType(@NonNull Attack.AttackType attackTypeWanted) {
+    public MonsterAttackResponse.MonsterAttack getCurrentMonsterAttack(@NonNull Attack.AttackType attackTypeWanted) {
+        if (mCurrentMonsterAttacks == null) {
+            return null;
+        }
+
         //Loop over current monster attack for finding an attack of the given type
         for (MonsterAttackResponse.MonsterAttack monsterAttack : mCurrentMonsterAttacks) {
             if (monsterAttack.infos.getType() == attackTypeWanted) {

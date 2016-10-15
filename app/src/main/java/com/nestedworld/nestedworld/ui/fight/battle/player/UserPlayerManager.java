@@ -18,6 +18,7 @@ import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
 
 import java.util.List;
@@ -109,31 +110,22 @@ public class UserPlayerManager extends PlayerManager {
     @Override
     public void displayMonsterKo() {
         viewMonsterDetailContainer.setBackgroundColor(Color.RED);
-
-        mAdapter.clear();
-        for (UserMonster userMonster : mTeam) {
-            if (userMonster.userMonsterId == mCurrentMonster.userMonsterId) {
-                mTeam.remove(userMonster);
-            } else {
-                mAdapter.add(userMonster.info());
-            }
-        }
     }
 
     @Override
-    public void displayCurrentMonster() {
+    protected void displayMonsterDetails(@NonNull StartMessage.StartMessagePlayerMonster monster) {
         Context context = mViewContainer.getContext();
 
         //Populate widget;
-        monsterName.setText(mCurrentMonster.name);
-        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), mCurrentMonster.level));
-        progressBarMonsterHp.setMax(mCurrentMonster.hp);
-        progressBarMonsterHp.setProgress(mCurrentMonster.hp);
-        monsterLife.setText(String.valueOf(mCurrentMonster.hp));
+        monsterName.setText(monster.name);
+        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
+        progressBarMonsterHp.setMax(monster.hp);
+        progressBarMonsterHp.setProgress(monster.hp);
+        monsterLife.setText(String.valueOf(monster.hp));
         viewMonsterDetailContainer.setBackgroundColor(Color.TRANSPARENT);
 
         //Populate monster sprite
-        Monster monsterInfos = mCurrentMonster.info();
+        Monster monsterInfos = monster.info();
         if (monsterInfos != null) {
             Glide.with(context)
                     .load(monsterInfos.sprite)
