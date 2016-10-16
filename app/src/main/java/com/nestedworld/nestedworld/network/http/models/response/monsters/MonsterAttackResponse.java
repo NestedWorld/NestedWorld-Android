@@ -4,11 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.nestedworld.nestedworld.database.models.Attack;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MonsterAttackResponse {
     @Expose
-    public ArrayList<MonsterAttack> attacks;
+    public List<MonsterAttack> attacks;
 
     public static class MonsterAttack {
         @Expose

@@ -50,7 +50,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -375,7 +374,7 @@ public class BattleFragment extends BaseFragment {
             default:
                 //If we're here, it means the user want to send: attack || attackSp || defense || defenceSp
                 //Check if the current monster has an attack of the wanted type
-               MonsterAttackResponse.MonsterAttack attack = mUserPlayerManager.getCurrentMonsterAttack(attackTypeWanted);
+                MonsterAttackResponse.MonsterAttack attack = mUserPlayerManager.getCurrentMonsterAttack(attackTypeWanted);
                 if (attack == null) {
                     //Current monster don't have any attack of the wantend type, just display error message
                     Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
@@ -511,7 +510,7 @@ public class BattleFragment extends BaseFragment {
     }
 
     @Nullable
-    private static ArrayList<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Monster monster) {
+    private static List<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Monster monster) {
         try {
             //Retrieve current monster attack
             Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance().getMonsterAttack(monster.monsterId).execute();

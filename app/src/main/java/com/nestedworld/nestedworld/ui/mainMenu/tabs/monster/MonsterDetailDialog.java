@@ -138,7 +138,7 @@ public class MonsterDetailDialog extends DialogFragment {
         textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mMonster.speed));
     }
 
-    private void populateMonsterAttack(ArrayList<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
+    private void populateMonsterAttack(@NonNull final List<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
         if (monsterAttacks.isEmpty()) {
             textViewMonterNoAttack.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);

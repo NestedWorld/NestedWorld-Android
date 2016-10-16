@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.database.models;
 import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Simple model for :
@@ -19,7 +19,7 @@ public class Place extends SugarRecord {
     public String name;
 
     @Expose
-    private ArrayList<Float> position;
+    private List<Float> position;
 
     //Empty constructor for SugarRecord
     public Place() {

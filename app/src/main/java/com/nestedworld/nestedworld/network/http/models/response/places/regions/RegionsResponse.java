@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.network.http.models.response.places.regions;
 import com.google.gson.annotations.Expose;
 import com.nestedworld.nestedworld.database.models.Region;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Simple model for mapping a json response
@@ -11,5 +11,5 @@ import java.util.ArrayList;
 public class RegionsResponse {
 
     @Expose
-    public ArrayList<Region> regions;
+    public List<Region> regions;
 }

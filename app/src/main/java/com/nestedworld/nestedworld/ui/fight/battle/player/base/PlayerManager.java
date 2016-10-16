@@ -21,7 +21,7 @@ public abstract class PlayerManager {
     protected final View mViewContainer;
     protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
     private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
-    @Nullable protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
+    @Nullable protected List<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
     protected final List<StartMessage.StartMessagePlayerMonster> mFrontMonster = new ArrayList<>();
     protected final List<StartMessage.StartMessagePlayerMonster> mDeadMonster = new ArrayList<>();
     protected final int mTeamSize;
@@ -72,7 +72,7 @@ public abstract class PlayerManager {
     }
 
     @CallSuper
-    public void setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final ArrayList<MonsterAttackResponse.MonsterAttack> attacks) {
+    public void setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final List<MonsterAttackResponse.MonsterAttack> attacks) {
         mCurrentMonster = monster;
         mCurrentMonsterAttacks = attacks;
 

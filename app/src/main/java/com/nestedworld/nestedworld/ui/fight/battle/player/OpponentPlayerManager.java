@@ -90,7 +90,7 @@ public class OpponentPlayerManager extends PlayerManager {
         viewMonsterDetailContainer.setBackgroundColor(Color.RED);
 
         mAdapter.clear();
-        for (int i=0; i<mRemainingMonster; i++) {
+        for (int i = 0; i < mRemainingMonster; i++) {
             mAdapter.add(null);
         }
     }
