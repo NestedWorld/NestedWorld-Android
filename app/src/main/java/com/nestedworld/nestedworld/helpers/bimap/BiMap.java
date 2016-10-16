@@ -25,8 +25,4 @@ public class BiMap<K, V> {
     public Boolean containsValue(@NonNull final V value) {
         return map.containsValue(value);
     }
-
-    public Boolean containsKey(@NonNull final K key) {
-        return map.containsKey(key);
-    }
 }

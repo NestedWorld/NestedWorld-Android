@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="32dp"
-             android:layout_height="32dp">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/counterValuePanel"
+    android:layout_width="32dp"
+    android:layout_height="32dp">
 
-    <RelativeLayout
-        android:id="@+id/counterValuePanel"
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/GreenYellow"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/GreenYellow"/>
-
-        <TextView
-            android:id="@+id/count"
-            style="@style/TypefaceStyle.ProximaNova.bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textSize="12sp"/>
-    </RelativeLayout>
-</FrameLayout>
+    <TextView
+        android:id="@+id/count"
+        style="@style/TypefaceStyle.ProximaNova.bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="12sp"/>
+</RelativeLayout>

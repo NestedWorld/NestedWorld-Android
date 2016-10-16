@@ -1,114 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="25dip"
+    android:layout_marginStart="25dip"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingEnd="8dip"
+    android:paddingStart="8dip">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dip"
-        android:layout_marginStart="25dip"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingEnd="8dip"
-        android:paddingStart="8dip">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:paddingTop="8dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TypefaceStyle.ProximaNova.light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"
+                android:text="@string/combat_msg_monsterLife"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/progressBar_MonsterLife"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dip"
+                    android:progress="100"/>
+
+                <TextView
+                    android:id="@+id/textview_MonsterLife"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RecyclerView_battle_monster"
+            android:layout_width="match_parent"
+            android:layout_height="38dip"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_monster_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_monster"
+            android:layout_width="38dip"
+            android:layout_height="38dip"
+            android:layout_gravity="center"
+            android:src="@drawable/default_monster"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="start"
             android:orientation="vertical"
-            android:paddingBottom="8dip"
-            android:paddingTop="8dip">
+            android:padding="8dip">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textview_monster_name"
+                style="@style/TypefaceStyle.ProximaNova"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:textColor="@color/apptheme_color"
+                android:textSize="14sp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TypefaceStyle.ProximaNova.light"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dip"
-                        android:text="@string/combat_msg_monsterLife"/>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ProgressBar
-                            android:id="@+id/progressBar_MonsterLife"
-                            style="@android:style/Widget.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dip"
-                            android:progress="100"/>
-
-                        <TextView
-                            android:id="@+id/textview_MonsterLife"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"/>
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/RecyclerView_battle_monster"
-                    android:layout_width="match_parent"
-                    android:layout_height="38dip"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/container_monster_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/imageView_monster"
-                android:layout_width="38dip"
-                android:layout_height="38dip"
-                android:layout_gravity="center"
-                android:src="@drawable/default_monster"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textview_monster_lvl"
+                style="@style/TypefaceStyle.ProximaNova"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="vertical"
-                android:padding="8dip">
-
-                <TextView
-                    android:id="@+id/textview_monster_name"
-                    style="@style/TypefaceStyle.ProximaNova"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/apptheme_color"
-                    android:textSize="14sp"/>
-
-                <TextView
-                    android:id="@+id/textview_monster_lvl"
-                    style="@style/TypefaceStyle.ProximaNova"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/apptheme_color"
-                    android:textSize="14sp"/>
-
-            </LinearLayout>
+                android:textColor="@color/apptheme_color"
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
