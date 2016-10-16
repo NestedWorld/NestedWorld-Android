@@ -176,7 +176,7 @@ public class MonsterDetailDialog extends DialogFragment {
                         //Stop loading animation
                         progressView.stop();
 
-                        if (response != null && response.body() != null) {
+                        if (response.body() != null) {
                             populateMonsterAttack(response.body().attacks);
                         } else {
                             onError(KIND.UNEXPECTED, response);
