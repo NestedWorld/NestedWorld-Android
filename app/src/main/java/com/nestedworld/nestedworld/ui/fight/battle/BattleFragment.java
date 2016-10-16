@@ -196,12 +196,20 @@ public class BattleFragment extends BaseFragment {
         PlayerManager attacker;
         PlayerManager target;
         if (mUserPlayerManager.hasMonsterInFront(message.monster.id)) {
+            LogHelper.d(TAG, "onAttackReceive > opponent");
+
             //Attack sender is the user
             attacker = mUserPlayerManager;
             target = mOpponentPlayerManager;
-        } else {
+        } else if (mOpponentPlayerManager.hasMonsterInFront(message.monster.id)) {
+            LogHelper.d(TAG, "onAttackReceive > opponent");
+
             attacker = mOpponentPlayerManager;
             target = mUserPlayerManager;
+        } else {
+            //The monster is probably dead
+            LogHelper.d(TAG, "onAttackReceive > Unknown");
+            return;
         }
 
         //Update monsters life
@@ -218,6 +226,7 @@ public class BattleFragment extends BaseFragment {
         MonsterKoMessage message = event.getMessage();
 
         if (mUserPlayerManager.hasMonsterInFront(message.monster)) {
+            LogHelper.d(TAG, "onMonsterKo > user");
             mUserPlayerManager.onCurrentMonsterKo();
             if (mUserPlayerManager.hasRemainingMonster()) {
                 UserMonster nextMonster = mUserPlayerManager.getNextMonster();
@@ -227,11 +236,15 @@ public class BattleFragment extends BaseFragment {
                     sendReplaceMonsterKoRequest(nextMonster);
                 }
             }
-        } else {
+        } else if (mOpponentPlayerManager.hasMonsterInFront(message.monster)) {
+            LogHelper.d(TAG, "onMonsterKo > opponent");
             mOpponentPlayerManager.onCurrentMonsterKo();
             if (!mOpponentPlayerManager.hasRemainingMonster()) {
                 FightResultFragment.load(getFragmentManager(), "Your opponent didn't have any monster left.");
             }
+        } else {
+            //The monster is probably dead
+            LogHelper.d(TAG, "onMonsterKo > Unknown");
         }
     }
 
