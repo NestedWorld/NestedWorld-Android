@@ -50,11 +50,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingBottom="8dip"
-        android:paddingTop="8dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="8dip"
+        android:paddingTop="8dip">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -11,7 +11,7 @@ public abstract class NestedWorldHttpCallback<T> implements retrofit2.Callback<T
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-        if (response!= null && response.isSuccessful()) {
+        if (response != null && response.isSuccessful()) {
             onSuccess(response);
         } else {
             onError(KIND.SERVER, response);
