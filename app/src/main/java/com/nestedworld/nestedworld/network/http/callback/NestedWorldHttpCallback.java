@@ -7,11 +7,11 @@ import android.support.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public abstract class Callback<T> implements retrofit2.Callback<T> {
+public abstract class NestedWorldHttpCallback<T> implements retrofit2.Callback<T> {
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-        if (response.isSuccessful()) {
+        if (response!= null && response.isSuccessful()) {
             onSuccess(response);
         } else {
             onError(KIND.SERVER, response);
@@ -27,7 +27,7 @@ public abstract class Callback<T> implements retrofit2.Callback<T> {
         }
     }
 
-    public abstract void onSuccess(Response<T> response);
+    public abstract void onSuccess(@NonNull final Response<T> response);
 
     public abstract void onError(@NonNull final KIND errorKind, @Nullable Response<T> response);
 

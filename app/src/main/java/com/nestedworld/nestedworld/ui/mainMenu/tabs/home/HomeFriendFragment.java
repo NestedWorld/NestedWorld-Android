@@ -34,7 +34,7 @@ import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.socket.generic.OnResultResponseEvent;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
@@ -206,9 +206,9 @@ public class HomeFriendFragment extends BaseFragment {
                 String pseudo = editTextPseudo.getText().toString();
 
                 //Send request
-                NestedWorldHttpApi.getInstance().addFriend(pseudo).enqueue(new Callback<AddFriendResponse>() {
+                NestedWorldHttpApi.getInstance().addFriend(pseudo).enqueue(new NestedWorldHttpCallback<AddFriendResponse>() {
                     @Override
-                    public void onSuccess(Response<AddFriendResponse> response) {
+                    public void onSuccess(@NonNull Response<AddFriendResponse> response) {
                         //Update Orm and adapter
                         updateFriendList();
 

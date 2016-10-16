@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
@@ -138,9 +138,9 @@ public class CreateAccountFragment extends BaseFragment {
         progressView.start();
 
         //Send request
-        NestedWorldHttpApi.getInstance().register(email, password, pseudo).enqueue(new Callback<RegisterResponse>() {
+        NestedWorldHttpApi.getInstance().register(email, password, pseudo).enqueue(new NestedWorldHttpCallback<RegisterResponse>() {
             @Override
-            public void onSuccess(Response<RegisterResponse> response) {
+            public void onSuccess(@NonNull Response<RegisterResponse> response) {
                 //Check if fragment hasn't been detach
                 if (mContext == null) {
                     return;
@@ -176,9 +176,9 @@ public class CreateAccountFragment extends BaseFragment {
         }
 
         //Send request
-        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new Callback<SignInResponse>() {
+        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new NestedWorldHttpCallback<SignInResponse>() {
             @Override
-            public void onSuccess(Response<SignInResponse> response) {
+            public void onSuccess(@NonNull Response<SignInResponse> response) {
                 //Check if fragment hasn't been detach
                 if (mContext == null) {
                     return;

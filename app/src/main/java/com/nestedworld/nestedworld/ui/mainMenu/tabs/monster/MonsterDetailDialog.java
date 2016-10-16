@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.orm.query.Condition;
@@ -170,9 +170,9 @@ public class MonsterDetailDialog extends DialogFragment {
         NestedWorldHttpApi
                 .getInstance()
                 .getMonsterAttack(mMonster.monsterId)
-                .enqueue(new Callback<MonsterAttackResponse>() {
+                .enqueue(new NestedWorldHttpCallback<MonsterAttackResponse>() {
                     @Override
-                    public void onSuccess(Response<MonsterAttackResponse> response) {
+                    public void onSuccess(@NonNull Response<MonsterAttackResponse> response) {
                         //Stop loading animation
                         progressView.stop();
 

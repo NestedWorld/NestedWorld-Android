@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.models.response.ErrorResponse;
 
 import java.io.IOException;
@@ -31,13 +31,13 @@ public final class RetrofitErrorHandler {
     ** Public method
      */
     @NonNull
-    public static String getErrorMessage(@NonNull final Context context, @NonNull final Callback.KIND errorType, @NonNull final String defaultMessage, @Nullable Response response) {
+    public static String getErrorMessage(@NonNull final Context context, @NonNull final NestedWorldHttpCallback.KIND errorType, @NonNull final String defaultMessage, @Nullable Response response) {
         String errorMessage = getErrorMessage(context, errorType, response);
         return errorMessage == null ? defaultMessage : errorMessage;
     }
 
     @Nullable
-    public static String getErrorMessage(@NonNull final Context context, @NonNull final Callback.KIND errorType, @Nullable Response response) {
+    public static String getErrorMessage(@NonNull final Context context, @NonNull final NestedWorldHttpCallback.KIND errorType, @Nullable Response response) {
         //try to get error message from the response
         if (response != null) {
             try {

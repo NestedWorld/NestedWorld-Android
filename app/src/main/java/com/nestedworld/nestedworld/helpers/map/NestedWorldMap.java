@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Place;
 import com.nestedworld.nestedworld.database.models.Region;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
@@ -90,9 +90,9 @@ public class NestedWorldMap {
      */
     private void retrieveAndPoPopulateRegions() {
 
-        NestedWorldHttpApi.getInstance().getRegions().enqueue(new Callback<RegionsResponse>() {
+        NestedWorldHttpApi.getInstance().getRegions().enqueue(new NestedWorldHttpCallback<RegionsResponse>() {
             @Override
-            public void onSuccess(Response<RegionsResponse> response) {
+            public void onSuccess(@NonNull Response<RegionsResponse> response) {
                 for (Region region : response.body().regions) {
                     retrieveAndPopulateRegion(region);
                 }
@@ -109,9 +109,9 @@ public class NestedWorldMap {
 
     private void retrieveAndPopulateRegion(@NonNull final Region region) {
 
-        NestedWorldHttpApi.getInstance().getRegionDetails(region).enqueue(new Callback<RegionResponse>() {
+        NestedWorldHttpApi.getInstance().getRegionDetails(region).enqueue(new NestedWorldHttpCallback<RegionResponse>() {
             @Override
-            public void onSuccess(Response<RegionResponse> response) {
+            public void onSuccess(@NonNull Response<RegionResponse> response) {
                 if (isRegionDisplayable(response.body().region)) {
                     displayRegion(region, Color.BLACK);
                 }
@@ -126,9 +126,9 @@ public class NestedWorldMap {
 
     private void retrieveAndPopulatePlace() {
         //retrieving places from API
-        NestedWorldHttpApi.getInstance().getPlaces().enqueue(new Callback<PlacesResponse>() {
+        NestedWorldHttpApi.getInstance().getPlaces().enqueue(new NestedWorldHttpCallback<PlacesResponse>() {
             @Override
-            public void onSuccess(Response<PlacesResponse> response) {
+            public void onSuccess(@NonNull Response<PlacesResponse> response) {
                 //request success, we display nearest places
                 for (Place place : response.body().places) {
                     if (isPlaceDisplayable(place)) {

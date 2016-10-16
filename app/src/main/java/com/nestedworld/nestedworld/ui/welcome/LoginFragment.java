@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
-import com.nestedworld.nestedworld.network.http.callback.Callback;
+import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
@@ -160,9 +160,9 @@ public class LoginFragment extends BaseFragment {
         progressView.start();
 
         //Send request
-        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new Callback<SignInResponse>() {
+        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new NestedWorldHttpCallback<SignInResponse>() {
             @Override
-            public void onSuccess(Response<SignInResponse> response) {
+            public void onSuccess(@NonNull Response<SignInResponse> response) {
                 //Check if fragment hasn't been detach
                 if (mContext == null) {
                     return;
@@ -200,9 +200,9 @@ public class LoginFragment extends BaseFragment {
 
     private void sendForgotPasswordRequest(@NonNull final String email) {
         //Send request
-        NestedWorldHttpApi.getInstance().forgotPassword(email).enqueue(new Callback<ForgotPasswordResponse>() {
+        NestedWorldHttpApi.getInstance().forgotPassword(email).enqueue(new NestedWorldHttpCallback<ForgotPasswordResponse>() {
             @Override
-            public void onSuccess(Response<ForgotPasswordResponse> response) {
+            public void onSuccess(@NonNull Response<ForgotPasswordResponse> response) {
                 //check if fragment hasn't been detach
                 if (mContext == null) {
                     return;
