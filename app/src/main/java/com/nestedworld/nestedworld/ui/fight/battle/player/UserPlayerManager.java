@@ -21,6 +21,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackRe
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
 
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -108,8 +109,22 @@ public class UserPlayerManager extends PlayerManager {
     }
 
     @Override
-    public void displayMonsterKo() {
+    public void displayMonsterKo(@NonNull StartMessage.StartMessagePlayerMonster monsterKo) {
+        LogHelper.d(TAG, "displayMonsterKo");
         viewMonsterDetailContainer.setBackgroundColor(Color.RED);
+
+        Iterator<UserMonster> iterator = mTeam.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().userMonsterId == monsterKo.userMonsterId) {
+                iterator.remove();
+
+                mAdapter.clear();
+                for (UserMonster userMonster : mTeam) {
+                    mAdapter.add(userMonster.info());
+                }
+                return;
+            }
+        }
     }
 
     @Override

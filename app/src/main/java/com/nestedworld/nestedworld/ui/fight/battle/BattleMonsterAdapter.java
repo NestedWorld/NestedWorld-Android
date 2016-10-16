@@ -26,13 +26,6 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     private final List<Monster> mMonsters = new ArrayList<>();
 
     /*
-    ** Constructor
-     */
-    public BattleMonsterAdapter() {
-
-    }
-
-    /*
     ** Life cycle
      */
     @Override

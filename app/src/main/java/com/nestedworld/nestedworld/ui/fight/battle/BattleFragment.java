@@ -196,7 +196,7 @@ public class BattleFragment extends BaseFragment {
 
         PlayerManager attacker;
         PlayerManager target;
-        if (mUserPlayerManager.hasMonster(message.monster.id)) {
+        if (mUserPlayerManager.hasMonsterInFront(message.monster.id)) {
             //Attack sender is the user
             attacker = mUserPlayerManager;
             target = mOpponentPlayerManager;
@@ -218,7 +218,7 @@ public class BattleFragment extends BaseFragment {
     public void onMonsterKo(OnMonsterKoEvent event) {
         MonsterKoMessage message = event.getMessage();
 
-        if (mUserPlayerManager.hasMonster(message.monster)) {
+        if (mUserPlayerManager.hasMonsterInFront(message.monster)) {
             mUserPlayerManager.onCurrentMonsterKo();
             if (mUserPlayerManager.hasRemainingMonster()) {
                 UserMonster nextMonster = mUserPlayerManager.getNextMonster();

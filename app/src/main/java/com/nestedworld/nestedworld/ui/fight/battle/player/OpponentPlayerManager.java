@@ -86,8 +86,13 @@ public class OpponentPlayerManager extends PlayerManager {
     }
 
     @Override
-    public void displayMonsterKo() {
+    public void displayMonsterKo(@NonNull StartMessage.StartMessagePlayerMonster monster) {
         viewMonsterDetailContainer.setBackgroundColor(Color.RED);
+
+        mAdapter.clear();
+        for (int i=0; i<mRemainingMonster; i++) {
+            mAdapter.add(null);
+        }
     }
 
     @Override

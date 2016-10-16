@@ -22,8 +22,8 @@ public abstract class PlayerManager {
     protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
     private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
     @Nullable protected ArrayList<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
-    protected final List<StartMessage.StartMessagePlayerMonster> mMonstersAlive = new ArrayList<>();
-    protected final List<StartMessage.StartMessagePlayerMonster> mMonstersDead = new ArrayList<>();
+    protected final List<StartMessage.StartMessagePlayerMonster> mFrontMonster = new ArrayList<>();
+    protected final List<StartMessage.StartMessagePlayerMonster> mDeadMonster = new ArrayList<>();
     protected final int mTeamSize;
     protected int mRemainingMonster;
 
@@ -49,7 +49,7 @@ public abstract class PlayerManager {
 
     public abstract void displayAttackSend();
 
-    public abstract void displayMonsterKo();
+    public abstract void displayMonsterKo(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 
     protected abstract void displayMonsterDetails(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 
@@ -57,14 +57,13 @@ public abstract class PlayerManager {
     ** Utils
      */
     @CallSuper
-    public void onCurrentMonsterKo() {
-        if (!mMonstersDead.contains(mCurrentMonster)) {
-            mMonstersAlive.remove(mCurrentMonster);
-            mMonstersDead.add(mCurrentMonster);
+    public synchronized void onCurrentMonsterKo() {
+        if (!mDeadMonster.contains(mCurrentMonster)) {
+            mFrontMonster.remove(mCurrentMonster);
+            mDeadMonster.add(mCurrentMonster);
 
-            mAdapter.clear();
             mRemainingMonster -= 1;
-            displayMonsterKo();
+            displayMonsterKo(mCurrentMonster);
         }
     }
 
@@ -77,7 +76,7 @@ public abstract class PlayerManager {
         mCurrentMonster = monster;
         mCurrentMonsterAttacks = attacks;
 
-        mMonstersAlive.add(monster);
+        mFrontMonster.add(monster);
 
         ((BaseAppCompatActivity) mViewContainer.getContext()).runOnUiThread(new Runnable() {
             @Override
@@ -89,14 +88,19 @@ public abstract class PlayerManager {
 
     @Nullable
     public StartMessage.StartMessagePlayerMonster getCurrentMonster() {
-        if (mMonstersAlive.contains(mCurrentMonster)) {
+        if (mFrontMonster.contains(mCurrentMonster)) {
             return mCurrentMonster;
         }
         return null;
     }
 
-    public boolean hasMonster(final long id) {
-        return mCurrentMonster.id == id;
+    public boolean hasMonsterInFront(final long monsterBattleId) {
+        for (StartMessage.StartMessagePlayerMonster monster : mFrontMonster) {
+            if (monster.id == monsterBattleId) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Nullable
