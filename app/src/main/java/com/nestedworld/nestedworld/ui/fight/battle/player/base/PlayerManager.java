@@ -49,7 +49,7 @@ public abstract class PlayerManager {
 
     public abstract void displayAttackSend();
 
-    public abstract void displayMonsterKo(@NonNull final StartMessage.StartMessagePlayerMonster monster);
+    protected abstract void displayMonsterKo(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 
     protected abstract void displayMonsterDetails(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 

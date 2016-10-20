@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class SocketService extends Service {
 
-    public final static String TAG = SocketService.class.getSimpleName();
+    private final static String TAG = SocketService.class.getSimpleName();
     private final IBinder mBinder = new LocalBinder();
     private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
 
