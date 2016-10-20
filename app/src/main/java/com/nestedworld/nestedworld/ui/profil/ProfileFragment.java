@@ -13,13 +13,12 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.User;
-import com.nestedworld.nestedworld.helpers.database.DataBaseHelper;
+import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
-import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.welcome.welcomeActivity;
 
@@ -127,15 +126,7 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
-        //remove user
-        SessionHelper.deleteSession();
-
-        //avoid leak with the static instance
-        NestedWorldHttpApi.reset();
-        NestedWorldSocketAPI.reset();
-
-        //clean db
-        DataBaseHelper.cleanDataBase();
+        ApplicationHelper.logout(mContext);
 
         //go to launch screen & kill the current context
         Intent intent = new Intent(mContext, welcomeActivity.class);

@@ -24,9 +24,9 @@ import com.nestedworld.nestedworld.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
+import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
@@ -254,10 +254,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                     //display error message
                     Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
-                    //TODO use "logout relative code" helper
-
-                    //remove user
-                    SessionHelper.deleteSession();
+                    ApplicationHelper.logout(MainMenuActivity.this);
 
                     //Go to launch screen
                     startActivity(LaunchActivity.class);
