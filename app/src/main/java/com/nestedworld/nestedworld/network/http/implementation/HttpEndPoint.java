@@ -5,10 +5,10 @@ import com.nestedworld.nestedworld.network.NetworkConstant;
 
 public final class HttpEndPoint {
 
-    private final static String API_VERSION = "v1/";
+    private final static String API_VERSION = "";
 
-    private final static String DEV_URL = "http://nestedworld-dev.kokakiwi.net/";
-    private final static String PROD_URL = "dev.nestedworld.com";
+    private final static String DEV_URL = "http://api-dev.nestedworld.com";
+    private final static String PROD_URL = "http://api-dev.nestedworld.com";
 
     private final static String BASE_URL =
             (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_URL

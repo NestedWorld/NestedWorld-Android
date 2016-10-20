@@ -25,7 +25,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
 
     //Static field
     private final static int TIME_OUT = 10000;
-    private final static String HOST = "eip.kokakiwi.net";
+    private final static String HOST = "http://realtime-dev.nestedworld.com/";
     private final static int PORT = 6464;
     //Singleton
     private static NestedWorldSocketAPI mSingleton;
