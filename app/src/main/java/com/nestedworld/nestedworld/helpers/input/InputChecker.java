@@ -37,4 +37,8 @@ public final class InputChecker {
     public static boolean checkPasswordFormat(@NonNull final String password) {
         return !TextUtils.isEmpty(password) && password.length() >= SHORTEST_PASSWORD_LENGTH;
     }
+
+    public static boolean checkPseudoFormat(@NonNull final String password) {
+        return !TextUtils.isEmpty(password);
+    }
 }
