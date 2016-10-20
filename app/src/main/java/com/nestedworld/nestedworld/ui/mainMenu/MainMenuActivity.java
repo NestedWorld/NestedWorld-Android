@@ -244,6 +244,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
             @Override
             protected void onPostExecute(Boolean result) {
+                //Check if activity hasn't been destroy
+                if (!isUiBinded()) {
+                    return;
+                }
+
                 if (result) {
                     initSocketService();
                     initTabs();
