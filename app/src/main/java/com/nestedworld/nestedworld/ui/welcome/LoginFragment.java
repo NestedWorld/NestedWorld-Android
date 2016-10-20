@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.helpers.input.InputChecker;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
@@ -125,34 +126,36 @@ public class LoginFragment extends BaseFragment {
      */
     private boolean checkInputForLogin(@NonNull final String email, @NonNull final String password) {
         //Check email
-        if (!email.isEmpty()) {
-            textInputLayoutUserEmail.setErrorEnabled(false);
-        } else {
+        if (!InputChecker.checkEmailFormat(email)) {
             textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
             return false;
+        } else {
+            textInputLayoutUserEmail.setErrorEnabled(false);
         }
 
         //Check password
-        if (!password.isEmpty()) {
-            textInputLayoutUserPassword.setErrorEnabled(false);
-        } else {
+        if (!InputChecker.checkPasswordFormat(password)) {
             textInputLayoutUserPassword.setError(getString(R.string.error_passwordTooShort));
             return false;
+        } else {
+            textInputLayoutUserPassword.setErrorEnabled(false);
         }
 
         return true;
     }
 
     private boolean checkInputForForgotPassword(@NonNull final String email) {
-        if (email.isEmpty()) {
-            textInputLayoutUserEmail.setErrorEnabled(true);
+        //We don't care about email, stop display error on it
+        textInputLayoutUserPassword.setErrorEnabled(false);
+
+        //Check email
+        if (!InputChecker.checkEmailFormat(email)) {
             textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
             return false;
         } else {
             textInputLayoutUserEmail.setErrorEnabled(false);
-            textInputLayoutUserPassword.setErrorEnabled(false);
-            return true;
         }
+        return true;
     }
 
     private void sendLoginRequest(@NonNull final String email, @NonNull final String password) {

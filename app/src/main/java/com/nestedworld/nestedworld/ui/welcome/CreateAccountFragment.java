@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.helpers.input.InputChecker;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandler;
@@ -102,27 +103,27 @@ public class CreateAccountFragment extends BaseFragment {
      */
     private boolean checkInputRegistration(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         //Check email
-        if (!email.isEmpty()) {
-            textInputLayoutUserEmail.setErrorEnabled(false);
-        } else {
+        if (!InputChecker.checkEmailFormat(email)) {
             textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
             return false;
+        } else {
+            textInputLayoutUserEmail.setErrorEnabled(false);
         }
 
         //Check password
-        if (!password.isEmpty()) {
-            textInputLayoutUserPassword.setErrorEnabled(false);
-        } else {
+        if (!InputChecker.checkPasswordFormat(password)) {
             textInputLayoutUserPassword.setError(getString(R.string.error_passwordTooShort));
             return false;
+        } else {
+            textInputLayoutUserPassword.setErrorEnabled(false);
         }
 
         //Check pseudo
-        if (!pseudo.isEmpty()) {
-            textInputLayoutPseudo.setErrorEnabled(false);
-        } else {
+        if (!InputChecker.checkPseudoFormat(pseudo)) {
             textInputLayoutPseudo.setError(getString(R.string.error_pseudoEmpty));
             return false;
+        } else {
+            textInputLayoutPseudo.setErrorEnabled(false);
         }
 
         return true;
