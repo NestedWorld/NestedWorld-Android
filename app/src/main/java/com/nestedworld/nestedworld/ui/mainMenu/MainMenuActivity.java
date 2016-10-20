@@ -73,8 +73,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
-        initSocketService();
     }
 
     @Override
@@ -247,6 +245,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result) {
+                    initSocketService();
                     initTabs();
                 } else {
                     //stop loading animation
@@ -254,6 +253,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
                     //display error message
                     Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
+
+                    //TODO use "logout relative code" helper
 
                     //remove user
                     SessionHelper.deleteSession();
