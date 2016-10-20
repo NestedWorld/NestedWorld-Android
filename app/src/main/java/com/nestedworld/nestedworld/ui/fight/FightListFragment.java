@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.ui.fight;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
@@ -12,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +29,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageTy
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -133,11 +132,9 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
             return;
         }
 
-        if (mContext instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle(getResources().getString(R.string.fightList_title));
-            }
+        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getResources().getString(R.string.fightList_title));
         }
     }
 
@@ -173,7 +170,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
             FightHolder fightHolder;
 
             if (convertView == null) {
-                LayoutInflater layoutInflater = ((Activity) getContext()).getLayoutInflater();
+                LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
                 view = layoutInflater.inflate(resource, parent, false);
 
                 fightHolder = new FightHolder();
@@ -221,7 +218,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
 
             //Yes just accept the combat, we have to choose our team
             //Display the team selection
-            TeamSelectionFragment.load(((AppCompatActivity) getContext()).getSupportFragmentManager(), combat);
+            TeamSelectionFragment.load(((BaseAppCompatActivity) getContext()).getSupportFragmentManager(), combat);
         }
 
         private void refuseCombat(@NonNull final Combat combat) {

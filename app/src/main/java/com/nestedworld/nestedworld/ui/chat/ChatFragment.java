@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 
 import butterknife.BindView;
@@ -88,7 +88,7 @@ public class ChatFragment extends BaseFragment {
             return;
         }
 
-        ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             User friendInfo = mFriend.info;
             if (friendInfo != null) {

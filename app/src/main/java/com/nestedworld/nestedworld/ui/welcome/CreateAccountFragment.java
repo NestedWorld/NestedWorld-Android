@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.ui.welcome;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +18,7 @@ import com.nestedworld.nestedworld.network.http.errorHandler.RetrofitErrorHandle
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.MainMenuActivity;
 import com.rey.material.widget.ProgressView;
@@ -190,7 +190,7 @@ public class CreateAccountFragment extends BaseFragment {
 
                 //display MainMenu and stop this activity
                 startActivity(MainMenuActivity.class);
-                ((Activity) mContext).finish();
+                ((BaseAppCompatActivity) mContext).finish();
             }
 
             @Override

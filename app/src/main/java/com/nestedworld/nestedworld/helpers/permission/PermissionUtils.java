@@ -5,9 +5,9 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public final class PermissionUtils {
                 LogHelper.d(TAG, "Asking for permission : " + p);
             }
         }
-        ActivityCompat.requestPermissions((AppCompatActivity) context, permissionNeeded.toArray(new String[permissionNeeded.size()]), REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+        ActivityCompat.requestPermissions((BaseAppCompatActivity) context, permissionNeeded.toArray(new String[permissionNeeded.size()]), REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
     }
 
     //asking for a single permissions from an appcompatActivity
@@ -54,7 +54,7 @@ public final class PermissionUtils {
         LogHelper.d(TAG, "Asking for permission : " + permissionName);
 
         if (checkSelfPermission(context, permissionName) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions((AppCompatActivity) context, new String[]{permissionName}, REQUEST_CODE_ASK_PERMISSIONS);
+            ActivityCompat.requestPermissions((BaseAppCompatActivity) context, new String[]{permissionName}, REQUEST_CODE_ASK_PERMISSIONS);
         }
     }
 

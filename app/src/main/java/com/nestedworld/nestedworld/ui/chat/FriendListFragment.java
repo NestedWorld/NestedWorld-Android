@@ -12,7 +12,6 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
@@ -123,7 +123,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             return;
         }
 
-        ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
+        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.mainMenu_action_chat));
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -189,7 +189,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             FriendHolder friendHolder;
 
             if (convertView == null) {
-                LayoutInflater layoutInflater = ((AppCompatActivity) getContext()).getLayoutInflater();
+                LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
                 view = layoutInflater.inflate(resource, parent, false);
 
                 friendHolder = new FriendHolder();

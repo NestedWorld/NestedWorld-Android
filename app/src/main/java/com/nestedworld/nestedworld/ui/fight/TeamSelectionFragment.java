@@ -15,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageTy
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleFragment;
 import com.orm.query.Condition;
@@ -116,7 +116,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
             //Finish the current activity
             if (mContext != null) {
-                ((AppCompatActivity) mContext).finish();
+                ((BaseAppCompatActivity) mContext).finish();
             }
         }
 
@@ -225,11 +225,9 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             return;
         }
 
-        if (mContext instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) mContext).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle(getResources().getString(R.string.teamSelection_title));
-            }
+        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getResources().getString(R.string.teamSelection_title));
         }
     }
 
@@ -316,7 +314,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                     Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
 
                     //Finish the current activity
-                    ((AppCompatActivity) mContext).finish();
+                    ((BaseAppCompatActivity) mContext).finish();
                 }
             }
         });

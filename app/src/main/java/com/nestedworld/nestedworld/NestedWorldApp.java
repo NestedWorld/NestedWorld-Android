@@ -32,7 +32,7 @@ public class NestedWorldApp extends SugarApp {
     }
 
     /*
-    ** Utils
+    ** Internal method
      */
     private void initFontOverrider() {
         LogHelper.d(TAG, "initFontOverrider");

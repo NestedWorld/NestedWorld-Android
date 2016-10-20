@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -179,7 +178,7 @@ public class LoginFragment extends BaseFragment {
 
                 //display the mainMenu and stop the launchActivity
                 startActivity(MainMenuActivity.class);
-                ((FragmentActivity) mContext).finish();
+                ((BaseAppCompatActivity) mContext).finish();
             }
 
             @Override

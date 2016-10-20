@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,6 +43,7 @@ import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessa
 import com.nestedworld.nestedworld.network.socket.models.message.generic.ResultMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
 import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
@@ -277,7 +277,7 @@ public class HomeFriendFragment extends BaseFragment {
             FriendHolder friendHolder;
 
             if (convertView == null) {
-                LayoutInflater layoutInflater = ((Activity) getContext()).getLayoutInflater();
+                LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
                 view = layoutInflater.inflate(resource, parent, false);
 
                 friendHolder = new FriendHolder();
