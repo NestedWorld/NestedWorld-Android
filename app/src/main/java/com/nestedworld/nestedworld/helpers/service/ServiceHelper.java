@@ -27,7 +27,7 @@ public final class ServiceHelper {
     public static void stopSocketService(@NonNull final Context context) {
         //Start the service
         Intent intent = new Intent(context, SocketService.class);
-        context.startService(intent);
+        context.stopService(intent);
     }
 
     public static void bindToSocketService(@NonNull final Context context, @NonNull final ServiceConnection serviceConnection) {
