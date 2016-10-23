@@ -5,18 +5,19 @@
 
     <!-- Color for the theme -->
     <!-- 500 = normal / 700 = dark -->
-    <color name="apptheme_color">#03a9f4</color>
-    <color name="apptheme_color_dark">#0288d1</color>
+    <color name="apptheme_color">#2196F3</color>
+    <color name="apptheme_color_dark">#0D47A1</color>
 
+    <!-- Monster overlay color-->
     <color name="holo_blue_light">#ff33b5e5</color>
-    <color name="holo_green_light">#ff99cc00</color>
-    <color name="holo_orange_light">#ffffbb33</color>
     <color name="holo_red_light">#ffff4444</color>
+    <color name="DarkKhaki">#BDB76B</color>
+    <color name="holo_orange_light">#ffffbb33</color>
+    <color name="holo_green_light">#ff99cc00</color>
+
+    <!--Generic color-->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="DarkKhaki">#BDB76B</color>
-    <color name="GreenYellow">#ADFF2F</color>
     <color name="WhiteSmoke">#F5F5F5</color>
     <color name="DarkGray">#a9a9a9</color>
-
 </resources>
