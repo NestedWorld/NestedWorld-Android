@@ -78,9 +78,10 @@ public class HomeFragment extends BaseFragment {
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new HomeFragment());
-        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
-        fragmentTransaction.commit();
+        fragmentTransaction
+                .replace(R.id.container, new HomeFragment())
+                .addToBackStack(FRAGMENT_NAME)
+                .commit();
     }
 
     /*
@@ -93,7 +94,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        initTabs();
+        setupTabs();
         populateUserInfo();
     }
 
@@ -127,16 +128,16 @@ public class HomeFragment extends BaseFragment {
     /*
     ** Private method
      */
-    private void initTabs() {
+    private void setupTabs() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        final TabsAdapter adapter = new TabsAdapter(getChildFragmentManager());
+        //Setup adapter
+        TabsAdapter adapter = new TabsAdapter(getChildFragmentManager());
         adapter.addFragment(getString(R.string.tabHome_title_monsterList), new HomeMonsterFragment());
         adapter.addFragment(getString(R.string.tabHome_title_friendList), new HomeFriendFragment());
-
         viewPager.setAdapter(adapter);
 
         //Add view pager to the tabLayout
