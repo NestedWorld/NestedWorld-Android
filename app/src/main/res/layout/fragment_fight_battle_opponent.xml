@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="25dip"
     android:layout_marginStart="25dip"
-    android:background="@color/white"
+    android:background="@color/WhiteSmokeHalf"
     android:orientation="vertical"
     android:paddingEnd="8dip"
     android:paddingStart="8dip">

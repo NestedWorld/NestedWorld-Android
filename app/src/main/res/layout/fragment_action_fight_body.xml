@@ -19,7 +19,7 @@
         android:layout_height="55dip"
         android:layout_above="@+id/imageView_top_right"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_action_ghost"/>
+        android:src="@drawable/ic_action_ghost_rounded"/>
 
     <ImageView
         android:id="@+id/imageView_bottom"
@@ -27,7 +27,7 @@
         android:layout_height="55dip"
         android:layout_below="@+id/imageView_bottom_right"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_action_ghost"/>
+        android:src="@drawable/ic_action_ghost_rounded"/>
 
     <ImageView
         android:id="@+id/imageView_top_left"
@@ -35,7 +35,7 @@
         android:layout_height="55dip"
         android:layout_above="@+id/imageView_center"
         android:layout_alignStart="@+id/imageView_bottom_left"
-        android:src="@drawable/ic_action_ghost"/>
+        android:src="@drawable/ic_action_ghost_rounded"/>
 
     <ImageView
         android:id="@+id/imageView_top_right"
@@ -43,7 +43,7 @@
         android:layout_height="55dip"
         android:layout_above="@+id/imageView_center"
         android:layout_toEndOf="@+id/imageView_center"
-        android:src="@drawable/ic_action_ghost"/>
+        android:src="@drawable/ic_action_ghost_rounded"/>
 
     <ImageView
         android:id="@+id/imageView_bottom_right"
@@ -51,7 +51,7 @@
         android:layout_height="55dip"
         android:layout_alignStart="@+id/imageView_top_right"
         android:layout_below="@+id/imageView_center"
-        android:src="@drawable/ic_action_ghost"/>
+        android:src="@drawable/ic_action_ghost_rounded"/>
 
     <ImageView
         android:id="@+id/imageView_bottom_left"
@@ -59,7 +59,7 @@
         android:layout_height="55dip"
         android:layout_below="@+id/imageView_center"
         android:layout_toStartOf="@+id/imageView_center"
-        android:src="@drawable/ic_action_ghost"/>
+        android:src="@drawable/ic_action_ghost_rounded"/>
 
 
 </RelativeLayout>

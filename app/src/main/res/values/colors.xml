@@ -19,5 +19,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="WhiteSmoke">#F5F5F5</color>
+    <color name="WhiteSmokeHalf">#99EEEEEE</color>
     <color name="DarkGray">#a9a9a9</color>
 </resources>

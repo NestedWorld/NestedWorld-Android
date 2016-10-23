@@ -6,10 +6,10 @@
                 android:orientation="vertical">
 
     <ImageView
+        android:scaleType="fitXY"
         android:id="@+id/imageView_battle_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/WhiteSmoke"
         android:src="@drawable/logo"/>
 
     <LinearLayout
