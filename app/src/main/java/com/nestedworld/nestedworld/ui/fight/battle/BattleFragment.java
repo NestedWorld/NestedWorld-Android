@@ -63,6 +63,8 @@ public class BattleFragment extends BaseFragment {
     View layoutUser;
     @BindView(R.id.layout_opponent)
     View layoutOpponent;
+    @BindView(R.id.imageView_battle_background)
+    ImageView battleBackground;
     @BindViews({
             R.id.imageView_top,
             R.id.imageView_top_right,
@@ -275,10 +277,13 @@ public class BattleFragment extends BaseFragment {
     }
 
     private void setupEnvironment() {
+        //TODO add missing env
         switch (mStartMessage.env) {
             case "city":
+                battleBackground.setImageResource(R.drawable.citybg);
                 break;
             default:
+                battleBackground.setImageResource(R.drawable.citybg);
                 break;
         }
     }
