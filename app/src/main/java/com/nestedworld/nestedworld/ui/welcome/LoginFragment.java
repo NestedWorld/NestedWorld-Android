@@ -94,9 +94,10 @@ public class LoginFragment extends BaseFragment {
         String password = etPassword.getText().toString();
 
         //Check input
-        if (!checkInputForLogin(email, password)) {
+        //TODO check input (should be a warning)
+        /*if (!checkInputForLogin(email, password)) {
             return;
-        }
+        }*/
 
         //Send login request
         sendLoginRequest(email, password);
