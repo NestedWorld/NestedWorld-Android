@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="25dip"
-    android:layout_marginStart="25dip"
+    android:layout_marginEnd="16dip"
+    android:layout_marginStart="16dip"
     android:background="@color/WhiteSmokeHalf"
     android:orientation="vertical"
     android:paddingEnd="8dip"
@@ -14,6 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RecyclerView_battle_monster"
+            android:layout_width="match_parent"
+            android:layout_height="38dip"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,14 +39,18 @@
                 android:layout_height="wrap_content">
 
                 <ProgressBar
-                    android:id="@+id/progressBar_MonsterLife"
                     style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="@color/apptheme_color"
+                    android:id="@+id/progressBar_MonsterLife"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dip"
                     android:progress="100"/>
 
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/textview_MonsterLife"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -51,10 +60,7 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/RecyclerView_battle_monster"
-            android:layout_width="match_parent"
-            android:layout_height="38dip"/>
+
 
     </LinearLayout>
 
