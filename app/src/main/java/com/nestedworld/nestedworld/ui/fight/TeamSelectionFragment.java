@@ -37,7 +37,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSock
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
-import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleFragment;

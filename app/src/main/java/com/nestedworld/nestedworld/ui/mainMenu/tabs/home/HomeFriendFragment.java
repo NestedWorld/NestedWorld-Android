@@ -42,7 +42,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageTy
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.generic.ResultMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.combat.AskRequest;
-import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;

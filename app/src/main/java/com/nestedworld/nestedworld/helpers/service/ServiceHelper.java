@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.service.SocketService;
+import com.nestedworld.nestedworld.network.socket.service.SocketService;
 
 public final class ServiceHelper {
     /*

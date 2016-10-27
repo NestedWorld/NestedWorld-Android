@@ -69,7 +69,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!--Service-->
-        <service android:name=".service.SocketService"/>
+        <service android:name=".network.socket.service.SocketService"/>
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"

@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.service;
+package com.nestedworld.nestedworld.network.socket.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.events.socket.generic.OnResultResponseEvent;
 import com.nestedworld.nestedworld.gcm.NestedWorldGcm;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.network.socket.handlers.SocketMessageHandler;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.listener.ConnectionListener;
@@ -34,9 +35,12 @@ import com.nestedworld.nestedworld.network.socket.models.message.message.UserPar
 import org.greenrobot.eventbus.EventBus;
 import org.msgpack.value.Value;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SocketService extends Service {
+
+    private final Map<SocketMessageType.MessageKind, SocketMessageHandler> mHandlers = buildHandlers();
 
     private final static String TAG = SocketService.class.getSimpleName();
     private final IBinder mBinder = new LocalBinder();
@@ -80,7 +84,7 @@ public class SocketService extends Service {
             @Override
             public void onMessageReceived(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Do internal job
-                parseMessage(message, messageKind, idKind);
+                handleMessage(message, messageKind, idKind);
             }
         });
 
@@ -104,111 +108,119 @@ public class SocketService extends Service {
     /*
     ** Internal method
      */
-    private void parseMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
+    private void handleMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
         //Handle notification
         NestedWorldGcm.onMessageReceived(this, message, messageKind, idKind);
 
         //Do internal job
-        switch (messageKind) {
-            case TYPE_CHAT_USER_JOINED:
+        mHandlers.get(messageKind).handleMessage(message, messageKind, idKind);
+    }
+
+    private Map<SocketMessageType.MessageKind, SocketMessageHandler> buildHandlers() {
+        //TODO 1 class for each handler
+
+        Map<SocketMessageType.MessageKind, SocketMessageHandler> handler = new HashMap<>();
+        handler.put(SocketMessageType.MessageKind.TYPE_CHAT_USER_JOINED, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
                 UserJoinedMessage userJoinedMessage = new UserJoinedMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnUserJoinedEvent(userJoinedMessage));
-                break;
-            case TYPE_CHAT_USER_PARTED:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_CHAT_USER_PARTED, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
                 UserPartedMessage userPartedMessage = new UserPartedMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnUserPartedEvent(userPartedMessage));
-                break;
-            case TYPE_CHAT_MESSAGE_RECEIVED:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_CHAT_MESSAGE_RECEIVED, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
                 MessageReceivedMessage messageReceivedMessage = new MessageReceivedMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnMessageReceivedEvent(messageReceivedMessage));
-                break;
-            case TYPE_COMBAT_START:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_COMBAT_START, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
                 StartMessage startMessage = new StartMessage(message, messageKind, idKind);
 
                 //Send notification
                 EventBus.getDefault().post(new OnCombatStartMessageEvent(startMessage));
-                break;
-            case TYPE_COMBAT_AVAILABLE:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
                 AvailableMessage availableMessage = new AvailableMessage(message, messageKind, idKind);
                 availableMessage.saveAsCombat();
 
                 //Send event
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
-                break;
-            case TYPE_COMBAT_MONSTER_KO:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_COMBAT_MONSTER_KO, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
                 MonsterKoMessage monsterKoMessage = new MonsterKoMessage(message, messageKind, idKind);
 
                 //Send Event
                 EventBus.getDefault().post(new OnMonsterKoEvent(monsterKoMessage));
-                break;
-            case TYPE_COMBAT_ATTACK_RECEIVED:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_COMBAT_ATTACK_RECEIVED, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
                 AttackReceiveMessage attackReveiveMessage = new AttackReceiveMessage(message, messageKind, idKind);
 
                 //Send Event
                 EventBus.getDefault().post(new OnAttackReceiveEvent(attackReveiveMessage));
-                break;
-            case TYPE_COMBAT_END:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_COMBAT_END, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
                 CombatEndMessage combatEndMessage = new CombatEndMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnCombatEndEvent(combatEndMessage));
-                break;
-            case TYPE_RESULT:
+            }
+        });
+
+        handler.put(SocketMessageType.MessageKind.TYPE_RESULT, new SocketMessageHandler() {
+            @Override
+            public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Generic response
                 ResultMessage resultMessage = new ResultMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnResultResponseEvent(resultMessage));
-                break;
-            case TYPE_GEO_PLACES_CAPTURED:
-                //Who know ?
-                break;
-            case TYPE_AUTHENTICATE:
-                //Shouldn't use it (handle by socketManager)
-                break;
-            case TYPE_COMBAT_MONSTER_REPLACED:
-                //It's a response (it's probably a result for chat:join:chanel)
-                break;
-            case TYPE_CHAT_JOIN_CHANNEL:
-                //It's a response (it's probably a result for chat:join:chanel)
-                break;
-            case TYPE_CHAT_PART_CHANNEL:
-                //It's a response (it's probably a result for chat:part:chanel)
-                break;
-            case TYPE_CHAT_SEND_MESSAGE:
-                //It's a response (it's probably a result for chat:send:message)
-                break;
-            case TYPE_COMBAT_SEND_ATTACK:
-                //It's a response (it's probably a result for combat:send:atk)
-                break;
-            case TYPE_COMBAT_MONSTER_KO_CAPTURE:
-                //It's a response (it's probably a result for monster:ko:capture)
-                break;
-            case TYPE_COMBAT_MONSTER_KO_REPLACE:
-                //It's a response (it's probably a result for monster:ko:replace)
-                break;
-            case TYPE_COMBAT_FLEE:
-                //It's a response (it's probably a result for combat:flee)
-                break;
-            case TYPE_COMBAT_ASK:
-                //It's a response (it's a result for combat:ask)
-            default:
-                break;
-        }
+            }
+        });
+
+        return handler;
     }
 
     /*
