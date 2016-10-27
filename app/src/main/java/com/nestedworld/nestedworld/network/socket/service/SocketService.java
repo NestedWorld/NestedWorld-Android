@@ -41,7 +41,7 @@ import java.util.Map;
 public class SocketService extends Service {
 
     private final static String TAG = SocketService.class.getSimpleName();
-    private final Map<SocketMessageType.MessageKind, SocketMessageHandler> mHandlers = buildHandlers();
+    private final static Map<SocketMessageType.MessageKind, SocketMessageHandler> mHandlers = buildHandlers();
     private final IBinder mBinder = new LocalBinder();
     private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
 
@@ -112,10 +112,15 @@ public class SocketService extends Service {
         NestedWorldGcm.onMessageReceived(this, message, messageKind, idKind);
 
         //Do internal job
-        mHandlers.get(messageKind).handleMessage(message, messageKind, idKind);
+        SocketMessageHandler handler = mHandlers.get(messageKind);
+        if (handler == null) {
+            LogHelper.d(TAG, "Unsupported message: " + messageKind);
+        } else {
+            mHandlers.get(messageKind).handleMessage(message, messageKind, idKind);
+        }
     }
 
-    private Map<SocketMessageType.MessageKind, SocketMessageHandler> buildHandlers() {
+    private static Map<SocketMessageType.MessageKind, SocketMessageHandler> buildHandlers() {
         //TODO 1 class for each handler
 
         Map<SocketMessageType.MessageKind, SocketMessageHandler> handler = new HashMap<>();
