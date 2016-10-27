@@ -40,9 +40,8 @@ import java.util.Map;
 
 public class SocketService extends Service {
 
-    private final Map<SocketMessageType.MessageKind, SocketMessageHandler> mHandlers = buildHandlers();
-
     private final static String TAG = SocketService.class.getSimpleName();
+    private final Map<SocketMessageType.MessageKind, SocketMessageHandler> mHandlers = buildHandlers();
     private final IBinder mBinder = new LocalBinder();
     private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
 

@@ -6,16 +6,16 @@
                 android:orientation="vertical">
 
     <ImageView
-        android:scaleType="fitXY"
         android:id="@+id/imageView_battle_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
         android:src="@drawable/logo"/>
 
     <LinearLayout
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <include
