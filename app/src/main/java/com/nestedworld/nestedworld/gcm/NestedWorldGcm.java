@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.gcm;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.gcm.handler.GcmHandler;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class NestedWorldGcm {
+    private final static String TAG = NestedWorldGcm.class.getSimpleName();
     private final static Map<SocketMessageType.MessageKind, GcmHandler> mHandlers = buildHandlers();
 
     /*
@@ -56,7 +58,16 @@ public final class NestedWorldGcm {
         return handlers;
     }
 
-    private static void handleMessage(@NonNull final Context context, @NonNull final NotificationMessage notification, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
-        mHandlers.get(notification.type).handle(context, notification, messageKind, idKind);
+    private static void handleMessage(@NonNull final Context context,
+                                      @NonNull final NotificationMessage notification,
+                                      @NonNull final SocketMessageType.MessageKind messageKind,
+                                      @Nullable final SocketMessageType.MessageKind idKind) {
+
+        GcmHandler gcmHandler = mHandlers.get(notification.type);
+        if (gcmHandler == null) {
+            Log.d(TAG, "Unsuported messageType" + notification.type);
+        } else {
+            mHandlers.get(notification.type).handle(context, notification, messageKind, idKind);
+        }
     }
 }
