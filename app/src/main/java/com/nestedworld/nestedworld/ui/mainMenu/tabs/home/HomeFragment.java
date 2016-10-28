@@ -182,6 +182,7 @@ public class HomeFragment extends BaseFragment {
         Glide.with(mContext)
                 .load(user.avatar)
                 .placeholder(roundedBitmapDrawable)
+                .error(roundedBitmapDrawable)
                 .centerCrop()
                 .bitmapTransform(new CropCircleTransformation(mContext))
                 .into(imageViewUser);
@@ -189,7 +190,8 @@ public class HomeFragment extends BaseFragment {
         //Display user background
         Glide.with(mContext)
                 .load(user.background)
-                .placeholder(R.color.apptheme_color)
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
                 .into(imageViewUserBackground);
     }
 

@@ -17,6 +17,6 @@ public class welcomeActivity extends BaseAppCompatActivity {
 
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
-        welcomerFragment.load(this.getSupportFragmentManager(), false);
+        welcomeFragment.load(this.getSupportFragmentManager(), false);
     }
 }
