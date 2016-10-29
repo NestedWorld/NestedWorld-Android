@@ -1,19 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Base application theme, put your generic field here-->
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/apptheme_color</item>
+        <item name="android:colorBackground">@color/apptheme_color</item>
+        <item name="colorAccent">@color/apptheme_accent</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:windowBackground">@color/apptheme_color</item>
+        <item name="colorPrimaryDark">@color/apptheme_color_dark</item>
+        <item name="colorButtonNormal">@color/apptheme_color</item>
+        <item name="android:textColorPrimary">@color/apptheme_accent</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <!--Default application theme (used in every activity)-->
     <style name="AppTheme" parent="AppTheme.Base">
     </style>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/apptheme_color</item>
-        <item name="colorPrimaryDark">@color/apptheme_color_dark</item>
-        <item name="colorAccent">@color/apptheme_accent</item>
-        <item name="android:colorBackground">@color/apptheme_background</item>
-        <item name="android:buttonStyle">@style/button</item>
-    </style>
-
+    <!--Custom theme for cold start-->
     <style name="AppTheme.Launcher" parent="AppTheme">
         <item name="android:windowBackground">@drawable/logo_launch</item>
+    </style>
+
+    <!--Button style-->
+    <style name="AppTheme.button" parent="Widget.AppCompat.Button.Colored">
+        <item name="fontPath">fonts/ProximaNova-Reg.ttf</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <!--TextinputLayout-->
+    <style name="AppTheme.TextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="hintTextAppearance">@style/AppTheme.TextFloatLabelAppearance</item>
+        <item name="errorTextAppearance">@style/AppTheme.TextErrorAppearance</item>
+    </style>
+
+    <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
+        <!-- Floating label appearance here -->
+        <item name="android:textColor">@color/apptheme_accent</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="AppTheme.TextErrorAppearance" parent="TextAppearance.Design.Error">
+        <!-- Error message appearance here -->
+        <item name="android:textColor">@color/material_red_500</item>
+    </style>
+
+    <!--Spinner style-->
+    <style name="AppTheme.spinner" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:dropDownSelector">@color/apptheme_color</item>
     </style>
 
 </resources>

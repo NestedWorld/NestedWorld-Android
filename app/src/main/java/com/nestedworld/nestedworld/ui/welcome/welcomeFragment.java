@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 
 import butterknife.OnClick;
@@ -15,20 +15,15 @@ import butterknife.OnClick;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class welcomeFragment extends BaseFragment {
-
-    public final static String FRAGMENT_NAME = welcomeFragment.class.getSimpleName();
+public class WelcomeFragment extends BaseFragment {
 
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Boolean toBackStack) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new welcomeFragment());
-        if (toBackStack) {
-            fragmentTransaction.addToBackStack(FRAGMENT_NAME);
-        }
-        fragmentTransaction.commit();
+    public static void load(@NonNull final FragmentManager fragmentManager) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new WelcomeFragment())
+                .commit();
     }
 
     /*
@@ -36,7 +31,7 @@ public class welcomeFragment extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_register;
+        return R.layout.fragment_welcome;
     }
 
     @Override
@@ -48,12 +43,11 @@ public class welcomeFragment extends BaseFragment {
     ** ButterKnife callback
      */
     @OnClick(R.id.button_login)
-    public void login() {
-        LoginFragment.load(getFragmentManager());
+    public void login() {LoginFragment.load(((BaseAppCompatActivity) mContext).getSupportFragmentManager());
     }
 
     @OnClick(R.id.button_inscription)
     public void createAccount() {
-        CreateAccountFragment.load(getFragmentManager());
+        CreateAccountFragment.load(((BaseAppCompatActivity) mContext).getSupportFragmentManager());
     }
 }

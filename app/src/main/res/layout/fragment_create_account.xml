@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/WhiteSmoke">
+    android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView_createAccount_background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/desc"
@@ -14,37 +14,27 @@
         android:src="@drawable/logo"/>
 
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/nav_back">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="16dip"
             android:paddingRight="16dip">
 
-            <TextView
-                style="@style/TypefaceStyle.ProximaNova.semibold"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dip"
-                android:gravity="center"
-                android:padding="8dip"
-                android:text="@string/registration_msg_joinUs"
-                android:textColor="@color/apptheme_color"
-                android:textSize="22sp"/>
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout_userEmail"
+                style="@style/AppTheme.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dip"
-                android:background="#AAEEEEEE"
-                android:padding="8dip">
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editText_userEmail"
@@ -53,55 +43,63 @@
                     android:layout_height="match_parent"
                     android:hint="@string/registration_editText_email"
                     android:inputType="textEmailAddress"
-                    android:padding="@dimen/global_padding"/>
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout_userPassword"
+                style="@style/AppTheme.TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="8dip"
-                android:background="#AAEEEEEE"
-                android:padding="8dip">
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip"
+                app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editText_userPassword"
-                    style="@style/TypefaceStyle.ProximaNova"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:ems="10"
                     android:hint="@string/registration_editText_password"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:textColor="@color/white"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout_pseudo"
+                style="@style/AppTheme.TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="8dip"
-                android:background="#AAEEEEEE"
-                android:padding="8dip">
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip"
+                app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editText_pseudo"
-                    style="@style/TypefaceStyle.ProximaNova"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:ems="10"
                     android:hint="@string/registration_editText_pseudo"
-                    android:inputType="textEmailAddress"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:inputType="textPersonName"
+                    android:textColor="@color/white"/>
 
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/button_inscription"
-                style="@style/TypefaceStyle"
-                android:layout_width="fill_parent"
+                style="@style/AppTheme.button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:padding="12dip"
-                android:text="@string/registration_msg_inscription"
-                android:textColor="@color/white"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/registration_msg_inscription"/>
 
             <TextView
                 android:id="@+id/textView_forgotPassword"
@@ -112,21 +110,11 @@
                 android:gravity="center"
                 android:padding="@dimen/global_padding"
                 android:text="@string/registration_msg_cgu"
-                android:textColor="@color/apptheme_color"
+                android:textColor="@color/white"
                 android:textSize="16sp"/>
         </LinearLayout>
 
     </ScrollView>
-
-    <ImageButton
-        android:id="@+id/nav_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        android:clickable="true"
-        android:contentDescription="@string/desc"
-        android:padding="@dimen/global_padding"
-        android:src="@drawable/ic_navigation_chevron_left_green"/>
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progressView"

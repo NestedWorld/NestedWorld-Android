@@ -6,10 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.input.InputChecker;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
@@ -25,15 +26,13 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class CreateAccountFragment extends BaseFragment {
-
-    public final static String FRAGMENT_NAME = CreateAccountFragment.class.getSimpleName();
-
     @BindView(R.id.editText_pseudo)
     TextInputEditText etPseudo;
     @BindView(R.id.textInputLayout_pseudo)
@@ -48,16 +47,19 @@ public class CreateAccountFragment extends BaseFragment {
     TextInputLayout textInputLayoutUserPassword;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    @BindView(R.id.imageView_createAccount_background)
+    ImageView imageViewBackground;
 
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
-        fragmentTransaction.replace(R.id.container, new CreateAccountFragment());
-        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
-        fragmentTransaction.commit();
+        fragmentManager
+                .beginTransaction()
+                .setCustomAnimations(R.anim.fade_out, R.anim.fade_in)
+                .replace(R.id.container, new CreateAccountFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     /*
@@ -70,17 +72,12 @@ public class CreateAccountFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-
+        setupBackground();
     }
 
     /*
     ** ButterKnife callback
      */
-    @OnClick(R.id.nav_back)
-    public void back() {
-        getActivity().onBackPressed();
-    }
-
     @OnClick(R.id.button_inscription)
     public void sendCreateAccountRequest() {
 
@@ -101,6 +98,18 @@ public class CreateAccountFragment extends BaseFragment {
     /*
     ** Internal method
      */
+    private void setupBackground() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        Glide.with(mContext)
+                .load(R.drawable.logo)
+                .bitmapTransform(new BlurTransformation(mContext))
+                .into(imageViewBackground);
+    }
+
     private boolean checkInputRegistration(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         //Check email
         if (!InputChecker.checkEmailFormat(email)) {

@@ -17,7 +17,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
-import com.nestedworld.nestedworld.ui.welcome.welcomeActivity;
+import com.nestedworld.nestedworld.ui.welcome.WelcomeActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -116,7 +116,7 @@ public abstract class BaseFragment extends Fragment {
         Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
         //go to launch screen & kill the current context
-        Intent intent = new Intent(mContext, welcomeActivity.class);
+        Intent intent = new Intent(mContext, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
 

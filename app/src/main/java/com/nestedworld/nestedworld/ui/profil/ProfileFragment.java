@@ -20,7 +20,7 @@ import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.welcome.welcomeActivity;
+import com.nestedworld.nestedworld.ui.welcome.WelcomeActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -129,7 +129,7 @@ public class ProfileFragment extends BaseFragment {
         ApplicationHelper.logout(mContext);
 
         //go to launch screen & kill the current context
-        Intent intent = new Intent(mContext, welcomeActivity.class);
+        Intent intent = new Intent(mContext, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

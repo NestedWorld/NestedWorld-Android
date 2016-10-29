@@ -6,10 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.input.InputChecker;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
@@ -25,15 +26,13 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class LoginFragment extends BaseFragment {
-
-    public final static String FRAGMENT_NAME = LoginFragment.class.getSimpleName();
-
     @BindView(R.id.editText_userEmail)
     TextInputEditText etEmail;
     @BindView(R.id.textInputLayout_userEmail)
@@ -44,16 +43,18 @@ public class LoginFragment extends BaseFragment {
     TextInputLayout textInputLayoutUserPassword;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    @BindView(R.id.imageview_login_background)
+    ImageView imageViewBackground;
 
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
-        fragmentTransaction.replace(R.id.container, new LoginFragment());
-        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.fade_out, R.anim.fade_in)
+                .replace(R.id.container, new LoginFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     /*
@@ -66,22 +67,12 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-
+        setupBackground();
     }
 
     /*
     ** ButterKnife callback
      */
-    @OnClick(R.id.nav_back)
-    public void back() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        ((BaseAppCompatActivity) mContext).onBackPressed();
-    }
-
     @OnClick(R.id.button_login)
     public void login() {
         //Check if fragment hasn't been detach
@@ -92,12 +83,6 @@ public class LoginFragment extends BaseFragment {
         //Retrieve user input
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
-
-        //Check input
-        //TODO check input (should be a warning)
-        /*if (!checkInputForLogin(email, password)) {
-            return;
-        }*/
 
         //Send login request
         sendLoginRequest(email, password);
@@ -124,24 +109,16 @@ public class LoginFragment extends BaseFragment {
     /*
     ** Internal method
      */
-    private boolean checkInputForLogin(@NonNull final String email, @NonNull final String password) {
-        //Check email
-        if (!InputChecker.checkEmailFormat(email)) {
-            textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
-            return false;
-        } else {
-            textInputLayoutUserEmail.setErrorEnabled(false);
+    private void setupBackground() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
         }
 
-        //Check password
-        if (!InputChecker.checkPasswordFormat(password)) {
-            textInputLayoutUserPassword.setError(getString(R.string.error_passwordTooShort));
-            return false;
-        } else {
-            textInputLayoutUserPassword.setErrorEnabled(false);
-        }
-
-        return true;
+        Glide.with(this)
+                .load(R.drawable.logo)
+                .bitmapTransform(new BlurTransformation(mContext))
+                .into(imageViewBackground);
     }
 
     private boolean checkInputForForgotPassword(@NonNull final String email) {
