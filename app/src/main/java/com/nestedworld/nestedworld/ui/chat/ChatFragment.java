@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Friend;
@@ -57,8 +58,16 @@ public class ChatFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        //Check if fragment is attach
+        if (mContext == null) {
+            return;
+        }
 
         mFriend = Friend.findById(Friend.class, getArguments().getLong("FRIEND_ID"));
+        if (mFriend == null) {
+            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_SHORT).show();
+            ((BaseAppCompatActivity) mContext).finish();
+        }
 
         setupActionBar();
         initChat();
