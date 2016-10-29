@@ -12,8 +12,8 @@
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/apptheme_color"
-        android:text="Monster characteristics: "/>
+        android:text="Monster characteristics: "
+        android:textColor="@color/apptheme_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,20 +58,20 @@
                 android:textColor="@color/apptheme_color"/>
 
             <TextView
-                android:textColor="@color/apptheme_color"
                 android:id="@+id/textView_monsterHp"
                 style="@style/TypefaceStyle.ProximaNova.light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabMonster_msg_monsterHp"/>
+                android:text="@string/tabMonster_msg_monsterHp"
+                android:textColor="@color/apptheme_color"/>
 
             <TextView
-                android:textColor="@color/apptheme_color"
                 android:id="@+id/textView_monsterSpeed"
                 style="@style/TypefaceStyle.ProximaNova.light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabMonster_msg_monsterSpeed"/>
+                android:text="@string/tabMonster_msg_monsterSpeed"
+                android:textColor="@color/apptheme_color"/>
 
         </LinearLayout>
 

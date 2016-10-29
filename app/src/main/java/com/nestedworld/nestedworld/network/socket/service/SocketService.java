@@ -45,81 +45,6 @@ public class SocketService extends Service {
     private final IBinder mBinder = new LocalBinder();
     private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
 
-    /*
-    ** Life cycle
-     */
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        //Display some log
-        LogHelper.d(TAG, "onBind()");
-
-        return mBinder;
-    }
-
-    @Override
-    public int onStartCommand(final Intent intent, final int flags, final int startId) {
-        //Display some log
-        LogHelper.d(TAG, "onStartCommand()");
-
-        //Instantiate a socketConnection listener
-        NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {
-            @Override
-            public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
-                mNestedWorldSocketAPI = nestedWorldSocketAPI;
-            }
-
-            @Override
-            public void onConnectionLost() {
-                mNestedWorldSocketAPI = null;
-
-                //Clean API
-                NestedWorldSocketAPI.reset();
-
-                //Re-init API
-                onStartCommand(intent, flags, startId);
-            }
-
-            @Override
-            public void onMessageReceived(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
-                //Do internal job
-                handleMessage(message, messageKind, idKind);
-            }
-        });
-
-        return START_NOT_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        NestedWorldSocketAPI.reset();
-    }
-
-    /*
-    ** Public method (for client)
-     */
-    @Nullable
-    public NestedWorldSocketAPI getApiInstance() {
-        LogHelper.d(TAG, "returning instance (isNull=" + (mNestedWorldSocketAPI == null) + ")");
-        return mNestedWorldSocketAPI;
-    }
-
-    /*
-    ** Internal method
-     */
-    private void handleMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
-        //Handle notification
-        NestedWorldGcm.onMessageReceived(this, message, messageKind, idKind);
-
-        //Do internal job
-        SocketMessageHandler handler = mHandlers.get(messageKind);
-        if (handler == null) {
-            LogHelper.d(TAG, "Unsupported message: " + messageKind);
-        } else {
-            mHandlers.get(messageKind).handleMessage(message, messageKind, idKind);
-        }
-    }
-
     private static Map<SocketMessageType.MessageKind, SocketMessageHandler> buildHandlers() {
         //TODO 1 class for each handler
 
@@ -225,6 +150,81 @@ public class SocketService extends Service {
         });
 
         return handler;
+    }
+
+    /*
+    ** Life cycle
+     */
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        //Display some log
+        LogHelper.d(TAG, "onBind()");
+
+        return mBinder;
+    }
+
+    @Override
+    public int onStartCommand(final Intent intent, final int flags, final int startId) {
+        //Display some log
+        LogHelper.d(TAG, "onStartCommand()");
+
+        //Instantiate a socketConnection listener
+        NestedWorldSocketAPI.getInstance().addListener(new ConnectionListener() {
+            @Override
+            public void onConnectionReady(@NonNull NestedWorldSocketAPI nestedWorldSocketAPI) {
+                mNestedWorldSocketAPI = nestedWorldSocketAPI;
+            }
+
+            @Override
+            public void onConnectionLost() {
+                mNestedWorldSocketAPI = null;
+
+                //Clean API
+                NestedWorldSocketAPI.reset();
+
+                //Re-init API
+                onStartCommand(intent, flags, startId);
+            }
+
+            @Override
+            public void onMessageReceived(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+                //Do internal job
+                handleMessage(message, messageKind, idKind);
+            }
+        });
+
+        return START_NOT_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        NestedWorldSocketAPI.reset();
+    }
+
+    /*
+    ** Public method (for client)
+     */
+    @Nullable
+    public NestedWorldSocketAPI getApiInstance() {
+        LogHelper.d(TAG, "returning instance (isNull=" + (mNestedWorldSocketAPI == null) + ")");
+        return mNestedWorldSocketAPI;
+    }
+
+    /*
+    ** Internal method
+     */
+    private void handleMessage(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
+        //Handle notification
+        NestedWorldGcm.onMessageReceived(this, message, messageKind, idKind);
+
+        //Do internal job
+        SocketMessageHandler handler = mHandlers.get(messageKind);
+        if (handler == null) {
+            LogHelper.d(TAG, "Unsupported message: " + messageKind);
+        } else {
+            mHandlers.get(messageKind).handleMessage(message, messageKind, idKind);
+        }
     }
 
     /*

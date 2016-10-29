@@ -46,22 +46,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/global_padding">
+
         <Button
             android:id="@+id/button_login"
             style="@style/AppTheme.button"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:text="@string/registration_msg_login"/>
 
         <Button
             android:id="@+id/button_inscription"
             style="@style/AppTheme.button"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:text="@string/registration_msg_inscription"/>
     </LinearLayout>
 </RelativeLayout>

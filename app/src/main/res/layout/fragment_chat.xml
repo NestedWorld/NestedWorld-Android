@@ -27,8 +27,8 @@
             android:inputType="text"/>
 
         <Button
-            style="@style/AppTheme.button"
             android:id="@+id/button_send_message"
+            style="@style/AppTheme.button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/chat_msg_button"/>

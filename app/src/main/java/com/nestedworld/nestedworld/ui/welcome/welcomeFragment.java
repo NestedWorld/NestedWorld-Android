@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 
 import butterknife.OnClick;
@@ -43,7 +42,8 @@ public class WelcomeFragment extends BaseFragment {
     ** ButterKnife callback
      */
     @OnClick(R.id.button_login)
-    public void login() {LoginFragment.load(getFragmentManager());
+    public void login() {
+        LoginFragment.load(getFragmentManager());
     }
 
     @OnClick(R.id.button_inscription)

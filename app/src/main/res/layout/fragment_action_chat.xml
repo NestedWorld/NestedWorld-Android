@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="8dip"
-            android:textColor="@color/apptheme_color"
-            android:text="@string/chat_msg_start_chat"/>
+            android:text="@string/chat_msg_start_chat"
+            android:textColor="@color/apptheme_color"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout_friend_list"

@@ -328,7 +328,6 @@ public class BattleFragment extends BaseFragment {
     }
 
     private void setupEnvironment() {
-        //TODO add missing env
         switch (mStartMessage.env) {
             case "city":
                 battleBackground.setImageResource(R.drawable.citybg);

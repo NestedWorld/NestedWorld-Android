@@ -75,8 +75,8 @@
         </TableRow>
 
         <Button
-            style="@style/AppTheme.button"
             android:id="@+id/button_go_fight"
+            style="@style/AppTheme.button"
             android:layout_width="58dip"
             android:layout_height="58dip"
             android:layout_gravity="center"

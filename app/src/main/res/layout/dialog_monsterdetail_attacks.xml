@@ -9,29 +9,29 @@
     android:padding="8dip">
 
     <TextView
-        android:textColor="@color/apptheme_color"
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/monsterDetail_title_attack"/>
+        android:text="@string/monsterDetail_title_attack"
+        android:textColor="@color/apptheme_color"/>
 
     <TextView
-        android:textColor="@color/apptheme_color"
         android:id="@+id/textview_monster_no_attack"
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="8dip"
-        android:text="@string/monsterDetail_no_attack"/>
+        android:text="@string/monsterDetail_no_attack"
+        android:textColor="@color/apptheme_color"/>
 
     <ListView
         android:id="@+id/listview_monter_attack"
-        android:divider="@color/apptheme_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dip"
+        android:divider="@color/apptheme_color"
         android:dividerHeight="1dp"
+        android:padding="8dip"
         android:visibility="gone"/>
 
 </LinearLayout>
