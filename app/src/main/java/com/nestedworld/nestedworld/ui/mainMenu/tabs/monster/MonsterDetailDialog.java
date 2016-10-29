@@ -234,8 +234,8 @@ public class MonsterDetailDialog extends DialogFragment {
             TextView textViewAttackType = (TextView) view.findViewById(R.id.textview_attackType);
             TextView textViewAttackName = (TextView) view.findViewById(R.id.textView_attackName);
 
-            String attackType = attack.type == null ? "unknown" : attack.type;
-            String attackName = attack.name == null ? "unknown" : attack.name;
+            String attackType = attack.type == null ? "Unknown" : attack.type;
+            String attackName = attack.name == null ? "Unknown" : attack.name;
 
             textViewAttackType.setText(String.format(getContext().getString(R.string.item_attack_msg_attackType), attackType));
             textViewAttackName.setText(String.format(getContext().getString(R.string.item_attack_msg_attackName), attackName));

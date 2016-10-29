@@ -12,6 +12,7 @@
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/apptheme_color"
         android:text="Monster characteristics: "/>
 
     <LinearLayout
@@ -37,23 +38,27 @@
                 style="@style/TypefaceStyle.ProximaNova.light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabMonster_msg_monsterName"/>
+                android:text="@string/tabMonster_msg_monsterName"
+                android:textColor="@color/apptheme_color"/>
 
             <TextView
                 android:id="@+id/textView_monsterAttack"
                 style="@style/TypefaceStyle.ProximaNova.light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabMonster_msg_monsterAttack"/>
+                android:text="@string/tabMonster_msg_monsterAttack"
+                android:textColor="@color/apptheme_color"/>
 
             <TextView
                 android:id="@+id/textView_monsterDefence"
                 style="@style/TypefaceStyle.ProximaNova.light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tabMonster_msg_monsterDefence"/>
+                android:text="@string/tabMonster_msg_monsterDefence"
+                android:textColor="@color/apptheme_color"/>
 
             <TextView
+                android:textColor="@color/apptheme_color"
                 android:id="@+id/textView_monsterHp"
                 style="@style/TypefaceStyle.ProximaNova.light"
                 android:layout_width="wrap_content"
@@ -61,6 +66,7 @@
                 android:text="@string/tabMonster_msg_monsterHp"/>
 
             <TextView
+                android:textColor="@color/apptheme_color"
                 android:id="@+id/textView_monsterSpeed"
                 style="@style/TypefaceStyle.ProximaNova.light"
                 android:layout_width="wrap_content"

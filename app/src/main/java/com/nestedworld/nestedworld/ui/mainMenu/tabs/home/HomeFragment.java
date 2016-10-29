@@ -48,7 +48,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  */
 public class HomeFragment extends BaseFragment {
 
-    public final static String FRAGMENT_NAME = HomeFragment.class.getSimpleName();
     private final int PICK_PROFIL_IMAGE_REQUEST = 1;
     private final int PICK_BACKGROUND_IMAGE_REQUEST = 2;
 
@@ -80,7 +79,7 @@ public class HomeFragment extends BaseFragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction
                 .replace(R.id.container, new HomeFragment())
-                .addToBackStack(FRAGMENT_NAME)
+                .addToBackStack(null)
                 .commit();
     }
 

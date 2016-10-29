@@ -9,12 +9,14 @@
     android:padding="8dip">
 
     <TextView
+        android:textColor="@color/apptheme_color"
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/monsterDetail_title_attack"/>
 
     <TextView
+        android:textColor="@color/apptheme_color"
         android:id="@+id/textview_monster_no_attack"
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
@@ -25,9 +27,11 @@
 
     <ListView
         android:id="@+id/listview_monter_attack"
-        android:layout_width="wrap_content"
+        android:divider="@color/apptheme_color"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dip"
+        android:dividerHeight="1dp"
         android:visibility="gone"/>
 
 </LinearLayout>

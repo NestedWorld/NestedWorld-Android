@@ -65,10 +65,13 @@ public class MapFragment extends BaseFragment implements LocationListener {
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
 
-        //we start the loading animation
-        if (progressView != null) {
-            progressView.start();
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
         }
+
+        //Start loading animation
+        progressView.start();
 
         //init MapView
         mMapView.onCreate(savedInstanceState);

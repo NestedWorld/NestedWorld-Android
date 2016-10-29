@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/WhiteSmoke"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dip">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:id="@+id/ViewPagerArrowIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/WhiteSmoke"
             android:padding="8dip"
             app:arrow.width="25dip"
             app:left_arrow.drawable="@drawable/ic_arrow_left"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dip"
-            android:background="@color/white"
+            android:background="@color/WhiteSmoke"
             android:gravity="center"
             android:padding="8dip">
 
@@ -75,6 +75,7 @@
         </TableRow>
 
         <Button
+            style="@style/AppTheme.button"
             android:id="@+id/button_go_fight"
             android:layout_width="58dip"
             android:layout_height="58dip"
@@ -86,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dip"
-            android:background="@color/white"
+            android:background="@color/WhiteSmoke"
             android:orientation="horizontal"
             android:padding="8dip">
 

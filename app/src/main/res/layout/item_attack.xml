@@ -9,11 +9,13 @@
     <TextView
         android:id="@+id/textview_attackType"
         style="@style/TypefaceStyle.ProximaNova.light"
+        android:textColor="@color/apptheme_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_attack_msg_attackType"/>
 
     <TextView
+        android:textColor="@color/apptheme_color"
         android:id="@+id/textView_attackName"
         style="@style/TypefaceStyle.ProximaNova.light"
         android:layout_width="wrap_content"

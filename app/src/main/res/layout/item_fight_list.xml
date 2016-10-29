@@ -6,6 +6,7 @@
               android:padding="8dip">
 
     <TextView
+        android:text="Unknown"
         android:id="@+id/textView_item_fight_dsc"
         style="@style/TypefaceStyle.ProximaNova.semibold"
         android:layout_width="wrap_content"
@@ -13,7 +14,7 @@
         android:layout_gravity="center"
         android:gravity="center|start"
         android:padding="8dip"
-        android:textColor="@color/apptheme_color"/>
+        android:textColor="@color/white"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -22,12 +23,14 @@
         android:gravity="end">
 
         <Button
+            style="@style/AppTheme.button"
             android:id="@+id/button_item_fight_accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fightList_msg_acceptFight"/>
 
         <Button
+            style="@style/AppTheme.button"
             android:id="@+id/button_item_fight_refuse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

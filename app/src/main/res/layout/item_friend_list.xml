@@ -15,15 +15,16 @@
     <TextView
         android:id="@+id/textView_item_friend"
         style="@style/TypefaceStyle.ProximaNova.light"
+        android:textColor="@color/apptheme_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center|start"
-        android:padding="8dip"
-        android:textColor="@color/apptheme_color"/>
+        android:padding="8dip"/>
 
     <Button
+        style="@style/AppTheme.button"
         android:id="@+id/button_defy_friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
