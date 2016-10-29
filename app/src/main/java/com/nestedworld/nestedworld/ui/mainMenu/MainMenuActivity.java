@@ -98,7 +98,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         //Calculate the number of fight and update icon
         //we don't have to check for 0 (see buildCounterDrawable())
         int numberOfFight = Select.from(Combat.class).list().size();
-        menuItem.setIcon(DrawableHelper.buildCounterDrawable(this, numberOfFight, R.drawable.ic_action_sword));
+        menuItem.setIcon(DrawableHelper.buildCounterDrawable(this, numberOfFight, R.drawable.ic_sword_white_18dp));
         return true;
     }
 
@@ -190,11 +190,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private void initTabs() {
         final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
-        adapter.addFragment("", new HomeFragment(), R.drawable.account_balance);
-        adapter.addFragment("", new MonstersFragment(), R.drawable.ic_action_ghost);
-        adapter.addFragment("", new MapFragment(), R.drawable.ic_action_map);
-        adapter.addFragment("", new ToolsFragment(), R.drawable.ic_action_sword);
-        adapter.addFragment("", new ShopFragment(), R.drawable.ic_action_cart);
+        adapter.addFragment("", new HomeFragment(), R.drawable.ic_home_white_18dp);
+        adapter.addFragment("", new MonstersFragment(), R.drawable.ic_ghost_white_18dp);
+        adapter.addFragment("", new MapFragment(), R.drawable.ic_map_marker_radius_white_18dp);
+        adapter.addFragment("", new ToolsFragment(), R.drawable.ic_sword_white_18dp);
+        adapter.addFragment("", new ShopFragment(), R.drawable.ic_cart_plus_white_18dp);
 
         viewPager.setAdapter(adapter);
 

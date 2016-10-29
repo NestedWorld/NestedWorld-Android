@@ -24,8 +24,6 @@
     <string name="registration_editText_password">Password</string>
     <string name="registration_msg_inscription">Registration</string>
     <string name="registration_msg_login">Log in</string>
-    <string name="registration_msg_login_full">Login to access your personal account</string>
-    <string name="registration_msg_joinUs">Join us !</string>
     <string name="registration_msg_cgu">By clicking \'Registration\' you accept the therm of use.</string>
     <string name="registration_msg_forgotPassword">Forgot password ?</string>
     <string name="registration_msg_passwordSend">You will receive an email soon.</string>

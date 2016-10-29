@@ -88,8 +88,7 @@
                     android:gravity="center"
                     android:lines="2"
                     android:maxLines="2"
-                    android:text="@string/tabHome_title_creditsNumber"
-                    android:textColor="@color/DarkGray"/>
+                    android:text="@string/tabHome_title_creditsNumber"/>
 
                 <TextView
                     android:id="@+id/textView_creditsNumber"
@@ -98,7 +97,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dip"
                     android:gravity="center"
-                    android:textColor="@color/DarkGray"
                     android:textSize="22sp"/>
 
             </LinearLayout>
@@ -120,8 +118,7 @@
                     android:gravity="center"
                     android:lines="2"
                     android:maxLines="2"
-                    android:text="@string/tabHome_title_monsterCaptured"
-                    android:textColor="@color/DarkGray"/>
+                    android:text="@string/tabHome_title_monsterCaptured"/>
 
                 <TextView
                     android:id="@+id/textView_monsterCaptured"
@@ -130,7 +127,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dip"
                     android:gravity="center"
-                    android:textColor="@color/DarkGray"
                     android:textSize="22sp"/>
             </LinearLayout>
 
@@ -151,8 +147,7 @@
                     android:gravity="center"
                     android:lines="2"
                     android:maxLines="2"
-                    android:text="@string/tabHome_title_areaCaptured"
-                    android:textColor="@color/DarkGray"/>
+                    android:text="@string/tabHome_title_areaCaptured"/>
 
                 <TextView
                     android:id="@+id/textView_areaCaptured"
@@ -161,7 +156,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dip"
                     android:gravity="center"
-                    android:textColor="@color/DarkGray"
                     android:textSize="22sp"/>
             </LinearLayout>
 
@@ -182,8 +176,7 @@
                     android:gravity="center"
                     android:lines="2"
                     android:maxLines="2"
-                    android:text="@string/tabHome_title_allyOnline"
-                    android:textColor="@color/DarkGray"/>
+                    android:text="@string/tabHome_title_allyOnline"/>
 
                 <TextView
                     android:id="@+id/textView_allyOnline"
@@ -192,7 +185,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dip"
                     android:gravity="center"
-                    android:textColor="@color/DarkGray"
                     android:textSize="22sp"/>
             </LinearLayout>
 
