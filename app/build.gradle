@@ -2,12 +2,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 25
         applicationId "com.kassisdion.nestedworld"
         versionCode 1
         versionName "1.0"
@@ -56,10 +56,31 @@ android {
             resValue "string", "app_name", "Nestedworld Prod"
         }
     }
+    //Special rules for allowing only some buildType/flavor pair
+    //Loop over variants
+   variantFilter { variant ->
+       //Loop over flavor
+        variant.getFlavors().each { flavor ->
+            //If we build a build dev flavor, we just want to ignore the "default" buildType
+            if (flavor.name.equals('dev')) {
+                //If it's a "default" buildtype, ignore it
+                if (variant.buildType.name.equals('debug') || variant.buildType.name.equals('release')) {
+                    variant.setIgnore(true)
+                }
+            }
+            //If we build a build prod flavor, we only a back_prod buildType
+            else if (flavor.name.equals('prod')) {
+                //If it's not a back_prod buildType, ignore it
+                if (!variant.buildType.name.equals('with_back_prod')) {
+                    variant.setIgnore(true)
+                }
+            }
+        }
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ext {
-    supportLibVersion = '24.2.1'
+    supportLibVersion = '25.0.0'
     retrofitVersion = '2.1.0'
     okHttpVersion = '3.4.1'
     butterknifeVersion = '8.4.0'
@@ -71,7 +92,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     //GPS
-    compile 'com.google.android.gms:play-services:9.6.1'
+    compile 'com.google.android.gms:play-services:9.8.0'
 
     //Annotation replacing findViewById()
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
