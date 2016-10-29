@@ -43,11 +43,11 @@ public class WelcomeFragment extends BaseFragment {
     ** ButterKnife callback
      */
     @OnClick(R.id.button_login)
-    public void login() {LoginFragment.load(((BaseAppCompatActivity) mContext).getSupportFragmentManager());
+    public void login() {LoginFragment.load(getFragmentManager());
     }
 
     @OnClick(R.id.button_inscription)
     public void createAccount() {
-        CreateAccountFragment.load(((BaseAppCompatActivity) mContext).getSupportFragmentManager());
+        CreateAccountFragment.load(getFragmentManager());
     }
 }
