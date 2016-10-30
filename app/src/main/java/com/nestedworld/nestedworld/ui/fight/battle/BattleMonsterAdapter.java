@@ -80,7 +80,7 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
 
         //Display monster picture
         Glide.with(getContext())
-                .load(monster.sprite)
+                .load(monster.base_sprite)
                 .placeholder(R.drawable.default_monster)
                 .centerCrop()
                 .into(holder.imageViewMonster);

@@ -110,7 +110,7 @@ public class OpponentPlayerManager extends PlayerManager {
         Monster monsterInfos = monster.info();
         if (monsterInfos != null) {
             Glide.with(context)
-                    .load(monsterInfos.sprite)
+                    .load(monsterInfos.base_sprite)
                     .placeholder(R.drawable.default_monster)
                     .error(R.drawable.default_monster)
                     .centerCrop()

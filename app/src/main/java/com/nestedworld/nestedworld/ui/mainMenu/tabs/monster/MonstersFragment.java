@@ -191,7 +191,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
             //Display monster picture
             final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
-                    .load(monster.sprite)
+                    .load(monster.base_sprite)
                     .placeholder(R.drawable.default_monster)
                     .centerCrop()
                     .into(imageViewMonster);

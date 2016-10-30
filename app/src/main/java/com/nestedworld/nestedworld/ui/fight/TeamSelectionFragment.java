@@ -386,7 +386,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             //Display monster picture
             final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(mContext)
-                    .load(monsterInfo.sprite)
+                    .load(monsterInfo.base_sprite)
                     .placeholder(R.drawable.default_monster)
                     .centerCrop()
                     .into(imageViewMonster);

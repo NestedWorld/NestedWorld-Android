@@ -119,7 +119,7 @@ public class HomeMonsterFragment extends BaseFragment {
             //Display monster picture
             final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(getContext())
-                    .load(monsterInfo.sprite)
+                    .load(monsterInfo.base_sprite)
                     .placeholder(R.drawable.default_monster)
                     .centerCrop()
                     .into(imageViewMonster);

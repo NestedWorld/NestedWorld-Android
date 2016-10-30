@@ -32,7 +32,10 @@ public class Monster extends SugarRecord {
     public String name;
 
     @Expose
-    public String sprite;
+    public String enraged_sprite;
+
+    @Expose
+    public String base_sprite;
 
     @Expose
     public String type;
@@ -54,7 +57,8 @@ public class Monster extends SugarRecord {
                 ", hp='" + hp + '\'' +
                 ", defense=" + defense +
                 ", name='" + name + '\'' +
-                ", sprite='" + sprite + '\'' +
+                ", enraged_sprite='" + enraged_sprite + '\'' +
+                ", base_sprite='" + base_sprite + '\'' +
                 ", type='" + type + '\'' +
                 ", speed='" + speed + '\'' +
                 '}';
