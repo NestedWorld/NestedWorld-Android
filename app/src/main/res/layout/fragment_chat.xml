@@ -19,6 +19,8 @@
         android:padding="8dip">
 
         <EditText
+            android:textColor="@color/apptheme_color"
+            android:textColorHint="@color/apptheme_color"
             android:id="@+id/editText_chat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
