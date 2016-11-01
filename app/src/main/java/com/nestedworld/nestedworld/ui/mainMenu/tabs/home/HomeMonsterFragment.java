@@ -8,13 +8,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.adapter.UserMonsterAdapter;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
 import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;

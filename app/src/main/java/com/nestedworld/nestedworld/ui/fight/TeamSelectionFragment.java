@@ -56,6 +56,7 @@ import butterknife.BindViews;
 
 public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
+    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     @BindViews({
             R.id.imageview_selectedmonster_1,
             R.id.imageview_selectedmonster_2,
@@ -72,8 +73,6 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     Button button_go_fight;
     @BindView(R.id.progressView)
     ProgressView progressView;
-
-    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     private List<UserMonster> mUserMonsters;
     private Combat mCurrentCombat;
 

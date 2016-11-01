@@ -13,7 +13,6 @@ import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.dialog.AddFriendDialog;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.events.socket.generic.OnResultResponseEvent;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.generic.ResultMessage;

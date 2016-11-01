@@ -19,14 +19,14 @@
         android:padding="8dip">
 
         <EditText
-            android:textColor="@color/apptheme_color"
-            android:textColorHint="@color/apptheme_color"
             android:id="@+id/editText_chat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/chat_title"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:textColor="@color/apptheme_color"
+            android:textColorHint="@color/apptheme_color"/>
 
         <Button
             android:id="@+id/button_send_message"

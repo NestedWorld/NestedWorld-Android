@@ -45,11 +45,11 @@
 
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/WhiteSmoke">
+            android:background="@color/WhiteSmoke"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageview_selectedmonster_1"

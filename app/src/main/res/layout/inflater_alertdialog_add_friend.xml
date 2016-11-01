@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="8dip"
-    android:gravity="center">
+    android:padding="8dip">
 
     <com.rey.material.widget.ProgressView
-        android:visibility="gone"
         android:id="@+id/progressView"
         android:layout_width="48dip"
         android:layout_height="48dip"
+        android:visibility="gone"
         app:pv_autostart="false"
         app:pv_circular="true"
         app:pv_progressMode="indeterminate"
