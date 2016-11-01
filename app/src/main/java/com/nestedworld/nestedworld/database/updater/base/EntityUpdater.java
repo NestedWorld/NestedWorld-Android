@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.database.updater.base;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
@@ -39,7 +40,7 @@ public abstract class EntityUpdater<T> {
         return makeRequest();
     }
 
-    public void start(@NonNull final OnEntityUpdated onEntityUpdated) {
+    public void start(@Nullable final OnEntityUpdated onEntityUpdated) {
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... params) {
@@ -48,10 +49,12 @@ public abstract class EntityUpdater<T> {
 
             @Override
             protected void onPostExecute(Boolean result) {
-                if (result) {
-                    onEntityUpdated.onSuccess();
-                } else {
-                    onEntityUpdated.onError(OnEntityUpdated.KIND.SERVER);
+                if (onEntityUpdated != null) {
+                    if (result) {
+                        onEntityUpdated.onSuccess();
+                    } else {
+                        onEntityUpdated.onError(OnEntityUpdated.KIND.SERVER);
+                    }
                 }
             }
         }.execute();
