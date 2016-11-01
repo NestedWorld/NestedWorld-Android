@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/apptheme_color"
-        android:dividerHeight="1dp"
+        android:dividerHeight="0.5dip"
         android:padding="8dip"
         android:visibility="gone"/>
 

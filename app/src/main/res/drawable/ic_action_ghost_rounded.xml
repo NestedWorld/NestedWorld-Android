@@ -6,9 +6,5 @@
         </shape>
     </item>
     <item
-        android:top="100dip"
-        android:bottom="100dip"
-        android:left="100dip"
-        android:right="100dip"
         android:drawable="@drawable/ic_action_ghost"/>
 </layer-list>

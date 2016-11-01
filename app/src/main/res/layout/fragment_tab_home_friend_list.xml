@@ -7,6 +7,10 @@
     android:orientation="vertical">
 
     <ListView
+        android:paddingStart="8dip"
+        android:paddingEnd="8dip"
+        android:divider="@color/apptheme_color"
+        android:dividerHeight="0.5dip"
         android:id="@+id/listView_home_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

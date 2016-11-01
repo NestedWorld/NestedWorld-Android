@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/apptheme_color_dark"
+        android:divider="@color/apptheme_color"
         android:orientation="vertical"
         android:padding="8dip"
         android:showDividers="middle">
@@ -109,8 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dip"
             android:padding="8dip"
-            android:text="@string/profile_msg_logout"
-            android:textColor="@color/white"/>
+            android:text="@string/profile_msg_logout"/>
 
     </LinearLayout>
 
