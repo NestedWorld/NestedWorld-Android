@@ -55,13 +55,10 @@ public class ProfileFragment extends BaseFragment {
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, final boolean toBackStack) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new ProfileFragment());
-        if (toBackStack) {
-            fragmentTransaction.addToBackStack(FRAGMENT_NAME);
-        }
-        fragmentTransaction.commit();
+    public static void load(@NonNull final FragmentManager fragmentManager) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new ProfileFragment())
+                .commit();
     }
 
     /*

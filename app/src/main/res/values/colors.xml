@@ -8,6 +8,7 @@
     <color name="apptheme_color">#607d8b</color>
     <color name="apptheme_color_dark">#455a64</color>
     <color name="apptheme_accent">#4dd0e1</color>
+    <color name="apptheme_background">#F5F5F5</color>
 
     <!-- Monster overlay color-->
     <color name="holo_blue_light">#ff33b5e5</color>
@@ -20,6 +21,5 @@
     <color name="material_red_500">#f44336</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="WhiteSmoke">#F5F5F5</color>
     <color name="WhiteSmokeHalf">#66EEEEEE</color>
 </resources>

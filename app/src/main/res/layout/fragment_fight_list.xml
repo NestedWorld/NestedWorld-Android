@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefreshLayout_fight_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dip">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout_fight_list"
+    <ListView
+        android:divider="@color/apptheme_color"
+        android:dividerHeight="1dip"
+        android:id="@+id/listView_fightList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbarSize="3dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        android:scrollingCache="true"
+        android:smoothScrollbar="true"/>
 
-        <ListView
-            android:id="@+id/listView_fightList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarSize="3dp"
-            android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical"
-            android:scrollingCache="true"
-            android:smoothScrollbar="true"/>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

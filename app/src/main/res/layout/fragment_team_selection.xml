@@ -4,22 +4,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dip">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dip"
+
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/apptheme_color"
+            android:orientation="horizontal"
+            android:padding="8dip">
+
+            <ImageView
+                android:src="@drawable/default_avatar"
+                android:layout_width="38dip"
+                android:layout_height="38dip"/>
+
+            <ImageView
+                android:layout_weight="1"
+                android:src="@drawable/logo_rounded"
+                android:layout_width="38dip"
+                android:layout_height="38dip"/>
+
+            <ImageView
+                android:src="@drawable/default_avatar"
+                android:layout_width="38dip"
+                android:layout_height="38dip"/>
+
+        </LinearLayout>
+
         <com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator
+            android:layout_marginTop="8dip"
             android:id="@+id/ViewPagerArrowIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/WhiteSmoke"
+            android:background="@color/white"
             android:padding="8dip"
             app:arrow.width="25dip"
             app:left_arrow.drawable="@drawable/ic_arrow_left"
@@ -45,9 +70,9 @@
 
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/WhiteSmoke"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -90,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dip"
-            android:background="@color/WhiteSmoke"
+            android:background="@color/white"
             android:orientation="horizontal"
             android:padding="8dip">
 

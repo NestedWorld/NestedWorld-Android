@@ -26,7 +26,7 @@ public class ProfileActivity extends BaseAppCompatActivity {
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
         setUpToolbar();
-        ProfileFragment.load(getSupportFragmentManager(), false);
+        ProfileFragment.load(getSupportFragmentManager());
     }
 
     /*

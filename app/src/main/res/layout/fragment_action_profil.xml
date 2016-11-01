@@ -15,6 +15,7 @@
         <TextView
             android:id="@+id/textView_gender"
             style="@style/TypefaceStyle.ProximaNova.light"
+            android:textColor="@color/apptheme_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -24,6 +25,7 @@
         <TextView
             android:id="@+id/textView_pseudo"
             style="@style/TypefaceStyle.ProximaNova.light"
+            android:textColor="@color/apptheme_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -31,6 +33,7 @@
             android:padding="8dip"/>
 
         <TextView
+            android:textColor="@color/apptheme_color"
             android:id="@+id/textView_birthDate"
             style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
@@ -40,6 +43,7 @@
             android:padding="8dip"/>
 
         <TextView
+            android:textColor="@color/apptheme_color"
             android:id="@+id/textView_city"
             style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
@@ -49,6 +53,7 @@
             android:padding="8dip"/>
 
         <TextView
+            android:textColor="@color/apptheme_color"
             android:id="@+id/textView_registeredAt"
             style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
@@ -58,6 +63,7 @@
             android:padding="8dip"/>
 
         <TextView
+            android:textColor="@color/apptheme_color"
             android:id="@+id/textView_email"
             style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
@@ -67,6 +73,7 @@
             android:padding="8dip"/>
 
         <TextView
+            android:textColor="@color/apptheme_color"
             android:id="@+id/textView_backgroundUrl"
             style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
@@ -76,6 +83,7 @@
             android:padding="8dip"/>
 
         <TextView
+            android:textColor="@color/apptheme_color"
             android:id="@+id/textView_level"
             style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
@@ -85,6 +93,7 @@
             android:padding="8dip"/>
 
         <TextView
+            android:textColor="@color/apptheme_color"
             android:id="@+id/textView_avatar"
             style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
