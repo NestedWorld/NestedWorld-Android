@@ -1,32 +1,19 @@
 package com.nestedworld.nestedworld.ui.chat;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.FriendsAdapter;
 import com.nestedworld.nestedworld.database.models.Friend;
-import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
@@ -37,7 +24,6 @@ import com.rey.material.widget.ProgressView;
 import java.util.List;
 
 import butterknife.BindView;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class FriendListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
