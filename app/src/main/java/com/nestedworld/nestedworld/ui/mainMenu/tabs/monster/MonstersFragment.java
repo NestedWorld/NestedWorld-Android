@@ -24,6 +24,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.dialog.MonsterDetailDialog;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 
@@ -137,7 +138,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Monster selectedMonster = mAdapter.getItem(position);
                 if (selectedMonster != null) {
-                    MonsterDetailDialog.newInstance(selectedMonster).show(getChildFragmentManager(), TAG);
+                    MonsterDetailDialog.show(getChildFragmentManager(), selectedMonster);
                 }
             }
         });

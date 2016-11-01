@@ -105,6 +105,7 @@ dependencies {
 
     //Material design support helper
     compile 'com.github.rey5137:material:1.2.4'
+    compile 'com.avast:android-styled-dialogs:2.3.3'
 
     //API
     compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"//send request

@@ -17,8 +17,8 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
+import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.mainMenu.tabs.monster.MonsterDetailDialog;
 import com.orm.query.Select;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class HomeMonsterFragment extends BaseFragment {
                 if (selectedUserMonster != null) {
                     Monster selectedMonster = selectedUserMonster.info();
                     if (selectedMonster != null) {
-                        HomeMonsterDetailDialog.newInstance(selectedMonster).show(getChildFragmentManager(), TAG);
+                        UserMonsterDetailDialog.show(getChildFragmentManager(), selectedUserMonster);
                     }
                 }
             }

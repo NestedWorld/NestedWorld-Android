@@ -1,26 +1,21 @@
-package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
+package com.nestedworld.nestedworld.dialog;
 
-import android.app.Dialog;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.avast.android.dialogs.core.BaseDialogFragment;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.AttackAdapter;
 import com.nestedworld.nestedworld.database.models.Attack;
-import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -30,7 +25,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class HomeMonsterDetailDialog extends DialogFragment {
+public class UserMonsterDetailDialog extends BaseDialogFragment {
+
+    private final static String TAG = MonsterDetailDialog.class.getSimpleName();
+    private final UserMonster mUserMonster;
 
     @BindView(R.id.textView_monsterName)
     TextView textViewName;
@@ -49,91 +47,57 @@ public class HomeMonsterDetailDialog extends DialogFragment {
     @BindView(R.id.listview_monter_attack)
     ListView listView;
 
-    private Monster mMonster;
 
     /*
-    ** Static method
+    ** Constructor
      */
-    public static HomeMonsterDetailDialog newInstance(@NonNull final Monster monster) {
-        HomeMonsterDetailDialog homeMonsterDetailDialog = new HomeMonsterDetailDialog();
+    private UserMonsterDetailDialog(@NonNull final UserMonster userMonster) {
+        mUserMonster = userMonster;
+    }
 
-        // Supply monsterId as an argument.
-        Bundle args = new Bundle();
-        args.putLong("monsterId", monster.monsterId);
-
-        homeMonsterDetailDialog.setArguments(args);
-
-        return homeMonsterDetailDialog;
+    /*
+    ** Public method
+     */
+    public static void show(@NonNull final FragmentManager fragmentManager, @NonNull final UserMonster userMonster) {
+        new UserMonsterDetailDialog(userMonster).show(fragmentManager, TAG);
     }
 
     /*
     ** Life cycle
      */
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setTitle("My Title");
-        return dialog;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //Retrieve monster by parsing fragment args
-        parseArg();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Create view
-        View view = inflater.inflate(R.layout.dialog_monsterdetail, container, false);
-
-        if (mMonster != null) {
-            getDialog().setTitle(mMonster.name);
-
-            //Retrieve widget
-            ButterKnife.bind(this, view);
-
-            //Start loading animation
-            progressView.start();
-
-            //Populate
-            populateView();
-            retrieveMonsterAttack();
-        } else {
-            //Display error message
-            Toast.makeText(getActivity(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
-
-            //Close dialog
-            getDialog().dismiss();
-        }
-
-        return view;
+    protected Builder build(Builder initialBuilder) {
+        return initialBuilder
+                .setTitle(mUserMonster.info().name)
+                .setView(getMonsterDetailView());
     }
 
     /*
     ** Internal method
      */
-    private void parseArg() {
-        if (getArguments().containsKey("monsterId")) {
-            long monsterId = getArguments().getLong("monsterId");
+    @NonNull
+    private View getMonsterDetailView() {
+        //Create the view
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_monsterdetail, null);
 
-            Monster monster = Select.from(Monster.class).where(Condition.prop("monster_id").eq(monsterId)).first();
-            if (monster != null) {
-                mMonster = monster;
-            }
-        }
+        //Retrieve widget
+        ButterKnife.bind(this, view);
+
+        //Populate view
+        populateView();
+        retrieveMonsterAttack();
+
+        //Return the newly created view
+        return view;
     }
 
     private void populateView() {
-        textViewName.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterName), mMonster.name));
-        textViewAttack.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), mMonster.attack));
-        textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), mMonster.defense));
-        textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mMonster.hp));
-        textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mMonster.speed));
+        //TODO display experience / surname / picture
+        textViewName.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterName), mUserMonster.surname));
+        textViewAttack.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), mUserMonster.info().attack));
+        textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), mUserMonster.info().defense));
+        textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mUserMonster.info().hp));
+        textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mUserMonster.info().speed));
     }
 
     private void populateMonsterAttack(@NonNull final List<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
@@ -156,7 +120,6 @@ public class HomeMonsterDetailDialog extends DialogFragment {
                 attackAdapter.clear();
                 attackAdapter.addAll(attacks);
             }
-
         }
     }
 
@@ -167,7 +130,7 @@ public class HomeMonsterDetailDialog extends DialogFragment {
         //Retrieve monster spell
         NestedWorldHttpApi
                 .getInstance()
-                .getMonsterAttack(mMonster.monsterId)
+                .getMonsterAttack(mUserMonster.info().monsterId)
                 .enqueue(new NestedWorldHttpCallback<MonsterAttackResponse>() {
                     @Override
                     public void onSuccess(@NonNull Response<MonsterAttackResponse> response) {
