@@ -56,7 +56,7 @@ public class HomeMonsterFragment extends BaseFragment {
                 if (selectedUserMonster != null) {
                     Monster selectedMonster = selectedUserMonster.info();
                     if (selectedMonster != null) {
-                        MonsterDetailDialog.newInstance(selectedMonster).show(getChildFragmentManager(), TAG);
+                        HomeMonsterDetailDialog.newInstance(selectedMonster).show(getChildFragmentManager(), TAG);
                     }
                 }
             }

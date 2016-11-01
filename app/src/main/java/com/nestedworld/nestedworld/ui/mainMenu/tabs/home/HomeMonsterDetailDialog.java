@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.mainMenu.tabs.monster;
+package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -30,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class MonsterDetailDialog extends DialogFragment {
+public class HomeMonsterDetailDialog extends DialogFragment {
 
     @BindView(R.id.textView_monsterName)
     TextView textViewName;
@@ -54,16 +54,16 @@ public class MonsterDetailDialog extends DialogFragment {
     /*
     ** Static method
      */
-    public static MonsterDetailDialog newInstance(@NonNull final Monster monster) {
-        MonsterDetailDialog monsterDetailDialog = new MonsterDetailDialog();
+    public static HomeMonsterDetailDialog newInstance(@NonNull final Monster monster) {
+        HomeMonsterDetailDialog homeMonsterDetailDialog = new HomeMonsterDetailDialog();
 
         // Supply monsterId as an argument.
         Bundle args = new Bundle();
         args.putLong("monsterId", monster.monsterId);
 
-        monsterDetailDialog.setArguments(args);
+        homeMonsterDetailDialog.setArguments(args);
 
-        return monsterDetailDialog;
+        return homeMonsterDetailDialog;
     }
 
     /*
