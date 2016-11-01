@@ -43,6 +43,7 @@
 
     <!-- MonsterDetail-->
     <string name="monsterDetail_no_attack">This monster didn\'t have any attack</string>
+    <string name="monsterDetail_title_characteristics">Characteristics: </string>
 
     <!--MainMenu-->
     <string name="mainMenu_title_tab_inventory">Inventory</string>

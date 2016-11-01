@@ -12,7 +12,7 @@
         style="@style/TypefaceStyle.ProximaNova.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Monster characteristics: "
+        android:text="@string/monsterDetail_title_characteristics"
         android:textColor="@color/apptheme_color"/>
 
     <LinearLayout
