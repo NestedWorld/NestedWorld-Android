@@ -9,14 +9,14 @@ public class InventoryResponse {
 
     @Expose
     @SerializedName("inventory")
-    List<InventoryObject> objects;
+    public List<InventoryObject> objects;
 
     public final static class InventoryObject {
         @Expose
         @SerializedName("id")
-        int objectId;
+        public int objectId;
 
         @Expose
-        String object;
+        public String object;
     }
 }
