@@ -13,8 +13,13 @@ import com.nestedworld.nestedworld.adapter.UserMonsterAdapter;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
+import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -24,6 +29,7 @@ public class HomeMonsterFragment extends BaseFragment {
 
     @BindView(R.id.gridLayout_home_monsters)
     GridView gridView;
+    private UserMonsterAdapter userMonsterAdapter;
 
     /*
     ** Life cycle
@@ -35,12 +41,54 @@ public class HomeMonsterFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        setupAdapter();
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         populateMonstersList();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onUserMonstersUpdated(OnUserMonstersUpdatedEvent onUserMonstersUpdatedEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateMonstersList();
+            }
+        });
     }
 
     /*
     ** Private method
      */
+    private void setupAdapter() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        gridView.setAdapter(userMonsterAdapter);
+        userMonsterAdapter = new UserMonsterAdapter(mContext);
+    }
+
     private void populateMonstersList() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
@@ -51,11 +99,8 @@ public class HomeMonsterFragment extends BaseFragment {
         List<UserMonster> userMonsters = Select.from(UserMonster.class).list();
 
         //Create and populate adapter
-        UserMonsterAdapter userMonsterAdapter = new UserMonsterAdapter(mContext);
+        userMonsterAdapter.clear();
         userMonsterAdapter.addAll(userMonsters);
-
-        //set adapter to our grid
-        gridView.setAdapter(userMonsterAdapter);
 
         //Set listener on our grid
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -203,7 +203,8 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
-        if ((lastUpdate != -1) && (lastUpdate + 2000 < Calendar.getInstance().getTimeInMillis())) {
+        //Update only every 10s
+        if ((lastUpdate != -1) && (lastUpdate + 10000 < Calendar.getInstance().getTimeInMillis())) {
             LogHelper.d(TAG, "onLocationChanged > ignore");
             return;
         }

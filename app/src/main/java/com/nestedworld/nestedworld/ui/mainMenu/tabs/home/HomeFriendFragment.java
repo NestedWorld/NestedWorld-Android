@@ -16,6 +16,7 @@ import com.nestedworld.nestedworld.events.socket.generic.OnResultResponseEvent;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.generic.ResultMessage;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
@@ -27,7 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.Response;
 
 public class HomeFriendFragment extends BaseFragment {
 
@@ -48,11 +48,12 @@ public class HomeFriendFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        setupListView();
+
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 
-        setupListView();
         populateFriendList();
     }
 
@@ -69,7 +70,17 @@ public class HomeFriendFragment extends BaseFragment {
      */
     @Subscribe
     public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
-        populateFriendList();
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateFriendList();
+            }
+        });
     }
 
     @Subscribe
@@ -119,7 +130,7 @@ public class HomeFriendFragment extends BaseFragment {
         //Retrieve entity from orm
         List<Friend> friends = Select.from(Friend.class).list();
 
-        //Remove old entitu and add new one
+        //Remove old entity and add new one
         mAdapter.clear();
         mAdapter.addAll(friends);
     }
