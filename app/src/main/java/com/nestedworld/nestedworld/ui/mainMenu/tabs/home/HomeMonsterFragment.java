@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.UserMonsterAdapter;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
@@ -61,73 +62,5 @@ public class HomeMonsterFragment extends BaseFragment {
                 }
             }
         });
-    }
-
-    /*
-    ** Custom Adapter for displaying userMonsters
-     */
-    private class UserMonsterAdapter extends BaseAdapter {
-
-        private final List<UserMonster> userMonsters;
-
-        public UserMonsterAdapter(@NonNull final List<UserMonster> userMonsters) {
-            this.userMonsters = userMonsters;
-        }
-
-        @Override
-        public int getCount() {
-            return userMonsters.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return userMonsters.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return userMonsters.get(position).getId();
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            //Check if fragment hasn't been detach
-            if (mContext == null) {
-                return null;
-            }
-
-            View view = convertView;
-
-            //Get current monster
-            final UserMonster monster = (UserMonster) getItem(position);
-            final Monster monsterInfo = monster.info();
-
-            if (monsterInfo == null) {
-                return null;
-            }
-
-            //Check if an existing view is being reused, otherwise inflate the view
-            if (view == null) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
-            }
-
-            //Populate name & lvl
-            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monsterInfo.name);
-            ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(getResources().getString(R.string.tabHome_msg_monsterLvl), monster.level));
-
-            //Display monster picture
-            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
-            Glide.with(getContext())
-                    .load(monsterInfo.base_sprite)
-                    .placeholder(R.drawable.default_monster)
-                    .centerCrop()
-                    .into(imageViewMonster);
-
-            //Add color shape around monster picture
-            view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getColorResource()));
-
-            return view;
-        }
     }
 }
