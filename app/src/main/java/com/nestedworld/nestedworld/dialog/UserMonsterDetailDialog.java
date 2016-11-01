@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.avast.android.dialogs.core.BaseDialogFragment;
+import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.AttackAdapter;
 import com.nestedworld.nestedworld.database.models.Attack;
@@ -46,7 +48,8 @@ public class UserMonsterDetailDialog extends BaseDialogFragment {
     TextView textViewMonsterNoAttack;
     @BindView(R.id.listview_monter_attack)
     ListView listView;
-
+    @BindView(R.id.imageview_monster_sprite)
+    ImageView imageViewSprite;
 
     /*
     ** Constructor
@@ -98,6 +101,9 @@ public class UserMonsterDetailDialog extends BaseDialogFragment {
         textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), mUserMonster.info().defense));
         textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mUserMonster.info().hp));
         textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mUserMonster.info().speed));
+        Glide.with(getContext())
+                .load(mUserMonster.info().base_sprite)
+                .into(imageViewSprite);
     }
 
     private void populateMonsterAttack(@NonNull final List<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
