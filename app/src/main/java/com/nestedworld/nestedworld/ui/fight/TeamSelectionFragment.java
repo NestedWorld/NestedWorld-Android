@@ -4,8 +4,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -13,8 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -58,11 +54,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
+    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     @BindViews({
             R.id.imageview_selectedmonster_1,
             R.id.imageview_selectedmonster_2,
@@ -83,8 +79,6 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     ImageView imageViewUserPicture;
     @BindView(R.id.imageview_opponent_picture)
     ImageView imageViewOpponentPicture;
-
-    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     private List<UserMonster> mUserMonsters;
     private Combat mCurrentCombat;
 

@@ -22,32 +22,32 @@
             android:padding="8dip">
 
             <ImageView
-                android:scaleType="centerCrop"
                 android:id="@+id/imageView_user_picture"
-                android:src="@drawable/default_avatar_rounded"
                 android:layout_width="38dip"
-                android:layout_height="38dip"/>
+                android:layout_height="38dip"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar_rounded"/>
 
             <ImageView
-                android:scaleType="fitCenter"
-                android:layout_weight="1"
-                android:src="@drawable/logo_rounded"
                 android:layout_width="0dp"
-                android:layout_height="38dip"/>
+                android:layout_height="38dip"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_rounded"/>
 
             <ImageView
                 android:id="@+id/imageview_opponent_picture"
-                android:src="@drawable/default_avatar_rounded"
                 android:layout_width="38dip"
-                android:layout_height="38dip"/>
+                android:layout_height="38dip"
+                android:src="@drawable/default_avatar_rounded"/>
 
         </LinearLayout>
 
         <com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator
-            android:layout_marginTop="8dip"
             android:id="@+id/ViewPagerArrowIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dip"
             android:background="@color/white"
             android:padding="8dip"
             app:arrow.width="25dip"
@@ -74,9 +74,9 @@
 
 
         <LinearLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
 

@@ -10,7 +10,7 @@ public final class HttpEndPoint {
     private final static String PROD_URL = "http://api.nestedworld.com";
 
     private final static String BASE_URL =
-            (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_URL
+                    (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_URL
                     : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
                     : DEV_URL;
 
