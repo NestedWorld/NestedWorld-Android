@@ -250,14 +250,17 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     private void onMonsterSelected() {
         //Get the selected monster
         UserMonster selectedMonster = mUserMonsters.get(viewPager.getCurrentItem());
+        Monster selectedMonserInfo = selectedMonster.info();
 
         //Display some log
         LogHelper.d(TAG, "Monster selected: " + selectedMonster.toString());
 
         //Show the selected monster
-        Glide.with(mContext)
-                .load(selectedMonster.info().base_sprite)
-                .into(selectedMonsterView.get(mSelectedMonster.size()));
+        if (selectedMonserInfo != null) {
+            Glide.with(mContext)
+                    .load(selectedMonserInfo.base_sprite)
+                    .into(selectedMonsterView.get(mSelectedMonster.size()));
+        }
 
         //Add the monster in the list (of selected monster)
         mSelectedMonster.add(selectedMonster);

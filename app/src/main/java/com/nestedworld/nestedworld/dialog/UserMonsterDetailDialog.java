@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class UserMonsterDetailDialog extends BaseDialogFragment {
+public final class UserMonsterDetailDialog extends BaseDialogFragment {
 
     private final static String TAG = MonsterDetailDialog.class.getSimpleName();
     private final UserMonster mUserMonster;

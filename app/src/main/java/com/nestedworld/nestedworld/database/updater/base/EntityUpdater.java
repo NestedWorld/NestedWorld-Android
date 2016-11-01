@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 
 import java.io.IOException;
@@ -71,6 +72,7 @@ public abstract class EntityUpdater<T> {
     ** Internal method
      */
     private boolean makeRequest() {
+        LogHelper.d(TAG, "makeRequest");
         Call<T> request = getRequest();
 
         try {
@@ -82,6 +84,7 @@ public abstract class EntityUpdater<T> {
                 return false;
             }
         } catch (IOException e) {
+            LogHelper.d(TAG, "makeRequest > IOException: " + e);
             e.printStackTrace();
             return false;
         }
