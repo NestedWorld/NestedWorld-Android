@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.mainMenu.tabs;
+package com.nestedworld.nestedworld.ui.mainMenu.tabs.shop;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
