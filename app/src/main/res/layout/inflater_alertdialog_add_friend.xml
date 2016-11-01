@@ -19,13 +19,23 @@
         app:pv_progressMode="indeterminate"
         app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
 
-    <EditText
-        android:textColorHint="@color/apptheme_color"
-        android:id="@+id/editText_addFriend"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout_friendPseudo"
+        style="@style/AppTheme.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/tabHome_msg_friendPseudo"
-        android:inputType="textPersonName"/>
+        android:layout_margin="8dip">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editText_friendPseudo"
+            style="@style/TypefaceStyle.ProximaNova"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/tabHome_msg_friendPseudo"
+            android:inputType="textPersonName"
+            android:textColor="@color/apptheme_color"
+            android:textColorHint="@color/white"/>
+
+    </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

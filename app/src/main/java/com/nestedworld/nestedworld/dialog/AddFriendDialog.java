@@ -3,6 +3,8 @@ package com.nestedworld.nestedworld.dialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +29,13 @@ public class AddFriendDialog extends BaseDialogFragment {
 
     private final static String TAG = AddFriendDialog.class.getSimpleName();
 
-    @BindView(R.id.editText_addFriend)
-    EditText editTextPseudo;
+    @BindView(R.id.textInputLayout_friendPseudo)
+    TextInputLayout textInputLayoutFriendPseudo;
+    @BindView(R.id.editText_friendPseudo)
+    TextInputEditText textInputEditTextFriendPseudo;
     @BindView(R.id.progressView)
     ProgressView progressView;
+
     private Unbinder mUnbinder;
 
     /*
@@ -82,11 +87,11 @@ public class AddFriendDialog extends BaseDialogFragment {
         if (loadingMode) {
             progressView.start();
             progressView.setVisibility(View.VISIBLE);
-            editTextPseudo.setVisibility(View.GONE);
+            textInputLayoutFriendPseudo.setVisibility(View.GONE);
         } else {
             progressView.stop();
             progressView.setVisibility(View.GONE);
-            editTextPseudo.setVisibility(View.VISIBLE);
+            textInputLayoutFriendPseudo.setVisibility(View.VISIBLE);
         }
     }
 
@@ -95,7 +100,7 @@ public class AddFriendDialog extends BaseDialogFragment {
         setOnLoadingMode(true);
 
         //Retrieve input
-        String pseudo = editTextPseudo.getText().toString();
+        String pseudo = textInputEditTextFriendPseudo.getText().toString();
 
         //Send request
         NestedWorldHttpApi
