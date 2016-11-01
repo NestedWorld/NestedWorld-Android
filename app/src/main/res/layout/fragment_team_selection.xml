@@ -24,6 +24,7 @@
             app:arrow.width="25dip"
             app:left_arrow.drawable="@drawable/ic_arrow_left"
             app:right_arrow.drawable="@drawable/ic_arrow_right"
+            app:round.color.selected="@color/apptheme_accent"
             app:round.size="15dip">
 
             <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
@@ -42,37 +43,39 @@
             android:background="@drawable/ic_action_arrow_bottom_blue"
             android:padding="8dip"/>
 
-        <TableRow
-            android:id="@+id/tablerow_selected_monster"
+
+        <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dip"
-            android:background="@color/WhiteSmoke"
-            android:gravity="center"
-            android:padding="8dip">
+            android:orientation="horizontal"
+            android:background="@color/WhiteSmoke">
 
             <ImageView
+                android:id="@+id/imageview_selectedmonster_1"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear"/>
+                android:src="@drawable/places_ic_clear"/>
 
             <ImageView
+                android:id="@+id/imageview_selectedmonster_2"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear"/>
+                android:src="@drawable/places_ic_clear"/>
 
             <ImageView
+                android:id="@+id/imageview_selectedmonster_3"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear"/>
+                android:src="@drawable/places_ic_clear"/>
 
             <ImageView
+                android:id="@+id/imageview_selectedmonster_4"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                android:background="@drawable/places_ic_clear"/>
+                android:src="@drawable/places_ic_clear"/>
 
-        </TableRow>
+        </LinearLayout>
 
         <Button
             android:id="@+id/button_go_fight"

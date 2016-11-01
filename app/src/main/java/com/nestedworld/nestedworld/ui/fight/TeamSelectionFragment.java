@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,15 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.database.models.Combat;
@@ -58,31 +52,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 
 public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
-    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
+    @BindViews({
+            R.id.imageview_selectedmonster_1,
+            R.id.imageview_selectedmonster_2,
+            R.id.imageview_selectedmonster_3,
+            R.id.imageview_selectedmonster_4})
+    List<ImageView> selectedMonsterView;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.ViewPagerArrowIndicator)
     ViewPagerWithIndicator viewPagerArrowIndicator;
     @BindView(R.id.button_select_monster)
     Button button_select_monster;
-    @BindView(R.id.tablerow_selected_monster)
-    TableRow tableRow_selected_monster;
     @BindView(R.id.button_go_fight)
     Button button_go_fight;
     @BindView(R.id.progressView)
     ProgressView progressView;
+
+    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     private List<UserMonster> mUserMonsters;
-    private UserMonsterPagerAdapter mUserMonsterPagerAdapter;
     private Combat mCurrentCombat;
 
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Combat currentCombat) {
-
         //Instantiate new fragment
         Fragment newFragment = new TeamSelectionFragment();
 
@@ -92,9 +90,9 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         newFragment.setArguments(args);
 
         //Display the fragment
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, newFragment);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, newFragment)
+                .commit();
     }
 
     /*
@@ -107,6 +105,11 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        //Check if fragment has been atach
+        if (mContext == null) {
+            return;
+        }
+
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -116,31 +119,28 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
         //Get CombatId from arg
         if (!parseArgs()) {
+            //Cannot get selected Combat, display error and finish current activity
             Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+            ((BaseAppCompatActivity) mContext).finish();
+        } else {
+            //Retrieve userMonsters
+            mUserMonsters = Select.from(UserMonster.class).list();
 
-            //Finish the current activity
-            if (mContext != null) {
-                ((BaseAppCompatActivity) mContext).finish();
-            }
+            //Init the viewPager (it will display user's monster)
+            setUpViewPager();
+
+            //Init button 'start_fight' text (it will display the number of selected monster)
+            button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0));
+
+            //Init button 'select_monster'
+            button_select_monster.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onMonsterSelected();
+                    updateArrowState();//Update the 'select monster' button
+                }
+            });
         }
-
-        //Retrieve monster and init selectedMonster list
-        mUserMonsters = Select.from(UserMonster.class).list();
-
-        //Init the viewPager (it will display user's monster)
-        setUpViewPager();
-
-        //Init button 'start_fight' text (it will display the number of selected monster)
-        button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0));
-
-        //Init button 'select_monster'
-        button_select_monster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onMonsterSelected();
-                updateArrowState();
-            }
-        });
     }
 
     @Override
@@ -179,6 +179,24 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     }
 
     /*
+    ** ViewPager.OnPageChangeListener implementation
+     */
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        //DO What you want
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        updateArrowState();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        //DO What you want
+    }
+
+    /*
     ** Private method
      */
     private boolean parseArgs() {
@@ -187,25 +205,20 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             return false;
         }
 
-        //Check parameter
-        if (getArguments().containsKey("combatId")) {
-            //Parse combatId
-            Long combatId = getArguments().getLong("combatId", 0);
-
-            //Retrieve Combat from Orm
-            Combat combat = Select.from(Combat.class).where(Condition.prop("id").eq(combatId)).first();
-            if (combat != null) {
-                mCurrentCombat = combat;
-
-                //Display some log
-                LogHelper.d(TAG, "Combat= " + mCurrentCombat.toString());
-
-                return true;
-            }
+        Long combatId = getArguments().getLong("combatId", -1);
+        if (combatId == -1) {
+            return false;
         }
 
-        //Display some log
-        LogHelper.d(TAG, "cannot parse combatId args");
+        //Retrieve Combat from Orm
+        Combat combat = Select.from(Combat.class).where(Condition.prop("id").eq(combatId)).first();
+        if (combat != null) {
+            mCurrentCombat = combat;
+
+            //Display some log
+            LogHelper.d(TAG, "Combat= " + mCurrentCombat.toString());
+            return true;
+        }
 
         return false;
     }
@@ -217,7 +230,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         }
 
         //Set up viewPager
-        mUserMonsterPagerAdapter = new UserMonsterPagerAdapter(mContext, mUserMonsters);
+        UserMonsterPagerAdapter mUserMonsterPagerAdapter = new UserMonsterPagerAdapter(mContext, mUserMonsters);
         viewPager.setAdapter(mUserMonsterPagerAdapter);
         viewPagerArrowIndicator.setViewPager(viewPager);
         viewPager.addOnPageChangeListener(this);
@@ -242,20 +255,10 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         //Display some log
         LogHelper.d(TAG, "Monster selected: " + selectedMonster.toString());
 
-        /*
-        ** /!\ keep order : show monster and then add it in the list /!\
-        ** (because show is based on mSelectedMonster.size())
-         */
         //Show the selected monster
-        final View target = tableRow_selected_monster.getChildAt(mSelectedMonster.size());
         Glide.with(mContext)
                 .load(selectedMonster.info().base_sprite)
-                .into(new SimpleTarget<GlideDrawable>() {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                        target.setBackground(resource);
-                    }
-                });
+                .into(selectedMonsterView.get(mSelectedMonster.size()));
 
         //Add the monster in the list (of selected monster)
         mSelectedMonster.add(selectedMonster);
@@ -281,6 +284,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             }
         });
 
+        //Disable monster selection
         button_select_monster.setOnClickListener(null);
     }
 
@@ -342,24 +346,6 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         }
     }
 
-    /*
-    ** ViewPager.OnPageChangeListener implementation
-     */
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        //DO What you want
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        updateArrowState();
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        //DO What you want
-    }
-
     /**
      * Simple pager Adapter for displaying our monster
      */
@@ -396,7 +382,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             ((TextView) view.findViewById(R.id.textview_monster_defense)).setText(String.format(res.getString(R.string.teamSelection_msg_monsterDefence), monsterInfo.defense));
 
             //Display monster picture
-            final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
+            ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(mContext)
                     .load(monsterInfo.base_sprite)
                     .placeholder(R.drawable.default_monster)
