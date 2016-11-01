@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.adapter.UserMonsterAdapter;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
@@ -41,8 +42,22 @@ public class HomeMonsterFragment extends BaseFragment {
     ** Private method
      */
     private void populateMonstersList() {
-        List<UserMonster> monsters = Select.from(UserMonster.class).list();
-        gridView.setAdapter(new UserMonsterAdapter(monsters));
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Retrieve monsters
+        List<UserMonster> userMonsters = Select.from(UserMonster.class).list();
+
+        //Create and populate adapter
+        UserMonsterAdapter userMonsterAdapter = new UserMonsterAdapter(mContext);
+        userMonsterAdapter.addAll(userMonsters);
+
+        //set adapter to our grid
+        gridView.setAdapter(userMonsterAdapter);
+
+        //Set listener on our grid
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

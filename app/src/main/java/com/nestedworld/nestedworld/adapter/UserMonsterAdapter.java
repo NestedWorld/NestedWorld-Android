@@ -6,7 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,46 +15,33 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 
-import java.util.List;
-
 /*
 ** Custom Adapter for displaying userMonsters
  */
-public class UserMonsterAdapter extends BaseAdapter {
-
-    private final List<UserMonster> userMonsters;
+public class UserMonsterAdapter extends ArrayAdapter<UserMonster> {
 
     /*
     ** Constructor
      */
-    public UserMonsterAdapter(@NonNull final List<UserMonster> userMonsters) {
-        this.userMonsters = userMonsters;
+    public UserMonsterAdapter(@NonNull final Context context) {
+        super(context, 0);
     }
 
     /*
     ** Life cycle
      */
+    @NonNull
     @Override
-    public int getCount() {
-        return userMonsters.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return userMonsters.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return userMonsters.get(position).getId();
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
+        //Check if an existing view is being reused, otherwise inflate the view
+        if (view == null) {
+            view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
+        }
+
         //Get current monster
-        final UserMonster monster = (UserMonster) getItem(position);
+        final UserMonster monster = getItem(position);
         if (monster == null) {
             return view;
         }
@@ -65,31 +52,20 @@ public class UserMonsterAdapter extends BaseAdapter {
             return view;
         }
 
-        //Check if parents view hasn't been detach
-        Context context = parent.getContext();
-        if (context == null) {
-            return view;
-        }
-
-        //Check if an existing view is being reused, otherwise inflate the view
-        if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_monster, parent, false);
-        }
-
         //Populate name & lvl
         ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monsterInfo.name);
-        ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(context.getResources().getString(R.string.tabHome_msg_monsterLvl), monster.level));
+        ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(getContext().getResources().getString(R.string.tabHome_msg_monsterLvl), monster.level));
 
         //Display monster picture
         final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
-        Glide.with(context)
+        Glide.with(getContext())
                 .load(monsterInfo.base_sprite)
                 .placeholder(R.drawable.default_monster)
                 .centerCrop()
                 .into(imageViewMonster);
 
         //Add color shape around monster picture
-        view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(context, monster.getColorResource()));
+        view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(getContext(), monster.getColorResource()));
 
         return view;
     }
