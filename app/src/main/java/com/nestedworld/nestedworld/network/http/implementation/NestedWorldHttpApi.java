@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.network.http.implementation;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
@@ -24,6 +25,7 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Logou
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 
 import java.io.IOException;
@@ -48,7 +50,7 @@ import retrofit2.http.Url;
 public final class NestedWorldHttpApi {
     private static NestedWorldHttpApi mSingleton;
     private final String TAG = getClass().getSimpleName();
-    private ApiInterface mClient;
+    private NestedWorldApiInterface mClient;
 
     /*
     ** Constructor
@@ -124,7 +126,7 @@ public final class NestedWorldHttpApi {
                 .client(client)
                 .build();
 
-        mClient = retrofit.create(ApiInterface.class);
+        mClient = retrofit.create(NestedWorldApiInterface.class);
     }
 
     /**
@@ -187,51 +189,7 @@ public final class NestedWorldHttpApi {
         return mClient.getUserMonsters();
     }
 
-
-    /**
-     * API Interface which use the retrofit annotation
-     */
-    public interface ApiInterface {
-        @GET(HttpEndPoint.USER_MONSTERS)
-        Call<UserMonsterResponse> getUserMonsters();
-
-        @GET(HttpEndPoint.USER_FRIENDS)
-        Call<FriendsResponse> getFriends();
-
-        @POST(HttpEndPoint.USER_FRIENDS)
-        Call<AddFriendResponse> addFriends(@Body AddFriendRequest body);
-
-        @POST(HttpEndPoint.USER_LOGOUT)
-        Call<LogoutResponse> logout();
-
-        @POST(HttpEndPoint.USER_REGISTER)
-        Call<RegisterResponse> register(@Body RegisterRequest body);
-
-        @POST(HttpEndPoint.USER_SIGN_IN)
-        Call<SignInResponse> signIn(@Body SignInRequest body);
-
-        @POST(HttpEndPoint.USER_PASSWORD)
-        Call<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest body);
-
-        @GET(HttpEndPoint.MONSTERS_LIST)
-        Call<MonstersResponse> getMonsters();
-
-        @GET(HttpEndPoint.USER_INFO)
-        Call<UserResponse> getUserInfo();
-
-        @GET(HttpEndPoint.PLACES_LIST)
-        Call<PlacesResponse> getPlaces();
-
-        @GET(HttpEndPoint.REGIONS_LIST)
-        Call<RegionsResponse> getRegions();
-
-        @GET
-        Call<RegionResponse> getRegionDetail(@Url String endPoint);
-
-        @GET(HttpEndPoint.ATTACK_LIST)
-        Call<AttacksResponse> getAttacks();
-
-        @GET(HttpEndPoint.MONSTER_ATTACK)
-        Call<MonsterAttackResponse> getMonsterAttack(@Path("monsterId") long monsterId);
+    public Call<InventoryResponse> getUserInventory() {
+        return mClient.getUserInventory();
     }
 }

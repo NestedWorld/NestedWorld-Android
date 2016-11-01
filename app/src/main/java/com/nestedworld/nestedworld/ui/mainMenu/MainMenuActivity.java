@@ -35,7 +35,7 @@ import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.map.MapFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.monster.MonstersFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.shop.ShopFragment;
-import com.nestedworld.nestedworld.ui.mainMenu.tabs.tool.ToolsFragment;
+import com.nestedworld.nestedworld.ui.mainMenu.tabs.inventory.UserInventoryFragment;
 import com.nestedworld.nestedworld.ui.profil.ProfileActivity;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
@@ -193,7 +193,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         adapter.addFragment("", new HomeFragment(), R.drawable.ic_home_white_18dp);
         adapter.addFragment("", new MonstersFragment(), R.drawable.ic_ghost_white_18dp);
         adapter.addFragment("", new MapFragment(), R.drawable.ic_map_marker_radius_white_18dp);
-        adapter.addFragment("", new ToolsFragment(), R.drawable.ic_sword_white_18dp);
+        adapter.addFragment("", new UserInventoryFragment(), R.drawable.ic_sword_white_18dp);
         adapter.addFragment("", new ShopFragment(), R.drawable.ic_cart_plus_white_18dp);
 
         viewPager.setAdapter(adapter);
