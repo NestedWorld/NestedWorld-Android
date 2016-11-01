@@ -22,8 +22,9 @@
             android:padding="8dip">
 
             <ImageView
+                android:scaleType="centerCrop"
                 android:id="@+id/imageView_user_picture"
-                android:src="@drawable/default_avatar"
+                android:src="@drawable/default_avatar_rounded"
                 android:layout_width="38dip"
                 android:layout_height="38dip"/>
 
@@ -36,7 +37,7 @@
 
             <ImageView
                 android:id="@+id/imageview_opponent_picture"
-                android:src="@drawable/default_avatar"
+                android:src="@drawable/default_avatar_rounded"
                 android:layout_width="38dip"
                 android:layout_height="38dip"/>
 

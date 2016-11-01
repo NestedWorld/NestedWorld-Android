@@ -243,25 +243,26 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             return;
         }
 
-        //Make placeHolder rounded
-        Resources resources = getResources();
-        Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
-        roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
-        
         //Display user picture
         User user = Select.from(User.class).first();
         if (user != null) {
             Glide.with(mContext)
                     .load(user.avatar)
-                    .placeholder(roundedBitmapDrawable)
-                    .error(roundedBitmapDrawable)
+                    .placeholder(R.drawable.default_avatar_rounded)
+                    .error(R.drawable.default_avatar_rounded)
                     .centerCrop()
                     .bitmapTransform(new CropCircleTransformation(mContext))
                     .into(imageViewUserPicture);
         }
 
         //TODO display real opponent picture
+        Glide.with(mContext)
+                .load(R.drawable.default_avatar_rounded)
+                .placeholder(R.drawable.default_avatar_rounded)
+                .error(R.drawable.default_avatar_rounded)
+                .centerCrop()
+                .bitmapTransform(new CropCircleTransformation(mContext))
+                .into(imageViewOpponentPicture);
     }
 
     private void setUpViewPager() {

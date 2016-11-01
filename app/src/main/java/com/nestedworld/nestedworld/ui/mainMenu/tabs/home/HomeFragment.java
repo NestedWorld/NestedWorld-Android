@@ -171,17 +171,11 @@ public class HomeFragment extends BaseFragment {
         textViewCreditsNumber.setText("0");
         textViewAreaCaptured.setText("0");
 
-        //Make placeHolder rounded
-        Resources resources = getResources();
-        Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
-        roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
-
         //Display user picture
         Glide.with(mContext)
                 .load(user.avatar)
-                .placeholder(roundedBitmapDrawable)
-                .error(roundedBitmapDrawable)
+                .placeholder(R.drawable.default_avatar_rounded)
+                .error(R.drawable.default_avatar_rounded)
                 .centerCrop()
                 .bitmapTransform(new CropCircleTransformation(mContext))
                 .into(imageViewUser);

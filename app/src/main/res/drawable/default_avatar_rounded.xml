@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">
@@ -6,9 +5,9 @@
         </shape>
     </item>
     <item
+        android:drawable="@drawable/default_avatar"
         android:top="100dip"
         android:bottom="100dip"
         android:left="100dip"
-        android:right="100dip"
-        android:drawable="@drawable/ic_action_ghost"/>
+        android:right="100dip"/>
 </layer-list>
