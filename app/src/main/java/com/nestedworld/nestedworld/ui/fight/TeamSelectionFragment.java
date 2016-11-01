@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -11,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -27,6 +31,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -53,10 +58,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
-    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     @BindViews({
             R.id.imageview_selectedmonster_1,
             R.id.imageview_selectedmonster_2,
@@ -73,6 +79,12 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
     Button button_go_fight;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    @BindView(R.id.imageView_user_picture)
+    ImageView imageViewUserPicture;
+    @BindView(R.id.imageview_opponent_picture)
+    ImageView imageViewOpponentPicture;
+
+    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     private List<UserMonster> mUserMonsters;
     private Combat mCurrentCombat;
 
@@ -127,6 +139,9 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
             //Init the viewPager (it will display user's monster)
             setUpViewPager();
+
+            //init header block (with players information)
+            setupHeader();
 
             //Init button 'start_fight' text (it will display the number of selected monster)
             button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0));
@@ -220,6 +235,33 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         }
 
         return false;
+    }
+
+    private void setupHeader() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Make placeHolder rounded
+        Resources resources = getResources();
+        Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
+        roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
+        
+        //Display user picture
+        User user = Select.from(User.class).first();
+        if (user != null) {
+            Glide.with(mContext)
+                    .load(user.avatar)
+                    .placeholder(roundedBitmapDrawable)
+                    .error(roundedBitmapDrawable)
+                    .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .into(imageViewUserPicture);
+        }
+
+        //TODO display real opponent picture
     }
 
     private void setUpViewPager() {

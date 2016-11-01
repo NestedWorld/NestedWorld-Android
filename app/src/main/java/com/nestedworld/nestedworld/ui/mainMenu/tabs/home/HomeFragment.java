@@ -69,7 +69,7 @@ public class HomeFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-    @BindView(R.id.imageView_user_background)
+    @BindView(R.id.imageView_user_picture)
     ImageView imageViewUserBackground;
 
     /*
@@ -119,7 +119,7 @@ public class HomeFragment extends BaseFragment {
         startImagePickerIntent(PICK_PROFIL_IMAGE_REQUEST);
     }
 
-    @OnClick(R.id.imageView_user_background)
+    @OnClick(R.id.imageView_user_picture)
     public void selectBackgroundPicture() {
         startImagePickerIntent(PICK_BACKGROUND_IMAGE_REQUEST);
     }

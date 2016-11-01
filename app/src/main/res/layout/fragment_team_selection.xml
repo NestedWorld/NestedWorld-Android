@@ -22,17 +22,20 @@
             android:padding="8dip">
 
             <ImageView
+                android:id="@+id/imageView_user_picture"
                 android:src="@drawable/default_avatar"
                 android:layout_width="38dip"
                 android:layout_height="38dip"/>
 
             <ImageView
+                android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:src="@drawable/logo_rounded"
-                android:layout_width="38dip"
+                android:layout_width="0dp"
                 android:layout_height="38dip"/>
 
             <ImageView
+                android:id="@+id/imageview_opponent_picture"
                 android:src="@drawable/default_avatar"
                 android:layout_width="38dip"
                 android:layout_height="38dip"/>
