@@ -77,6 +77,7 @@ public abstract class BaseFragment extends Fragment {
         if (mUnbinder != null) {
             mUnbinder.unbind();
         }
+        mContext = null;
     }
 
     @Override

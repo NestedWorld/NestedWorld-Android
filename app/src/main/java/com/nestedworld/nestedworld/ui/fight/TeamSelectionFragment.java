@@ -27,11 +27,13 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
@@ -237,9 +239,23 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             return;
         }
 
-        //Display user picture
-        User user = Select.from(User.class).first();
-        if (user != null) {
+        //Retrieve the session
+        Session session = SessionHelper.getSession();
+        if (session == null) {
+            LogHelper.d(TAG, "No Session");
+            onFatalError();
+            return;
+        }
+
+        //Retrieve the user
+        User user = session.getUser();
+        if (user == null) {
+            LogHelper.d(TAG, "No User");
+            onFatalError();
+            return;
+        }
+
+        if (user.avatar != null) {
             Glide.with(mContext)
                     .load(user.avatar)
                     .placeholder(R.drawable.default_avatar_rounded)

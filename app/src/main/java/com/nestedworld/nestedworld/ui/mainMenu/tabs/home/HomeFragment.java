@@ -141,6 +141,11 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void populateUserInfo() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         //Retrieve the session
         Session session = SessionHelper.getSession();
         if (session == null) {
@@ -169,20 +174,24 @@ public class HomeFragment extends BaseFragment {
         textViewAreaCaptured.setText("0");
 
         //Display user picture
-        Glide.with(mContext)
-                .load(user.avatar)
-                .placeholder(R.drawable.default_avatar_rounded)
-                .error(R.drawable.default_avatar_rounded)
-                .centerCrop()
-                .bitmapTransform(new CropCircleTransformation(mContext))
-                .into(imageViewUser);
+        if (user.avatar != null) {
+            Glide.with(mContext)
+                    .load(user.avatar)
+                    .placeholder(R.drawable.default_avatar_rounded)
+                    .error(R.drawable.default_avatar_rounded)
+                    .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(mContext))
+                    .into(imageViewUser);
+        }
 
         //Display user background
-        Glide.with(mContext)
-                .load(user.background)
-                .placeholder(R.drawable.logo)
-                .error(R.drawable.logo)
-                .into(imageViewUserBackground);
+        if (user.background != null) {
+            Glide.with(mContext)
+                    .load(user.background)
+                    .placeholder(R.drawable.logo)
+                    .error(R.drawable.logo)
+                    .into(imageViewUserBackground);
+        }
     }
 
     private void startImagePickerIntent(final int requestCode) {

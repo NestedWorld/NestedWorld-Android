@@ -43,6 +43,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
 
     private NestedWorldMap mMap;
     private long lastUpdate = -1;
+    private boolean isMapReady = false;
 
     /*
     ** Public method
@@ -89,6 +90,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
 
                 //Init the mapView
                 mMap = new NestedWorldMap(mContext, googleMap);
+                isMapReady = true;
                 initMap();
             }
         });
@@ -117,7 +119,13 @@ public class MapFragment extends BaseFragment implements LocationListener {
     @Override
     public void onResume() {
         super.onResume();
-        if (mMapView != null) {
+
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (isMapReady && mMapView != null) {
             mMapView.onResume();
         }
     }
@@ -125,7 +133,13 @@ public class MapFragment extends BaseFragment implements LocationListener {
     @Override
     public void onPause() {
         super.onPause();
-        if (mMapView != null) {
+
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (isMapReady && mMapView != null) {
             mMapView.onPause();
         }
     }
@@ -133,7 +147,13 @@ public class MapFragment extends BaseFragment implements LocationListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mMapView != null) {
+
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (isMapReady && mMapView != null) {
             mMapView.onDestroy();
         }
     }
@@ -141,9 +161,64 @@ public class MapFragment extends BaseFragment implements LocationListener {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        if (mMapView != null) {
+
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (isMapReady && mMapView != null) {
             mMapView.onLowMemory();
         }
+    }
+
+    /*
+    ** Location listener Implementation
+     */
+    @Override
+    public void onLocationChanged(@NonNull final Location location) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Update only every 10s
+        if ((lastUpdate != -1) && (lastUpdate + 10000 < Calendar.getInstance().getTimeInMillis())) {
+            LogHelper.d(TAG, "onLocationChanged > ignore");
+        } else {
+            LogHelper.d(TAG, "onLocationChanged > update");
+
+            lastUpdate = Calendar.getInstance().getTimeInMillis();
+
+            //Start loading animation
+            progressView.start();
+
+            mMap.build(new NestedWorldMap.OnMapReadyListener() {
+                @Override
+                public void onMapReady() {
+                    LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
+                    mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
+
+                    //Stop loading animation
+                    progressView.stop();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        LogHelper.d(TAG, "status changed: " + provider);
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        LogHelper.d(TAG, "provider enable: " + provider);
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        LogHelper.d(TAG, "provider disable:" + provider);
     }
 
     /*
@@ -189,56 +264,5 @@ public class MapFragment extends BaseFragment implements LocationListener {
         //Center the googleMap map on the userLocation
         mMap.getGoogleMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.getGoogleMap().setMyLocationEnabled(true);
-    }
-
-    /*
-    ** Location listener
-     */
-    @Override
-    public void onLocationChanged(@NonNull final Location location) {
-        LogHelper.d(TAG, "onLocationChanged");
-
-        //Check if fragment hasn't been destroy
-        if (mContext == null || progressView == null) {
-            return;
-        }
-
-        //Update only every 10s
-        if ((lastUpdate != -1) && (lastUpdate + 10000 < Calendar.getInstance().getTimeInMillis())) {
-            LogHelper.d(TAG, "onLocationChanged > ignore");
-            return;
-        }
-        LogHelper.d(TAG, "onLocationChanged > update");
-
-        lastUpdate = Calendar.getInstance().getTimeInMillis();
-
-        progressView.start();
-
-        mMap.build(new NestedWorldMap.OnMapReadyListener() {
-            @Override
-            public void onMapReady() {
-                LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
-                mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
-
-                //We stop the loading animation
-                progressView.stop();
-            }
-        });
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        LogHelper.d(TAG, "status changed: " + provider);
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        LogHelper.d(TAG, "provider enable: " + provider);
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        LogHelper.d(TAG, "provider disable:" + provider);
     }
 }
