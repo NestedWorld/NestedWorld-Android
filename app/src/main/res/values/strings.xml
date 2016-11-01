@@ -74,6 +74,7 @@
     <string name="tabHome_msg_addFriend">Add</string>
     <string name="tabHome_title_addFriend">Add friend</string>
     <string name="tabHome_msg_friendPseudo">Pseudo</string>
+    <string name="tabHome_title_addFriendDetail">Enter your friend\'s pseudo</string>
     <string name="tabHome_msg_cancel">Cancel</string>
     <string name="tabHome_msg_requestFightSend">Your fight request has been send</string>
     <string name="tabHome_msg_requestFightSuccess">Request send</string>
