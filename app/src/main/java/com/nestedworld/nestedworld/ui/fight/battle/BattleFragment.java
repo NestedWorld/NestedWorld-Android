@@ -25,6 +25,7 @@ import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
+import com.nestedworld.nestedworld.helpers.battle.BattleHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -129,35 +130,6 @@ public class BattleFragment extends BaseFragment {
     /*
     ** Utils
      */
-    @NonNull
-    private static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {
-        LogHelper.d(BattleFragment.class.getSimpleName(), "gestureToAttackType > gestureInput=" + gestureInput);
-
-        Attack.AttackType attackType;
-        switch (gestureInput) {
-            case "41":
-                attackType = Attack.AttackType.ATTACK;
-                break;
-            case "62":
-                attackType = Attack.AttackType.DEFENSE;
-                break;
-            case "456123":
-                attackType = Attack.AttackType.ATTACK_SP;
-                break;
-            case "432165":
-                attackType = Attack.AttackType.DEFENSE_SP;
-                break;
-            case "6253":
-                attackType = Attack.AttackType.OBJECT_USE;
-                break;
-            default:
-                attackType = Attack.AttackType.UNKNOWN;
-                break;
-        }
-
-        return attackType;
-    }
-
     @Nullable
     private static List<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Monster monster) {
         try {
@@ -319,7 +291,7 @@ public class BattleFragment extends BaseFragment {
     private void setupActionBar() {
         //Check if fragment hasn't been detach
         if (mContext != null) {
-            /*Update toolbar title*/
+            //Update toolbar title
             ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
             if (actionBar != null) {
                 actionBar.hide();
@@ -417,7 +389,7 @@ public class BattleFragment extends BaseFragment {
         }
 
         //Retrieve and clear user gesture
-        Attack.AttackType attackTypeWanted = gestureToAttackType(mUserGestureInput);
+        Attack.AttackType attackTypeWanted = BattleHelper.gestureToAttackType(mUserGestureInput);
         mUserGestureInput = "";
 
         //Check if the user monster is alive

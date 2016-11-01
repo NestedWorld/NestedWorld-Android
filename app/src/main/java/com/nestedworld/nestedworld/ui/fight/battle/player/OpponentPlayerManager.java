@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -69,13 +70,13 @@ public class OpponentPlayerManager extends PlayerManager {
     @Override
     public void displayAttackReceive() {
         //Set background to red
-        mViewContainer.setBackgroundColor(Color.RED);
+        mViewContainer.setBackgroundColor(ContextCompat.getColor(mViewContainer.getContext(), R.color.material_red_500));
 
         //Set background to normal after 1s
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 // Actions to do after 1s
-                mViewContainer.setBackgroundColor(Color.TRANSPARENT);
+                mViewContainer.setBackgroundColor(ContextCompat.getColor(mViewContainer.getContext(), R.color.WhiteSmokeHalf));
             }
         }, 1000);
     }
@@ -113,7 +114,6 @@ public class OpponentPlayerManager extends PlayerManager {
                     .load(monsterInfos.base_sprite)
                     .placeholder(R.drawable.default_monster)
                     .error(R.drawable.default_monster)
-                    .centerCrop()
                     .into(monsterPicture);
         }
     }
