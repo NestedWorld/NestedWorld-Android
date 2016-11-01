@@ -25,6 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.database.models.Combat;
@@ -243,7 +247,15 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         ** (because show is based on mSelectedMonster.size())
          */
         //Show the selected monster
-        tableRow_selected_monster.getChildAt(mSelectedMonster.size()).setBackgroundResource(R.drawable.default_monster);
+        final View target = tableRow_selected_monster.getChildAt(mSelectedMonster.size());
+        Glide.with(mContext)
+                .load(selectedMonster.info().base_sprite)
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        target.setBackground(resource);
+                    }
+                });
 
         //Add the monster in the list (of selected monster)
         mSelectedMonster.add(selectedMonster);
@@ -356,7 +368,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         private final List<UserMonster> mUserMonsters;
         private final Context mContext;
 
-        UserMonsterPagerAdapter(@NonNull Context context, @NonNull List<UserMonster> userMonsters) {
+        public UserMonsterPagerAdapter(@NonNull Context context, @NonNull List<UserMonster> userMonsters) {
             mUserMonsters = userMonsters;
             mContext = context;
         }

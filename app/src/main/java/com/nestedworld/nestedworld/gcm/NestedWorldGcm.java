@@ -65,7 +65,7 @@ public final class NestedWorldGcm {
 
         GcmHandler gcmHandler = mHandlers.get(notification.type);
         if (gcmHandler == null) {
-            Log.d(TAG, "Unsuported messageType" + notification.type);
+            Log.d(TAG, "Unsuported messageType: " + notification.type);
         } else {
             mHandlers.get(notification.type).handle(context, notification, messageKind, idKind);
         }

@@ -114,8 +114,6 @@ public class HomeMonsterFragment extends BaseFragment {
         //Retrieve monsters
         List<UserMonster> userMonsters = Select.from(UserMonster.class).list();
 
-        LogHelper.e(TAG, "UPDATE: " + userMonsters);
-
         //Create and populate adapter
         userMonsterAdapter.clear();
         userMonsterAdapter.addAll(userMonsters);
