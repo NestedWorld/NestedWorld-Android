@@ -37,6 +37,7 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     ProgressView progressView;
 
     private InventoryObjectAdapter mAdapter;
+
     /*
     ** Public method
      */

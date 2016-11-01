@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.network.http.implementation;
 
-import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
@@ -16,6 +15,8 @@ import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksRe
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
+import com.nestedworld.nestedworld.network.http.models.response.object.ObjectDetailResponse;
+import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionsResponse;
@@ -25,7 +26,6 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Logou
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryItemResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 
@@ -39,11 +39,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Url;
 
 /**
  * Simple Api containing the retrofit interface and his implementation
@@ -194,7 +189,11 @@ public final class NestedWorldHttpApi {
         return mClient.getUserInventory();
     }
 
-    public Call<InventoryItemResponse> getUserInventoryItemDetail(final long itemId) {
-        return mClient.getUserInventoryItemDetail(itemId);
+    public Call<ShopObjectsResponse> getObjects() {
+        return mClient.getObjects();
+    }
+
+    public Call<ObjectDetailResponse> getObjectDetail(final long objectId) {
+        return mClient.getObjectDetail(objectId);
     }
 }

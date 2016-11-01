@@ -8,6 +8,8 @@ import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksRe
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
+import com.nestedworld.nestedworld.network.http.models.response.object.ObjectDetailResponse;
+import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionResponse;
 import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionsResponse;
@@ -17,7 +19,6 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Logou
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryItemResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 
@@ -74,6 +75,9 @@ public interface NestedWorldApiInterface {
     @GET(HttpEndPoint.USER_INVENTORY)
     Call<InventoryResponse> getUserInventory();
 
-    @GET(HttpEndPoint.USER_INVENTORY_ITEM_DETAIL)
-    Call<InventoryItemResponse> getUserInventoryItemDetail(@Path("itemId") long itemId);
+    @GET(HttpEndPoint.OBJECT_LIST)
+    Call<ShopObjectsResponse> getObjects();
+
+    @GET(HttpEndPoint.OBJECT_DETAIL)
+    Call<ObjectDetailResponse> getObjectDetail(@Path("objectId") long objectId);
 }

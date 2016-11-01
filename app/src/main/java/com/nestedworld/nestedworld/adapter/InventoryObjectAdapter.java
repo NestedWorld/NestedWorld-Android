@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryItemResponse;
+import com.nestedworld.nestedworld.network.http.models.response.object.ObjectDetailResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
 
 import retrofit2.Response;
@@ -63,16 +63,16 @@ public class InventoryObjectAdapter extends ArrayAdapter<InventoryResponse.Inven
 
         NestedWorldHttpApi
                 .getInstance()
-                .getUserInventoryItemDetail(inventoryObject.objectId)
-                .enqueue(new NestedWorldHttpCallback<InventoryItemResponse>() {
+                .getObjectDetail(inventoryObject.objectId)
+                .enqueue(new NestedWorldHttpCallback<ObjectDetailResponse>() {
                     @Override
-                    public void onSuccess(@NonNull Response<InventoryItemResponse> response) {
-
+                    public void onSuccess(@NonNull Response<ObjectDetailResponse> response) {
+                        //TODO populate view with response
                     }
 
                     @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<InventoryItemResponse> response) {
-
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<ObjectDetailResponse> response) {
+                        //TODO populate view with default message
                     }
                 });
     }
