@@ -34,6 +34,7 @@ public final class HttpEndPoint {
 
     public final static String USER_INFO = USER_PREFIX + "me/";
     public final static String USER_INVENTORY = USER_INFO + "inventory/";
+    public final static String USER_INVENTORY_ITEM_DETAIL = USER_INVENTORY + "{itemId}/";
 
     //Auth related endpoint
     private final static String AUTH_PREFIX = USER_PREFIX + "auth/";

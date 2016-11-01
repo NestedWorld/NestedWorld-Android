@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.adapter;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
+import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryItemResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
+
+import retrofit2.Response;
 
 public class InventoryObjectAdapter extends ArrayAdapter<InventoryResponse.InventoryObject> {
 
@@ -54,5 +60,20 @@ public class InventoryObjectAdapter extends ArrayAdapter<InventoryResponse.Inven
     private void populateView(@NonNull final View view, @NonNull final InventoryResponse.InventoryObject inventoryObject) {
         TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_objectName);
         textViewObjectName.setText(inventoryObject.object);
+
+        NestedWorldHttpApi
+                .getInstance()
+                .getUserInventoryItemDetail(inventoryObject.objectId)
+                .enqueue(new NestedWorldHttpCallback<InventoryItemResponse>() {
+                    @Override
+                    public void onSuccess(@NonNull Response<InventoryItemResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<InventoryItemResponse> response) {
+
+                    }
+                });
     }
 }

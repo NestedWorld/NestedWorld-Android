@@ -25,6 +25,7 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Logou
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryItemResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 
@@ -191,5 +192,9 @@ public final class NestedWorldHttpApi {
 
     public Call<InventoryResponse> getUserInventory() {
         return mClient.getUserInventory();
+    }
+
+    public Call<InventoryItemResponse> getUserInventoryItemDetail(final long itemId) {
+        return mClient.getUserInventoryItemDetail(itemId);
     }
 }

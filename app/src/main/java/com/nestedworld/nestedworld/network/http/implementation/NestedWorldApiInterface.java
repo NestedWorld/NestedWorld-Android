@@ -17,13 +17,13 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Logou
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryItemResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
@@ -73,4 +73,7 @@ public interface NestedWorldApiInterface {
 
     @GET(HttpEndPoint.USER_INVENTORY)
     Call<InventoryResponse> getUserInventory();
+
+    @GET(HttpEndPoint.USER_INVENTORY_ITEM_DETAIL)
+    Call<InventoryItemResponse> getUserInventoryItemDetail(@Path("itemId") long itemId);
 }

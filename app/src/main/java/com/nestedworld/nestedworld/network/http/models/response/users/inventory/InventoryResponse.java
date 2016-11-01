@@ -14,7 +14,7 @@ public class InventoryResponse {
     public final static class InventoryObject {
         @Expose
         @SerializedName("id")
-        public int objectId;
+        public long objectId;
 
         @Expose
         public String object;
