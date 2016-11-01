@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.fight.battle;
+package com.nestedworld.nestedworld.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -86,7 +86,7 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
                 .into(holder.imageViewMonster);
     }
 
-    public class BattleMonsterViewHolder extends RecyclerView.ViewHolder {
+    public static class BattleMonsterViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.textview_monster_name)
         TextView textViewMonsterName;

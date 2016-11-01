@@ -10,7 +10,7 @@ import com.nestedworld.nestedworld.network.http.models.response.monsters.Monster
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.fight.battle.BattleMonsterAdapter;
+import com.nestedworld.nestedworld.adapter.BattleMonsterAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
