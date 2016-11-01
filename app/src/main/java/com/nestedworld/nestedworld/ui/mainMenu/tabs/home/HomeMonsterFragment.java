@@ -14,6 +14,7 @@ import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
 import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
@@ -85,22 +86,9 @@ public class HomeMonsterFragment extends BaseFragment {
             return;
         }
 
-        gridView.setAdapter(userMonsterAdapter);
+        //Setup adapter
         userMonsterAdapter = new UserMonsterAdapter(mContext);
-    }
-
-    private void populateMonstersList() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        //Retrieve monsters
-        List<UserMonster> userMonsters = Select.from(UserMonster.class).list();
-
-        //Create and populate adapter
-        userMonsterAdapter.clear();
-        userMonsterAdapter.addAll(userMonsters);
+        gridView.setAdapter(userMonsterAdapter);
 
         //Set listener on our grid
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,5 +103,21 @@ public class HomeMonsterFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    private void populateMonstersList() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Retrieve monsters
+        List<UserMonster> userMonsters = Select.from(UserMonster.class).list();
+
+        LogHelper.e(TAG, "UPDATE: " + userMonsters);
+
+        //Create and populate adapter
+        userMonsterAdapter.clear();
+        userMonsterAdapter.addAll(userMonsters);
     }
 }
