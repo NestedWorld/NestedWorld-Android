@@ -4,6 +4,8 @@ import android.accounts.NetworkErrorException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -20,7 +22,7 @@ public abstract class NestedWorldHttpCallback<T> implements retrofit2.Callback<T
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        if (t instanceof NetworkErrorException) {
+        if (t instanceof NetworkErrorException || t instanceof IOException) {
             onError(KIND.NETWORK, null);
         } else {
             onError(KIND.UNEXPECTED, null);
