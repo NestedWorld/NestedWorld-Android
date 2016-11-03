@@ -251,7 +251,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         User user = session.getUser();
         if (user == null) {
             LogHelper.d(TAG, "No User");
-            onFatalError();
+            ((BaseAppCompatActivity) mContext).finish();
             return;
         }
 

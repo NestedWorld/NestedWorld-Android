@@ -82,7 +82,6 @@ public class ProfileFragment extends BaseFragment {
         User user = session.getUser();
         if (user == null) {
             LogHelper.d(TAG, "No User");
-            onFatalError();
             return;
         }
 

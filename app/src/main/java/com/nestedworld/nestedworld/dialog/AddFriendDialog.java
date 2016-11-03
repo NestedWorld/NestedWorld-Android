@@ -138,6 +138,7 @@ public class AddFriendDialog extends BaseDialogFragment {
 
     private void onAddFriendSuccess() {
         //Update friend list (ORM)
+        //TODO should had a callback for checking response
         new FriendsUpdater().start(null);
 
         //Display message
