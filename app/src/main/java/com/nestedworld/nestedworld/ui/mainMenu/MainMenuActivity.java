@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -191,7 +192,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     private void initTabs() {
-        final TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
+        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
         adapter.addFragment("", new HomeFragment(), R.drawable.ic_home_white_18dp);
         adapter.addFragment("", new MonstersFragment(), R.drawable.ic_ghost_white_18dp);
         adapter.addFragment("", new MapFragment(), R.drawable.ic_map_marker_radius_white_18dp);
@@ -278,7 +279,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
      * Custom FragmentPagerAdapter
      * It's use for displaying the TABS under activity.mainMenu
      */
-    private static class TabsAdapter extends FragmentPagerAdapter {
+    private static class TabsAdapter extends FragmentStatePagerAdapter {
         protected final String TAG = getClass().getSimpleName();
 
         private final List<CustomTab> tabList = new ArrayList<>();
