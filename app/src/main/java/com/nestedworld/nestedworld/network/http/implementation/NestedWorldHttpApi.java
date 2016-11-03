@@ -189,7 +189,7 @@ public final class NestedWorldHttpApi {
         return mClient.getUserInventory();
     }
 
-    public Call<ShopObjectsResponse> getObjects() {
+    public Call<ShopObjectsResponse> getShopItems() {
         return mClient.getObjects();
     }
 

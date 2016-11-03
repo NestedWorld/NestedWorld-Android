@@ -12,10 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
 
 
-public class ShopObjectAdapter extends ArrayAdapter<ShopObjectsResponse.ShopObject> {
+public class ShopObjectAdapter extends ArrayAdapter<ShopItem> {
 
     @LayoutRes
     private final static int layoutRes = R.layout.item_shop_object;
@@ -41,7 +42,7 @@ public class ShopObjectAdapter extends ArrayAdapter<ShopObjectsResponse.ShopObje
         }
 
         //Get current object
-        ShopObjectsResponse.ShopObject currentObject = getItem(position);
+        ShopItem currentObject = getItem(position);
         if (currentObject == null) {
             return view;
         }
@@ -54,7 +55,7 @@ public class ShopObjectAdapter extends ArrayAdapter<ShopObjectsResponse.ShopObje
     /*
     ** Internal method
      */
-    private void populateView(@NonNull final View view, @NonNull final ShopObjectsResponse.ShopObject shopObject) {
+    private void populateView(@NonNull final View view, @NonNull final ShopItem shopObject) {
         //Retrieve widget
         TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
         TextView textViewObjectKind = (TextView) view.findViewById(R.id.textview_object_kind);

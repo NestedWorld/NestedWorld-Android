@@ -12,15 +12,22 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.ShopObjectAdapter;
+import com.nestedworld.nestedworld.database.models.ShopItem;
+import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
+
 import butterknife.BindView;
-import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -57,7 +64,11 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        //Start loading animation
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+        //start loading animation
         progressView.start();
 
         //Setup listview and adapter
@@ -67,7 +78,15 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         swipeRefreshLayout.setOnRefreshListener(this);
 
         //Retrieve inventory and populate ListView
-        retrieveObjects();
+        populateAdapter();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /*
@@ -76,7 +95,44 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        retrieveObjects();
+        new ShopItemsUpdater().start(new OnEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Do not update adapter here (use eventBus)
+
+                //Stop loading animation
+                progressView.stop();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
+                //Stop loading animation
+                progressView.stop();
+                swipeRefreshLayout.setRefreshing(false);
+
+                //Display error message
+                Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onShopItemUpdated(OnShopItemsUpdated onShopItemsUpdated) {
+        populateAdapter();
     }
 
     /*
@@ -92,46 +148,20 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         listViewShop.setAdapter(mAdapter);
     }
 
-    private void retrieveObjects() {
-        NestedWorldHttpApi.getInstance().getObjects().enqueue(new NestedWorldHttpCallback<ShopObjectsResponse>() {
-            @Override
-            public void onSuccess(@NonNull Response<ShopObjectsResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+    private void populateAdapter() {
+        List<ShopItem> shopItemList = Select.from(ShopItem.class).list();
 
-                //Stop loading animation
-                progressView.stop();
-                swipeRefreshLayout.setRefreshing(false);
+        if (shopItemList == null || shopItemList.isEmpty()) {
+            mAdapter.clear();
+            textViewShopEmpty.setVisibility(View.VISIBLE);
+        } else {
+            textViewShopEmpty.setVisibility(View.GONE);
+            mAdapter.clear();
+            mAdapter.addAll(shopItemList);
+        }
 
-                //Check response
-                if (response.body() == null || response.body().objects == null) {
-                    onError(KIND.SERVER, response);
-                } else if (!response.body().objects.isEmpty()) {
-                    textViewShopEmpty.setVisibility(View.GONE);
-                    mAdapter.clear();
-                    mAdapter.addAll(response.body().objects);
-                } else {
-                    textViewShopEmpty.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<ShopObjectsResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
-
-                //Stop loading animation
-                progressView.stop();
-                swipeRefreshLayout.setRefreshing(false);
-
-                //Display error message
-                Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
-                textViewShopEmpty.setVisibility(View.VISIBLE);
-            }
-        });
+        //Stop loading animation
+        swipeRefreshLayout.setRefreshing(false);
+        progressView.stop();
     }
 }
