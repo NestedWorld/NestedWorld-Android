@@ -41,9 +41,9 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     ** Public static method
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new FightListFragment());
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new FightListFragment())
+                .commit();
     }
 
     /*
@@ -98,11 +98,16 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         //Retrieve list of available combat from Orm
         List<Combat> combats = Select.from(Combat.class).list();
 
-        //Clear old content
-        mAdapter.clear();
+        if (combats == null || combats.isEmpty()) {
+            //TODO display "no combat" text
+            mAdapter.clear();
+        } else {
+            //Clear old content
+            mAdapter.clear();
 
-        //Add new content
-        mAdapter.addAll(combats);
+            //Add new content
+            mAdapter.addAll(combats);
+        }
 
         //Stop loading animation
         swipeRefreshLayout.setRefreshing(false);

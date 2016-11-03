@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,11 +26,16 @@ import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.User;
 import com.nestedworld.nestedworld.database.models.UserMonster;
+import com.nestedworld.nestedworld.events.http.OnUserUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.aws.AwsHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,8 +96,12 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         setupTabs();
-        populateUserInfo();
+        displayUserInfo();
     }
 
     @Override
@@ -106,6 +116,32 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onUserUpdated(OnUserUpdatedEvent onUserUpdatedEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                displayUserInfo();
+            }
+        });
     }
 
     /*
@@ -140,7 +176,8 @@ public class HomeFragment extends BaseFragment {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void populateUserInfo() {
+    @UiThread
+    private void displayUserInfo() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;

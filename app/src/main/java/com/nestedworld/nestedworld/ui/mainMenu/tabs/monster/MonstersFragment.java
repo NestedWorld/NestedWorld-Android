@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,8 +19,13 @@ import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.dialog.MonsterDetailDialog;
+import com.nestedworld.nestedworld.events.http.OnMonstersUpdatedEvent;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -40,10 +46,10 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     private MonsterAdapter mAdapter;
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, new MonstersFragment());
-        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new MonstersFragment())
+                .addToBackStack(FRAGMENT_NAME)
+                .commit();
     }
 
     /*
@@ -56,6 +62,10 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         //init Adapter and ListView listener
         setupListView();
 
@@ -66,6 +76,17 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    /*
+    ** SwipeRefreshLayout.OnRefreshListener Implementation
+     */
     @Override
     public void onRefresh() {
         //Check if fragment hasn't been detach
@@ -80,17 +101,24 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         new MonsterUpdater().start(new OnEntityUpdated() {
             @Override
             public void onSuccess() {
-                //Update adapter
-                updateAdapterContent();
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
 
+                //Do not update adapter (done by eventBus)
                 //Stop loading animation
                 swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onError(@NonNull KIND errorKind) {
-                @StringRes int errorRes;
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
 
+                @StringRes int errorRes;
                 switch (errorKind) {
                     case NETWORK:
                         errorRes = R.string.error_network;
@@ -103,14 +131,29 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
                         break;
                 }
 
-                //Check if fragment hasn't been detach
-                //And display error message
-                if (mContext != null) {
-                    Toast.makeText(mContext, errorRes, Toast.LENGTH_LONG).show();
+                //Display error message
+                Toast.makeText(mContext, errorRes, Toast.LENGTH_LONG).show();
 
-                    //Stop loading animation
-                    swipeRefreshLayout.setRefreshing(false);
-                }
+                //Stop loading animation
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onMonsterUpdated(OnMonstersUpdatedEvent onMonstersUpdatedEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateAdapterContent();
             }
         });
     }
@@ -137,14 +180,22 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         });
     }
 
+    @UiThread
     private void updateAdapterContent() {
         //Retrieve monsters from ORM
-        final List<Monster> monsters = Select.from(Monster.class).list();
+        List<Monster> monsters = Select.from(Monster.class).list();
 
-        //Rove old content
-        mAdapter.clear();
+        if (monsters == null || monsters.isEmpty()) {
+            //Remove old content
+            mAdapter.clear();
 
-        //update query
-        mAdapter.addAll(monsters);
+            //TODO display text "no monster"
+        } else {
+            //Remove old content
+            mAdapter.clear();
+
+            //update query
+            mAdapter.addAll(monsters);
+        }
     }
 }

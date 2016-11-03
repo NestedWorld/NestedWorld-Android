@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.ui.chat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -16,10 +17,14 @@ import com.nestedworld.nestedworld.adapter.FriendsAdapter;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -58,12 +63,27 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         setupActionBar();
         setupListView();
         populateFriendList();
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    /*
+    ** SwipeRefreshLayout.OnRefreshListener implementation
+     */
     @Override
     public void onRefresh() {
         //Check if fragment hasn't been detach
@@ -78,25 +98,45 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             @Override
             public void onSuccess() {
                 //Check if fragment hasn't been detach
-                if (mContext != null) {
-                    //Update adapter
-                    populateFriendList();
-
-                    //Stop loading animation
-                    swipeRefreshLayout.setRefreshing(false);
+                if (mContext == null) {
+                    return;
                 }
+
+                //Do not update adapter here (will be done with EventBus)
+
+                //Stop loading animation
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onError(@NonNull KIND errorKind) {
                 //check if fragment hasn't been detach
-                if (mContext != null) {
-                    //Stop loading animation
-                    swipeRefreshLayout.setRefreshing(false);
-
-                    //Display error message
-                    Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+                if (mContext == null) {
+                    return;
                 }
+                //Stop loading animation
+                swipeRefreshLayout.setRefreshing(false);
+
+                //Display error message
+                Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateFriendList();
             }
         });
     }
@@ -142,12 +182,19 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
         });
     }
 
+    @UiThread
     private void populateFriendList() {
         //Retrieve friend from ORM
         List<Friend> friends = Select.from(Friend.class).list();
 
-        //Update adapter
-        mAdapter.clear();
-        mAdapter.addAll(friends);
+        if (friends == null || friends.isEmpty()) {
+            mAdapter.clear();
+
+            //TODO display "no friend text"
+        } else {
+            //Update adapter
+            mAdapter.clear();
+            mAdapter.addAll(friends);
+        }
     }
 }

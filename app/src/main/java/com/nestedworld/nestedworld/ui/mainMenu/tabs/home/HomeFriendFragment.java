@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -126,13 +127,20 @@ public class HomeFriendFragment extends BaseFragment {
         listView.setAdapter(mAdapter);
     }
 
+    @UiThread
     private void populateFriendList() {
         //Retrieve entity from orm
         List<Friend> friends = Select.from(Friend.class).list();
 
-        //Remove old entity and add new one
-        mAdapter.clear();
-        mAdapter.addAll(friends);
+        if (friends == null || friends.isEmpty()) {
+            mAdapter.clear();
+
+            //TODO display "no friend text"
+        } else {
+            //Remove old entity and add new one
+            mAdapter.clear();
+            mAdapter.addAll(friends);
+        }
     }
 
     /*

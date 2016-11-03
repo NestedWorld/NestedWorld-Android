@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -103,6 +104,7 @@ public class HomeMonsterFragment extends BaseFragment {
         });
     }
 
+    @UiThread
     private void populateMonstersList() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
