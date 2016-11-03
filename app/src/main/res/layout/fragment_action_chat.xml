@@ -22,6 +22,16 @@
             android:text="@string/chat_msg_start_chat"
             android:textColor="@color/apptheme_color"/>
 
+        <TextView
+            android:id="@+id/textview_no_friend"
+            style="@style/TypefaceStyle.ProximaNova"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dip"
+            android:text="You don't have any friend"
+            android:textColor="@color/apptheme_color"/>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout_friend_list"
             android:layout_width="match_parent"

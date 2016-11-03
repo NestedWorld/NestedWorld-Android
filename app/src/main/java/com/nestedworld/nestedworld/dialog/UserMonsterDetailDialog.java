@@ -95,7 +95,7 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
     }
 
     private void populateView() {
-        //TODO display experience / surname / picture
+        //TODO display experience / surname
         textViewName.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterName), mUserMonster.surname));
         textViewAttack.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), mUserMonster.info().attack));
         textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), mUserMonster.info().defense));

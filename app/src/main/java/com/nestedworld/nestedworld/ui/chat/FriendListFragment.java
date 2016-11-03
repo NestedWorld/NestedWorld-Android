@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
@@ -40,6 +41,8 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
     ProgressView progressView;
     @BindView(R.id.swipeRefreshLayout_friend_list)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.textview_no_friend)
+    TextView textViewNoFriend;
 
     private FriendsAdapter mAdapter;
 
@@ -189,9 +192,11 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
 
         if (friends == null || friends.isEmpty()) {
             mAdapter.clear();
-
-            //TODO display "no friend text"
+            textViewNoFriend.setVisibility(View.VISIBLE);
         } else {
+            //Hide "no friend" text
+            textViewNoFriend.setVisibility(View.GONE);
+
             //Update adapter
             mAdapter.clear();
             mAdapter.addAll(friends);
