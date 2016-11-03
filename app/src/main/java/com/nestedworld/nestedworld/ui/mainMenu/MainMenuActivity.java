@@ -68,11 +68,13 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
-        setUpToolbar();
-
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+
+        setUpToolbar();
+        initSocketService();
+        initTabs();
     }
 
     @Override
@@ -82,8 +84,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         //We want to redraw the toolbar
         invalidateOptionsMenu();
 
-        //Update database
-        progressView.start();
         updateDataBase();
     }
 
@@ -222,6 +222,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
      * Simple asyncTask implementation for updating the database
      */
     private void updateDataBase() {
+        //Start loading animation
+        progressView.start();
+
         final List<EntityUpdater> tasks = new ArrayList<>();
         tasks.add(new UserUpdater());
         tasks.add(new FriendsUpdater());
@@ -249,13 +252,10 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                     return;
                 }
 
-                if (result) {
-                    initSocketService();
-                    initTabs();
-                } else {
-                    //stop loading animation
-                    progressView.stop();
+                //stop loading animation
+                progressView.stop();
 
+                if (!result){
                     //display error message
                     Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
