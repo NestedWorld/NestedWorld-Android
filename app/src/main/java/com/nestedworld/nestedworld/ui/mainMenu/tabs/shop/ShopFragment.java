@@ -17,6 +17,7 @@ import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;
 import com.orm.query.Select;
@@ -132,7 +133,17 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
      */
     @Subscribe
     public void onShopItemUpdated(OnShopItemsUpdated onShopItemsUpdated) {
-        populateAdapter();
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateAdapter();
+            }
+        });
     }
 
     /*
