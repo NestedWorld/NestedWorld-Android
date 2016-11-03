@@ -312,6 +312,8 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         if (selectedMonserInfo != null) {
             Glide.with(mContext)
                     .load(selectedMonserInfo.base_sprite)
+                    .placeholder(R.drawable.default_monster)
+                    .error(R.drawable.default_monster)
                     .into(selectedMonsterView.get(mSelectedMonster.size()));
         }
 
