@@ -20,13 +20,16 @@ import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.updater.AttacksUpdater;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
+import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
 import com.nestedworld.nestedworld.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
@@ -80,7 +83,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         //We want to redraw the toolbar
         invalidateOptionsMenu();
 
@@ -230,7 +232,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         tasks.add(new FriendsUpdater());
         tasks.add(new AttacksUpdater());
         tasks.add(new MonsterUpdater());
-        tasks.add(new UserMonsterUpdater());//Always update userMonster after monster (for avoiding any delete issue)
+        tasks.add(new UserMonsterUpdater());//Always update userMonster after monster (for fk issue)
+        tasks.add(new ShopItemsUpdater());
 
         //We use run() method for convenience
         //for being thread safe, make request in asyncTask
