@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class TabsAdapter extends FragmentStatePagerAdapter {
     protected final String TAG = getClass().getSimpleName();
 
     private final List<ViewPagerItem> mTabs = new ArrayList<>();
@@ -17,19 +17,19 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     /*
     ** Constructor
      */
-    public ViewPagerAdapter(@NonNull final FragmentManager fm) {
+    public TabsAdapter(@NonNull final FragmentManager fm) {
         super(fm);
     }
 
     /*
     ** Public method
      */
-    public ViewPagerAdapter addFragment(@NonNull final Fragment fragment, @Nullable final String title) {
+    public TabsAdapter addFragment(@NonNull final Fragment fragment, @Nullable final String title) {
         mTabs.add(new ViewPagerItem(fragment, title));
         return this;
     }
 
-    public ViewPagerAdapter setDisplayPageTitle(boolean displayPageTitle) {
+    public TabsAdapter setDisplayPageTitle(boolean displayPageTitle) {
         mDisplayPageTitle = displayPageTitle;
         return this;
     }

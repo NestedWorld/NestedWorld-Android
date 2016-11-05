@@ -11,9 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -22,7 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.ViewPagerAdapter;
+import com.nestedworld.nestedworld.adapter.TabsAdapter;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.User;
@@ -40,8 +38,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -168,7 +164,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         //Setup adapter
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager())
+        TabsAdapter viewPagerAdapter = new TabsAdapter(getChildFragmentManager())
                 .setDisplayPageTitle(true)
                 .addFragment(new HomeMonsterFragment(), getString(R.string.tabHome_title_monsterList))
                 .addFragment(new HomeFriendFragment(), getString(R.string.tabHome_title_friendList));

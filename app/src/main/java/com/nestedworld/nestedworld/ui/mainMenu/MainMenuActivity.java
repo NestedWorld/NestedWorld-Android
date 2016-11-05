@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.ViewPagerAdapter;
+import com.nestedworld.nestedworld.adapter.TabsAdapter;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.updater.AttacksUpdater;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
@@ -209,7 +209,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private void setupViewPager() {
         //Create adapter
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager()).setDisplayPageTitle(false);
+        TabsAdapter viewPagerAdapter = new TabsAdapter(getSupportFragmentManager()).setDisplayPageTitle(false);
 
         //Populate adapter
         for (Tabs tabs : mTabs) {
