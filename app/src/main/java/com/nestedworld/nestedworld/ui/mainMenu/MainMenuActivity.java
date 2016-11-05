@@ -193,11 +193,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private void initTabs() {
         TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
-        adapter.addFragment("", new HomeFragment(), R.drawable.ic_home_white_18dp);
-        adapter.addFragment("", new MonstersFragment(), R.drawable.ic_ghost_white_18dp);
-        adapter.addFragment("", new MapFragment(), R.drawable.ic_map_marker_radius_white_18dp);
-        adapter.addFragment("", new UserInventoryFragment(), R.drawable.ic_sword_white_18dp);
-        adapter.addFragment("", new ShopFragment(), R.drawable.ic_cart_plus_white_18dp);
+        adapter.addFragment(new HomeFragment(), null, R.drawable.ic_home_white_18dp);
+        adapter.addFragment(new MonstersFragment(), null, R.drawable.ic_ghost_white_18dp);
+        adapter.addFragment(new MapFragment(), null, R.drawable.ic_map_marker_radius_white_18dp);
+        adapter.addFragment(new UserInventoryFragment(), null, R.drawable.ic_sword_white_18dp);
+        adapter.addFragment(new ShopFragment(), null, R.drawable.ic_cart_plus_white_18dp);
 
         viewPager.setAdapter(adapter);
 
@@ -294,7 +294,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         /*
         ** Public method
          */
-        public void addFragment(@NonNull final String title, @NonNull final Fragment fragment, final int icon) {
+        public void addFragment(@NonNull final Fragment fragment, @Nullable final String title, final int icon) {
             tabList.add(new CustomTab(title, fragment, icon));
         }
 
@@ -326,9 +326,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         public static class CustomTab {
             private final Fragment mFragment;
             private final int mIcon;
-            private String mTitle = "";
+            private String mTitle = null;
 
-            public CustomTab(@NonNull final String title, @NonNull final Fragment fragment, final int icon) {
+            public CustomTab(@Nullable final String title, @NonNull final Fragment fragment, final int icon) {
                 mTitle = title;
                 mFragment = fragment;
                 mIcon = icon;
