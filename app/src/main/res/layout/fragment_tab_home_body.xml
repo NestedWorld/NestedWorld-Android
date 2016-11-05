@@ -19,6 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabBackground="@color/apptheme_background"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
             app:tabMode="fixed"/>
 
         <android.support.v4.view.ViewPager
