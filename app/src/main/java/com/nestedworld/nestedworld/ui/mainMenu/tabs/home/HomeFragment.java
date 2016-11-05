@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.ViewPagerAdapter;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.User;
@@ -167,10 +168,12 @@ public class HomeFragment extends BaseFragment {
         }
 
         //Setup adapter
-        TabsAdapter adapter = new TabsAdapter(getChildFragmentManager());
-        adapter.addFragment(getString(R.string.tabHome_title_monsterList), new HomeMonsterFragment());
-        adapter.addFragment(getString(R.string.tabHome_title_friendList), new HomeFriendFragment());
-        viewPager.setAdapter(adapter);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager())
+                .setDisplayPageTitle(true)
+                .addFragment(new HomeMonsterFragment(), getString(R.string.tabHome_title_monsterList))
+                .addFragment(new HomeFriendFragment(), getString(R.string.tabHome_title_friendList));
+
+        viewPager.setAdapter(viewPagerAdapter);
 
         //Add view pager to the tabLayout
         tabLayout.setupWithViewPager(viewPager);
@@ -264,69 +267,6 @@ public class HomeFragment extends BaseFragment {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Custom FragmentPagerAdapter
-     * It's use for displaying the TABS
-     */
-    private static class TabsAdapter extends FragmentPagerAdapter {
-        protected final String TAG = getClass().getSimpleName();
-
-        private final List<CustomTab> tabList = new ArrayList<>();
-
-        /*
-        ** Constructor
-         */
-        public TabsAdapter(@NonNull final FragmentManager fm) {
-            super(fm);
-        }
-
-        /*
-        ** Public method
-         */
-        public void addFragment(@NonNull final String title, @NonNull final Fragment fragment) {
-            tabList.add(new CustomTab(title, fragment));
-        }
-
-        /*
-        ** Parents method
-         */
-        @Override
-        public Fragment getItem(int position) {
-            return tabList.get(position).getFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return tabList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabList.get(position).getTitle();
-        }
-
-        /**
-         * Custom class for easy tab management
-         */
-        private static class CustomTab {
-            private final Fragment mFragment;
-            private String mTitle = "";
-
-            public CustomTab(@NonNull final String title, @NonNull final Fragment fragment) {
-                mTitle = title;
-                mFragment = fragment;
-            }
-
-            public Fragment getFragment() {
-                return mFragment;
-            }
-
-            public String getTitle() {
-                return mTitle;
-            }
         }
     }
 }
