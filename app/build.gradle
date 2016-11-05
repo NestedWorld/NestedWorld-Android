@@ -33,6 +33,9 @@ android {
 
         }
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
     buildTypes {
         release {
             buildConfigField "com.nestedworld.nestedworld.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.network.NetworkConstant.Environement.PROD"
