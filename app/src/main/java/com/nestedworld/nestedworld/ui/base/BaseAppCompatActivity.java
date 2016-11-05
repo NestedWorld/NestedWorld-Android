@@ -1,7 +1,9 @@
 package com.nestedworld.nestedworld.ui.base;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Trace;
 import android.support.annotation.LayoutRes;
@@ -53,11 +55,10 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
         mUnbinder = ButterKnife.bind(this);
 
-        try {
-            Trace.beginSection(TAG + " init");
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            initWithtTrace(savedInstanceState);
+        } else {
             init(savedInstanceState);
-        } finally {
-            Trace.endSection();
         }
     }
 
@@ -66,6 +67,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         super.onDestroy();
         if (mUnbinder != null) {
             mUnbinder.unbind();
+            mUnbinder = null;
         }
     }
 
@@ -95,17 +97,18 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     ** Utils
      */
     protected boolean isUiBinded() {
-        boolean isBinded = mUnbinder != null;
+        boolean isBinded;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+            isBinded = (mUnbinder != null && !super.isDestroyed());
+        } else {
+            isBinded = isUiBindedOnJellyBean();
+        }
         LogHelper.d(TAG, "isUiBinded > " + isBinded);
-        return isBinded && !super.isDestroyed();
-    }
-
-    public String toString() {
-        return TAG;
+        return isBinded;
     }
 
     protected void startActivity(@NonNull final Class clazz, @Nullable Bundle bundle) {
-        final Intent intent = new Intent(this, clazz);
+        Intent intent = new Intent(this, clazz);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
@@ -114,5 +117,23 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     protected void startActivity(@NonNull final Class clazz) {
         startActivity(clazz, null);
+    }
+
+    /*
+    ** Internal method
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private boolean isUiBindedOnJellyBean() {
+        return (mUnbinder != null);
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void initWithtTrace(@Nullable Bundle savedInstanceState) {
+        try {
+            Trace.beginSection(TAG + " init");
+            init(savedInstanceState);
+        } finally {
+            Trace.endSection();
+        }
     }
 }

@@ -43,7 +43,6 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:indeterminateTintMode="src_atop"
                     android:padding="8dip"
                     android:progress="100"/>
 
