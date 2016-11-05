@@ -20,7 +20,7 @@ public class ProfileActivity extends BaseAppCompatActivity {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_empty_with_toolbar;
+        return R.layout.activity_profile;
     }
 
     @Override

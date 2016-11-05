@@ -19,7 +19,7 @@ public class FightProcessActivity extends BaseAppCompatActivity {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_empty_with_toolbar;
+        return R.layout.acitivity_fight_process;
     }
 
     @Override
