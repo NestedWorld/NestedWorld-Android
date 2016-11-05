@@ -36,7 +36,6 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editText_userEmail"
                     style="@style/TypefaceStyle.ProximaNova"
-                    android:text="florian.faisan@epitech.eu"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/registration_editText_email"
