@@ -2,13 +2,12 @@ package com.nestedworld.nestedworld.ui.mainMenu;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.ViewPagerAdapter;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.updater.AttacksUpdater;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
@@ -28,9 +28,7 @@ import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
@@ -53,6 +51,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.viewpager)
@@ -61,6 +60,22 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     TabLayout tabLayout;
     @BindView(R.id.progressView)
     ProgressView progressView;
+
+    private final List<Tabs> mTabs = new ArrayList<Tabs>() {{
+        add(new Tabs(new HomeFragment(), "Home", R.drawable.ic_home_white_18dp));
+        add(new Tabs(new MonstersFragment(), "Monsters", R.drawable.ic_ghost_white_18dp));
+        add(new Tabs(new MapFragment(), "Map", R.drawable.ic_map_marker_radius_white_18dp));
+        add(new Tabs(new UserInventoryFragment(), "Inventory", R.drawable.ic_sword_white_18dp));
+        add(new Tabs(new ShopFragment(), "Shop", R.drawable.ic_cart_plus_white_18dp));
+    }};
+    private final List<EntityUpdater> mTasks = new ArrayList<EntityUpdater>() {{
+        add(new UserUpdater());
+        add(new FriendsUpdater());
+        add(new AttacksUpdater());
+        add(new MonsterUpdater());
+        add(new UserMonsterUpdater());//Always update userMonster after monster (for fk issue)
+        add(new ShopItemsUpdater());
+    }};
 
     /*
     ** Life cycle
@@ -77,8 +92,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         }
 
         setUpToolbar();
+        setupViewPager();
+        setupTabLayout();
         initSocketService();
-        initTabs();
     }
 
     @Override
@@ -135,15 +151,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         }
     }
 
-    /*
-    ** EventBus
-     */
-    @Subscribe
-    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
-        //We want to redraw the toolbar
-        invalidateOptionsMenu();
-    }
-
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -163,6 +170,15 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
+        //We want to redraw the toolbar
+        invalidateOptionsMenu();
     }
 
     /*
@@ -191,30 +207,54 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         ServiceHelper.stopSocketService(this);
     }
 
-    private void initTabs() {
-        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager());
-        adapter.addFragment(new HomeFragment(), null, R.drawable.ic_home_white_18dp);
-        adapter.addFragment(new MonstersFragment(), null, R.drawable.ic_ghost_white_18dp);
-        adapter.addFragment(new MapFragment(), null, R.drawable.ic_map_marker_radius_white_18dp);
-        adapter.addFragment(new UserInventoryFragment(), null, R.drawable.ic_sword_white_18dp);
-        adapter.addFragment(new ShopFragment(), null, R.drawable.ic_cart_plus_white_18dp);
+    private void setupViewPager() {
+        //Create adapter
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager()).setDisplayPageTitle(false);
 
-        viewPager.setAdapter(adapter);
+        //Populate adapter
+        for (Tabs tabs : mTabs) {
+            viewPagerAdapter.addFragment(tabs.fragment, tabs.title);
+        }
+
+        //Set adapter
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    private void setupTabLayout() {
+        //add listener for toolbar.name customisation
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //Update toolbar title
+                ActionBar actionBar = getSupportActionBar();
+                Tabs selectedTabs = mTabs.get(tab.getPosition());
+
+                if (actionBar != null && selectedTabs != null) {
+                    actionBar.setTitle(selectedTabs.title);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         //Add view pager to the tabLayout
         tabLayout.setupWithViewPager(viewPager);
 
         //Display tab icon
-        //We loop over the adapter instead of calling setIcon() manually
-        for (int i = 0; i < adapter.getCount(); i++) {
+        for (int i = 0; i < mTabs.size(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             if (tab != null) {
-                tab.setIcon(adapter.getPageIcon(i));
+                tab.setIcon(mTabs.get(i).icon);
             }
         }
-
-        //Stop loading animation
-        progressView.stop();
     }
 
     private void setUpToolbar() {
@@ -228,20 +268,12 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         //Start loading animation
         progressView.start();
 
-        final List<EntityUpdater> tasks = new ArrayList<>();
-        tasks.add(new UserUpdater());
-        tasks.add(new FriendsUpdater());
-        tasks.add(new AttacksUpdater());
-        tasks.add(new MonsterUpdater());
-        tasks.add(new UserMonsterUpdater());//Always update userMonster after monster (for fk issue)
-        tasks.add(new ShopItemsUpdater());
-
         //We use run() method for convenience
         //for being thread safe, make request in asyncTask
         new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... params) {
-                for (EntityUpdater entityUpdater : tasks) {
+                for (EntityUpdater entityUpdater : mTasks) {
                     if (!entityUpdater.run()) {
                         return false;
                     }
@@ -275,76 +307,20 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         }.execute();
     }
 
-    /**
-     * Custom FragmentPagerAdapter
-     * It's use for displaying the TABS under activity.mainMenu
-     */
-    private static class TabsAdapter extends FragmentStatePagerAdapter {
-        protected final String TAG = getClass().getSimpleName();
+    private final static class Tabs {
+        @NonNull
+        public Fragment fragment;
 
-        private final List<CustomTab> tabList = new ArrayList<>();
+        @Nullable
+        public String title;
 
-        /*
-        ** Constructor
-         */
-        public TabsAdapter(@NonNull final FragmentManager fm) {
-            super(fm);
-        }
+        @DrawableRes
+        public int icon;
 
-        /*
-        ** Public method
-         */
-        public void addFragment(@NonNull final Fragment fragment, @Nullable final String title, final int icon) {
-            tabList.add(new CustomTab(title, fragment, icon));
-        }
-
-        /*
-        ** Parents method
-         */
-        @Override
-        public Fragment getItem(int position) {
-            return tabList.get(position).getFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return tabList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabList.get(position).getTitle();
-        }
-
-        public int getPageIcon(int position) {
-            return tabList.get(position).getIcon();
-        }
-
-        /**
-         * Custom class for easy tab management
-         */
-        public static class CustomTab {
-            private final Fragment mFragment;
-            private final int mIcon;
-            private String mTitle = null;
-
-            public CustomTab(@Nullable final String title, @NonNull final Fragment fragment, final int icon) {
-                mTitle = title;
-                mFragment = fragment;
-                mIcon = icon;
-            }
-
-            public Fragment getFragment() {
-                return mFragment;
-            }
-
-            public String getTitle() {
-                return mTitle;
-            }
-
-            public int getIcon() {
-                return mIcon;
-            }
+        public Tabs(@NonNull final Fragment fragment, @Nullable final String title, @DrawableRes final int icon) {
+            this.icon = icon;
+            this.fragment = fragment;
+            this.title = title;
         }
     }
 }
