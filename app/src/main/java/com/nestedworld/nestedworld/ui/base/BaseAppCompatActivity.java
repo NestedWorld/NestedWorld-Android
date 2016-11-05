@@ -97,7 +97,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected boolean isUiBinded() {
         boolean isBinded = mUnbinder != null;
         LogHelper.d(TAG, "isUiBinded > " + isBinded);
-        return isBinded;
+        return isBinded && !super.isDestroyed();
     }
 
     public String toString() {
