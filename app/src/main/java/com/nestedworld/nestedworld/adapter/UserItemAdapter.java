@@ -61,9 +61,7 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
             TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
             TextView textViewObjectKind = (TextView) view.findViewById(R.id.textview_object_kind);
             TextView textViewObjectPower = (TextView) view.findViewById(R.id.textview_object_power);
-            TextView textViewObjectPrenium = (TextView) view.findViewById(R.id.textview_object_prenium);
             TextView textViewObjectDescription = (TextView) view.findViewById(R.id.textview_object_description);
-            TextView textViewObjectPrice = (TextView) view.findViewById(R.id.textview_object_price);
             ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
 
             //Populate widget

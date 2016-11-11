@@ -14,7 +14,6 @@
 
     <!--Error message (request failed)-->
     <string name="error_request_login">Cannot login.</string>
-    <string name="error_request_place">Cannot retrieve places.</string>
     <string name="error_request_forgotPassword">Cannot reset your password.</string>
     <string name="error_request_user">Cannot retrieve your data.</string>
 
@@ -47,7 +46,6 @@
     <string name="monsterDetail_title_characteristics">Characteristics: </string>
 
     <!--MainMenu-->
-    <string name="mainMenu_title_tab_inventory">Inventory</string>
     <string name="mainMenu_action_chat">Chat</string>
     <string name="mainMenu_action_fight">fight</string>
 

@@ -314,13 +314,13 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private final static class Tabs {
         @NonNull
-        public Fragment fragment;
+        public final Fragment fragment;
 
         @Nullable
-        public String title;
+        public final String title;
 
         @DrawableRes
-        public int icon;
+        public final int icon;
 
         public Tabs(@NonNull final Fragment fragment, @Nullable final String title, @DrawableRes final int icon) {
             this.icon = icon;

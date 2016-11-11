@@ -12,8 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
-
 public final class DrawableHelper {
 
     /*
@@ -37,10 +35,6 @@ public final class DrawableHelper {
         } else {
             TextView textView = (TextView) view.findViewById(R.id.count);
             textView.setText(String.valueOf(count));
-        }
-
-        if (view == null) {
-            LogHelper.e("TA mERE", "TA MERE");
         }
 
         view.setLayoutParams(new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));

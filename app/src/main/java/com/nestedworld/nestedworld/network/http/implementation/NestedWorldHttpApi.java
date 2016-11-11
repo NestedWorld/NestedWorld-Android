@@ -41,10 +41,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Simple Api containing the retrofit interface and his implementation
  */
 public final class NestedWorldHttpApi {
+    private final static String TAG = NestedWorldHttpApi.class.getSimpleName();
+
     private static NestedWorldHttpApi mSingleton;
-    private final String TAG = getClass().getSimpleName();
     private NestedWorldApiInterface mClient;
-    private Call<PortalsResponse> portals;
 
     /*
     ** Constructor

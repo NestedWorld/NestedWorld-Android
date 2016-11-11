@@ -48,8 +48,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  */
 public class HomeFragment extends BaseFragment {
 
-    private final int PICK_PROFIL_IMAGE_REQUEST = 1;
-    private final int PICK_BACKGROUND_IMAGE_REQUEST = 2;
+    private final static int PICK_PROFIL_IMAGE_REQUEST = 1;
+    private final static int PICK_BACKGROUND_IMAGE_REQUEST = 2;
 
     @BindView(R.id.textView_username)
     TextView textViewUsername;

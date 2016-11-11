@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.AttackAdapter;
 import com.nestedworld.nestedworld.database.models.Attack;
+import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -97,13 +98,18 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
     private void populateView() {
         //TODO display experience / surname
         textViewName.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterName), mUserMonster.surname));
-        textViewAttack.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), mUserMonster.info().attack));
-        textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), mUserMonster.info().defense));
-        textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mUserMonster.info().hp));
-        textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mUserMonster.info().speed));
-        Glide.with(getContext())
-                .load(mUserMonster.info().baseSprite)
-                .into(imageViewSprite);
+
+        Monster userMonsterInfo = mUserMonster.info();
+        if (userMonsterInfo != null) {
+            textViewAttack.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), userMonsterInfo.attack));
+            textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), userMonsterInfo.defense));
+            textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), userMonsterInfo.hp));
+            textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), userMonsterInfo.speed));
+            Glide.with(getContext())
+                    .load(userMonsterInfo.baseSprite)
+                    .into(imageViewSprite);
+
+        }
     }
 
     private void populateMonsterAttack(@NonNull final List<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
