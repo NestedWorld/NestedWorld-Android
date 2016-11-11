@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.models.UserItem;
@@ -55,8 +57,21 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
     private void populateView(@NonNull final View view, @NonNull final UserItem userItem) {
         ShopItem shopItem = userItem.infos();
         if (shopItem != null) {
-            TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_objectName);
-            textViewObjectName.setText(shopItem.name);
+            //Retrieve widget
+            TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
+            TextView textViewObjectKind = (TextView) view.findViewById(R.id.textview_object_kind);
+            TextView textViewObjectPower = (TextView) view.findViewById(R.id.textview_object_power);
+            TextView textViewObjectPrenium = (TextView) view.findViewById(R.id.textview_object_prenium);
+            TextView textViewObjectDescription = (TextView) view.findViewById(R.id.textview_object_description);
+            TextView textViewObjectPrice = (TextView) view.findViewById(R.id.textview_object_price);
+            ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
+
+            //Populate widget
+            textViewObjectName.setText("Name: " + shopItem.name);
+            textViewObjectKind.setText("Kind: " + shopItem.kind);
+            textViewObjectPower.setText("Power: " + shopItem.power);
+            textViewObjectDescription.setText("Description : " + shopItem.description);
+            Glide.with(getContext()).load(shopItem.image).into(imageViewObject);
         }
     }
 }
