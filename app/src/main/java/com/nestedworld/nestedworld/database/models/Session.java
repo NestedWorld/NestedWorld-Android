@@ -26,8 +26,8 @@ public class Session extends SugarRecord {
     }
 
     @Nullable
-    public User getUser() {
-        return Select.from(User.class)
+    public Player getUser() {
+        return Select.from(Player.class)
                 .where(Condition.prop("email").eq(email))
                 .first();
     }

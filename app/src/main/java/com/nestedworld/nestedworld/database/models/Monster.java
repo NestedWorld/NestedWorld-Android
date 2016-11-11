@@ -32,10 +32,12 @@ public class Monster extends SugarRecord {
     public String name;
 
     @Expose
-    public String enraged_sprite;
+    @SerializedName("enraged_sprite")
+    public String enragedSprite;
 
     @Expose
-    public String base_sprite;
+    @SerializedName("base_sprite")
+    public String baseSprite;
 
     @Expose
     public String type;
@@ -57,8 +59,8 @@ public class Monster extends SugarRecord {
                 ", hp='" + hp + '\'' +
                 ", defense=" + defense +
                 ", name='" + name + '\'' +
-                ", enraged_sprite='" + enraged_sprite + '\'' +
-                ", base_sprite='" + base_sprite + '\'' +
+                ", enragedSprite='" + enragedSprite + '\'' +
+                ", baseSprite='" + baseSprite + '\'' +
                 ", type='" + type + '\'' +
                 ", speed='" + speed + '\'' +
                 '}';

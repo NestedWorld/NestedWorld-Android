@@ -7,7 +7,7 @@ import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.Place;
 import com.nestedworld.nestedworld.database.models.Region;
 import com.nestedworld.nestedworld.database.models.Session;
-import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.orm.SugarRecord;
 
@@ -31,7 +31,7 @@ public final class DataBaseHelper {
         SugarRecord.deleteAll(Place.class);
         SugarRecord.deleteAll(Region.class);
         SugarRecord.deleteAll(Session.class);
-        SugarRecord.deleteAll(User.class);
+        SugarRecord.deleteAll(Player.class);
         SugarRecord.deleteAll(UserMonster.class);
     }
 }

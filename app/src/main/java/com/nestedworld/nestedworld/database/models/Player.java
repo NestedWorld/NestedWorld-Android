@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.database.models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
 /**
@@ -9,42 +10,46 @@ import com.orm.SugarRecord;
  * - mapping a sql table with SugarORM
  * /!\ Keep the default constructor empty (see sugarOrm doc)
  */
-public class User extends SugarRecord {
+public class Player extends SugarRecord {
     @Expose
-    public String birth_date;
-
-    @Expose
-    public String background;
-
-    @Expose
-    public String is_active;
-
-    @Expose
-    public Long level;
-
-    @Expose
-    public String pseudo;
-
-    @Expose
-    public String registered_at;
-
-    @Expose
-    public String email;
+    @SerializedName("birth_date")
+    public String birthDate;
 
     @Expose
     public String city;
 
     @Expose
-    public String avatar;
-
-    @Expose
     public String gender;
 
     @Expose
-    public Boolean is_connected;
+    public String background;
+
+    @Expose
+    public String email;
+
+    @Expose
+    public Long level;
+
+    @Expose
+    @SerializedName("is_active")
+    public String isActive;
+
+    @Expose
+    public String pseudo;
+
+    @Expose
+    @SerializedName("registered_at")
+    public String registeredAt;
+
+    @Expose
+    public String avatar;
+
+    @Expose
+    @SerializedName("is_connected")
+    public Boolean isConnected;
 
     //Empty constructor for SugarRecord
-    public User() {
+    public Player() {
         //keep empty
     }
 
@@ -52,11 +57,11 @@ public class User extends SugarRecord {
     @Override
     public String toString() {
         return "User{" +
-                "birth_date='" + birth_date + '\'' +
+                "birthDate='" + birthDate + '\'' +
                 ", background='" + background + '\'' +
-                ", is_active='" + is_active + '\'' +
+                ", isActive='" + isActive + '\'' +
                 ", pseudo='" + pseudo + '\'' +
-                ", registered_at='" + registered_at + '\'' +
+                ", registeredAt='" + registeredAt + '\'' +
                 ", email='" + email + '\'' +
                 ", city='" + city + '\'' +
                 ", avatar='" + avatar + '\'' +

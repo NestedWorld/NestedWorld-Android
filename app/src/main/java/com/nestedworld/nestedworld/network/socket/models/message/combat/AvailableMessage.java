@@ -46,8 +46,8 @@ public class AvailableMessage extends DefaultMessage {
         if (message.containsKey(ValueFactory.newString("monster_id"))) {
             this.monsterId = combat.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asLong();
         }
-        if (message.containsKey(ValueFactory.newString("user"))) {
-            Map<Value, Value> userInfo = message.get(ValueFactory.newString("user")).asMapValue().map();
+        if (message.containsKey(ValueFactory.newString("player"))) {
+            Map<Value, Value> userInfo = message.get(ValueFactory.newString("player")).asMapValue().map();
             this.opponentPseudo = combat.opponentPseudo = userInfo.get(ValueFactory.newString("pseudo")).asStringValue().asString();
         }
         combat.save();

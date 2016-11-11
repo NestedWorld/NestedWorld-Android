@@ -101,7 +101,7 @@ public final class MonsterDetailDialog extends BaseDialogFragment {
         textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mMonster.hp));
         textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mMonster.speed));
         Glide.with(getContext())
-                .load(mMonster.enraged_sprite)
+                .load(mMonster.enragedSprite)
                 .into(imageViewSprite);
     }
 

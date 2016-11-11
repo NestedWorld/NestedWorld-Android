@@ -28,7 +28,7 @@ public class UserMonster extends SugarRecord {
 
     @Expose
     public Long level;
-    public Long fkmonster;//key for Monster<->UserMonster relationship
+    public Long monsterId;//key for Monster<->UserMonster relationship
 
     @Expose
     public String surname;
@@ -44,7 +44,7 @@ public class UserMonster extends SugarRecord {
     @Nullable
     public Monster info() {
         if (infos == null) {
-            infos = Select.from(Monster.class).where(Condition.prop("monster_id").eq(fkmonster)).first();
+            infos = Select.from(Monster.class).where(Condition.prop("monster_id").eq(monsterId)).first();
         }
         return infos;
     }
@@ -53,12 +53,12 @@ public class UserMonster extends SugarRecord {
     @Override
     public String toString() {
         return "UserMonster{" +
-                "userMonsterId=" + userMonsterId +
-                ", info=" + infos +
+                "experience='" + experience + '\'' +
+                ", userMonsterId=" + userMonsterId +
+                ", infos=" + infos +
                 ", level=" + level +
+                ", monsterId=" + monsterId +
                 ", surname='" + surname + '\'' +
-                ", experience='" + experience + '\'' +
-                ", fkmonster=" + fkmonster +
                 '}';
     }
 

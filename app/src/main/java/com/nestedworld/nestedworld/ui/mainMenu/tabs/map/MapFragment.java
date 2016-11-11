@@ -179,7 +179,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
         if (mContext == null) {
             return;
         }
-        
+
         LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
         mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
     }

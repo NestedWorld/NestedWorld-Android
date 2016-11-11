@@ -23,7 +23,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.TabsAdapter;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.Session;
-import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.http.OnUserUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.aws.AwsHelper;
@@ -190,14 +190,14 @@ public class HomeFragment extends BaseFragment {
             return;
         }
 
-        //Retrieve the user
-        User user = session.getUser();
+        //Retrieve the player
+        Player user = session.getUser();
         if (user == null) {
             LogHelper.d(TAG, "No User");
             return;
         }
 
-        //Display user information
+        //Display player information
         Resources res = getResources();
         textViewUserLevel.setText(String.format(res.getString(R.string.tabHome_msg_userLvl), user.level));
         textViewAllyOnline.setText(String.format(res.getString(R.string.tabHome_msg_allyOnline), Friend.getNumberOfAllyOnline()));
@@ -208,7 +208,7 @@ public class HomeFragment extends BaseFragment {
         textViewCreditsNumber.setText("0");
         textViewAreaCaptured.setText("0");
 
-        //Display user picture
+        //Display player picture
         if (user.avatar != null) {
             Glide.with(mContext)
                     .load(user.avatar)
@@ -219,7 +219,7 @@ public class HomeFragment extends BaseFragment {
                     .into(imageViewUser);
         }
 
-        //Display user background
+        //Display player background
         if (user.background != null) {
             Glide.with(mContext)
                     .load(user.background)

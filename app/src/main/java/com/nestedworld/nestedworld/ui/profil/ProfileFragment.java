@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Session;
-import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
@@ -29,8 +29,6 @@ import retrofit2.Response;
  * A placeholder fragment containing a simple view.
  */
 public class ProfileFragment extends BaseFragment {
-
-    public final static String FRAGMENT_NAME = ProfileFragment.class.getSimpleName();
 
     @BindView(R.id.textView_gender)
     TextView textViewGender;
@@ -78,8 +76,8 @@ public class ProfileFragment extends BaseFragment {
             return;
         }
 
-        //Retrieve the user
-        User user = session.getUser();
+        //Retrieve the player
+        Player user = session.getUser();
         if (user == null) {
             LogHelper.d(TAG, "No User");
             return;
@@ -89,9 +87,9 @@ public class ProfileFragment extends BaseFragment {
         Resources res = getResources();
         textViewGender.setText(String.format(res.getString(R.string.profile_msg_gender), user.gender));
         textViewPseudo.setText(String.format(res.getString(R.string.profile_msg_pseudo), user.pseudo));
-        textViewBirthDate.setText(String.format(res.getString(R.string.profile_msg_birthDay), user.birth_date));
+        textViewBirthDate.setText(String.format(res.getString(R.string.profile_msg_birthDay), user.birthDate));
         textViewCity.setText(String.format(res.getString(R.string.profile_msg_city), user.city));
-        textViewRegisteredAt.setText(String.format(res.getString(R.string.profile_msg_registeredAt), user.registered_at));
+        textViewRegisteredAt.setText(String.format(res.getString(R.string.profile_msg_registeredAt), user.registeredAt));
         textViewEmail.setText(String.format(res.getString(R.string.profile_msg_email), user.email));
         textViewBackgroundUrl.setText(String.format(res.getString(R.string.profile_msg_background), user.background));
         textViewLevel.setText(String.format(res.getString(R.string.profile_msg_level), String.valueOf(user.level)));

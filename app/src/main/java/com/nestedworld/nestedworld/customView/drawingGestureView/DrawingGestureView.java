@@ -169,7 +169,7 @@ public class DrawingGestureView extends View {
     }
 
     private void updateTiles(final float x, final float y) {
-        //We check if the user touch a tiles
+        //We check if the player touch a tiles
         for (ImageView view : mTiles) {
 
             //hit test

@@ -102,7 +102,7 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
         textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mUserMonster.info().hp));
         textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mUserMonster.info().speed));
         Glide.with(getContext())
-                .load(mUserMonster.info().base_sprite)
+                .load(mUserMonster.info().baseSprite)
                 .into(imageViewSprite);
     }
 

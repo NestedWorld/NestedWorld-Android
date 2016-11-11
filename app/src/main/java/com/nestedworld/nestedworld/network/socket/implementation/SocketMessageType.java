@@ -19,8 +19,8 @@ public final class SocketMessageType {
         ** -> we'll use the key for message parsing
          */
         //Chat
-        map.put(MessageKind.TYPE_CHAT_USER_JOINED, "chat:user-joined");
-        map.put(MessageKind.TYPE_CHAT_USER_PARTED, "chat:user-parted");
+        map.put(MessageKind.TYPE_CHAT_USER_JOINED, "chat:player-joined");
+        map.put(MessageKind.TYPE_CHAT_USER_PARTED, "chat:player-parted");
         map.put(MessageKind.TYPE_CHAT_MESSAGE_RECEIVED, "chat:message-received");
 
         //Combat

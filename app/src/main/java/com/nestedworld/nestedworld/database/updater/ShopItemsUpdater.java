@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,7 +19,7 @@ public class ShopItemsUpdater extends EntityUpdater<ShopObjectsResponse> {
     @NonNull
     @Override
     protected Call<ShopObjectsResponse> getRequest() {
-        return NestedWorldHttpApi.getInstance().getShopItems();
+        return getApi().getShopItems();
     }
 
     @Override

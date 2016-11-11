@@ -15,7 +15,7 @@ public final class ApplicationHelper {
     }
 
     public static void logout(@NonNull final Context context) {
-        //remove user
+        //remove player
         SessionHelper.deleteSession();
 
         //avoid leak with the static instance

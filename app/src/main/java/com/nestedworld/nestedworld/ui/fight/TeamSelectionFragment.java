@@ -28,7 +28,7 @@ import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.Session;
-import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -133,7 +133,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             //Retrieve userMonsters
             mUserMonsters = Select.from(UserMonster.class).list();
 
-            //Init the viewPager (it will display user's monster)
+            //Init the viewPager (it will display player's monster)
             setUpViewPager();
 
             //init header block (with players information)
@@ -247,8 +247,8 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             return;
         }
 
-        //Retrieve the user
-        User user = session.getUser();
+        //Retrieve the player
+        Player user = session.getUser();
         if (user == null) {
             LogHelper.d(TAG, "No User");
             ((BaseAppCompatActivity) mContext).finish();
@@ -311,7 +311,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
         //Show the selected monster
         if (selectedMonserInfo != null) {
             Glide.with(mContext)
-                    .load(selectedMonserInfo.base_sprite)
+                    .load(selectedMonserInfo.baseSprite)
                     .placeholder(R.drawable.default_monster)
                     .error(R.drawable.default_monster)
                     .into(selectedMonsterView.get(mSelectedMonster.size()));
@@ -441,7 +441,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
             //Display monster picture
             ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(mContext)
-                    .load(monsterInfo.base_sprite)
+                    .load(monsterInfo.baseSprite)
                     .placeholder(R.drawable.default_monster)
                     .centerCrop()
                     .into(imageViewMonster);

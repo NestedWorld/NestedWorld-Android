@@ -80,7 +80,7 @@ public class LoginFragment extends BaseFragment {
             return;
         }
 
-        //Retrieve user input
+        //Retrieve player input
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
@@ -95,10 +95,10 @@ public class LoginFragment extends BaseFragment {
             return;
         }
 
-        //Retrieve user input
+        //Retrieve player input
         String email = etEmail.getText().toString();
 
-        //Check user input
+        //Check player input
         if (!checkInputForForgotPassword(email)) {
             return;
         }
@@ -188,7 +188,7 @@ public class LoginFragment extends BaseFragment {
                     return;
                 }
 
-                //Warn user an email has been send
+                //Warn player an email has been send
                 Toast.makeText(mContext, getString(R.string.registration_msg_passwordSend), Toast.LENGTH_LONG).show();
             }
 

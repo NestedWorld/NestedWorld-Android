@@ -52,7 +52,7 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
         //Display monster picture
         ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
         Glide.with(getContext())
-                .load(monster.base_sprite)
+                .load(monster.baseSprite)
                 .placeholder(R.drawable.default_monster)
                 .centerCrop()
                 .into(imageViewMonster);

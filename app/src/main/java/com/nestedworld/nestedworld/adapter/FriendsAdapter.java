@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Friend;
-import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
@@ -79,7 +79,7 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
         }
 
         //get current friend information
-        User currentFriendInfo = currentFriend.info();
+        Player currentFriendInfo = currentFriend.info();
         if (currentFriendInfo == null) {
             return view;
         }
@@ -92,7 +92,7 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
     /*
     ** Internal method
      */
-    private void populateView(@NonNull final FriendHolder friendHolder, @NonNull final User currentFriendInfo) {
+    private void populateView(@NonNull final FriendHolder friendHolder, @NonNull final Player currentFriendInfo) {
         //display the friend name
         friendHolder.friendName.setText(currentFriendInfo.pseudo);
 
@@ -119,7 +119,7 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
         });
     }
 
-    private void onDefyFriendClick(@NonNull final User currentFriendInfo) {
+    private void onDefyFriendClick(@NonNull final Player currentFriendInfo) {
         //Retrieve SocketService for using NestedworldSocketAPI
         ServiceHelper.bindToSocketService(getContext(), new ServiceConnection() {
             @Override

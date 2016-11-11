@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.database.models.Session;
-import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.orm.query.Select;
 
@@ -48,12 +48,12 @@ public final class SessionHelper {
         //Display some log
         LogHelper.d(TAG, "deleteSession()");
 
-        //Delete the user linked to the session
+        //Delete the player linked to the session
         Session session = getSession();
         if (session != null) {
-            User user = session.getUser();
+            Player user = session.getUser();
             if (user != null) {
-                LogHelper.d(TAG, "delete user: " + user.toString());
+                LogHelper.d(TAG, "delete player: " + user.toString());
                 user.delete();
             }
 

@@ -44,8 +44,8 @@ public class StartMessage extends DefaultMessage {
         this.env = message.get(ValueFactory.newString("env")).asStringValue().asString();
         this.first = message.get(ValueFactory.newString("first")).asBooleanValue().getBoolean();
 
-        if (message.containsKey(ValueFactory.newString("user"))) {
-            Map<Value, Value> userMap = message.get(ValueFactory.newString("user")).asMapValue().map();
+        if (message.containsKey(ValueFactory.newString("player"))) {
+            Map<Value, Value> userMap = message.get(ValueFactory.newString("player")).asMapValue().map();
             if (userMap != null) {
                 this.user = new StartMessagePlayer(userMap, getMessageKind(), null);
             }
@@ -68,7 +68,7 @@ public class StartMessage extends DefaultMessage {
                 "combatId=" + combatId +
                 ", type='" + type + '\'' +
                 ", id='" + id + '\'' +
-                ", user=" + user +
+                ", player=" + user +
                 ", opponent=" + opponent +
                 ", combat_type='" + combatType + '\'' +
                 ", env='" + env + '\'' +

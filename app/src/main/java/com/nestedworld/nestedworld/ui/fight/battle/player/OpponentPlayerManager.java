@@ -111,7 +111,7 @@ public class OpponentPlayerManager extends PlayerManager {
         Monster monsterInfos = monster.info();
         if (monsterInfos != null) {
             Glide.with(context)
-                    .load(monsterInfos.base_sprite)
+                    .load(monsterInfos.baseSprite)
                     .placeholder(R.drawable.default_monster)
                     .error(R.drawable.default_monster)
                     .into(monsterPicture);

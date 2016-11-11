@@ -81,7 +81,7 @@ public class CreateAccountFragment extends BaseFragment {
     @OnClick(R.id.button_inscription)
     public void sendCreateAccountRequest() {
 
-        //Retrieve user input
+        //Retrieve player input
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
         String pseudo = etPseudo.getText().toString();

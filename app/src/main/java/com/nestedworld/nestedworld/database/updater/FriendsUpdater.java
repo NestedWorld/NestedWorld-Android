@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.database.updater;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.database.models.Friend;
-import com.nestedworld.nestedworld.database.models.User;
+import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
@@ -32,7 +32,7 @@ public class FriendsUpdater extends EntityUpdater<FriendsResponse> {
         //Delete old entity
         List<Friend> oldFriend = Select.from(Friend.class).list();
         for (Friend friend : oldFriend) {
-            User friendInfo = friend.info();
+            Player friendInfo = friend.info();
             if (friendInfo != null) {
                 friendInfo.delete();
             }
@@ -41,7 +41,7 @@ public class FriendsUpdater extends EntityUpdater<FriendsResponse> {
 
         //Update foreign key
         for (Friend friend : response.body().friends) {
-            friend.fkfuser = friend.info.save();
+            friend.playerId = friend.info.save();
         }
 
         //Save entity

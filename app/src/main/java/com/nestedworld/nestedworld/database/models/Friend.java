@@ -16,9 +16,9 @@ import com.orm.query.Select;
 public class Friend extends SugarRecord {
     @Expose
     @SerializedName("user")
-    public User info;
+    public Player info;
 
-    public Long fkfuser;//key for User<->Friend relationship
+    public Long playerId;//key for User<->Friend relationship
 
     //Empty constructor for SugarRecord
     public Friend() {
@@ -29,8 +29,8 @@ public class Friend extends SugarRecord {
     public static int getNumberOfAllyOnline() {
         int allyOnline = 0;
         for (Friend friend : Select.from(Friend.class).list()) {
-            User friendInfo = friend.info;
-            if (friendInfo != null && friendInfo.is_connected) {
+            Player friendInfo = friend.info;
+            if (friendInfo != null && friendInfo.isConnected) {
                 allyOnline++;
             }
         }
@@ -38,9 +38,9 @@ public class Friend extends SugarRecord {
     }
 
     @Nullable
-    public User info() {
+    public Player info() {
         if (info == null) {
-            info = Friend.findById(User.class, fkfuser);
+            info = Friend.findById(Player.class, playerId);
         }
         return info;
     }
@@ -50,7 +50,7 @@ public class Friend extends SugarRecord {
     public String toString() {
         return "Friend{" +
                 "info=" + info +
-                ", fkfuser=" + fkfuser +
+                ", playerId=" + playerId +
                 '}';
     }
 }

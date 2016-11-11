@@ -177,7 +177,7 @@ public class BattleFragment extends BaseFragment {
             //Display some log
             LogHelper.d(TAG, "You should call setStartMessage() and setUserTeam() before binding the fragment");
 
-            //Warm the user we can't start this battle
+            //Warm the player we can't start this battle
             Toast.makeText(mContext, "Sorry, can't start your battle", Toast.LENGTH_LONG).show();
 
             //Stop current activity
@@ -225,7 +225,7 @@ public class BattleFragment extends BaseFragment {
         if (mUserPlayerManager.hasMonsterInFront(message.monster.id)) {
             LogHelper.d(TAG, "onAttackReceive > opponent");
 
-            //Attack sender is the user
+            //Attack sender is the player
             attacker = mUserPlayerManager;
             target = mOpponentPlayerManager;
         } else if (mOpponentPlayerManager.hasMonsterInFront(message.monster.id)) {
@@ -253,7 +253,7 @@ public class BattleFragment extends BaseFragment {
         MonsterKoMessage message = event.getMessage();
 
         if (mUserPlayerManager.hasMonsterInFront(message.monster)) {
-            LogHelper.d(TAG, "onMonsterKo > user");
+            LogHelper.d(TAG, "onMonsterKo > player");
             mUserPlayerManager.onCurrentMonsterKo();
             if (mUserPlayerManager.hasRemainingMonster()) {
                 UserMonster nextMonster = mUserPlayerManager.getNextMonster();
@@ -360,7 +360,7 @@ public class BattleFragment extends BaseFragment {
                     return;
                 }
 
-                //Enable drawingGestureView (allow user to send attack)
+                //Enable drawingGestureView (allow player to send attack)
                 enableDrawingGestureView(true);
 
                 //Stop loading animation
@@ -388,11 +388,11 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        //Retrieve and clear user gesture
+        //Retrieve and clear player gesture
         Attack.AttackType attackTypeWanted = BattleHelper.gestureToAttackType(mUserGestureInput);
         mUserGestureInput = "";
 
-        //Check if the user monster is alive
+        //Check if the player monster is alive
         if (mUserPlayerManager.getCurrentMonster() == null) {
             Toast.makeText(mContext, "Your monster is dead, he can't attack !", Toast.LENGTH_LONG).show();
             return;
@@ -401,7 +401,7 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        //Parse user gesture
+        //Parse player gesture
         switch (attackTypeWanted) {
             case UNKNOWN:
                 //Unknown attack, display error message
@@ -412,7 +412,7 @@ public class BattleFragment extends BaseFragment {
                 Toast.makeText(mContext, "Feature incoming", Toast.LENGTH_SHORT).show();
                 break;
             default:
-                //If we're here, it means the user want to send: attack || attackSp || defense || defenceSp
+                //If we're here, it means the player want to send: attack || attackSp || defense || defenceSp
                 //Check if the current monster has an attack of the wanted type
                 MonsterAttackResponse.MonsterAttack attack = mUserPlayerManager.getCurrentMonsterAttack(attackTypeWanted);
                 if (attack == null) {
