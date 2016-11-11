@@ -42,15 +42,16 @@ public class MapFragment extends BaseFragment implements LocationListener {
     ProgressView progressView;
 
     private NestedWorldMap mMap = null;
-    private long lastUpdate = -1;
+    private final static int MIN_TIME = 1000; //Minimum time between 2 update (in millisecond)
+    private final static int MIN_DIST = 1; //Minimum distance between 2 update (in meter)
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.fade_out, R.anim.fade_in);
-        fragmentTransaction.addToBackStack(FRAGMENT_NAME);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.fade_out, R.anim.fade_in)
+                .addToBackStack(FRAGMENT_NAME)
+                .commit();
     }
 
     /*
@@ -178,18 +179,9 @@ public class MapFragment extends BaseFragment implements LocationListener {
         if (mContext == null) {
             return;
         }
-
-        //Update only every 10s
-        if ((lastUpdate != -1) && (lastUpdate + 10000 < Calendar.getInstance().getTimeInMillis())) {
-            LogHelper.d(TAG, "onLocationChanged > ignore");
-        } else {
-            LogHelper.d(TAG, "onLocationChanged > update");
-
-            lastUpdate = Calendar.getInstance().getTimeInMillis();
-
-            LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
-            mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
-        }
+        
+        LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
+        mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
     }
 
     @Override
@@ -223,32 +215,32 @@ public class MapFragment extends BaseFragment implements LocationListener {
 
             //We ask for the permission (it we'll call onRequestPermissionsResult who will call initMap())
             PermissionUtils.askForPermissionsFromFragment(mContext, this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
-            return;
-        }
+        } else {
 
-        // Acquire a reference to the system Location Manager
-        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+            // Acquire a reference to the system Location Manager
+            LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
-        // Register the listener with the Location Manager to receive location updates
-        for (String provider : locationManager.getProviders(false)) {
+            // Register the listener with the Location Manager to receive location updates
+            for (String provider : locationManager.getProviders(false)) {
 
-            if (locationManager.isProviderEnabled(provider)) {
-                //onProviderEnabled() will not be called if the provider is already enable so we call it
-                onProviderEnabled(LocationManager.GPS_PROVIDER);
+                if (locationManager.isProviderEnabled(provider)) {
+                    //onProviderEnabled() will not be called if the provider is already enable so we call it
+                    onProviderEnabled(LocationManager.GPS_PROVIDER);
 
-                //get location fix
-                Location lastLocation = locationManager.getLastKnownLocation(provider);
-                if (lastLocation != null) {
-                    //Update the NestedWorldMap
-                    onLocationChanged(lastLocation);
+                    //get location fix
+                    Location lastLocation = locationManager.getLastKnownLocation(provider);
+                    if (lastLocation != null) {
+                        //Update the NestedWorldMap
+                        onLocationChanged(lastLocation);
+                    }
                 }
+
+                locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DIST, this);
             }
 
-            locationManager.requestLocationUpdates(provider, 0, 0, this);
+            //Center the googleMap map on the userLocation
+            mMap.getGoogleMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            mMap.getGoogleMap().setMyLocationEnabled(true);
         }
-
-        //Center the googleMap map on the userLocation
-        mMap.getGoogleMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.getGoogleMap().setMyLocationEnabled(true);
     }
 }
