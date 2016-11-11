@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.database.models.Region;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
-import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 
 import retrofit2.Call;
 import retrofit2.Response;

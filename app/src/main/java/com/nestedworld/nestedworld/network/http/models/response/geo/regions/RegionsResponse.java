@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.network.http.models.response.places.regions;
+package com.nestedworld.nestedworld.network.http.models.response.geo.regions;
 
 import com.google.gson.annotations.Expose;
 import com.nestedworld.nestedworld.database.models.Region;

@@ -13,13 +13,12 @@ import com.nestedworld.nestedworld.network.http.models.request.users.auth.Regist
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignInRequest;
 import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
+import com.nestedworld.nestedworld.network.http.models.response.geo.portal.PortalsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.network.http.models.response.object.ObjectDetailResponse;
 import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
@@ -47,6 +46,7 @@ public final class NestedWorldHttpApi {
     private static NestedWorldHttpApi mSingleton;
     private final String TAG = getClass().getSimpleName();
     private NestedWorldApiInterface mClient;
+    private Call<PortalsResponse> portals;
 
     /*
     ** Constructor
@@ -165,16 +165,8 @@ public final class NestedWorldHttpApi {
         return mClient.getUserInfo();
     }
 
-    public Call<PlacesResponse> getPlaces() {
-        return mClient.getPlaces();
-    }
-
     public Call<RegionsResponse> getRegions() {
         return mClient.getRegions();
-    }
-
-    public Call<RegionResponse> getRegionDetails(@NonNull final Region region) {
-        return mClient.getRegionDetail(region.url);
     }
 
     public Call<FriendsResponse> getFriends() {
@@ -195,5 +187,9 @@ public final class NestedWorldHttpApi {
 
     public Call<ObjectDetailResponse> getObjectDetail(final long objectId) {
         return mClient.getObjectDetail(objectId);
+    }
+
+    public Call<PortalsResponse> getPortals() {
+        return mClient.getPortals();
     }
 }

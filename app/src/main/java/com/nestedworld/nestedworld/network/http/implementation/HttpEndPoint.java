@@ -22,9 +22,9 @@ public final class HttpEndPoint {
     public final static String MONSTER_ATTACK = MONSTERS_PREFIX + "/{monsterId}/attacks";
 
     //Place related endpoint
-    private final static String PLACES_PREFIX = "geo";
-    public final static String PLACES_LIST = PLACES_PREFIX;
-    public final static String REGIONS_LIST = PLACES_PREFIX + "/regions";
+    private final static String GEO_PREFIX = "geo";
+    public final static String REGIONS_LIST = GEO_PREFIX + "/regions";
+    public final static String PORTALS_LIST = GEO_PREFIX + "/portals";
 
     //User related endpoint
     private final static String USER_PREFIX = "users/";

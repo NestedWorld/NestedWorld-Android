@@ -6,13 +6,12 @@ import com.nestedworld.nestedworld.network.http.models.request.users.auth.Regist
 import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignInRequest;
 import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
+import com.nestedworld.nestedworld.network.http.models.response.geo.portal.PortalsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.network.http.models.response.object.ObjectDetailResponse;
 import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.PlacesResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionResponse;
-import com.nestedworld.nestedworld.network.http.models.response.places.regions.RegionsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;
@@ -27,7 +26,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Url;
 
 public interface NestedWorldApiInterface {
     @GET(HttpEndPoint.USER_MONSTERS)
@@ -57,14 +55,8 @@ public interface NestedWorldApiInterface {
     @GET(HttpEndPoint.USER_INFO)
     Call<UserResponse> getUserInfo();
 
-    @GET(HttpEndPoint.PLACES_LIST)
-    Call<PlacesResponse> getPlaces();
-
     @GET(HttpEndPoint.REGIONS_LIST)
     Call<RegionsResponse> getRegions();
-
-    @GET
-    Call<RegionResponse> getRegionDetail(@Url String endPoint);
 
     @GET(HttpEndPoint.ATTACK_LIST)
     Call<AttacksResponse> getAttacks();
@@ -80,4 +72,7 @@ public interface NestedWorldApiInterface {
 
     @GET(HttpEndPoint.OBJECT_DETAIL)
     Call<ObjectDetailResponse> getObjectDetail(@Path("objectId") long objectId);
+
+    @GET(HttpEndPoint.PORTALS_LIST)
+    Call<PortalsResponse> getPortals();
 }
