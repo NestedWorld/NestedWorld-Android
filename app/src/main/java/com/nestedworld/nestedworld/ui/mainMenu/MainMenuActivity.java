@@ -21,6 +21,7 @@ import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.updater.AttacksUpdater;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
+import com.nestedworld.nestedworld.database.updater.RegionUpdater;
 import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
 import com.nestedworld.nestedworld.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.UserUpdater;
@@ -73,8 +74,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         add(new FriendsUpdater());
         add(new AttacksUpdater());
         add(new MonsterUpdater());
-        add(new UserMonsterUpdater());//Always update userMonster after monster (for fk issue)
+        add(new UserMonsterUpdater());
         add(new ShopItemsUpdater());
+        add(new RegionUpdater());
     }};
 
     /*

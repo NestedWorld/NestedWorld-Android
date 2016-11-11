@@ -4,8 +4,6 @@ import com.nestedworld.nestedworld.BuildConfig;
 import com.nestedworld.nestedworld.network.NetworkConstant;
 
 public final class HttpEndPoint {
-    private final static String API_VERSION = "/v1/";
-
     private final static String DEV_URL = "http://api-dev.nestedworld.com";
     private final static String PROD_URL = "http://api.nestedworld.com";
 
@@ -13,6 +11,8 @@ public final class HttpEndPoint {
                     (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_URL
                     : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
                     : DEV_URL;
+
+    private final static String API_VERSION = "/v1/";
 
     public final static String BASE_END_POINT = BASE_URL + API_VERSION;
 
@@ -22,7 +22,7 @@ public final class HttpEndPoint {
     public final static String MONSTER_ATTACK = MONSTERS_PREFIX + "/{monsterId}/attacks";
 
     //Place related endpoint
-    private final static String PLACES_PREFIX = "places";
+    private final static String PLACES_PREFIX = "geo";
     public final static String PLACES_LIST = PLACES_PREFIX;
     public final static String REGIONS_LIST = PLACES_PREFIX + "/regions";
 
