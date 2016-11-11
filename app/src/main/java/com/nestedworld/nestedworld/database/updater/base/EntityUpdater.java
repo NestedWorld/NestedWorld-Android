@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
+import com.google.gson.JsonSyntaxException;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -85,6 +86,10 @@ public abstract class EntityUpdater<T> {
             }
         } catch (IOException e) {
             LogHelper.d(TAG, "makeRequest > IOException: " + e);
+            e.printStackTrace();
+            return false;
+        } catch (JsonSyntaxException e) {
+            LogHelper.d(TAG, "makeRequest > JsonSyntaxException: " + e);
             e.printStackTrace();
             return false;
         }
