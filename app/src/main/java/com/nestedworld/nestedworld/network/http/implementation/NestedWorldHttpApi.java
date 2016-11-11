@@ -3,7 +3,6 @@ package com.nestedworld.nestedworld.network.http.implementation;
 import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
-import com.nestedworld.nestedworld.database.models.Region;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
@@ -16,8 +15,7 @@ import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriend
 import com.nestedworld.nestedworld.network.http.models.response.geo.portal.PortalsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
-import com.nestedworld.nestedworld.network.http.models.response.object.ObjectDetailResponse;
-import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.object.ObjectsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
@@ -25,7 +23,7 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Logou
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.inventory.UserInventoryResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 
 import java.io.IOException;
@@ -177,16 +175,12 @@ public final class NestedWorldHttpApi {
         return mClient.getUserMonsters();
     }
 
-    public Call<InventoryResponse> getUserInventory() {
+    public Call<UserInventoryResponse> getUserInventory() {
         return mClient.getUserInventory();
     }
 
-    public Call<ShopObjectsResponse> getShopItems() {
+    public Call<ObjectsResponse> getShopItems() {
         return mClient.getObjects();
-    }
-
-    public Call<ObjectDetailResponse> getObjectDetail(final long objectId) {
-        return mClient.getObjectDetail(objectId);
     }
 
     public Call<PortalsResponse> getPortals() {

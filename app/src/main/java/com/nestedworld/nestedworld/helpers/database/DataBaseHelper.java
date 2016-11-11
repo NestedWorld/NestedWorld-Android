@@ -4,7 +4,6 @@ import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.Monster;
-import com.nestedworld.nestedworld.database.models.Place;
 import com.nestedworld.nestedworld.database.models.Region;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.Player;
@@ -28,7 +27,6 @@ public final class DataBaseHelper {
         SugarRecord.deleteAll(Combat.class);
         SugarRecord.deleteAll(Friend.class);
         SugarRecord.deleteAll(Monster.class);
-        SugarRecord.deleteAll(Place.class);
         SugarRecord.deleteAll(Region.class);
         SugarRecord.deleteAll(Session.class);
         SugarRecord.deleteAll(Player.class);

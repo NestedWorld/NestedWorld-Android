@@ -49,7 +49,7 @@ public class Friend extends SugarRecord {
     @Override
     public String toString() {
         return "Friend{" +
-                "info=" + info +
+                "infos=" + info +
                 ", playerId=" + playerId +
                 '}';
     }

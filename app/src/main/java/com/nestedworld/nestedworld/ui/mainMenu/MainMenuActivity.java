@@ -24,6 +24,7 @@ import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.PortalUpdater;
 import com.nestedworld.nestedworld.database.updater.RegionUpdater;
 import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
+import com.nestedworld.nestedworld.database.updater.UserItemUpdater;
 import com.nestedworld.nestedworld.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
@@ -77,6 +78,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         add(new MonsterUpdater());
         add(new UserMonsterUpdater());
         add(new ShopItemsUpdater());
+        add(new UserItemUpdater());
         add(new RegionUpdater());
         add(new PortalUpdater());
     }};

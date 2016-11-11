@@ -11,13 +11,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.InventoryObjectAdapter;
+import com.nestedworld.nestedworld.adapter.UserItemAdapter;
+import com.nestedworld.nestedworld.database.models.UserItem;
+import com.nestedworld.nestedworld.database.updater.UserItemUpdater;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.events.http.OnUserItemUpdated;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.inventory.UserInventoryResponse;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 import butterknife.BindView;
 import retrofit2.Response;
@@ -36,7 +47,7 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private InventoryObjectAdapter mAdapter;
+    private UserItemAdapter mAdapter;
 
     /*
     ** Public method
@@ -58,6 +69,10 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         //Start loading animation
         progressView.start();
 
@@ -68,7 +83,33 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
         swipeRefreshLayout.setOnRefreshListener(this);
 
         //Retrieve inventory and populate ListView
-        retrieveInventoryObject();
+        populateAdapter();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroyView();
+    }
+
+    /*
+    ** Eventbus
+     */
+    @Subscribe
+    public void onUserItemUpdated(OnUserItemUpdated onUserItemUpdated) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateAdapter();
+            }
+        });
     }
 
     /*
@@ -77,52 +118,48 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        retrieveInventoryObject();
-    }
-
-    /*
-    ** Internal method
-     */
-    private void retrieveInventoryObject() {
-        NestedWorldHttpApi.getInstance().getUserInventory().enqueue(new NestedWorldHttpCallback<InventoryResponse>() {
+        new UserItemUpdater().start(new OnEntityUpdated() {
             @Override
-            public void onSuccess(@NonNull Response<InventoryResponse> response) {
+            public void onSuccess() {
                 //Check if fragment hasn't been detach
                 if (mContext == null) {
                     return;
                 }
+
+                //Do not update adapter here (use eventBus)
 
                 //Stop loading animation
                 progressView.stop();
                 swipeRefreshLayout.setRefreshing(false);
-
-                //Check response
-                if (response.body() == null || response.body().objects == null) {
-                    onError(KIND.SERVER, response);
-                } else if (!response.body().objects.isEmpty()) {
-                    textViewInventoryEmpty.setVisibility(View.GONE);
-                    mAdapter.clear();
-                    mAdapter.addAll(response.body().objects);
-                } else {
-                    textViewInventoryEmpty.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<InventoryResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+            public void onError(@NonNull KIND errorKind) {
                 //Stop loading animation
                 progressView.stop();
                 swipeRefreshLayout.setRefreshing(false);
 
                 //Display error message
                 Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
-                textViewInventoryEmpty.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    /*
+    ** Internal method
+     */
+    private void populateAdapter() {
+        List<UserItem> userItems = Select.from(UserItem.class).list();
+
+        if (userItems == null || userItems.isEmpty()) {
+            textViewInventoryEmpty.setVisibility(View.VISIBLE);
+        } else {
+            textViewInventoryEmpty.setVisibility(View.GONE);
+            mAdapter.clear();
+            mAdapter.addAll(userItems);
+        }
+
+        progressView.stop();
     }
 
     /*
@@ -134,7 +171,7 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
             return;
         }
 
-        mAdapter = new InventoryObjectAdapter(mContext);
+        mAdapter = new UserItemAdapter(mContext);
         listViewInventory.setAdapter(mAdapter);
     }
 }

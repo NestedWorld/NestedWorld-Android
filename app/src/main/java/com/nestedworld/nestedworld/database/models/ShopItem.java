@@ -1,29 +1,35 @@
 package com.nestedworld.nestedworld.database.models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
 
 public class ShopItem extends SugarRecord {
-    @Expose
-    public String name;
 
     @Expose
-    public String kind;
+    @SerializedName("id")
+    public long shopItemId;//
 
     @Expose
-    public String power;
+    public String name;//
 
     @Expose
-    public Boolean premium;
+    public String kind;//
 
     @Expose
-    public String description;
+    public String power;//
 
     @Expose
-    public long price;
+    public Boolean premium;//
 
     @Expose
-    public String image;
+    public String description;//
+
+    @Expose
+    public long price;//
+
+    @Expose
+    public String image;//
 
     /*
     ** Constructor

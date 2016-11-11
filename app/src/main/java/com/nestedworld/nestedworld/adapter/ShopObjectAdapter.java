@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.ShopItem;
-import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
 
 
 public class ShopObjectAdapter extends ArrayAdapter<ShopItem> {

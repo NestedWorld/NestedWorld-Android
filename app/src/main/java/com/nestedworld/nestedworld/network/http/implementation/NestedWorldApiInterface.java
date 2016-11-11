@@ -9,8 +9,7 @@ import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriend
 import com.nestedworld.nestedworld.network.http.models.response.geo.portal.PortalsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
-import com.nestedworld.nestedworld.network.http.models.response.object.ObjectDetailResponse;
-import com.nestedworld.nestedworld.network.http.models.response.object.ShopObjectsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.object.ObjectsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
@@ -18,7 +17,7 @@ import com.nestedworld.nestedworld.network.http.models.response.users.auth.Logou
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.RegisterResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.SignInResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.users.inventory.InventoryResponse;
+import com.nestedworld.nestedworld.network.http.models.response.users.inventory.UserInventoryResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.monster.UserMonsterResponse;
 
 import retrofit2.Call;
@@ -65,13 +64,10 @@ public interface NestedWorldApiInterface {
     Call<MonsterAttackResponse> getMonsterAttack(@Path("monsterId") long monsterId);
 
     @GET(HttpEndPoint.USER_INVENTORY)
-    Call<InventoryResponse> getUserInventory();
+    Call<UserInventoryResponse> getUserInventory();
 
     @GET(HttpEndPoint.OBJECT_LIST)
-    Call<ShopObjectsResponse> getObjects();
-
-    @GET(HttpEndPoint.OBJECT_DETAIL)
-    Call<ObjectDetailResponse> getObjectDetail(@Path("objectId") long objectId);
+    Call<ObjectsResponse> getObjects();
 
     @GET(HttpEndPoint.PORTALS_LIST)
     Call<PortalsResponse> getPortals();

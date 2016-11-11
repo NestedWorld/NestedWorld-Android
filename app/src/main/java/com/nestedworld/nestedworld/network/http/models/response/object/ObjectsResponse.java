@@ -6,7 +6,7 @@ import com.nestedworld.nestedworld.database.models.ShopItem;
 
 import java.util.List;
 
-public class ShopObjectsResponse {
+public class ObjectsResponse {
 
     @SerializedName("Objects")
     @Expose
