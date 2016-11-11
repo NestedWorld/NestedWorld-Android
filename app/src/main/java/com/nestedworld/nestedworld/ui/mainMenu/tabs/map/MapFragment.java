@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -25,7 +24,6 @@ import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
 
 import java.util.Arrays;
-import java.util.Calendar;
 
 import butterknife.BindView;
 
@@ -35,15 +33,14 @@ import butterknife.BindView;
 public class MapFragment extends BaseFragment implements LocationListener {
 
     public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
-
+    private final static int MIN_TIME = 1000; //Minimum time between 2 update (in millisecond)
+    private final static int MIN_DIST = 1; //Minimum distance between 2 update (in meter)
     @BindView(R.id.mapView)
     MapView mMapView;
     @BindView(R.id.progressView)
     ProgressView progressView;
-
     private NestedWorldMap mMap = null;
-    private final static int MIN_TIME = 1000; //Minimum time between 2 update (in millisecond)
-    private final static int MIN_DIST = 1; //Minimum distance between 2 update (in meter)
+
     /*
     ** Public method
      */

@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.database.updater;
 
 import android.support.annotation.NonNull;
+
 import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;

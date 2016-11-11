@@ -14,6 +14,7 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
 
     private final List<ViewPagerItem> mTabs = new ArrayList<>();
     private boolean mDisplayPageTitle = true;
+
     /*
     ** Constructor
      */

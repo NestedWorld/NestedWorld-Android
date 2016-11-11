@@ -11,20 +11,18 @@ import com.orm.query.Select;
 
 public class UserItem extends SugarRecord {
 
-    //Empty constructor for SugarRecord
-    public UserItem() {
-        //Keep empty
-    }
-
     @Expose
     @SerializedName("id")
     @Unique
     public Long userItemId;
-
     @Expose
     public ShopItem infos;
-
     public long shopItemId;
+
+    //Empty constructor for SugarRecord
+    public UserItem() {
+        //Keep empty
+    }
 
     @Nullable
     public ShopItem infos() {

@@ -12,7 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class UserItemUpdater extends EntityUpdater<UserInventoryResponse>{
+public class UserItemUpdater extends EntityUpdater<UserInventoryResponse> {
 
     @NonNull
     @Override

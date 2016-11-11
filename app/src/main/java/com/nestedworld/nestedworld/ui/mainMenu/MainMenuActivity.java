@@ -55,15 +55,6 @@ import butterknife.BindView;
 
 public class MainMenuActivity extends BaseAppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
-    @BindView(R.id.sliding_tabs)
-    TabLayout tabLayout;
-    @BindView(R.id.progressView)
-    ProgressView progressView;
-
     private final List<Tabs> mTabs = new ArrayList<Tabs>() {{
         add(new Tabs(new HomeFragment(), "Home", R.drawable.ic_home_white_18dp));
         add(new Tabs(new MonstersFragment(), "Monsters", R.drawable.ic_ghost_white_18dp));
@@ -82,6 +73,14 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         add(new RegionUpdater());
         add(new PortalUpdater());
     }};
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+    @BindView(R.id.sliding_tabs)
+    TabLayout tabLayout;
+    @BindView(R.id.progressView)
+    ProgressView progressView;
 
     /*
     ** Life cycle
@@ -297,7 +296,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
                 //stop loading animation
                 progressView.stop();
 
-                if (!result){
+                if (!result) {
                     //display error message
                     Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 

@@ -16,9 +16,6 @@ import com.nestedworld.nestedworld.database.models.UserItem;
 import com.nestedworld.nestedworld.database.updater.UserItemUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnUserItemUpdated;
-import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.http.models.response.users.inventory.UserInventoryResponse;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;
@@ -31,7 +28,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.BindView;
-import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.

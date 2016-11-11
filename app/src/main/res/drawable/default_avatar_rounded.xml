@@ -5,9 +5,9 @@
         </shape>
     </item>
     <item
-        android:drawable="@drawable/default_avatar"
-        android:top="100dip"
         android:bottom="100dip"
+        android:drawable="@drawable/default_avatar"
         android:left="100dip"
-        android:right="100dip"/>
+        android:right="100dip"
+        android:top="100dip"/>
 </layer-list>

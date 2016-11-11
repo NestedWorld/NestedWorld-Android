@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class NestedWorldMap {
 
     private final GoogleMap mGoogleMap;
+
     /*
     ** Constructor
      */

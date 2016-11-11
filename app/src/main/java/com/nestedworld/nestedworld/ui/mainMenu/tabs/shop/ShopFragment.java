@@ -16,7 +16,6 @@ import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;
-import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;

@@ -13,10 +13,10 @@ import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignIn
 import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.http.models.response.geo.portal.PortalsResponse;
+import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.network.http.models.response.object.ObjectsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.network.http.models.response.users.auth.LogoutResponse;

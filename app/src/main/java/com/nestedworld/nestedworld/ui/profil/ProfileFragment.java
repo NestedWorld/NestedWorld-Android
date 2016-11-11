@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.Player;
+import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
