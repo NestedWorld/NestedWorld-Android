@@ -130,7 +130,7 @@ public class FightAdapter extends ArrayAdapter<Combat> {
 
             @Override
             public void onServiceDisconnected(ComponentName name) {
-                Toast.makeText(getContext(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.error_socket_disconnected, Toast.LENGTH_LONG).show();
             }
         });
     }

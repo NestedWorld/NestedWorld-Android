@@ -10,6 +10,7 @@
     <string name="error_createAccount">Can\'t create your account</string>
     <string name="error_network">Connection lost</string>
     <string name="error_unexpected">An error occur, please try again</string>
+    <string name="error_socket_disconnected">Connection lost with host</string>
 
     <!--Error message (request failed)-->
     <string name="error_request_login">Cannot login.</string>

@@ -140,7 +140,7 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
             @Override
             public void onServiceDisconnected(ComponentName name) {
                 //Display an error message
-                Toast.makeText(getContext(), R.string.error_unexpected, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.error_socket_disconnected, Toast.LENGTH_LONG).show();
             }
         });
     }

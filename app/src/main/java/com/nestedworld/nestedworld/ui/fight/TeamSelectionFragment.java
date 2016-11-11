@@ -112,7 +112,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        //Check if fragment has been atach
+        //Check if fragment has been attach
         if (mContext == null) {
             return;
         }
@@ -384,7 +384,7 @@ public class TeamSelectionFragment extends BaseFragment implements ViewPager.OnP
                     progressView.stop();
 
                     //Display error message
-                    Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, R.string.error_socket_disconnected, Toast.LENGTH_LONG).show();
 
                     //Finish the current activity
                     ((BaseAppCompatActivity) mContext).finish();
