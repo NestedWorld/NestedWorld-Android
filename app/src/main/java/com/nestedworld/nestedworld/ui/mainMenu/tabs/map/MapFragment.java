@@ -41,10 +41,8 @@ public class MapFragment extends BaseFragment implements LocationListener {
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private NestedWorldMap mMap;
+    private NestedWorldMap mMap = null;
     private long lastUpdate = -1;
-    private boolean isMapReady = false;
-
     /*
     ** Public method
      */
@@ -89,8 +87,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
                 }
 
                 //Init the mapView
-                mMap = new NestedWorldMap(mContext, googleMap);
-                isMapReady = true;
+                mMap = new NestedWorldMap(googleMap);
                 initMap();
             }
         });
@@ -125,7 +122,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
-        if (isMapReady && mMapView != null) {
+        if (mMap != null && mMapView != null) {
             mMapView.onResume();
         }
     }
@@ -139,7 +136,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
-        if (isMapReady && mMapView != null) {
+        if (mMap != null && mMapView != null) {
             mMapView.onPause();
         }
     }
@@ -153,7 +150,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
-        if (isMapReady && mMapView != null) {
+        if (mMap != null && mMapView != null) {
             mMapView.onDestroy();
         }
     }
@@ -167,7 +164,7 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
-        if (isMapReady && mMapView != null) {
+        if (mMap != null && mMapView != null) {
             mMapView.onLowMemory();
         }
     }
@@ -190,19 +187,8 @@ public class MapFragment extends BaseFragment implements LocationListener {
 
             lastUpdate = Calendar.getInstance().getTimeInMillis();
 
-            //Start loading animation
-            progressView.start();
-
-            mMap.build(new NestedWorldMap.OnMapReadyListener() {
-                @Override
-                public void onMapReady() {
-                    LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
-                    mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
-
-                    //Stop loading animation
-                    progressView.stop();
-                }
-            });
+            LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
+            mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
         }
     }
 
