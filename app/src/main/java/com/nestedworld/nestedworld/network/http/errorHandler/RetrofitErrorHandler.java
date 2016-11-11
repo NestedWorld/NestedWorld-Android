@@ -33,7 +33,8 @@ public final class RetrofitErrorHandler {
     @NonNull
     public static String getErrorMessage(@NonNull final Context context, @NonNull final NestedWorldHttpCallback.KIND errorType, @NonNull final String defaultMessage, @Nullable Response response) {
         String errorMessage = getErrorMessage(context, errorType, response);
-        return errorMessage == null ? defaultMessage : errorMessage;
+
+        return errorMessage == null ? defaultMessage : (defaultMessage + ":" + errorMessage);
     }
 
     @Nullable
