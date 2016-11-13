@@ -13,7 +13,6 @@ import com.nestedworld.nestedworld.network.http.models.request.users.auth.SignIn
 import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
 import com.nestedworld.nestedworld.network.http.models.response.friend.AddFriendResponse;
 import com.nestedworld.nestedworld.network.http.models.response.geo.portal.PortalsResponse;
-import com.nestedworld.nestedworld.network.http.models.response.geo.regions.RegionsResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.network.http.models.response.object.ObjectsResponse;
@@ -163,10 +162,6 @@ public final class NestedWorldHttpApi {
         return mClient.getUserInfo();
     }
 
-    public Call<RegionsResponse> getRegions() {
-        return mClient.getRegions();
-    }
-
     public Call<FriendsResponse> getFriends() {
         return mClient.getFriends();
     }
@@ -183,7 +178,7 @@ public final class NestedWorldHttpApi {
         return mClient.getObjects();
     }
 
-    public Call<PortalsResponse> getPortals() {
-        return mClient.getPortals();
+    public Call<PortalsResponse> getPortals(final double latitude, final double longitude) {
+        return mClient.getPortals(latitude, longitude);
     }
 }

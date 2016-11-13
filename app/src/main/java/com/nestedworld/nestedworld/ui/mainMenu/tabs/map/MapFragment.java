@@ -16,12 +16,23 @@ import android.view.View;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.database.models.Portal;
+import com.nestedworld.nestedworld.database.updater.PortalUpdater;
+import com.nestedworld.nestedworld.dialog.EngagePortalFightDialog;
+import com.nestedworld.nestedworld.events.http.OnPortalUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.map.NestedWorldMap;
 import com.nestedworld.nestedworld.helpers.permission.PermissionUtils;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 
@@ -30,16 +41,20 @@ import butterknife.BindView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MapFragment extends BaseFragment implements LocationListener {
+public class MapFragment extends BaseFragment implements LocationListener, GoogleMap.OnMarkerClickListener {
 
     public final static String FRAGMENT_NAME = MapFragment.class.getSimpleName();
-    private final static int MIN_TIME = 1000; //Minimum time between 2 update (in millisecond)
+    private final static int MIN_TIME = 10000; //Minimum time between 2 update (in millisecond)
     private final static int MIN_DIST = 1; //Minimum distance between 2 update (in meter)
+    private final static int ZOOM = 15;
+
     @BindView(R.id.mapView)
     MapView mMapView;
     @BindView(R.id.progressView)
     ProgressView progressView;
+
     private NestedWorldMap mMap = null;
+    private GoogleMap mGoogleMap;
 
     /*
     ** Public method
@@ -67,8 +82,9 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
-        //Start loading animation
-        progressView.start();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
         //init MapView
         mMapView.onCreate(savedInstanceState);
@@ -85,6 +101,9 @@ public class MapFragment extends BaseFragment implements LocationListener {
                 }
 
                 //Init the mapView
+                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style));
+                googleMap.setOnMarkerClickListener(MapFragment.this);
+
                 mMap = new NestedWorldMap(googleMap);
                 initMap();
             }
@@ -141,16 +160,16 @@ public class MapFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
         //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
 
         if (mMap != null && mMapView != null) {
             mMapView.onDestroy();
         }
+
+        super.onDestroy();
     }
 
     @Override
@@ -168,6 +187,20 @@ public class MapFragment extends BaseFragment implements LocationListener {
     }
 
     /*
+    **  GoogleMap.OnMarkerClickListener implementation
+     */
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Portal portal = (Portal) marker.getTag();
+        if (portal != null) {
+            EngagePortalFightDialog.show(getChildFragmentManager(), portal);
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
     ** Location listener Implementation
      */
     @Override
@@ -177,8 +210,18 @@ public class MapFragment extends BaseFragment implements LocationListener {
             return;
         }
 
-        LogHelper.d(TAG, "set location to: " + location.getLatitude() + ", " + location.getLongitude());
-        mMap.moveCamera(location.getLatitude(), location.getLongitude(), 12);
+        //Get new position
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        //Display some log
+        LogHelper.d(TAG, "set location to: " + latitude + ", " + longitude);
+
+        //Update map position
+        mMap.moveCamera(location.getLatitude(), location.getLongitude(), ZOOM);
+
+        //Retrieve portal around the new position
+        new PortalUpdater(latitude, longitude).start(null);
     }
 
     @Override
@@ -194,6 +237,26 @@ public class MapFragment extends BaseFragment implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
         LogHelper.d(TAG, "provider disable:" + provider);
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onPortalsUpdated(OnPortalUpdatedEvent event) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (mMap != null) {
+            ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMap.draw(mContext, Select.from(Portal.class).list());
+                }
+            });
+        }
     }
 
     /*
@@ -213,7 +276,6 @@ public class MapFragment extends BaseFragment implements LocationListener {
             //We ask for the permission (it we'll call onRequestPermissionsResult who will call initMap())
             PermissionUtils.askForPermissionsFromFragment(mContext, this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
         } else {
-
             // Acquire a reference to the system Location Manager
             LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 

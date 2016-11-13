@@ -7,12 +7,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import java.util.List;
 
 public final class MapHelper {
+
+    private final static String TAG = MapHelper.class.getSimpleName();
 
     /*
     ** Constructor
@@ -28,15 +32,24 @@ public final class MapHelper {
         displayMarker(googleMap, markerName, BitmapDescriptorFactory.defaultMarker(markerColor), latitude, longitude);
     }
 
-    public static void displayMarker(@NonNull final GoogleMap googleMap, @NonNull final String markerName, @NonNull final BitmapDescriptor markerIcon, final double latitude, final double longitude) {
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title(markerName);
+    public static Marker displayMarker(@NonNull final GoogleMap googleMap,
+                                       @NonNull final String markerName,
+                                       @NonNull final BitmapDescriptor markerIcon,
+                                       final double latitude,
+                                       final double longitude) {
+        LogHelper.d(TAG, "displaying marker:" +
+                "markerName=" + markerName +
+                "latitude=" + latitude +
+                "longitude=" + longitude);
 
-        // Changing marker icon
-        marker.icon(markerIcon);
+        // create marker
+        MarkerOptions marker = new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .title(markerName)
+                .icon(markerIcon);
 
         // adding marker
-        googleMap.addMarker(marker);
+        return googleMap.addMarker(marker);
     }
 
     public static void displayArea(@NonNull final GoogleMap googleMap, @NonNull final List<Point> corners, final int color) {
