@@ -41,9 +41,9 @@ import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.FightResultFragment;
-import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentPlayerManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.UserPlayerManager;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
+import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentPlayerFragment;
+import com.nestedworld.nestedworld.ui.fight.battle.player.UserPlayerFragment;
+import com.nestedworld.nestedworld.ui.base.BattlePlayerFragment;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,10 +60,6 @@ public class BattleFragment extends BaseFragment {
 
     @BindView(R.id.progressView)
     ProgressView progressView;
-    @BindView(R.id.layout_user)
-    View layoutUser;
-    @BindView(R.id.layout_opponent)
-    View layoutOpponent;
     @BindView(R.id.imageView_battle_background)
     ImageView battleBackground;
     @BindViews({
@@ -105,8 +101,8 @@ public class BattleFragment extends BaseFragment {
     private DrawingGestureView mDrawingGestureView;
     private StartMessage mStartMessage = null;
     private List<UserMonster> mUserTeam = null;
-    private UserPlayerManager mUserPlayerManager;
-    private OpponentPlayerManager mOpponentPlayerManager;
+    private UserPlayerFragment mUserPlayerFragment;
+    private OpponentPlayerFragment mOpponentPlayerFragment;
     private final OnFinishMoveListener mOnFinishMoveListener = new OnFinishMoveListener() {
         @Override
         public void onFinish() {
@@ -220,19 +216,19 @@ public class BattleFragment extends BaseFragment {
         //Retrieve message
         AttackReceiveMessage message = event.getMessage();
 
-        PlayerManager attacker;
-        PlayerManager target;
-        if (mUserPlayerManager.hasMonsterInFront(message.monster.id)) {
+        BattlePlayerFragment attacker;
+        BattlePlayerFragment target;
+        if (mUserPlayerFragment.hasMonsterInFront(message.monster.id)) {
             LogHelper.d(TAG, "onAttackReceive > opponent");
 
             //Attack sender is the player
-            attacker = mUserPlayerManager;
-            target = mOpponentPlayerManager;
-        } else if (mOpponentPlayerManager.hasMonsterInFront(message.monster.id)) {
+            attacker = mUserPlayerFragment;
+            target = mOpponentPlayerFragment;
+        } else if (mOpponentPlayerFragment.hasMonsterInFront(message.monster.id)) {
             LogHelper.d(TAG, "onAttackReceive > opponent");
 
-            attacker = mOpponentPlayerManager;
-            target = mUserPlayerManager;
+            attacker = mOpponentPlayerFragment;
+            target = mUserPlayerFragment;
         } else {
             //The monster is probably dead
             LogHelper.d(TAG, "onAttackReceive > Unknown");
@@ -252,21 +248,21 @@ public class BattleFragment extends BaseFragment {
     public void onMonsterKo(OnMonsterKoEvent event) {
         MonsterKoMessage message = event.getMessage();
 
-        if (mUserPlayerManager.hasMonsterInFront(message.monster)) {
+        if (mUserPlayerFragment.hasMonsterInFront(message.monster)) {
             LogHelper.d(TAG, "onMonsterKo > player");
-            mUserPlayerManager.onCurrentMonsterKo();
-            if (mUserPlayerManager.hasRemainingMonster()) {
-                UserMonster nextMonster = mUserPlayerManager.getNextMonster();
+            mUserPlayerFragment.onCurrentMonsterKo();
+            if (mUserPlayerFragment.hasRemainingMonster()) {
+                UserMonster nextMonster = mUserPlayerFragment.getNextMonster();
                 if (nextMonster == null) {
                     FightResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
                 } else {
                     sendReplaceMonsterKoRequest(nextMonster);
                 }
             }
-        } else if (mOpponentPlayerManager.hasMonsterInFront(message.monster)) {
+        } else if (mOpponentPlayerFragment.hasMonsterInFront(message.monster)) {
             LogHelper.d(TAG, "onMonsterKo > opponent");
-            mOpponentPlayerManager.onCurrentMonsterKo();
-            if (!mOpponentPlayerManager.hasRemainingMonster()) {
+            mOpponentPlayerFragment.onCurrentMonsterKo();
+            if (!mOpponentPlayerFragment.hasRemainingMonster()) {
                 FightResultFragment.load(getFragmentManager(), "Your opponent didn't have any monster left.");
             }
         } else {
@@ -336,8 +332,8 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        mUserPlayerManager = new UserPlayerManager(layoutUser, mUserTeam);
-        mOpponentPlayerManager = new OpponentPlayerManager(layoutOpponent, (int) mStartMessage.opponent.monsterCount);
+        mUserPlayerFragment = UserPlayerFragment.load(getChildFragmentManager(),mUserTeam);
+        mOpponentPlayerFragment = OpponentPlayerFragment.load(getChildFragmentManager(), mStartMessage.opponent.monsterCount);
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -348,8 +344,8 @@ public class BattleFragment extends BaseFragment {
                 }
 
                 //TODO check if we successfully got monster attack
-                mUserPlayerManager.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mStartMessage.user.monster.info()));
-                mOpponentPlayerManager.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mStartMessage.opponent.monster.info()));
+                mUserPlayerFragment.setCurrentMonster(mStartMessage.user.monster, retrieveMonsterAttack(mStartMessage.user.monster.info()));
+                mOpponentPlayerFragment.setCurrentMonster(mStartMessage.opponent.monster, retrieveMonsterAttack(mStartMessage.opponent.monster.info()));
                 return null;
             }
 
@@ -393,10 +389,10 @@ public class BattleFragment extends BaseFragment {
         mUserGestureInput = "";
 
         //Check if the player monster is alive
-        if (mUserPlayerManager.getCurrentMonster() == null) {
+        if (mUserPlayerFragment.getCurrentMonster() == null) {
             Toast.makeText(mContext, "Your monster is dead, he can't attack !", Toast.LENGTH_LONG).show();
             return;
-        } else if (mOpponentPlayerManager.getCurrentMonster() == null) {
+        } else if (mOpponentPlayerFragment.getCurrentMonster() == null) {
             Toast.makeText(mContext, "You can't attack a dead monster !", Toast.LENGTH_LONG).show();
             return;
         }
@@ -414,13 +410,13 @@ public class BattleFragment extends BaseFragment {
             default:
                 //If we're here, it means the player want to send: attack || attackSp || defense || defenceSp
                 //Check if the current monster has an attack of the wanted type
-                MonsterAttackResponse.MonsterAttack attack = mUserPlayerManager.getCurrentMonsterAttack(attackTypeWanted);
+                MonsterAttackResponse.MonsterAttack attack = mUserPlayerFragment.getCurrentMonsterAttack(attackTypeWanted);
                 if (attack == null) {
                     //Current monster don't have any attack of the wantend type, just display error message
                     Toast.makeText(mContext, "Your monster didn't have this kind of attack", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    sendAttackRequest(mOpponentPlayerManager.getCurrentMonster().id, attack.infos.attackId);
+                    sendAttackRequest(mOpponentPlayerFragment.getCurrentMonster().id, attack.infos.attackId);
                 }
                 break;
         }

@@ -95,7 +95,7 @@ public class StartMessage extends DefaultMessage {
 
     public static class StartMessageOpponent extends DefaultMessage {
         public StartMessagePlayerMonster monster;
-        public long monsterCount;
+        public int monsterCount;
 
         /*
         ** Constructor

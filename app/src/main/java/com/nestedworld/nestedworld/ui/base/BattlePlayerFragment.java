@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.fight.battle.player.base;
+package com.nestedworld.nestedworld.ui.base;
 
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
@@ -11,34 +11,18 @@ import com.nestedworld.nestedworld.network.http.models.response.monsters.Monster
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
+import com.nestedworld.nestedworld.ui.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-
-public abstract class PlayerManager {
-    protected final View mViewContainer;
+public abstract class BattlePlayerFragment extends BaseFragment {
     protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
     protected final List<StartMessage.StartMessagePlayerMonster> mFrontMonster = new ArrayList<>();
     protected final List<StartMessage.StartMessagePlayerMonster> mDeadMonster = new ArrayList<>();
-    protected final int mTeamSize;
     @Nullable protected List<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
     protected int mRemainingMonster;
     private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
-
-    /*
-    ** Constructor
-     */
-    protected PlayerManager(@NonNull final View container, final int teamSize) {
-        //Init internal field
-        mViewContainer = container;
-        mTeamSize = teamSize;
-        mRemainingMonster = teamSize;
-
-        //Retrieve widget
-        ButterKnife.bind(this, container);
-    }
 
     /*
     ** Method for child
@@ -78,7 +62,7 @@ public abstract class PlayerManager {
 
         mFrontMonster.add(monster);
 
-        ((BaseAppCompatActivity) mViewContainer.getContext()).runOnUiThread(new Runnable() {
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 displayMonsterDetails(monster);

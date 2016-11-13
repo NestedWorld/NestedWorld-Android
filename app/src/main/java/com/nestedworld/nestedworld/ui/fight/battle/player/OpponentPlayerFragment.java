@@ -2,8 +2,11 @@ package com.nestedworld.nestedworld.ui.fight.battle.player;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,13 +21,13 @@ import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
+import com.nestedworld.nestedworld.ui.base.BattlePlayerFragment;
 
 import butterknife.BindView;
 
-public class OpponentPlayerManager extends PlayerManager {
+public class OpponentPlayerFragment extends BattlePlayerFragment {
 
-    private final static String TAG = OpponentPlayerManager.class.getSimpleName();
+    private final static String TAG = OpponentPlayerFragment.class.getSimpleName();
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -41,16 +44,37 @@ public class OpponentPlayerManager extends PlayerManager {
     RecyclerView recyclerViewMonsters;
 
     /*
-    ** Constructor
+    ** Public method
      */
-    public OpponentPlayerManager(@NonNull final View viewContainer, final int teamSize) {
-        super(viewContainer, teamSize);
+    public static OpponentPlayerFragment load(@NonNull final FragmentManager fragmentManager, final int teamSize) {
+        OpponentPlayerFragment opponentPlayerManager = new OpponentPlayerFragment();
 
+        Bundle args = new Bundle();
+        args.putInt("TEAM_SIZE", teamSize);
+        opponentPlayerManager.setArguments(args);
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.container_opponent, opponentPlayerManager)
+                .commit();
+
+        return opponentPlayerManager;
+    }
+
+    /*
+    ** Life cycle
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_fight_battle_opponent;
+    }
+
+    @Override
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         //Init internal field
-        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(viewContainer.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewMonsters.setAdapter(mAdapter);
 
-        for (int i = 0; i < teamSize; i++) {
+        for (int i = 0; i < getArguments().getInt("TEAM_SIZE", 0); i++) {
             mAdapter.add(null);
         }
     }
@@ -70,13 +94,13 @@ public class OpponentPlayerManager extends PlayerManager {
     @Override
     public void displayAttackReceive() {
         //Set background to red
-        mViewContainer.setBackgroundColor(ContextCompat.getColor(mViewContainer.getContext(), R.color.material_red_500));
+        getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.material_red_500));
 
         //Set background to normal after 1s
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 // Actions to do after 1s
-                mViewContainer.setBackgroundColor(ContextCompat.getColor(mViewContainer.getContext(), R.color.WhiteSmokeHalf));
+                getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.WhiteSmokeHalf));
             }
         }, 1000);
     }

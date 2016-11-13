@@ -1,10 +1,11 @@
 package com.nestedworld.nestedworld.ui.fight.battle.player;
 
-import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,16 +21,16 @@ import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
-import com.nestedworld.nestedworld.ui.fight.battle.player.base.PlayerManager;
+import com.nestedworld.nestedworld.ui.base.BattlePlayerFragment;
 
 import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class UserPlayerManager extends PlayerManager {
+public class UserPlayerFragment extends BattlePlayerFragment {
 
-    private final static String TAG = UserPlayerManager.class.getSimpleName();
+    private final static String TAG = UserPlayerFragment.class.getSimpleName();
 
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
@@ -49,16 +50,29 @@ public class UserPlayerManager extends PlayerManager {
     private List<UserMonster> mTeam = null;
 
     /*
-    ** Constructor
+    ** Public method
      */
-    public UserPlayerManager(@NonNull final View viewContainer, @NonNull final List<UserMonster> team) {
-        super(viewContainer, team.size());
+    public static UserPlayerFragment load(@NonNull final FragmentManager fragmentManager, @NonNull final List<UserMonster> team) {
+        UserPlayerFragment userPlayerFragment = new UserPlayerFragment().setTeam(team);
 
-        //Init internal field
-        mTeam = team;
+        fragmentManager.beginTransaction()
+                .replace(R.id.container_player, userPlayerFragment)
+                .commit();
 
+        return userPlayerFragment;
+    }
+    /*
+    ** Life cycle
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_fight_battle_player;
+    }
+
+    @Override
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         //Setup recycler
-        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(viewContainer.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewMonsters.setAdapter(mAdapter);
 
         //Populate monster list
@@ -93,13 +107,13 @@ public class UserPlayerManager extends PlayerManager {
     @Override
     public void displayAttackReceive() {
         //Set background to red
-        mViewContainer.setBackgroundColor(ContextCompat.getColor(mViewContainer.getContext(), R.color.material_red_500));
+        getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.material_red_500));
 
         //Set background to normal after 1s
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 // Actions to do after 1s
-                mViewContainer.setBackgroundColor(ContextCompat.getColor(mViewContainer.getContext(), R.color.WhiteSmokeHalf));
+                getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.WhiteSmokeHalf));
             }
         }, 1000);
     }
@@ -130,11 +144,9 @@ public class UserPlayerManager extends PlayerManager {
 
     @Override
     protected void displayMonsterDetails(@NonNull StartMessage.StartMessagePlayerMonster monster) {
-        Context context = mViewContainer.getContext();
-
         //Populate widget;
         monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
+        monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
         progressBarMonsterHp.setMax(monster.hp);
         progressBarMonsterHp.setProgress(monster.hp);
         monsterLife.setText(String.valueOf(monster.hp));
@@ -143,11 +155,19 @@ public class UserPlayerManager extends PlayerManager {
         //Populate monster sprite
         Monster monsterInfos = monster.info();
         if (monsterInfos != null) {
-            Glide.with(context)
+            Glide.with(mContext)
                     .load(monsterInfos.baseSprite)
                     .placeholder(R.drawable.default_monster)
                     .error(R.drawable.default_monster)
                     .into(monsterPicture);
         }
+    }
+
+    /*
+    ** Internal method
+     */
+    private UserPlayerFragment setTeam(@NonNull final List<UserMonster> team) {
+        mTeam = team;
+        return this;
     }
 }

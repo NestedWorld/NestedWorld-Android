@@ -18,9 +18,10 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/layout_opponent"
-            layout="@layout/fragment_fight_battle_opponent"/>
+        <FrameLayout
+            android:id="@+id/container_opponent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <include
             android:id="@+id/layout_fight_body"
@@ -29,9 +30,10 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <include
-            android:id="@+id/layout_user"
-            layout="@layout/fragment_fight_battle_player"/>
+        <FrameLayout
+            android:id="@+id/container_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 
