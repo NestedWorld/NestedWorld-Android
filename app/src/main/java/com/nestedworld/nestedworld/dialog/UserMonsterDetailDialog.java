@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.dialog;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -124,6 +125,12 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
     }
 
     private void populateMonsterAttack(@NonNull final List<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
+        //Check if fragment hasn't been detach
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
         if (monsterAttacks.isEmpty()) {
             textViewMonsterNoAttack.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
@@ -137,7 +144,7 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
             }
 
             if (listView.getAdapter() == null) {
-                listView.setAdapter(new AttackAdapter(getContext(), attacks));
+                listView.setAdapter(new AttackAdapter(context, attacks));
             } else {
                 AttackAdapter attackAdapter = (AttackAdapter) listView.getAdapter();
                 attackAdapter.clear();
