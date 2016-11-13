@@ -83,11 +83,11 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        super.onDestroyView();
+        super.onDestroy();
     }
 
     /*
