@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.database.models;
 
+import android.support.annotation.ColorRes;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.nestedworld.nestedworld.R;
@@ -67,6 +69,7 @@ public class Monster extends SugarRecord {
     }
 
     //Utils
+    @ColorRes
     public int getColorResource() {
         if (type == null) {
             return R.color.black;

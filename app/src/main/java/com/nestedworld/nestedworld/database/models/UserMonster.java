@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.database.models;
 
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
@@ -63,6 +64,7 @@ public class UserMonster extends SugarRecord {
     }
 
     //Utils
+    @ColorRes
     public int getColorResource() {
         Monster info = info();
         if (info == null) {

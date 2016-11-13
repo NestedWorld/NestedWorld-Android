@@ -20,7 +20,7 @@ public class Portal extends SugarRecord {
     /*
     ** Utils
      */
-    public Portal(Double latitude, Double longitude, String name, String type) {
+    public Portal(final Double latitude, final Double longitude, final String name, final String type) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;

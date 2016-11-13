@@ -1,5 +1,7 @@
 package com.nestedworld.nestedworld.database.models;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
@@ -27,6 +29,7 @@ public class Attack extends SugarRecord {
         //Keep empty
     }
 
+    @NonNull
     public AttackType getType() {
         if (this.type != null) {
             switch (this.type) {
