@@ -25,12 +25,12 @@ import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
-    private static Friend mFriend;
     @BindView(R.id.editText_chat)
     EditText editTextChat;
     @BindView(R.id.listView_chat)
     ListView listViewChat;
     private ArrayAdapter<String> itemAdapter;
+    private Friend mFriend;
 
     /*
     ** Public method
@@ -63,14 +63,15 @@ public class ChatFragment extends BaseFragment {
             return;
         }
 
+        //Check args
         mFriend = Friend.findById(Friend.class, getArguments().getLong("FRIEND_ID"));
         if (mFriend == null) {
             Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_SHORT).show();
             ((BaseAppCompatActivity) mContext).finish();
+        } else {
+            setupActionBar();
+            initChat();
         }
-
-        setupActionBar();
-        initChat();
     }
 
     /*
@@ -121,11 +122,8 @@ public class ChatFragment extends BaseFragment {
         editTextChat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_NULL
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
-
+                if (actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_DOWN) {
                     sendMessage();
-
                     return true;
                 }
                 return false;
