@@ -13,17 +13,20 @@ public class EngagePortalFightDialog extends BaseDialogFragment {
     private Portal mPortal;
 
     /*
-    ** Constructor
-     */
-    private EngagePortalFightDialog(@NonNull final Portal portal) {
-        mPortal = portal;
-    }
-
-    /*
     ** Public method
     */
     public static void show(@NonNull final FragmentManager fragmentManager, @NonNull final Portal portal) {
-        new EngagePortalFightDialog(portal).show(fragmentManager, TAG);
+        new EngagePortalFightDialog()
+                .setPortal(portal)
+                .show(fragmentManager, TAG);
+    }
+
+    /*
+    ** Internal method
+     */
+    private EngagePortalFightDialog setPortal(@NonNull final Portal portal) {
+        mPortal = portal;
+        return this;
     }
 
     /*
@@ -31,20 +34,26 @@ public class EngagePortalFightDialog extends BaseDialogFragment {
      */
     @Override
     protected Builder build(Builder initialBuilder) {
-        return initialBuilder
-                .setTitle(mPortal.name)
-                .setMessage("Engage a fight with this portal ?")
-                .setPositiveButton("yes", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //TODO display team selection
-                    }
-                })
-                .setNegativeButton("no", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dismiss();
-                    }
-                });
+        if (mPortal != null) {
+            initialBuilder
+                    .setTitle(mPortal.name)
+                    .setMessage("Engage a fight with this portal ?")
+                    .setPositiveButton("yes", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //TODO display team selection
+                        }
+                    })
+                    .setNegativeButton("no", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dismiss();
+                        }
+                    });
+
+        } else {
+            dismiss();
+        }
+        return initialBuilder;
     }
 }

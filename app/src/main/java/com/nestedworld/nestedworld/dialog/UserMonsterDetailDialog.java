@@ -31,7 +31,7 @@ import retrofit2.Response;
 public final class UserMonsterDetailDialog extends BaseDialogFragment {
 
     private final static String TAG = MonsterDetailDialog.class.getSimpleName();
-    private final UserMonster mUserMonster;
+    private UserMonster mUserMonster;
 
     @BindView(R.id.textView_monsterName)
     TextView textViewName;
@@ -55,15 +55,16 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
     /*
     ** Constructor
      */
-    private UserMonsterDetailDialog(@NonNull final UserMonster userMonster) {
+    private UserMonsterDetailDialog setUserMonster(@NonNull final UserMonster userMonster) {
         mUserMonster = userMonster;
+        return this;
     }
 
     /*
     ** Public method
      */
     public static void show(@NonNull final FragmentManager fragmentManager, @NonNull final UserMonster userMonster) {
-        new UserMonsterDetailDialog(userMonster).show(fragmentManager, TAG);
+        new UserMonsterDetailDialog().setUserMonster(userMonster).show(fragmentManager, TAG);
     }
 
     /*
@@ -71,9 +72,19 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
      */
     @Override
     protected Builder build(Builder initialBuilder) {
-        return initialBuilder
-                .setTitle(mUserMonster.info().name)
-                .setView(getMonsterDetailView());
+        if (mUserMonster != null) {
+            Monster userMonsterInfo = mUserMonster.info();
+            if (userMonsterInfo != null) {
+                initialBuilder
+                        .setTitle(mUserMonster.info().name)
+                        .setView(getMonsterDetailView());
+            } else {
+                dismiss();
+            }
+        } else {
+            dismiss();
+        }
+        return initialBuilder;
     }
 
     /*

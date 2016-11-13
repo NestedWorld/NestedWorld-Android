@@ -30,7 +30,7 @@ import retrofit2.Response;
 public final class MonsterDetailDialog extends BaseDialogFragment {
 
     private final static String TAG = MonsterDetailDialog.class.getSimpleName();
-    private final Monster mMonster;
+    private Monster mMonster;
 
     @BindView(R.id.textView_monsterName)
     TextView textViewName;
@@ -52,17 +52,12 @@ public final class MonsterDetailDialog extends BaseDialogFragment {
     ImageView imageViewSprite;
 
     /*
-    ** Constructor
-     */
-    private MonsterDetailDialog(@NonNull final Monster monster) {
-        mMonster = monster;
-    }
-
-    /*
     ** Public method
      */
     public static void show(@NonNull final FragmentManager fragmentManager, @NonNull final Monster monster) {
-        new MonsterDetailDialog(monster).show(fragmentManager, TAG);
+        new MonsterDetailDialog()
+                .setMonster(monster)
+                .show(fragmentManager, TAG);
     }
 
     /*
@@ -70,14 +65,25 @@ public final class MonsterDetailDialog extends BaseDialogFragment {
      */
     @Override
     protected Builder build(Builder initialBuilder) {
-        return initialBuilder
-                .setTitle(mMonster.name)
-                .setView(getMonsterDetailView());
+        if (mMonster != null) {
+            initialBuilder
+                    .setTitle(mMonster.name)
+                    .setView(getMonsterDetailView());
+        } else {
+            dismiss();
+        }
+
+        return initialBuilder;
     }
 
     /*
     ** Internal method
      */
+    private MonsterDetailDialog setMonster(@NonNull final Monster monster) {
+        mMonster = monster;
+        return this;
+    }
+
     @NonNull
     private View getMonsterDetailView() {
         //Create the view
