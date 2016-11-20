@@ -143,7 +143,11 @@ public class MonsterDetailFragment extends BaseFragment {
         //TODO Hide lvl block
         //TODO Hide exp block
 
-        textViewHp.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterHp), mMonster.hp, 100));
+        //Populate hp
+        textViewHp.setText(String.format(getResources().getString(
+                R.string.tabMonster_msg_monsterHp),
+                (int)mMonster.hp,
+                100));
         progressBarHp.setMax(100);
         progressBarHp.setProgress((int) mMonster.hp);
 
