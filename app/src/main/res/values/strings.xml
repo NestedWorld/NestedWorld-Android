@@ -54,7 +54,6 @@
     <string name="mainMenu_action_fight">fight</string>
 
     <!--MainMenu.tab.monsters-->
-    <string name="tabMonster_msg_monsterName">Name : %s</string>
     <string name="tabMonster_msg_monsterAttack" formatted="false">Attack : %d / %d</string>
     <string name="tabMonster_msg_monsterDefence" formatted="false">Defense : %d / %d</string>
     <string name="tabMonster_msg_monsterHp" formatted="false">Hp : %d / %d</string>
@@ -70,7 +69,6 @@
 
     <!--MainMenu.tab.home.monsterList-->
     <string name="tabHome_title_monsterList">Your monster</string>
-    <string name="tabHome_msg_monsterLvl">lvl %d</string>
     <string name="tabHome_msg_userLvl">lvl %d</string>
 
     <!--MainMenu.tab.home.friendList-->
