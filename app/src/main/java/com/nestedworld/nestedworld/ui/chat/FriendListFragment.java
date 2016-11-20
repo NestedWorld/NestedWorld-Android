@@ -177,7 +177,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Friend selectedFriend = mAdapter.getItem(position);
                 if (selectedFriend != null) {
-                    ChatFragment.load(getFragmentManager(), selectedFriend);
+                    ChatFragment.load(((BaseAppCompatActivity)mContext).getSupportFragmentManager(), selectedFriend);
                 } else {
                     Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
                 }
