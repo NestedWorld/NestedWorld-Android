@@ -67,7 +67,6 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        setupBackground();
     }
 
     /*
@@ -109,18 +108,6 @@ public class LoginFragment extends BaseFragment {
     /*
     ** Internal method
      */
-    private void setupBackground() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        Glide.with(this)
-                .load(R.drawable.logo)
-                .bitmapTransform(new BlurTransformation(mContext))
-                .into(imageViewBackground);
-    }
-
     private boolean checkInputForForgotPassword(@NonNull final String email) {
         //We don't care about email, stop display error on it
         textInputLayoutUserPassword.setErrorEnabled(false);

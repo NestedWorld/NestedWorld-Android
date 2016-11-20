@@ -39,7 +39,7 @@ public class NestedWorldMap {
         mGoogleMap.clear();
 
         //TODO retrieve icon on aws 
-        Drawable iconDrawable = ContextCompat.getDrawable(context, R.drawable.arena_drawable);
+        Drawable iconDrawable = ContextCompat.getDrawable(context, R.drawable.portal_drawable);
 
         //Display new marker
         for (Portal portal : portals) {

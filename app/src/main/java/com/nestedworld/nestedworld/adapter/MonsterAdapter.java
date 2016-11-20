@@ -58,7 +58,7 @@ public class MonsterAdapter extends ArrayAdapter<Monster> {
                 .into(imageViewMonster);
 
         //Add color shape around monster picture
-        view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(getContext(), monster.getColorResource()));
+        view.findViewById(R.id.user_monster_shape).setBackgroundColor(ContextCompat.getColor(getContext(), monster.getColorResource()));
 
         return view;
     }

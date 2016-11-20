@@ -3,10 +3,11 @@ package com.nestedworld.nestedworld.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,59 +15,118 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
+import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /*
 ** Custom Adapter for displaying userMonsters
  */
-public class UserMonsterAdapter extends ArrayAdapter<UserMonster> {
+public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.UserMonsterViewHolder> {
+
+    private final List<UserMonster> mItems = new ArrayList<>();
 
     /*
-    ** Constructor
+    ** Public method
      */
-    public UserMonsterAdapter(@NonNull final Context context) {
-        super(context, 0);
+    public void addAll(@NonNull final List<UserMonster> items) {
+        mItems.clear();
+        mItems.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mItems.clear();
+        notifyDataSetChanged();
     }
 
     /*
     ** Life cycle
      */
-    @NonNull
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        View view = convertView;
+    public UserMonsterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.item_home_user_monster, parent, false);
 
-        //Check if an existing view is being reused, otherwise inflate the view
-        if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.item_monster, parent, false);
-        }
+        UserMonsterViewHolder userMonsterViewHolder = new UserMonsterViewHolder(view);
+        ButterKnife.bind(userMonsterViewHolder, view);
 
+        return userMonsterViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(UserMonsterViewHolder holder, int position) {
         //Get current monster
-        final UserMonster monster = getItem(position);
+        UserMonster monster = mItems.get(position);
         if (monster == null) {
-            return view;
+            return;
         }
 
         //Get current monster information
         Monster monsterInfo = monster.info();
         if (monsterInfo == null) {
-            return view;
+            return;
         }
 
-        //Populate name & lvl
-        ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monsterInfo.name);
-        ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(getContext().getResources().getString(R.string.tabHome_msg_monsterLvl), monster.level));
+        holder.populateLate(monster, monsterInfo);
+    }
 
-        //Display monster picture
-        final ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
-        Glide.with(getContext())
-                .load(monsterInfo.baseSprite)
-                .placeholder(R.drawable.default_monster)
-                .centerCrop()
-                .into(imageViewMonster);
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
 
-        //Add color shape around monster picture
-        view.findViewById(R.id.imageView_monster_shape).setBackgroundColor(ContextCompat.getColor(getContext(), monster.getColorResource()));
+    /*
+    ** Inner class
+     */
+    public static class UserMonsterViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.textview_monster_name)
+        TextView textViewMonsterName;
 
-        return view;
+        @BindView(R.id.textview_monster_lvl)
+        TextView textViewMonsterLvl;
+
+        @BindView(R.id.imageView_monster)
+        ImageView imageViewMonster;
+
+        @BindView(R.id.user_monster_shape)
+        View viewUserMonsterShape;
+
+
+        public UserMonsterViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public void populateLate(@NonNull final UserMonster monster, @NonNull final Monster monsterInfo) {
+            final Context context = itemView.getContext();
+            if (context != null) {
+                //Add listener
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UserMonsterDetailDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), monster);
+                    }
+                });
+
+                //Populate name & lvl
+                textViewMonsterName.setText(monsterInfo.name);
+                textViewMonsterLvl.setText(String.format(context.getResources().getString(R.string.integer), monster.level));
+
+                //Display monster picture
+                Glide.with(itemView.getContext())
+                        .load(monsterInfo.baseSprite)
+                        .placeholder(R.drawable.default_monster)
+                        .centerCrop()
+                        .into(imageViewMonster);
+
+                //Add color shape around monster picture
+                viewUserMonsterShape.setBackgroundColor(ContextCompat.getColor(context, monster.getColorResource()));
+            }
+        }
     }
 }

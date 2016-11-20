@@ -21,7 +21,7 @@ public class WelcomeActivity extends BaseAppCompatActivity implements FragmentMa
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_registration;
+        return R.layout.activity_welcome;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class WelcomeActivity extends BaseAppCompatActivity implements FragmentMa
     }
 
     /*
-        ** Internal method
-         */
+    ** Internal method
+     */
     private void setupActionBar() {
         setSupportActionBar(toolbar);
 

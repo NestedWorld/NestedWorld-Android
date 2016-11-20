@@ -61,7 +61,6 @@ public abstract class BattlePlayerFragment extends BaseFragment {
         mCurrentMonsterAttacks = attacks;
 
         mFrontMonster.add(monster);
-
         ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {

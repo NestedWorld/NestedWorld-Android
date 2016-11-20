@@ -72,7 +72,6 @@ public class CreateAccountFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        setupBackground();
     }
 
     /*
@@ -98,18 +97,6 @@ public class CreateAccountFragment extends BaseFragment {
     /*
     ** Internal method
      */
-    private void setupBackground() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        Glide.with(mContext)
-                .load(R.drawable.logo)
-                .bitmapTransform(new BlurTransformation(mContext))
-                .into(imageViewBackground);
-    }
-
     private boolean checkInputRegistration(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
         //Check email
         if (!InputChecker.checkEmailFormat(email)) {

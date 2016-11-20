@@ -1,6 +1,9 @@
 <resources>
     <string name="desc" translatable="false">desc</string>
 
+    <!--Generic-->
+    <string name="integer" translatable="false">%d</string>
+
     <!--Error message-->
     <string name="error_emailInvalid">Invalid email !</string>
     <string name="error_passwordTooShort">Password too short !</string>
@@ -16,6 +19,7 @@
     <string name="error_request_login">Cannot login.</string>
     <string name="error_request_forgotPassword">Cannot reset your password.</string>
     <string name="error_request_user">Cannot retrieve your data.</string>
+    <string name="error_database_update">Cannot update database.</string>
 
     <!--Registration-->
     <string name="registration_msg_punchLine">Catch them all and became the champion !</string>
@@ -84,7 +88,7 @@
     <!--Fight.teamSelection-->
     <string name="teamSelection_msg_hint">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
     <string name="teamSelection_title">Team selection</string>
-    <string name="teamSelection_msg_progress">%d / 4</string>
+    <string name="teamSelection_msg_progress" formatted="false">%d / %d</string>
     <string name="teamSelection_msg_startFight">Go !</string>
     <string name="teamSelection_msg_monsterName">Name: %s</string>
     <string name="teamSelection_msg_monsterLvl">lvl: %d</string>

@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/gridLayout_home_monsters"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:numColumns="auto_fit"
-          android:stretchMode="columnWidth">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</GridView>
+    <TextView
+        android:id="@+id/textview_no_monster"
+        android:padding="8dip"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You didn't have any monster"/>
+
+    <LinearLayout
+        android:id="@+id/recycler_home_monster_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <com.nestedworld.nestedworld.customView.recycler.GridAutoFitRecyclerView
+            android:id="@+id/recycler_home_monster"
+            android:columnWidth="@dimen/item_user_monster_width"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

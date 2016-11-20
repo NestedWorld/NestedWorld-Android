@@ -26,6 +26,7 @@ import com.nestedworld.nestedworld.database.updater.UserItemUpdater;
 import com.nestedworld.nestedworld.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
@@ -54,14 +55,13 @@ import butterknife.BindView;
 public class MainMenuActivity extends BaseAppCompatActivity {
 
     private final List<Tabs> mTabs = new ArrayList<Tabs>() {{
-        add(new Tabs(new HomeFragment(), "Home", R.drawable.ic_home_white_18dp));
-        add(new Tabs(new MonstersFragment(), "Monsters", R.drawable.ic_ghost_white_18dp));
-        add(new Tabs(new MapFragment(), "Map", R.drawable.ic_map_marker_radius_white_18dp));
-        add(new Tabs(new UserInventoryFragment(), "Inventory", R.drawable.ic_sword_white_18dp));
-        add(new Tabs(new ShopFragment(), "Shop", R.drawable.ic_cart_plus_white_18dp));
+        add(new Tabs(new HomeFragment(), "Home", R.drawable.ic_home_24dp));
+        add(new Tabs(new MonstersFragment(), "Monsters", R.drawable.ic_monster_24dp));
+        add(new Tabs(new MapFragment(), "Map", R.drawable.ic_map_24dp));
+        add(new Tabs(new UserInventoryFragment(), "Inventory", R.drawable.ic_inventory_24dp));
+        add(new Tabs(new ShopFragment(), "Shop", R.drawable.ic_shop_24dp));
     }};
     private final List<EntityUpdater> mTasks = new ArrayList<EntityUpdater>() {{
-        add(new UserUpdater());
         add(new FriendsUpdater());
         add(new AttacksUpdater());
         add(new MonsterUpdater());
@@ -118,7 +118,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         //Calculate the number of fight and update icon
         //we don't have to check for 0 (see buildCounterDrawable())
         int numberOfFight = Select.from(Combat.class).list().size();
-        menuItem.setIcon(DrawableHelper.buildCounterDrawable(this, numberOfFight, R.drawable.ic_sword_white_18dp));
+        menuItem.setIcon(DrawableHelper.buildCounterDrawable(this, numberOfFight, R.drawable.ic_swords_cross_24dp));
         return true;
     }
 
@@ -269,43 +269,54 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         //Start loading animation
         progressView.start();
 
-        //We use run() method for convenience
-        //for being thread safe, make request in asyncTask
-        new AsyncTask<Void, Void, Boolean>() {
+        new UserUpdater().start(new OnEntityUpdated() {
             @Override
-            protected Boolean doInBackground(Void... params) {
-                for (EntityUpdater entityUpdater : mTasks) {
-                    if (!entityUpdater.run()) {
-                        return false;
+            public void onSuccess() {
+                //We use run() method for convenience
+                //for being thread safe, make request in asyncTask
+                new AsyncTask<Void, Void, Boolean>() {
+                    @Override
+                    protected Boolean doInBackground(Void... params) {
+                        for (EntityUpdater entityUpdater : mTasks) {
+                            if (!entityUpdater.run()) {
+                                return false;
+                            }
+                        }
+                        return true;
                     }
-                }
-                return true;
+
+                    @Override
+                    protected void onPostExecute(Boolean result) {
+                        //Check if activity hasn't been destroy
+                        if (!isUiBinded()) {
+                            return;
+                        }
+
+                        //stop loading animation
+                        progressView.stop();
+
+                        if (!result) {
+                            //display error message
+                            Toast.makeText(MainMenuActivity.this, getString(R.string.error_database_update), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }.execute();
             }
 
             @Override
-            protected void onPostExecute(Boolean result) {
-                //Check if activity hasn't been destroy
-                if (!isUiBinded()) {
-                    return;
-                }
+            public void onError(@NonNull KIND errorKind) {
+                //display error message
+                Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
-                //stop loading animation
-                progressView.stop();
+                ApplicationHelper.logout(MainMenuActivity.this);
 
-                if (!result) {
-                    //display error message
-                    Toast.makeText(MainMenuActivity.this, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
+                //Go to launch screen
+                startActivity(LaunchActivity.class);
 
-                    ApplicationHelper.logout(MainMenuActivity.this);
-
-                    //Go to launch screen
-                    startActivity(LaunchActivity.class);
-
-                    ///Finish current activity
-                    finish();
-                }
+                ///Finish current activity
+                finish();
             }
-        }.execute();
+        });
     }
 
     private final static class Tabs {

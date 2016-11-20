@@ -11,13 +11,13 @@
 
     <item
         android:id="@+id/action_fight"
-        android:icon="@drawable/ic_sword_white_18dp"
+        android:icon="@drawable/ic_swords_cross_24dp"
         android:title="@string/mainMenu_action_fight"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_chat"
-        android:icon="@drawable/ic_wechat_white_18dp"
+        android:icon="@drawable/ic_action_chat_24dp"
         android:title="@string/mainMenu_action_chat"
         app:showAsAction="always"/>
 

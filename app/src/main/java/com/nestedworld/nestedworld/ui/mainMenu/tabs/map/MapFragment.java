@@ -54,7 +54,6 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     ProgressView progressView;
 
     private NestedWorldMap mMap = null;
-    private GoogleMap mGoogleMap;
 
     /*
     ** Public method
@@ -76,14 +75,14 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
 
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
-        }
-
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
         }
 
         //init MapView

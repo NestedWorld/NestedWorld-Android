@@ -21,7 +21,7 @@ import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageTy
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.fight.TeamSelectionFragment;
+import com.nestedworld.nestedworld.ui.fight.teamSelection.TeamSelectionFragment;
 
 import org.msgpack.value.ValueFactory;
 
@@ -99,7 +99,9 @@ public class FightAdapter extends ArrayAdapter<Combat> {
 
         //Yes just accept the combat, we have to choose our team
         //Display the team selection
-        TeamSelectionFragment.load(((BaseAppCompatActivity) getContext()).getSupportFragmentManager(), combat);
+        TeamSelectionFragment
+                .load(((BaseAppCompatActivity) getContext()).getSupportFragmentManager(),
+                        getContext().getResources().getInteger(R.integer.duel_monster_needed));
     }
 
     private void refuseCombat(@NonNull final Combat combat) {

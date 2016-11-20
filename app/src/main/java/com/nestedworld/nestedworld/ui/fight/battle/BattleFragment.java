@@ -40,7 +40,6 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAtta
 import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.fight.FightResultFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentPlayerFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.UserPlayerFragment;
 import com.nestedworld.nestedworld.ui.base.BattlePlayerFragment;
@@ -254,7 +253,7 @@ public class BattleFragment extends BaseFragment {
             if (mUserPlayerFragment.hasRemainingMonster()) {
                 UserMonster nextMonster = mUserPlayerFragment.getNextMonster();
                 if (nextMonster == null) {
-                    FightResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
+                    BattleResultFragment.load(getFragmentManager(), "You didn't have any monster left.");
                 } else {
                     sendReplaceMonsterKoRequest(nextMonster);
                 }
@@ -263,7 +262,7 @@ public class BattleFragment extends BaseFragment {
             LogHelper.d(TAG, "onMonsterKo > opponent");
             mOpponentPlayerFragment.onCurrentMonsterKo();
             if (!mOpponentPlayerFragment.hasRemainingMonster()) {
-                FightResultFragment.load(getFragmentManager(), "Your opponent didn't have any monster left.");
+                BattleResultFragment.load(getFragmentManager(), "Your opponent didn't have any monster left.");
             }
         } else {
             //The monster is probably dead
@@ -278,7 +277,7 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        FightResultFragment.load(getFragmentManager(), "Fight Ended");
+        BattleResultFragment.load(getFragmentManager(), "Fight Ended");
     }
 
     /*
@@ -332,7 +331,7 @@ public class BattleFragment extends BaseFragment {
             return;
         }
 
-        mUserPlayerFragment = UserPlayerFragment.load(getChildFragmentManager(),mUserTeam);
+        mUserPlayerFragment = UserPlayerFragment.load(getChildFragmentManager(), mUserTeam);
         mOpponentPlayerFragment = OpponentPlayerFragment.load(getChildFragmentManager(), mStartMessage.opponent.monsterCount);
 
         new AsyncTask<Void, Void, Void>() {

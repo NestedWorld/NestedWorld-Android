@@ -5,10 +5,10 @@
 
     <!-- Color for the theme -->
     <!-- 500 = normal / 700 = dark -->
-    <color name="apptheme_color">#607d8b</color>
-    <color name="apptheme_color_dark">#455a64</color>
+    <color name="apptheme_color">#263238</color>
+    <color name="apptheme_color_dark">#212121</color>
     <color name="apptheme_accent">#4dd0e1</color>
-    <color name="apptheme_background">#F5F5F5</color>
+    <color name="apptheme_background">#EEEEEE</color>
 
     <!-- Monster overlay color-->
     <color name="holo_blue_light">#ff33b5e5</color>

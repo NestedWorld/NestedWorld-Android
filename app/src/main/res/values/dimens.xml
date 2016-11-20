@@ -1,4 +1,4 @@
 <resources>
-    <!--Put your global dimension here-->
     <dimen name="global_padding">8dip</dimen>
+    <dimen name="item_user_monster_width">100dip</dimen>
 </resources>

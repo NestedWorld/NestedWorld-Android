@@ -23,7 +23,7 @@ public final class HttpEndPoint {
 
     //Place related endpoint
     private final static String GEO_PREFIX = "geo";
-    public final static String PORTALS_LIST = GEO_PREFIX + "/portals/{latitude}/{longitude}";
+    public final static String PORTALS_LIST = GEO_PREFIX + "/portals/{longitude}/{latitude}";
 
     //User related endpoint
     private final static String USER_PREFIX = "users/";
