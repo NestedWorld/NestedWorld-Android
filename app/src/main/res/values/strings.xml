@@ -94,7 +94,7 @@
     <string name="teamSelection_msg_monsterLvl">lvl: %d</string>
     <string name="teamSelection_msg_monsterAttack">Attack %d</string>
     <string name="teamSelection_msg_monsterDefence">Defence: %d</string>
-    <string name="teamSelection_msg_monsterHp">Hp: %s</string>
+    <string name="teamSelection_msg_monsterHp">Hp: %d</string>
 
     <!--Fight.combat-->
     <string name="combat_msg_monsterLife">Life</string>
