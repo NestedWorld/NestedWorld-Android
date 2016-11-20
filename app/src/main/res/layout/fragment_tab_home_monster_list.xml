@@ -23,7 +23,7 @@
             android:id="@+id/recycler_home_monster"
             android:columnWidth="@dimen/item_user_monster_width"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
 </LinearLayout>
