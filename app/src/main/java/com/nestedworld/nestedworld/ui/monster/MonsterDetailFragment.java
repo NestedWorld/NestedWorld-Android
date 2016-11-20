@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.AttackAdapter;
+import com.nestedworld.nestedworld.adapter.ArrayAdapter.AttackAdapter;
 import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.network.http.callback.NestedWorldHttpCallback;
@@ -147,15 +147,27 @@ public class MonsterDetailFragment extends BaseFragment {
         progressBarHp.setMax(100);
         progressBarHp.setProgress((int) mMonster.hp);
 
-        textViewAttack.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterAttack), mMonster.attack, 100));
+        //Populate attack
+        textViewAttack.setText(String.format(getResources().getString(
+                R.string.tabMonster_msg_monsterAttack),
+                (int)mMonster.attack,
+                100));
         progressBarAttack.setMax(100);
         progressBarAttack.setProgress((int) mMonster.attack);
 
-        textViewDefence.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterDefence), mMonster.defense, 100));
+        //Populate defence
+        textViewDefence.setText(String.format(
+                getResources().getString(R.string.tabMonster_msg_monsterDefence),
+                (int)mMonster.defense,
+                100));
         progressBarDefence.setMax(100);
-        progressBarDefence.setProgress(mMonster.defense);
+        progressBarDefence.setProgress((int)mMonster.defense);
 
-        textViewSpeed.setText(String.format(getResources().getString(R.string.tabMonster_msg_monsterSpeed), mMonster.speed, 100));
+        //Populate speed
+        textViewSpeed.setText(String.format(
+                getResources().getString(R.string.tabMonster_msg_monsterSpeed),
+                (int)mMonster.speed,
+                100));
         progressBarSpeed.setMax(100);
         progressBarSpeed.setProgress((int) mMonster.speed);
     }
