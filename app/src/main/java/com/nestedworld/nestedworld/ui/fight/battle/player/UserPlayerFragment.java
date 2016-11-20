@@ -61,6 +61,7 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
         return userPlayerFragment;
     }
+
     /*
     ** Life cycle
      */

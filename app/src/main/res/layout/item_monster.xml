@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="8dip"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="8dip">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -20,31 +20,31 @@
             android:padding="3dip">
 
             <ImageView
-                android:background="@color/apptheme_background"
                 android:id="@+id/imageView_monster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@color/apptheme_background"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_monster"/>
 
         </LinearLayout>
 
         <TextView
-            android:padding="8dip"
             android:id="@+id/textview_monster_name"
             style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dip"
             android:textSize="14sp"/>
 
         <ImageView
-            android:padding="8dip"
             android:id="@+id/imageview_monster_type"
-            android:scaleType="fitEnd"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="8dip"
+            android:scaleType="fitEnd"
             android:src="@drawable/ic_help_outline_24dp"/>
 
     </LinearLayout>

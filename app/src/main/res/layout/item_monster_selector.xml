@@ -6,11 +6,11 @@
               android:padding="8dip">
 
     <RelativeLayout
-        android:gravity="center"
-        android:layout_gravity="center"
         android:id="@+id/user_monster_shape"
         android:layout_width="58dip"
         android:layout_height="58dip"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:padding="3dip">
 
         <View

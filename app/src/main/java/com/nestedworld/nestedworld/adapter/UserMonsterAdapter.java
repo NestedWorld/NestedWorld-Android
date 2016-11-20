@@ -3,7 +3,6 @@ package com.nestedworld.nestedworld.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
-import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
 import com.nestedworld.nestedworld.ui.monster.MonsterDetailActivity;
 
 import java.util.ArrayList;

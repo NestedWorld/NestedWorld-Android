@@ -40,6 +40,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TeamSelectionFragment extends BaseFragment {
 
+    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     @BindViews({
             R.id.imageview_selectedmonster_1,
             R.id.imageview_selectedmonster_2,
@@ -58,9 +59,7 @@ public class TeamSelectionFragment extends BaseFragment {
     ImageView imageViewUserPicture;
     @BindView(R.id.imageview_opponent_picture)
     ImageView imageViewOpponentPicture;
-
     private List<UserMonster> mUserMonsters;
-    private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     private int mNeededMonster;
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override

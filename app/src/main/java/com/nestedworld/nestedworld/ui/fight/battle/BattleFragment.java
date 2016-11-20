@@ -40,9 +40,9 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.SendAtta
 import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.base.BattlePlayerFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.OpponentPlayerFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.player.UserPlayerFragment;
-import com.nestedworld.nestedworld.ui.base.BattlePlayerFragment;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;

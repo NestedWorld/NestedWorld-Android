@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dip"
     android:orientation="vertical"
     android:padding="8dip">
 
     <LinearLayout
-        android:padding="8dip"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="8dip">
 
         <TextView
             style="@style/TypefaceStyle.ProximaNova.bold"
@@ -35,21 +35,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="1"
                     android:id="@+id/textView_monsterHp"
                     style="@style/TypefaceStyle.ProximaNova.light"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/tabMonster_msg_monsterHp"
                     android:textColor="@color/apptheme_color"/>
 
                 <ProgressBar
+                    android:id="@+id/progress_monster_hp"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progress_monster_hp"
-                    android:paddingStart="8dip"
-                    android:paddingEnd="8dip"/>
+                    android:paddingEnd="8dip"
+                    android:paddingStart="8dip"/>
 
             </LinearLayout>
 
@@ -59,21 +59,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="1"
                     android:id="@+id/textView_monsterAttack"
                     style="@style/TypefaceStyle.ProximaNova.light"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/tabMonster_msg_monsterAttack"
                     android:textColor="@color/apptheme_color"/>
 
                 <ProgressBar
+                    android:id="@+id/progress_monster_attack"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progress_monster_attack"
-                    android:paddingStart="8dip"
-                    android:paddingEnd="8dip"/>
+                    android:paddingEnd="8dip"
+                    android:paddingStart="8dip"/>
 
             </LinearLayout>
 
@@ -83,21 +83,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="1"
                     android:id="@+id/textView_monsterDefence"
                     style="@style/TypefaceStyle.ProximaNova.light"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/tabMonster_msg_monsterDefence"
                     android:textColor="@color/apptheme_color"/>
 
                 <ProgressBar
+                    android:id="@+id/progress_monster_defence"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progress_monster_defence"
-                    android:paddingStart="8dip"
-                    android:paddingEnd="8dip"/>
+                    android:paddingEnd="8dip"
+                    android:paddingStart="8dip"/>
 
             </LinearLayout>
 
@@ -108,21 +108,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_weight="1"
                     android:id="@+id/textView_monsterSpeed"
                     style="@style/TypefaceStyle.ProximaNova.light"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/tabMonster_msg_monsterSpeed"
                     android:textColor="@color/apptheme_color"/>
 
                 <ProgressBar
+                    android:id="@+id/progress_monster_speed"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progress_monster_speed"
-                    android:paddingStart="8dip"
-                    android:paddingEnd="8dip"/>
+                    android:paddingEnd="8dip"
+                    android:paddingStart="8dip"/>
 
             </LinearLayout>
 
@@ -131,12 +131,12 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="16dip"
-        android:padding="8dip"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="16dip"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="8dip">
 
         <TextView
             style="@style/TypefaceStyle.ProximaNova.bold"
@@ -165,10 +165,10 @@
             android:visibility="gone"/>
 
         <com.rey.material.widget.ProgressView
-            android:layout_gravity="center"
             android:id="@+id/progressView"
             android:layout_width="48dip"
             android:layout_height="48dip"
+            android:layout_gravity="center"
             app:pv_autostart="false"
             app:pv_circular="true"
             app:pv_progressMode="indeterminate"

@@ -11,13 +11,13 @@
 
         <TextView
             android:id="@+id/textview_no_monster"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="@color/apptheme_color"
+            android:padding="8dip"
             android:text="No monsters"
-            android:padding="8dip"/>
+            android:textColor="@color/apptheme_color"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout_monster_list"

@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.input.InputChecker;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
@@ -26,7 +25,6 @@ import com.rey.material.widget.ProgressView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Response;
 
 /**

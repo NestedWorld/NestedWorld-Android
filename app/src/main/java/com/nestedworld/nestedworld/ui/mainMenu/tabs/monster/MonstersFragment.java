@@ -1,21 +1,15 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.monster;
 
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,15 +37,13 @@ import butterknife.BindView;
 public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public final static String FRAGMENT_NAME = MonstersFragment.class.getSimpleName();
-
+    private final MonsterAdapter mAdapter = new MonsterAdapter();
     @BindView(R.id.recycler_monsters_list)
     RecyclerView recyclerViewMonsters;
     @BindView(R.id.swipeRefreshLayout_monster_list)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.textview_no_monster)
     TextView textViewNoMonster;
-
-    private final MonsterAdapter mAdapter = new MonsterAdapter();
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()

@@ -32,8 +32,6 @@ import retrofit2.Response;
 public final class UserMonsterDetailDialog extends BaseDialogFragment {
 
     private final static String TAG = UserMonsterDetailDialog.class.getSimpleName();
-    private UserMonster mUserMonster;
-
     @BindView(R.id.textView_monsterName)
     TextView textViewName;
     @BindView(R.id.textView_monsterAttack)
@@ -52,6 +50,14 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
     ListView listView;
     @BindView(R.id.imageview_monster_sprite)
     ImageView imageViewSprite;
+    private UserMonster mUserMonster;
+
+    /*
+    ** Public method
+     */
+    public static void show(@NonNull final FragmentManager fragmentManager, @NonNull final UserMonster userMonster) {
+        new UserMonsterDetailDialog().setUserMonster(userMonster).show(fragmentManager, TAG);
+    }
 
     /*
     ** Constructor
@@ -59,13 +65,6 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
     private UserMonsterDetailDialog setUserMonster(@NonNull final UserMonster userMonster) {
         mUserMonster = userMonster;
         return this;
-    }
-
-    /*
-    ** Public method
-     */
-    public static void show(@NonNull final FragmentManager fragmentManager, @NonNull final UserMonster userMonster) {
-        new UserMonsterDetailDialog().setUserMonster(userMonster).show(fragmentManager, TAG);
     }
 
     /*

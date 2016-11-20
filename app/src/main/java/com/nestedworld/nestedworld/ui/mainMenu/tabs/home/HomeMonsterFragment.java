@@ -1,4 +1,5 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.home;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,14 +25,13 @@ import butterknife.BindView;
 
 public class HomeMonsterFragment extends BaseFragment {
 
+    private final UserMonsterAdapter userMonsterAdapter = new UserMonsterAdapter();
     @BindView(R.id.recycler_home_monster)
     GridAutoFitRecyclerView recycler;
     @BindView(R.id.recycler_home_monster_container)
     View viewRecyclerContainer;
     @BindView(R.id.textview_no_monster)
     TextView textViewNoMonster;
-
-    private final UserMonsterAdapter userMonsterAdapter = new UserMonsterAdapter();
 
     /*
     ** Life cycle

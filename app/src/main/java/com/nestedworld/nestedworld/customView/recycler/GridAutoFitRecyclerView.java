@@ -88,8 +88,7 @@ public class GridAutoFitRecyclerView extends RecyclerView {
                 int totalSpace;
                 if (getOrientation() == VERTICAL) {
                     totalSpace = width - getPaddingRight() - getPaddingLeft();
-                }
-                else {
+                } else {
                     totalSpace = height - getPaddingTop() - getPaddingBottom();
                 }
 
