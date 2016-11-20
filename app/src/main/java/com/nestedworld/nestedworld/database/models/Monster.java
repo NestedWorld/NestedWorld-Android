@@ -21,13 +21,13 @@ public class Monster extends SugarRecord {
     public Long monsterId;// the sql table will be called monsterid (see sugarOrm doc)
 
     @Expose
-    public String hp;
+    public float hp;
 
     @Expose
     public int defense;
 
     @Expose
-    public int attack;
+    public float attack;
 
     @Expose
     @Unique
@@ -45,7 +45,7 @@ public class Monster extends SugarRecord {
     public String type;
 
     @Expose
-    public String speed;
+    public float speed;
 
     //Empty constructor for SugarRecord
     public Monster() {

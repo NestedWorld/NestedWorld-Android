@@ -277,7 +277,7 @@ public class TeamSelectionFragment extends BaseFragment {
         public Object instantiateItem(ViewGroup container, int position) {
 
             //Create the view
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_monster, container, false);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_monster_selector, container, false);
 
             //Retrieve the monster we'll display
             UserMonster monster = mUserMonsters.get(position);

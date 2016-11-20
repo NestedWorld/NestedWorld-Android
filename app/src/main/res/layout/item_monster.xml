@@ -1,87 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="8dip">
-
-    <RelativeLayout
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:id="@+id/user_monster_shape"
-        android:layout_width="58dip"
-        android:layout_height="58dip"
-        android:padding="3dip">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/apptheme_background"/>
-
-        <ImageView
-            android:id="@+id/imageView_monster"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/default_monster"/>
-
-    </RelativeLayout>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="8dip"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dip">
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/user_monster_shape"
+            android:layout_width="58dp"
+            android:layout_height="58dip"
+            android:padding="3dip">
+
+            <ImageView
+                android:background="@color/apptheme_background"
+                android:id="@+id/imageView_monster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_monster"/>
+
+        </LinearLayout>
 
         <TextView
+            android:padding="8dip"
             android:id="@+id/textview_monster_name"
             style="@style/TypefaceStyle.ProximaNova"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color"
             android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/textview_monster_lvl"
-            style="@style/TypefaceStyle.ProximaNova"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:padding="8dip"
+            android:id="@+id/imageview_monster_type"
+            android:scaleType="fitEnd"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
+            android:src="@drawable/ic_help_outline_24dp"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/monster_detail_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dip">
-
-        <TextView
-            android:id="@+id/textview_monster_hp"
-            style="@style/TypefaceStyle.ProximaNova"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textview_monster_attack"
-            style="@style/TypefaceStyle.ProximaNova"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textview_monster_defense"
-            style="@style/TypefaceStyle.ProximaNova"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
-
-    </LinearLayout>
 
 </LinearLayout>

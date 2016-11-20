@@ -31,7 +31,7 @@ import retrofit2.Response;
 
 public final class UserMonsterDetailDialog extends BaseDialogFragment {
 
-    private final static String TAG = MonsterDetailDialog.class.getSimpleName();
+    private final static String TAG = UserMonsterDetailDialog.class.getSimpleName();
     private UserMonster mUserMonster;
 
     @BindView(R.id.textView_monsterName)
@@ -94,7 +94,7 @@ public final class UserMonsterDetailDialog extends BaseDialogFragment {
     @NonNull
     private View getMonsterDetailView() {
         //Create the view
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_monsterdetail, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_monsterdetail, null);
 
         //Retrieve widget
         ButterKnife.bind(this, view);

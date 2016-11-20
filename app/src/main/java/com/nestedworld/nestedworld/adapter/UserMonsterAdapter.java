@@ -16,6 +16,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.dialog.UserMonsterDetailDialog;
+import com.nestedworld.nestedworld.ui.monster.MonsterDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        UserMonsterDetailDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), monster);
+                        MonsterDetailActivity.start(context, monsterInfo);
                     }
                 });
 

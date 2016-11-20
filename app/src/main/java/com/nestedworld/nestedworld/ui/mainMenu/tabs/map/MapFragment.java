@@ -85,28 +85,30 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
             return;
         }
 
-        //init MapView
-        mMapView.onCreate(savedInstanceState);
-        mMapView.onResume();//We display the map immediately
+        if (savedInstanceState != null) {
+            //init MapView
+            mMapView.onCreate(savedInstanceState);
+            mMapView.onResume();//We display the map immediately
 
-        //retrieve GoogleMap from mapView
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
+            //retrieve GoogleMap from mapView
+            mMapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
 
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
+                    //Check if fragment hasn't been detach
+                    if (mContext == null) {
+                        return;
+                    }
+
+                    //Init the mapView
+                    googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style));
+                    googleMap.setOnMarkerClickListener(MapFragment.this);
+
+                    mMap = new NestedWorldMap(googleMap);
+                    initMap();
                 }
-
-                //Init the mapView
-                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style));
-                googleMap.setOnMarkerClickListener(MapFragment.this);
-
-                mMap = new NestedWorldMap(googleMap);
-                initMap();
-            }
-        });
+            });
+        }
     }
 
     @Override

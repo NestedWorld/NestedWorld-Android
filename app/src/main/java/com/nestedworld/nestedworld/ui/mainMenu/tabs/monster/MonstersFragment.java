@@ -1,15 +1,23 @@
 package com.nestedworld.nestedworld.ui.mainMenu.tabs.monster;
 
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
@@ -17,7 +25,6 @@ import com.nestedworld.nestedworld.adapter.MonsterAdapter;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.dialog.MonsterDetailDialog;
 import com.nestedworld.nestedworld.events.http.OnMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
@@ -37,12 +44,14 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
 
     public final static String FRAGMENT_NAME = MonstersFragment.class.getSimpleName();
 
-    @BindView(R.id.listview_monsters_list)
-    ListView listViewMonstersList;
+    @BindView(R.id.recycler_monsters_list)
+    RecyclerView recyclerViewMonsters;
     @BindView(R.id.swipeRefreshLayout_monster_list)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.textview_no_monster)
+    TextView textViewNoMonster;
 
-    private MonsterAdapter mAdapter;
+    private final MonsterAdapter mAdapter = new MonsterAdapter();
 
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -69,7 +78,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         setupListView();
 
         //Populate adapter with monster in BDD
-        updateAdapterContent();
+        populateMonsterList();
 
         //Init swipe listener
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -77,10 +86,10 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        super.onDestroyView();
     }
 
     /*
@@ -152,7 +161,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                updateAdapterContent();
+                populateMonsterList();
             }
         });
     }
@@ -166,34 +175,29 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
             return;
         }
 
-        mAdapter = new MonsterAdapter(mContext);
-        listViewMonstersList.setAdapter(mAdapter);
-        listViewMonstersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Monster selectedMonster = mAdapter.getItem(position);
-                if (selectedMonster != null) {
-                    MonsterDetailDialog.show(getChildFragmentManager(), selectedMonster);
-                }
-            }
-        });
+        recyclerViewMonsters.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        recyclerViewMonsters.setHasFixedSize(true);
+        recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerViewMonsters.setAdapter(mAdapter);
     }
 
     @UiThread
-    private void updateAdapterContent() {
+    private void populateMonsterList() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         //Retrieve monsters from ORM
         List<Monster> monsters = Select.from(Monster.class).list();
 
+        mAdapter.clear();
         if (monsters == null || monsters.isEmpty()) {
-            //Remove old content
-            mAdapter.clear();
-
-            //TODO display text "no monster"
+            textViewNoMonster.setVisibility(View.VISIBLE);
+            recyclerViewMonsters.setVisibility(View.GONE);
         } else {
-            //Remove old content
-            mAdapter.clear();
-
-            //update query
+            textViewNoMonster.setVisibility(View.GONE);
+            recyclerViewMonsters.setVisibility(View.VISIBLE);
             mAdapter.addAll(monsters);
         }
     }

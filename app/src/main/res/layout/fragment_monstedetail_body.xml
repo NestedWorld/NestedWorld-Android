@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dip"
+    android:orientation="vertical"
+    android:padding="8dip">
+
+    <LinearLayout
+        android:padding="8dip"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TypefaceStyle.ProximaNova.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monsterDetail_title_characteristics"
+            android:textColor="@color/apptheme_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dip">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/textView_monsterHp"
+                    style="@style/TypefaceStyle.ProximaNova.light"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tabMonster_msg_monsterHp"
+                    android:textColor="@color/apptheme_color"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_monster_hp"
+                    android:paddingStart="8dip"
+                    android:paddingEnd="8dip"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/textView_monsterAttack"
+                    style="@style/TypefaceStyle.ProximaNova.light"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tabMonster_msg_monsterAttack"
+                    android:textColor="@color/apptheme_color"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_monster_attack"
+                    android:paddingStart="8dip"
+                    android:paddingEnd="8dip"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/textView_monsterDefence"
+                    style="@style/TypefaceStyle.ProximaNova.light"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tabMonster_msg_monsterDefence"
+                    android:textColor="@color/apptheme_color"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_monster_defence"
+                    android:paddingStart="8dip"
+                    android:paddingEnd="8dip"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/textView_monsterSpeed"
+                    style="@style/TypefaceStyle.ProximaNova.light"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tabMonster_msg_monsterSpeed"
+                    android:textColor="@color/apptheme_color"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_monster_speed"
+                    android:paddingStart="8dip"
+                    android:paddingEnd="8dip"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="16dip"
+        android:padding="8dip"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TypefaceStyle.ProximaNova.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monsterDetail_title_attack"
+            android:textColor="@color/apptheme_color"/>
+
+        <TextView
+            android:id="@+id/textview_monster_no_attack"
+            style="@style/TypefaceStyle.ProximaNova.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dip"
+            android:text="@string/monsterDetail_no_attack"
+            android:textColor="@color/apptheme_color"/>
+
+        <ListView
+            android:id="@+id/listview_monter_attack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/apptheme_color"
+            android:dividerHeight="0.5dip"
+            android:padding="8dip"
+            android:visibility="gone"/>
+
+        <com.rey.material.widget.ProgressView
+            android:layout_gravity="center"
+            android:id="@+id/progressView"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            app:pv_autostart="false"
+            app:pv_circular="true"
+            app:pv_progressMode="indeterminate"
+            app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
+
+    </LinearLayout>
+
+</LinearLayout>

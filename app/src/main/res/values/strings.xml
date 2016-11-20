@@ -55,10 +55,10 @@
 
     <!--MainMenu.tab.monsters-->
     <string name="tabMonster_msg_monsterName">Name : %s</string>
-    <string name="tabMonster_msg_monsterAttack">Attack : %d</string>
-    <string name="tabMonster_msg_monsterDefence">Defense : %d</string>
-    <string name="tabMonster_msg_monsterHp">Hp : %s</string>
-    <string name="tabMonster_msg_monsterSpeed">Speed : %s</string>
+    <string name="tabMonster_msg_monsterAttack" formatted="false">Attack : %d / %d</string>
+    <string name="tabMonster_msg_monsterDefence" formatted="false">Defense : %d / %d</string>
+    <string name="tabMonster_msg_monsterHp" formatted="false">Hp : %d / %d</string>
+    <string name="tabMonster_msg_monsterSpeed" formatted="false">Speed : %d / %d</string>
 
     <!--MainMenu.tab.home-->
     <string name="tabHome_title_creditsNumber">Credits</string>
@@ -117,5 +117,5 @@
     <!--Attack adapter-->
     <string name="item_attack_msg_attackType">Attack type: %s</string>
     <string name="item_attack_msg_attackName">Attack name: %s</string>
-    <string name="monsterDetail_title_attack">Monster attacks:</string>
+    <string name="monsterDetail_title_attack">Attacks:</string>
 </resources>
