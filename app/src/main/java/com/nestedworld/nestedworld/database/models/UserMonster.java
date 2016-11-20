@@ -35,7 +35,7 @@ public class UserMonster extends SugarRecord {
     public String surname;
 
     @Expose
-    public String experience;
+    public long experience;
 
     //Empty constructor for SugarRecord
     public UserMonster() {

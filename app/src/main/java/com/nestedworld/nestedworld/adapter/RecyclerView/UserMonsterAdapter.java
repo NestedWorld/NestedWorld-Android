@@ -15,6 +15,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.ui.monster.MonsterDetailActivity;
+import com.nestedworld.nestedworld.ui.monster.UserMonsterDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +109,7 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MonsterDetailActivity.start(context, monsterInfo);
+                        UserMonsterDetailActivity.start(context, monster);
                     }
                 });
 
