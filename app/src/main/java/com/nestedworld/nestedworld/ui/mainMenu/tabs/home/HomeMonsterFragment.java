@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.UserMonsterAdapter;
+import com.nestedworld.nestedworld.adapter.RecyclerView.UserMonsterAdapter;
 import com.nestedworld.nestedworld.customView.recycler.GridAutoFitRecyclerView;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;

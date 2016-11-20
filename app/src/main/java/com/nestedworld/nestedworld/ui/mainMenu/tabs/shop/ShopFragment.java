@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.ShopObjectAdapter;
+import com.nestedworld.nestedworld.adapter.ArrayAdapter.ShopObjectAdapter;
 import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;

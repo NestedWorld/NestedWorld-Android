@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.TabsAdapter;
+import com.nestedworld.nestedworld.adapter.FragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.Session;

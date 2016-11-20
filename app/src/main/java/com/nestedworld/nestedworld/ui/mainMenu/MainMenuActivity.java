@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.TabsAdapter;
+import com.nestedworld.nestedworld.adapter.FragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.updater.AttacksUpdater;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;

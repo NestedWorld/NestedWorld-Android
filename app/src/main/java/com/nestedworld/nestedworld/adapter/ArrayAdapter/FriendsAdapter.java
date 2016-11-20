@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.adapter;
+package com.nestedworld.nestedworld.adapter.ArrayAdapter;
 
 import android.content.ComponentName;
 import android.content.Context;

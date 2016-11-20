@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.FightAdapter;
+import com.nestedworld.nestedworld.adapter.ArrayAdapter.FightAdapter;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;

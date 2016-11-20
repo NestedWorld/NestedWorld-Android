@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.adapter;
+package com.nestedworld.nestedworld.adapter.FragmentStatePager;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

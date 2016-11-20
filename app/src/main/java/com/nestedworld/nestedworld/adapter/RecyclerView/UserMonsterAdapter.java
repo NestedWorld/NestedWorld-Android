@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.adapter;
+package com.nestedworld.nestedworld.adapter.RecyclerView;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

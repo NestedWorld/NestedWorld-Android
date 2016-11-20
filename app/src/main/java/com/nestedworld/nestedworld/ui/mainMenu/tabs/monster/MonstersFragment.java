@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.MonsterAdapter;
+import com.nestedworld.nestedworld.adapter.RecyclerView.MonsterAdapter;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;

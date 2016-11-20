@@ -24,7 +24,7 @@ public class Monster extends SugarRecord {
     public float hp;
 
     @Expose
-    public int defense;
+    public float defense;
 
     @Expose
     public float attack;

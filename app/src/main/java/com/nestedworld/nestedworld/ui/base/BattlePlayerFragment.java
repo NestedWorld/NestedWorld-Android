@@ -4,7 +4,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.adapter.BattleMonsterAdapter;
+import com.nestedworld.nestedworld.adapter.RecyclerView.BattleMonsterAdapter;
 import com.nestedworld.nestedworld.database.models.Attack;
 import com.nestedworld.nestedworld.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;

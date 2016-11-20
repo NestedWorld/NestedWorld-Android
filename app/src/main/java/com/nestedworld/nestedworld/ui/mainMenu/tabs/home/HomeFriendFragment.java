@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.FriendsAdapter;
+import com.nestedworld.nestedworld.adapter.ArrayAdapter.FriendsAdapter;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.dialog.AddFriendDialog;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
