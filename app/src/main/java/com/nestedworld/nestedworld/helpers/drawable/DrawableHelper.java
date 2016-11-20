@@ -27,7 +27,6 @@ public final class DrawableHelper {
     public static Drawable buildCounterDrawable(@NonNull final Context context, final int count, final int backgroundImageId) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.menuitem_counter_layout, null);
-        view.setBackgroundResource(backgroundImageId);
 
         if (count == 0) {
             View counterTextPanel = view.findViewById(R.id.counterValuePanel);
