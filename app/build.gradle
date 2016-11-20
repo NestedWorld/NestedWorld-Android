@@ -11,6 +11,7 @@ android {
         applicationId "com.kassisdion.nestedworld"
         versionCode 1
         versionName "1.0"
+        resConfigs ("en", "fr")
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         renderscriptSupportModeEnabled true
@@ -85,7 +86,7 @@ android {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ext {
-    supportLibVersion = '25.0.0'
+    supportLibVersion = '25.0.1'
     retrofitVersion = '2.1.0'
     okHttpVersion = '3.4.1'
     butterknifeVersion = '8.4.0'
@@ -106,6 +107,7 @@ dependencies {
     //Support library
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
 
     //Material design support helper
     compile 'com.github.rey5137:material:1.2.4'
