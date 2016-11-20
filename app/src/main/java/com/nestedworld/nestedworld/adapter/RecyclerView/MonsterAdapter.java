@@ -45,7 +45,6 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
     /*
     ** Life cycle
      */
-
     @Override
     public MonsterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater

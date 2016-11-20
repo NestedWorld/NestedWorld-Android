@@ -26,6 +26,25 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     private final List<Monster> mMonsters = new ArrayList<>();
 
     /*
+    ** Public method
+     */
+    public void add(@Nullable final Monster monster) {
+        mMonsters.add(monster);
+        notifyItemInserted(mMonsters.size() - 1);
+    }
+
+    public void addAll(@NonNull final List<Monster> monsters) {
+        mMonsters.addAll(monsters);
+        notifyItemRangeChanged(mMonsters.size() - monsters.size(), mMonsters.size());
+    }
+
+    public void clear() {
+        int oldSize = mMonsters.size();
+        mMonsters.clear();
+        notifyItemRangeRemoved(0, oldSize);
+    }
+
+    /*
     ** Life cycle
      */
     @Override
@@ -51,25 +70,6 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     @Override
     public int getItemCount() {
         return mMonsters.size();
-    }
-
-    /*
-    ** Public method
-     */
-    public void add(@Nullable final Monster monster) {
-        mMonsters.add(monster);
-        notifyItemInserted(mMonsters.size() - 1);
-    }
-
-    public void addAll(@NonNull final List<Monster> monsters) {
-        mMonsters.addAll(monsters);
-        notifyItemRangeChanged(mMonsters.size() - monsters.size(), mMonsters.size());
-    }
-
-    public void clear() {
-        int oldSize = mMonsters.size();
-        mMonsters.clear();
-        notifyItemRangeRemoved(0, oldSize);
     }
 
     /*
