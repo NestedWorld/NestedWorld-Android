@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
@@ -13,10 +15,16 @@ import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import butterknife.BindView;
+
 public class MonsterDetailActivity extends BaseAppCompatActivity {
 
-
     private final static String ARG_MONSTER = "MonsterDetailActivity_ARG_MONSTER";
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    private Monster mMonster;
 
     /*
     ** Public method
@@ -41,16 +49,33 @@ public class MonsterDetailActivity extends BaseAppCompatActivity {
             throw new IllegalArgumentException("You should provide a monsterId in intent");
         } else {
             long monserId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
-            Monster monster = Select.from(Monster.class)
+            mMonster = Select.from(Monster.class)
                     .where(Condition.prop("monster_id").eq(monserId))
                     .first();
-
-            if (monster == null) {
+            if (mMonster == null) {
                 Toast.makeText(this, R.string.error_unexpected, Toast.LENGTH_LONG).show();
                 finish();
             } else {
-                MonsterDetailFragment.load(getSupportFragmentManager(), monster);
+                setupToolbar();
+                MonsterDetailFragment.load(getSupportFragmentManager(), mMonster);
             }
+        }
+    }
+
+    /*
+    ** Internal method
+     */
+    private void setupToolbar() {
+        //Set the toolbar as actionBar
+        setSupportActionBar(toolbar);
+
+        //Get back the Toolbar as actionBar and then custom it
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            //customise the actionBar
+            actionBar.setTitle(mMonster.name);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
         }
     }
 }

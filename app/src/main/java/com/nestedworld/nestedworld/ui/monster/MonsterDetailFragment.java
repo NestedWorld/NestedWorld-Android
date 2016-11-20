@@ -98,7 +98,7 @@ public class MonsterDetailFragment extends BaseFragment {
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         if (mMonster == null) {
-            throw new IllegalArgumentException("You should call setMonster(");
+            throw new IllegalArgumentException("You should call setMonster()");
         } else {
             populateView();
             retrieveMonsterAttack();
@@ -108,19 +108,6 @@ public class MonsterDetailFragment extends BaseFragment {
     /*
     ** Internal method
      */
-    private void setupToolbar() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(mMonster.name);
-        }
-    }
-
     private MonsterDetailFragment setMonster(@NonNull final Monster monster) {
         mMonster = monster;
         return this;
