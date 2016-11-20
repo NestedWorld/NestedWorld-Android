@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.monster;
+package com.nestedworld.nestedworld.ui.monster.monsterDetail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,28 +11,27 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
-import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
 import butterknife.BindView;
 
-public class UserMonsterDetailActivity extends BaseAppCompatActivity{
-    private final static String ARG_MONSTER = "UserMonsterDetailActivity_ARG_MONSTER";
+public class MonsterDetailActivity extends BaseAppCompatActivity {
+
+    private final static String ARG_MONSTER = "MonsterDetailActivity_ARG_MONSTER";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private UserMonster mMonster;
-    private Monster mMonsterInfo;
+    private Monster mMonster;
 
     /*
     ** Public method
      */
-    public static void start(@NonNull final Context context, @NonNull final UserMonster monster) {
-        Intent intent = new Intent(context, UserMonsterDetailActivity.class);
-        intent.putExtra(ARG_MONSTER, monster.getId());
+    public static void start(@NonNull final Context context, @NonNull final Monster monster) {
+        Intent intent = new Intent(context, MonsterDetailActivity.class);
+        intent.putExtra(ARG_MONSTER, monster.monsterId);
         context.startActivity(intent);
     }
 
@@ -41,7 +40,7 @@ public class UserMonsterDetailActivity extends BaseAppCompatActivity{
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_usermonster_detail;
+        return R.layout.activity_monster_detail;
     }
 
     @Override
@@ -49,23 +48,16 @@ public class UserMonsterDetailActivity extends BaseAppCompatActivity{
         if (!getIntent().getExtras().containsKey(ARG_MONSTER)) {
             throw new IllegalArgumentException("You should provide a monsterId in intent");
         } else {
-            long monsterId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
-            mMonster = Select.from(UserMonster.class)
-                    .where(Condition.prop("id").eq(monsterId))
+            long monserId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
+            mMonster = Select.from(Monster.class)
+                    .where(Condition.prop("monster_id").eq(monserId))
                     .first();
-
-            if (mMonster != null) {
-                mMonsterInfo = Select.from(Monster.class)
-                        .where(Condition.prop("monster_id").eq(mMonster.monsterId))
-                        .first();
-            }
-
-            if (mMonster == null || mMonsterInfo == null) {
+            if (mMonster == null) {
                 Toast.makeText(this, R.string.error_unexpected, Toast.LENGTH_LONG).show();
                 finish();
             } else {
                 setupToolbar();
-                UserMonsterDetailFragment.load(getSupportFragmentManager(), mMonster, mMonsterInfo);
+                MonsterDetailFragment.load(getSupportFragmentManager(), mMonster);
             }
         }
     }
@@ -81,7 +73,7 @@ public class UserMonsterDetailActivity extends BaseAppCompatActivity{
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //customise the actionBar
-            actionBar.setTitle(mMonsterInfo.name);
+            actionBar.setTitle(mMonster.name);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }

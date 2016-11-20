@@ -14,8 +14,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
-import com.nestedworld.nestedworld.ui.monster.MonsterDetailActivity;
-import com.nestedworld.nestedworld.ui.monster.UserMonsterDetailActivity;
+import com.nestedworld.nestedworld.ui.monster.userMonsterDetail.UserMonsterDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;

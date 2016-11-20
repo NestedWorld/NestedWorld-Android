@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.monster;
+package com.nestedworld.nestedworld.ui.monster.userMonsterDetail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

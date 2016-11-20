@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
-import com.nestedworld.nestedworld.ui.monster.MonsterDetailActivity;
+import com.nestedworld.nestedworld.ui.monster.monsterDetail.MonsterDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
