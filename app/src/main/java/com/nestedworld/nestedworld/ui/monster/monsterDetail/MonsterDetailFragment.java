@@ -32,6 +32,8 @@ public class MonsterDetailFragment extends BaseFragment {
     //Header related
     @BindView(R.id.imageView_monster)
     ImageView imageViewSprite;
+    @BindView(R.id.textview_monster_name)
+    TextView textViewMonsterName;
 
     //Sub header related
     @BindView(R.id.imageview_monster_type)
@@ -112,6 +114,8 @@ public class MonsterDetailFragment extends BaseFragment {
         Glide.with(getContext())
                 .load(mMonster.enragedSprite)
                 .into(imageViewSprite);
+
+        textViewMonsterName.setText(mMonster.name);
 
         //TODO populate imageview
         //textViewType.setText(mMonster.type);
