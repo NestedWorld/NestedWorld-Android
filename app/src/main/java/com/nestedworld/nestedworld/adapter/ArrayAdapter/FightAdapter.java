@@ -99,9 +99,10 @@ public class FightAdapter extends ArrayAdapter<Combat> {
 
         //Yes just accept the combat, we have to choose our team
         //Display the team selection
-        TeamSelectionFragment
-                .load(((BaseAppCompatActivity) getContext()).getSupportFragmentManager(),
-                        getContext().getResources().getInteger(R.integer.duel_monster_needed));
+        //TODO send attackPortal request
+//        TeamSelectionFragment
+//                .load(((BaseAppCompatActivity) getContext()).getSupportFragmentManager(),
+//                        getContext().getResources().getInteger(R.integer.duel_monster_needed));
     }
 
     private void refuseCombat(@NonNull final Combat combat) {

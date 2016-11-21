@@ -1,8 +1,11 @@
 package com.nestedworld.nestedworld.ui.fight.teamSelection;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,19 +20,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
+import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
+import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
+import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
+import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.orm.query.Condition;
 import com.orm.query.Select;
+import com.rey.material.widget.ProgressView;
+
+import org.msgpack.value.Value;
+import org.msgpack.value.ValueFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +74,11 @@ public class TeamSelectionFragment extends BaseFragment {
     ImageView imageViewUserPicture;
     @BindView(R.id.imageview_opponent_picture)
     ImageView imageViewOpponentPicture;
+    @BindView(R.id.progressView)
+    ProgressView progressView;
     private List<UserMonster> mUserMonsters;
     private int mNeededMonster;
+    private Combat mCurrentCombat;
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -81,13 +99,14 @@ public class TeamSelectionFragment extends BaseFragment {
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, final int monsterNeeded) {
+    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Combat combat, final int monsterNeeded) {
         //Instantiate new fragment
         Fragment newFragment = new TeamSelectionFragment();
 
         //Add fragment param
         Bundle args = new Bundle();
         args.putLong("MONSTER_NEEDED_KEY", monsterNeeded);
+        args.putLong("combatId", combat.getId());
         newFragment.setArguments(args);
 
         //Display the fragment
@@ -145,6 +164,34 @@ public class TeamSelectionFragment extends BaseFragment {
     /*
     ** Private method
      */
+    private boolean parseArgs() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return false;
+        }
+
+        if (!getArguments().containsKey("MONSTER_NEEDED_KEY")) {
+            throw new IllegalArgumentException("Must provide needed monster count");
+        } else {
+            mNeededMonster = getArguments().getInt("mNeededMonster");
+        }
+
+        if (!getArguments().containsKey("combatId")) {
+            throw new IllegalArgumentException("Must provide wanted combat");
+        } else {
+            long combatId = getArguments().getLong("combatId", -1);
+            mCurrentCombat = Select
+                    .from(Combat.class)
+                    .where(Condition.prop("id").eq(combatId))
+                    .first();
+        }
+
+        //Display some log
+        LogHelper.d(TAG, "Combat=" + mCurrentCombat.toString() + "monsterNeeded=" + mNeededMonster);
+
+        return (mNeededMonster > 0 && mCurrentCombat != null);
+    }
+
     private void setupHeader() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
@@ -236,7 +283,7 @@ public class TeamSelectionFragment extends BaseFragment {
         button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), mSelectedMonster.size(), mNeededMonster));
 
         //If we've selected enough monster, we enable the button
-        if (mSelectedMonster.size() == 4) {
+        if (mSelectedMonster.size() == mNeededMonster) {
             onEnoughMonsterSelected();
         }
     }
@@ -245,8 +292,64 @@ public class TeamSelectionFragment extends BaseFragment {
         //Change text on the button
         button_go_fight.setText(getResources().getString(R.string.teamSelection_msg_startFight));
 
+        //Set a listener for starting the fight
+        button_go_fight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendAcceptRequest();
+            }
+        });
+
         //Disable monster selection
         button_select_monster.setOnClickListener(null);
+    }
+
+    private void sendAcceptRequest() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Start loading animation
+        progressView.start();
+
+        ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
+                if (nestedWorldSocketAPI != null) {
+                    ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+
+                    List<Value> selectedMonsterIdList = new ArrayList<>();
+                    for (UserMonster userMonster : mSelectedMonster) {
+                        selectedMonsterIdList.add(ValueFactory.newInteger(userMonster.userMonsterId));
+                    }
+
+                    map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(true));
+                    map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
+
+                    ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCurrentCombat.combatId);
+
+                } else {
+                    onServiceDisconnected(null);
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                if (mContext != null) {
+                    //Stop loading animation
+                    progressView.stop();
+
+                    //Display error message
+                    Toast.makeText(mContext, R.string.error_socket_disconnected, Toast.LENGTH_LONG).show();
+
+                    //Finish the current activity
+                    ((BaseAppCompatActivity) mContext).finish();
+                }
+            }
+        });
     }
 
     private void updateArrowState() {
