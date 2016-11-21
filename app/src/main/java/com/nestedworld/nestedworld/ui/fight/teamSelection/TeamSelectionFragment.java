@@ -30,19 +30,24 @@ import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.models.UserMonster;
+import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.fight.battle.BattleFragment;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
@@ -135,6 +140,10 @@ public class TeamSelectionFragment extends BaseFragment {
             return;
         }
 
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
         if (!parseArgs()) {
             //Cannot get selected Combat, display error and finish current activity
             Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
@@ -163,6 +172,41 @@ public class TeamSelectionFragment extends BaseFragment {
                     updateArrowState();//Update the 'select monster' button
                 }
             });
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroyView();
+    }
+
+    /*
+    ** Eventbus
+     */
+    @Subscribe
+    public void onNewCombatStart(OnCombatStartMessageEvent event) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        LogHelper.d(TAG, "onNewCombatStart");
+
+        StartMessage startMessage = event.getMessage();
+
+        if (startMessage.id.equals(mCurrentCombat.combatId)) {
+            LogHelper.d(TAG, "onNewCombatStart > accept");
+
+            //Delete the combat from Orm
+            mCurrentCombat.delete();
+
+            //Start fight fragment
+            BattleFragment.load(getFragmentManager(), startMessage, mSelectedMonster);
+        } else {
+            LogHelper.d(TAG, "onNewCombatStart > refuse");
         }
     }
 
