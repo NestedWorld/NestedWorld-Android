@@ -32,18 +32,10 @@ public class MonsterDetailFragment extends BaseFragment {
     //Header related
     @BindView(R.id.imageView_monster)
     ImageView imageViewSprite;
-    @BindView(R.id.textView_monster_name)
-    TextView textViewMonsterName;
-    @BindView(R.id.textview_monster_surname)
-    TextView textViewMonsterSurname;
 
     //Sub header related
-    @BindView(R.id.textView_type)
-    TextView textViewType;
-    @BindView(R.id.textView_lvl)
-    TextView textViewLevel;
-    @BindView(R.id.textView_exp)
-    TextView textViewExp;
+    @BindView(R.id.imageview_monster_type)
+    ImageView imageViewMonsterType;
 
     //Body (characteristics) related
     @BindView(R.id.textView_monsterHp)
@@ -121,12 +113,8 @@ public class MonsterDetailFragment extends BaseFragment {
                 .load(mMonster.enragedSprite)
                 .into(imageViewSprite);
 
-
-        textViewMonsterName.setText(mMonster.name);
-        //TODO Hide surname
-        textViewType.setText(mMonster.type);
-        //TODO Hide lvl block
-        //TODO Hide exp block
+        //TODO populate imageview
+        //textViewType.setText(mMonster.type);
 
         //Populate hp
         textViewHp.setText(String.format(getResources().getString(

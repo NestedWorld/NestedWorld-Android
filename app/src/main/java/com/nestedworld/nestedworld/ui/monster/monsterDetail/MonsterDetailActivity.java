@@ -40,7 +40,7 @@ public class MonsterDetailActivity extends BaseAppCompatActivity {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_monster_detail;
+        return R.layout.activity_usermonster_detail;
     }
 
     @Override

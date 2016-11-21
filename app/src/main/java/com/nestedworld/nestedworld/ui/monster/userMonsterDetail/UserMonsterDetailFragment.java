@@ -94,7 +94,7 @@ public class UserMonsterDetailFragment  extends BaseFragment {
      */
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_monsterdetail;
+        return R.layout.fragment_usermonsterdetail;
     }
 
     @Override
