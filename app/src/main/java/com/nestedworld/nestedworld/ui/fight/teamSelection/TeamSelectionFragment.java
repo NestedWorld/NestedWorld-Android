@@ -79,7 +79,7 @@ public class TeamSelectionFragment extends BaseFragment {
     private List<UserMonster> mUserMonsters;
     private int mNeededMonster;
     private Combat mCurrentCombat;
-    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
+    private final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             //DO What you want
@@ -87,6 +87,11 @@ public class TeamSelectionFragment extends BaseFragment {
 
         @Override
         public void onPageSelected(int position) {
+            //Check if fragment hasn't been detach
+            if (mContext == null) {
+                return;
+            }
+
             updateArrowState();
         }
 
@@ -105,7 +110,7 @@ public class TeamSelectionFragment extends BaseFragment {
 
         //Add fragment param
         Bundle args = new Bundle();
-        args.putLong("MONSTER_NEEDED_KEY", monsterNeeded);
+        args.putInt("MONSTER_NEEDED_KEY", monsterNeeded);
         args.putLong("combatId", combat.getId());
         newFragment.setArguments(args);
 
@@ -130,35 +135,35 @@ public class TeamSelectionFragment extends BaseFragment {
             return;
         }
 
-        //Change action bar title
-        setupActionBar();
+        if (!parseArgs()) {
+            //Cannot get selected Combat, display error and finish current activity
+            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+            ((BaseAppCompatActivity) mContext).finish();
+        } else {
+            //Change action bar title
+            setupActionBar();
 
-        //Retrieve args
-        if (!getArguments().containsKey("MONSTER_NEEDED_KEY")) {
-            throw new IllegalArgumentException("Must provide needed monster count");
+            //Retrieve userMonster
+            mUserMonsters = Select.from(UserMonster.class).list();
+
+            //Init the viewPager (it will display player's monster)
+            setUpViewPager();
+
+            //init header block (with players information)
+            setupHeader();
+
+            //Init button 'start_fight' text (it will display the number of selected monster)
+            button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0, mNeededMonster));
+
+            //Init button 'select_monster'
+            button_select_monster.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onMonsterSelected();
+                    updateArrowState();//Update the 'select monster' button
+                }
+            });
         }
-        mNeededMonster = getArguments().getInt("mNeededMonster");
-
-        //Retrieve userMonster
-        mUserMonsters = Select.from(UserMonster.class).list();
-
-        //Init the viewPager (it will display player's monster)
-        setUpViewPager();
-
-        //init header block (with players information)
-        setupHeader();
-
-        //Init button 'start_fight' text (it will display the number of selected monster)
-        button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0, mNeededMonster));
-
-        //Init button 'select_monster'
-        button_select_monster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onMonsterSelected();
-                updateArrowState();//Update the 'select monster' button
-            }
-        });
     }
 
     /*
@@ -173,7 +178,7 @@ public class TeamSelectionFragment extends BaseFragment {
         if (!getArguments().containsKey("MONSTER_NEEDED_KEY")) {
             throw new IllegalArgumentException("Must provide needed monster count");
         } else {
-            mNeededMonster = getArguments().getInt("mNeededMonster");
+            mNeededMonster = getArguments().getInt("MONSTER_NEEDED_KEY", -1);
         }
 
         if (!getArguments().containsKey("combatId")) {
@@ -187,7 +192,7 @@ public class TeamSelectionFragment extends BaseFragment {
         }
 
         //Display some log
-        LogHelper.d(TAG, "Combat=" + mCurrentCombat.toString() + "monsterNeeded=" + mNeededMonster);
+        LogHelper.d(TAG, "Combat=" + mCurrentCombat.toString() + "\nmonsterNeeded=" + mNeededMonster);
 
         return (mNeededMonster > 0 && mCurrentCombat != null);
     }
@@ -391,11 +396,21 @@ public class TeamSelectionFragment extends BaseFragment {
 
             //Populate monster information
             Resources res = mContext.getResources();
-            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(String.format(res.getString(R.string.teamSelection_msg_monsterName), monsterInfo.name));
-            ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(res.getString(R.string.teamSelection_msg_monsterLvl), monster.level));
-            ((TextView) view.findViewById(R.id.textview_monster_hp)).setText(String.format(res.getString(R.string.teamSelection_msg_monsterHp), (int)monsterInfo.hp));
-            ((TextView) view.findViewById(R.id.textview_monster_attack)).setText(String.format(res.getString(R.string.teamSelection_msg_monsterAttack), monsterInfo.attack));
-            ((TextView) view.findViewById(R.id.textview_monster_defense)).setText(String.format(res.getString(R.string.teamSelection_msg_monsterDefence), monsterInfo.defense));
+            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(String.format(res.getString(
+                    R.string.teamSelection_msg_monsterName),
+                    monsterInfo.name));
+            ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(res.getString(
+                    R.string.teamSelection_msg_monsterLvl),
+                    monster.level));
+            ((TextView) view.findViewById(R.id.textview_monster_hp)).setText(String.format(res.getString(
+                    R.string.teamSelection_msg_monsterHp),
+                    (int) monsterInfo.hp));
+            ((TextView) view.findViewById(R.id.textview_monster_attack)).setText(String.format(res.getString(
+                    R.string.teamSelection_msg_monsterAttack),
+                    (int) monsterInfo.attack));
+            ((TextView) view.findViewById(R.id.textview_monster_defense)).setText(String.format(res.getString(
+                    R.string.teamSelection_msg_monsterDefence),
+                    (int) monsterInfo.defense));
 
             //Display monster picture
             ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
