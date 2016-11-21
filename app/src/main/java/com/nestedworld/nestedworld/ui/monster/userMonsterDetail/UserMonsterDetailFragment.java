@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import retrofit2.Response;
 
-public class UserMonsterDetailFragment  extends BaseFragment {
+public class UserMonsterDetailFragment extends BaseFragment {
 
     //Header related
     @BindView(R.id.imageView_monster)
@@ -140,7 +140,7 @@ public class UserMonsterDetailFragment  extends BaseFragment {
         //Populate hp
         textViewHp.setText(String.format(getResources().getString(
                 R.string.tabMonster_msg_monsterHp),
-                (int)mMonsterInfo.hp,
+                (int) mMonsterInfo.hp,
                 100));
         progressBarHp.setMax(100);
         progressBarHp.setProgress((int) mMonsterInfo.hp);
@@ -148,7 +148,7 @@ public class UserMonsterDetailFragment  extends BaseFragment {
         //Populate attack
         textViewAttack.setText(String.format(getResources().getString(
                 R.string.tabMonster_msg_monsterAttack),
-                (int)mMonsterInfo.attack,
+                (int) mMonsterInfo.attack,
                 100));
         progressBarAttack.setMax(100);
         progressBarAttack.setProgress((int) mMonsterInfo.attack);
@@ -156,15 +156,15 @@ public class UserMonsterDetailFragment  extends BaseFragment {
         //Populate defence
         textViewDefence.setText(String.format(
                 getResources().getString(R.string.tabMonster_msg_monsterDefence),
-                (int)mMonsterInfo.defense,
+                (int) mMonsterInfo.defense,
                 100));
         progressBarDefence.setMax(100);
-        progressBarDefence.setProgress((int)mMonsterInfo.defense);
+        progressBarDefence.setProgress((int) mMonsterInfo.defense);
 
         //Populate speed
         textViewSpeed.setText(String.format(
                 getResources().getString(R.string.tabMonster_msg_monsterSpeed),
-                (int)mMonsterInfo.speed,
+                (int) mMonsterInfo.speed,
                 100));
         progressBarSpeed.setMax(100);
         progressBarSpeed.setProgress((int) mMonsterInfo.speed);

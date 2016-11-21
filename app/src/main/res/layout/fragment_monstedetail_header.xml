@@ -13,9 +13,9 @@
         android:src="@drawable/logo"/>
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:paddingBottom="8dip"
         android:paddingEnd="16dip"
         android:paddingStart="16dip"
@@ -29,18 +29,18 @@
             android:src="@drawable/default_monster"/>
 
         <TextView
-            android:textColor="@color/apptheme_color"
-            android:padding="8dip"
+            android:id="@+id/textview_monster_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textview_monster_name"/>
+            android:padding="8dip"
+            android:textColor="@color/apptheme_color"/>
 
         <ImageView
             android:id="@+id/imageview_monster_type"
-            android:layout_weight="1"
-            android:scaleType="fitEnd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitEnd"
             android:src="@drawable/ic_help_outline_24dp"/>
 
     </LinearLayout>

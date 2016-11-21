@@ -123,7 +123,7 @@ public class MonsterDetailFragment extends BaseFragment {
         //Populate hp
         textViewHp.setText(String.format(getResources().getString(
                 R.string.tabMonster_msg_monsterHp),
-                (int)mMonster.hp,
+                (int) mMonster.hp,
                 100));
         progressBarHp.setMax(100);
         progressBarHp.setProgress((int) mMonster.hp);
@@ -131,7 +131,7 @@ public class MonsterDetailFragment extends BaseFragment {
         //Populate attack
         textViewAttack.setText(String.format(getResources().getString(
                 R.string.tabMonster_msg_monsterAttack),
-                (int)mMonster.attack,
+                (int) mMonster.attack,
                 100));
         progressBarAttack.setMax(100);
         progressBarAttack.setProgress((int) mMonster.attack);
@@ -139,15 +139,15 @@ public class MonsterDetailFragment extends BaseFragment {
         //Populate defence
         textViewDefence.setText(String.format(
                 getResources().getString(R.string.tabMonster_msg_monsterDefence),
-                (int)mMonster.defense,
+                (int) mMonster.defense,
                 100));
         progressBarDefence.setMax(100);
-        progressBarDefence.setProgress((int)mMonster.defense);
+        progressBarDefence.setProgress((int) mMonster.defense);
 
         //Populate speed
         textViewSpeed.setText(String.format(
                 getResources().getString(R.string.tabMonster_msg_monsterSpeed),
-                (int)mMonster.speed,
+                (int) mMonster.speed,
                 100));
         progressBarSpeed.setMax(100);
         progressBarSpeed.setProgress((int) mMonster.speed);

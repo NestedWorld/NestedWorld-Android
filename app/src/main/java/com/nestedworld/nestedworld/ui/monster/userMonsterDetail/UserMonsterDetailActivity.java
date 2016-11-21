@@ -18,7 +18,7 @@ import com.orm.query.Select;
 
 import butterknife.BindView;
 
-public class UserMonsterDetailActivity extends BaseAppCompatActivity{
+public class UserMonsterDetailActivity extends BaseAppCompatActivity {
     private final static String ARG_MONSTER = "UserMonsterDetailActivity_ARG_MONSTER";
 
     @BindView(R.id.toolbar)

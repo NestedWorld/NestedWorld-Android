@@ -21,7 +21,6 @@ import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageTy
 import com.nestedworld.nestedworld.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.fight.teamSelection.TeamSelectionFragment;
 
 import org.msgpack.value.ValueFactory;
 
