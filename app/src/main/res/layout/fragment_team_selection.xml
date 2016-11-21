@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
@@ -48,9 +47,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dip"
+            android:layout_gravity="center"
             android:background="@color/white"
             android:padding="8dip"
-            app:arrow.width="25dip"
             app:left_arrow.drawable="@drawable/ic_chevron_left_24dp"
             app:right_arrow.drawable="@drawable/ic_chevron_right_24dp"
             app:round.color.selected="@color/apptheme_accent"
@@ -132,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/apptheme_color"
                 android:text="@string/teamSelection_msg_hint"/>
 
         </LinearLayout>

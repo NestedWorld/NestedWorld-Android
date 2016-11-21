@@ -218,7 +218,6 @@ public class ViewPagerWithIndicator extends LinearLayout {
     }
 
     private void updateRoundIndicator() {
-        //TODO avoid loop over every element (store last updated)
         for (int i = 0; i < mViewPager.getAdapter().getCount(); i++) {
             View view = roundedIndicatorContainer.getChildAt(i);
             GradientDrawable background = (GradientDrawable) view.getBackground();

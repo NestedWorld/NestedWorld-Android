@@ -396,11 +396,9 @@ public class TeamSelectionFragment extends BaseFragment {
 
             //Populate monster information
             Resources res = mContext.getResources();
-            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(String.format(res.getString(
-                    R.string.teamSelection_msg_monsterName),
-                    monsterInfo.name));
+            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monsterInfo.name);
             ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(res.getString(
-                    R.string.teamSelection_msg_monsterLvl),
+                    R.string.integer),
                     monster.level));
             ((TextView) view.findViewById(R.id.textview_monster_hp)).setText(String.format(res.getString(
                     R.string.teamSelection_msg_monsterHp),
