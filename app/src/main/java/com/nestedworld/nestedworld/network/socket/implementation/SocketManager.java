@@ -159,12 +159,12 @@ public final class SocketManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (socket == null || !socket.isConnected()) {
-                    throw new UnsupportedOperationException("You should call connect() before");
-                }
-
                 try {
-                /*Send notification*/
+                    if (socket == null || !socket.isConnected()) {
+                        throw new UnsupportedOperationException("You should call connect() before");
+                    }
+
+                    /*Send notification*/
                     notifySocketListening();
 
                     LogHelper.d(TAG, "Listening on socket...");
