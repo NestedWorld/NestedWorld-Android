@@ -26,6 +26,7 @@ public class NestedWorldApp extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+
         initFontOverrider();
         setupGreenDao();
     }
@@ -39,6 +40,10 @@ public class NestedWorldApp extends Application {
     /*
     ** Internal method
      */
+    private void setupCrashLogger() {
+        Fabric.with(this, new Crashlytics());
+    }
+
     private void initFontOverrider() {
         LogHelper.d(TAG, "initFontOverrider");
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()

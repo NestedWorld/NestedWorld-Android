@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.database.updater;
 
 import android.support.annotation.NonNull;
 
+import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
@@ -35,6 +36,11 @@ public class UserUpdater extends EntityUpdater<UserResponse> {
                 oldUser.delete();
             }
         }
+
+        Player player = response.body().player;
+
+        //Add player information in our crash repport
+        NestedWorldAnalytics.setUserInfo(player);
 
         //Save entity
         getDatabase().getPlayerDao().insertOrReplace(response.body().player);

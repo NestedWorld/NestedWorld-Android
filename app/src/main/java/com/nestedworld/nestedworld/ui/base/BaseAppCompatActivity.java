@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import butterknife.ButterKnife;
@@ -54,6 +55,8 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
         setContentView(getLayoutResource());
         mUnbinder = ButterKnife.bind(this);
+
+        NestedWorldAnalytics.logViewLoaded("Activity", TAG);
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             initWithtTrace(savedInstanceState);
