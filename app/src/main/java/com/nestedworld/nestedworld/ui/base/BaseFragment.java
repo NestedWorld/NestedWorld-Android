@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
+import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
@@ -110,21 +111,14 @@ public abstract class BaseFragment extends Fragment {
             return;
         }
 
-        //avoid leek with the static instance
-        NestedWorldHttpApi.reset();
-        NestedWorldSocketAPI.reset();
-
-        //clean session
-        SessionHelper.deleteSession();
+        ApplicationHelper.logout(mContext);
 
         Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
-        //go to launch screen & kill the current context
+        //go to launch screen
         Intent intent = new Intent(mContext, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-
-        ((BaseAppCompatActivity) mContext).finish();
     }
 
     protected void startActivity(Class clazz) {

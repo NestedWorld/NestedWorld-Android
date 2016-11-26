@@ -20,7 +20,7 @@ public final class ApplicationHelper {
 
         //stop socketService and close socket
         ServiceHelper.stopSocketService(context);
-        NestedWorldSocketAPI.reset();
+        NestedWorldSocketAPI.getInstance().disconnect();
 
         //avoid leak with the static instance
         NestedWorldHttpApi.reset();

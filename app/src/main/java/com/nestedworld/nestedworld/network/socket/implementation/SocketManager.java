@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.network.socket.implementation;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.listener.SocketListener;
@@ -21,11 +22,12 @@ public final class SocketManager {
     private final String TAG = getClass().getSimpleName();
     private final String hostname;
     private final int port;
-    private final LinkedList<SocketListener> listeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private int timeOut;
-    private Socket socket = new Socket();
-    private MessagePacker messagePacker;/*input stream reader.*/
-    private MessageUnpacker messageUnpacker;/*output stream writer.*/
+    private boolean isConnected = false;
+    private final LinkedList<SocketListener> listeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
+    @Nullable private Socket socket = new Socket();
+    @Nullable private MessagePacker messagePacker;/*input stream reader.*/
+    @Nullable private MessageUnpacker messageUnpacker;/*output stream writer.*/
 
     /*
     ** Constructor (Creates a new unconnected socket).
@@ -74,6 +76,7 @@ public final class SocketManager {
                 throw new IllegalArgumentException("Can't connect if socket is null");
             }
             socket.connect(new InetSocketAddress(hostname, port), timeOut);
+            isConnected = true;
 
             /*Init serializer / deserializer */
             messagePacker = new MessagePack.PackerConfig().newPacker(socket.getOutputStream());
@@ -88,6 +91,7 @@ public final class SocketManager {
             /*Init a listeningThread*/
             startListeningTask();
         } catch (IOException | IllegalArgumentException e) {
+            isConnected = false;
             socket = null;
             messagePacker = null;
             messageUnpacker = null;
@@ -107,6 +111,8 @@ public final class SocketManager {
     // which means a new socket instance has to be created.
     public synchronized void disconnect() {
         try {
+            isConnected = false;
+
             if (socket != null) {
                 socket.close();
                 socket = null;
@@ -119,6 +125,7 @@ public final class SocketManager {
                 messageUnpacker.close();
                 messageUnpacker = null;
             }
+            listeners.clear();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -145,8 +152,10 @@ public final class SocketManager {
             @Override
             public void run() {
                 try {
-                    messagePacker.packValue(message);
-                    messagePacker.flush();
+                    if (messagePacker != null) {
+                        messagePacker.packValue(message);
+                        messagePacker.flush();
+                    }
                 } catch (IOException e) {
                     LogHelper.d(TAG, "Can't send message");
                     e.printStackTrace();
@@ -168,7 +177,7 @@ public final class SocketManager {
                     notifySocketListening();
 
                     LogHelper.d(TAG, "Listening on socket...");
-                    while (true) {
+                    while (isConnected) {
                         if (messageUnpacker != null) {
                             ImmutableValue message = messageUnpacker.unpackValue();
                             notifyMessageReceived(message);

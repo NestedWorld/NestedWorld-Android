@@ -23,13 +23,11 @@ import java.util.Map;
 
 public final class NestedWorldSocketAPI implements SocketListener {
 
-    //Static field
-    private final static int TIME_OUT = 10000;
-    //Singleton
-    private static NestedWorldSocketAPI mSingleton;
-    //Private field
     private final String TAG = getClass().getSimpleName();
-    private final SocketManager mSocketManager;
+
+    private final static int TIME_OUT = 10000;
+    private static NestedWorldSocketAPI mSingleton;
+    @Nullable private final SocketManager mSocketManager;
     private final List<ConnectionListener> mConnectionListener = new ArrayList<>();
     private boolean isAuth = false;
 
@@ -48,6 +46,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //Check if singleton hasn't been reset before thread launching
                 mSocketManager.connect();
             }
         }).start();
@@ -61,16 +60,6 @@ public final class NestedWorldSocketAPI implements SocketListener {
             mSingleton = new NestedWorldSocketAPI();
         }
         return mSingleton;
-    }
-
-    /*
-    ** Avoid leek when log out
-     */
-    public static void reset() {
-        if (mSingleton != null) {
-            mSingleton.disconect();
-            mSingleton = null;
-        }
     }
 
     /*
@@ -152,14 +141,16 @@ public final class NestedWorldSocketAPI implements SocketListener {
     private void sendMessage(@NonNull final ValueFactory.MapBuilder mapBuilder,
                              @NonNull final SocketMessageType.MessageKind messageKind,
                              @NonNull final String requestId) {
-        //Add id field
-        mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
+        if (mSocketManager != null) {
+            //Add id field
+            mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
 
-        //Add type field
-        mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString(SocketMessageType.MESSAGE_TYPE.getValueFromKey(messageKind)));
+            //Add type field
+            mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString(SocketMessageType.MESSAGE_TYPE.getValueFromKey(messageKind)));
 
-        //Send message
-        mSocketManager.send(mapBuilder.build());
+            //Send message
+            mSocketManager.send(mapBuilder.build());
+        }
     }
 
     private void parseSocketMessage(@NonNull final Map<Value, Value> message) {
@@ -192,7 +183,6 @@ public final class NestedWorldSocketAPI implements SocketListener {
             notifySocketReady();
         } else {
             onSocketDisconnected();
-            mSocketManager.disconnect();
         }
     }
 
@@ -213,6 +203,9 @@ public final class NestedWorldSocketAPI implements SocketListener {
     public void onSocketDisconnected() {
         LogHelper.d(TAG, "onSocketDisconnected");
 
+        if (mSocketManager != null) {
+            mSocketManager.disconnect();
+        }
         mSingleton = null;
         notifySocketDisconnected();
     }
@@ -244,8 +237,11 @@ public final class NestedWorldSocketAPI implements SocketListener {
     /*
     ** Notification (will call listener on the main thread)
      */
-    private void disconect() {
-        mSocketManager.disconnect();
+    public void disconnect() {
+        if (mSocketManager != null) {
+            mSocketManager.disconnect();
+        }
+        mSingleton = null;
     }
 
     private void notifySocketDisconnected() {

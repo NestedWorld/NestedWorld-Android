@@ -181,7 +181,7 @@ public class SocketService extends Service {
                 mNestedWorldSocketAPI = null;
 
                 //Clean API
-                NestedWorldSocketAPI.reset();
+                NestedWorldSocketAPI.getInstance().disconnect();
 
                 //Re-init API
                 onStartCommand(intent, flags, startId);
@@ -199,7 +199,7 @@ public class SocketService extends Service {
 
     @Override
     public void onDestroy() {
-        NestedWorldSocketAPI.reset();
+        NestedWorldSocketAPI.getInstance().disconnect();
     }
 
     /*

@@ -32,13 +32,12 @@ public class NestedWorldDatabase {
      */
     //Avoid leak
     public static void reset() {
-        LogHelper.d(TAG, "reset");
+        LogHelper.d(TAG, "stop");
 
         if (mSingleton == null) {
-            throw new IllegalArgumentException("Must call setup() before calling reset()");
+            throw new IllegalArgumentException("Must call setup() before calling stop()");
         } else {
             mSingleton.clearTables();
-            mSingleton = null;
         }
     }
 
@@ -48,7 +47,7 @@ public class NestedWorldDatabase {
         if (mSingleton == null) {
             mSingleton = new NestedWorldDatabase(context);
         } else {
-            throw new IllegalArgumentException("You should call reset() before calling setup() again");
+            throw new IllegalArgumentException("You should call stop() before calling setup() again");
         }
     }
 
