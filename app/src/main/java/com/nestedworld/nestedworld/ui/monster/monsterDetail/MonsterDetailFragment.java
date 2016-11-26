@@ -187,6 +187,11 @@ public class MonsterDetailFragment extends BaseFragment {
                 .enqueue(new NestedWorldHttpCallback<MonsterAttackResponse>() {
                     @Override
                     public void onSuccess(@NonNull Response<MonsterAttackResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
+
                         //Stop loading animation
                         progressView.stop();
 
@@ -199,6 +204,11 @@ public class MonsterDetailFragment extends BaseFragment {
 
                     @Override
                     public void onError(@NonNull KIND errorKind, @Nullable Response<MonsterAttackResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
+
                         //Stop loading animation
                         progressView.stop();
                     }
