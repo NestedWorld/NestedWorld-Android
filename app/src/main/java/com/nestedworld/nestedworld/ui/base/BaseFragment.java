@@ -61,13 +61,14 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutResource(), container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
+        mContext = getContext();
+        NestedWorldAnalytics.logViewLoaded("Fragment", TAG);
         return rootView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NestedWorldAnalytics.logViewLoaded("Fragment", TAG);
         init(view, savedInstanceState);
     }
 
