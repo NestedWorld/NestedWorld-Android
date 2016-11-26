@@ -59,8 +59,8 @@ public class Player {
 
     @Generated(hash = 771807671)
     public Player(long playerId, String city, String gender, String avatar,
-            Boolean isConnected, String background, String birthDate, String email,
-            Long level, String isActive, String pseudo, String registeredAt, Long id) {
+                  Boolean isConnected, String background, String birthDate, String email,
+                  Long level, String isActive, String pseudo, String registeredAt, Long id) {
         this.playerId = playerId;
         this.city = city;
         this.gender = gender;
@@ -220,7 +220,9 @@ public class Player {
         this.playerId = playerId;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1600887847)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

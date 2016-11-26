@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.FragmentStatePager.TabsAdapter;
-import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.updater.AttacksUpdater;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
@@ -32,7 +31,6 @@ import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;

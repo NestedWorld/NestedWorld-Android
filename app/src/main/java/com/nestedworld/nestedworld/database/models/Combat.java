@@ -31,7 +31,7 @@ public class Combat {
 
     @Generated(hash = 2144243660)
     public Combat(String combatId, String type, String origin, long monsterId,
-            String opponentPseudo, Long id) {
+                  String opponentPseudo, Long id) {
         this.combatId = combatId;
         this.type = type;
         this.origin = origin;
@@ -128,7 +128,9 @@ public class Combat {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 255570220)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

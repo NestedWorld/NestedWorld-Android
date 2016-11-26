@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="8dip"
-        android:textColor="@color/apptheme_color"
-        android:text="You didn't have any monster"/>
+        android:text="You didn't have any monster"
+        android:textColor="@color/apptheme_color"/>
 
     <LinearLayout
         android:id="@+id/recycler_home_monster_container"

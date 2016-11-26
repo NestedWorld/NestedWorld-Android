@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.database.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
@@ -13,18 +12,15 @@ import org.greenrobot.greendao.annotation.Unique;
 
 @Entity(active = true)
 public class Friend {
-    @Id(autoincrement = true)
-    @Unique
-    private Long id;
-
-    @Unique
-    private long playerId;
-
     @Expose
     @SerializedName("user")
     @Transient
     public Player player;
-
+    @Id(autoincrement = true)
+    @Unique
+    private Long id;
+    @Unique
+    private long playerId;
     /**
      * Used to resolve relations
      */
@@ -106,7 +102,9 @@ public class Friend {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1516049992)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

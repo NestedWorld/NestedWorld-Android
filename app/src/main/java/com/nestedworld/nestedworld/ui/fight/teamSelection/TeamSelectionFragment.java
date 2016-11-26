@@ -157,7 +157,7 @@ public class TeamSelectionFragment extends BaseFragment {
                     .getDataBase()
                     .getUserMonsterDao()
                     .loadAll();
-            
+
             if (mUserMonsters.size() < mNeededMonster) {
                 Toast.makeText(mContext, "You don't have enough monster (" + mNeededMonster + "required)", Toast.LENGTH_LONG).show();
                 ((BaseAppCompatActivity) mContext).finish();

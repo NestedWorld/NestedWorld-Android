@@ -5,19 +5,19 @@
     android:layout_height="150dip">
 
     <ImageView
-        android:layout_alignParentTop="true"
         android:id="@+id/imageView_user_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:alpha="0.5"
         android:background="@color/apptheme_color"
         android:scaleType="centerCrop"
         android:src="@drawable/logo"/>
 
     <LinearLayout
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:background="@color/WhiteSmokeHalf"
         android:orientation="vertical">
 

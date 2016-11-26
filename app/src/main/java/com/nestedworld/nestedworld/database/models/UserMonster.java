@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.database.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
@@ -44,7 +43,7 @@ public class UserMonster {
 
     @Generated(hash = 17730337)
     public UserMonster(Long userMonsterId, Long level, Long monsterId, String surname,
-            long experience, Long id) {
+                       long experience, Long id) {
         this.userMonsterId = userMonsterId;
         this.level = level;
         this.monsterId = monsterId;
@@ -149,7 +148,9 @@ public class UserMonster {
     }
 
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1557456353)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

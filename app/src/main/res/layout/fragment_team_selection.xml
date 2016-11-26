@@ -46,8 +46,8 @@
             android:id="@+id/ViewPagerArrowIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dip"
             android:layout_gravity="center"
+            android:layout_marginTop="8dip"
             android:background="@color/white"
             android:padding="8dip"
             app:left_arrow.drawable="@drawable/ic_arrow_back_24dp"
@@ -131,8 +131,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/apptheme_color"
-                android:text="@string/teamSelection_msg_hint"/>
+                android:text="@string/teamSelection_msg_hint"
+                android:textColor="@color/apptheme_color"/>
 
         </LinearLayout>
 

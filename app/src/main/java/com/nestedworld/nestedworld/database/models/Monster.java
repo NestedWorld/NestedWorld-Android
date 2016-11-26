@@ -40,25 +40,9 @@ public class Monster {
     @Unique
     private Long id;
 
-    @Override
-    public String toString() {
-        return "Monster{" +
-                "attack=" + attack +
-                ", monsterId=" + monsterId +
-                ", hp=" + hp +
-                ", defense=" + defense +
-                ", name='" + name + '\'' +
-                ", enragedSprite='" + enragedSprite + '\'' +
-                ", baseSprite='" + baseSprite + '\'' +
-                ", type='" + type + '\'' +
-                ", speed=" + speed +
-                ", id=" + id +
-                '}';
-    }
-
     @Generated(hash = 1610346844)
     public Monster(Long monsterId, float hp, float defense, float attack, String name,
-            String enragedSprite, String baseSprite, String type, float speed, Long id) {
+                   String enragedSprite, String baseSprite, String type, float speed, Long id) {
         this.monsterId = monsterId;
         this.hp = hp;
         this.defense = defense;
@@ -73,6 +57,22 @@ public class Monster {
 
     @Generated(hash = 173869498)
     public Monster() {
+    }
+
+    @Override
+    public String toString() {
+        return "Monster{" +
+                "attack=" + attack +
+                ", monsterId=" + monsterId +
+                ", hp=" + hp +
+                ", defense=" + defense +
+                ", name='" + name + '\'' +
+                ", enragedSprite='" + enragedSprite + '\'' +
+                ", baseSprite='" + baseSprite + '\'' +
+                ", type='" + type + '\'' +
+                ", speed=" + speed +
+                ", id=" + id +
+                '}';
     }
 
     //Utils
