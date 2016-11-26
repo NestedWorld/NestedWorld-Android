@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:hint="@string/tabHome_msg_friendPseudo"
             android:inputType="textPersonName"
-            android:textColor="@color/apptheme_color"/>
+            android:textColor="@color/apptheme_background"/>
 
     </android.support.design.widget.TextInputLayout>
 

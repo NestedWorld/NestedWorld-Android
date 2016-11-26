@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.orm.SugarRecord;
-import com.orm.dsl.Unique;
+import com.orm.annotation.Unique;
 
 /**
  * Simple model for :

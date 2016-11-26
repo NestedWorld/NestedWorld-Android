@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.orm.SugarApp;
+import com.orm.SugarContext;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -22,6 +23,7 @@ public class NestedWorldApp extends SugarApp {
     @Override
     public void onCreate() {
         super.onCreate();
+        SugarContext.init(getApplicationContext());
         initFontOverrider();
     }
 
@@ -29,6 +31,12 @@ public class NestedWorldApp extends SugarApp {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        SugarContext.terminate();
     }
 
     /*

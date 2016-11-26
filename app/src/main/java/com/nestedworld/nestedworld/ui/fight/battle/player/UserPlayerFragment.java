@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
@@ -21,6 +22,7 @@ import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.network.socket.models.message.combat.StartMessage;
+import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BattlePlayerFragment;
 
 import java.util.Iterator;
@@ -72,6 +74,17 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Check params
+        if (mTeam == null) {
+            Toast.makeText(mContext, "Can't fight without monster !", Toast.LENGTH_LONG).show();
+            ((BaseAppCompatActivity) mContext).finish();
+        }
+
         //Setup recycler
         recyclerViewMonsters.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewMonsters.setAdapter(mAdapter);
@@ -107,12 +120,22 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
     @Override
     public void displayAttackReceive() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         //Set background to red
         getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.material_red_500));
 
         //Set background to normal after 1s
         new Handler().postDelayed(new Runnable() {
             public void run() {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
                 // Actions to do after 1s
                 getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.WhiteSmokeHalf));
             }

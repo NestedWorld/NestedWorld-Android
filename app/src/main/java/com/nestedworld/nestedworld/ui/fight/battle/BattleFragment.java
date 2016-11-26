@@ -11,10 +11,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.drawingGestureView.DrawingGestureView;
 import com.nestedworld.nestedworld.customView.drawingGestureView.listener.DrawingGestureListener;
@@ -297,10 +299,10 @@ public class BattleFragment extends BaseFragment {
     private void setupEnvironment() {
         switch (mStartMessage.env) {
             case "city":
-                battleBackground.setImageResource(R.drawable.citybg);
+                Glide.with(mContext).load(R.drawable.citybg).centerCrop().into(battleBackground);
                 break;
             default:
-                battleBackground.setImageResource(R.drawable.citybg);
+                Glide.with(mContext).load(R.drawable.citybg).centerCrop().into(battleBackground);
                 break;
         }
     }
@@ -322,7 +324,7 @@ public class BattleFragment extends BaseFragment {
         */
 
         /*Add the custom view under the rootView*/
-        ((RelativeLayout) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
+        ((ViewGroup) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
     }
 
     private void setupPlayers() {

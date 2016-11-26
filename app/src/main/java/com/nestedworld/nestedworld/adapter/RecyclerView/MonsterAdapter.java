@@ -37,6 +37,11 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
         notifyDataSetChanged();
     }
 
+    public void add(@NonNull final Monster item) {
+        mItems.add(item);
+        notifyDataSetChanged();
+    }
+
     public void clear() {
         mItems.clear();
         notifyDataSetChanged();

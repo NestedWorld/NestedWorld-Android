@@ -1,7 +1,7 @@
 package com.nestedworld.nestedworld.database.models;
 
 import com.orm.SugarRecord;
-import com.orm.dsl.Unique;
+import com.orm.annotation.Unique;
 
 /**
  * Simple model for :

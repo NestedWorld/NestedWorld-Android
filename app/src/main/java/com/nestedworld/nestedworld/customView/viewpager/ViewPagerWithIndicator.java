@@ -21,8 +21,8 @@ public class ViewPagerWithIndicator extends LinearLayout {
     private Boolean mArrowEnable;
     private int mArrowWidth;
     private int mArrowHeight;
-    private int mRightArrowDrawable = R.drawable.ic_chevron_right_24dp;
-    private int mLeftArrowDrawable = R.drawable.ic_chevron_left_24dp;
+    private int mRightArrowDrawable = R.drawable.ic_arrow_forward_24dp;
+    private int mLeftArrowDrawable = R.drawable.ic_arrow_back_24dp;
 
     private Boolean mRoundEnable;
     private int mRoundSize;
@@ -54,8 +54,8 @@ public class ViewPagerWithIndicator extends LinearLayout {
             if (mArrowEnable) {
                 mArrowWidth = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_arrow_width, ViewGroup.LayoutParams.WRAP_CONTENT);
                 mArrowHeight = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_arrow_height, ViewGroup.LayoutParams.WRAP_CONTENT);
-                mRightArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_right_arrow_drawable, R.drawable.ic_chevron_right_24dp);
-                mLeftArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_left_arrow_drawable, R.drawable.ic_chevron_left_24dp);
+                mRightArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_right_arrow_drawable, R.drawable.ic_arrow_forward_24dp);
+                mLeftArrowDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_left_arrow_drawable, R.drawable.ic_arrow_back_24dp);
             }
 
             mRoundEnable = a.getBoolean(R.styleable.ViewPagerWithIndicator_round_enable, true);

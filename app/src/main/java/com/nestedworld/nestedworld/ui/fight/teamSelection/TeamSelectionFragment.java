@@ -75,7 +75,7 @@ public class TeamSelectionFragment extends BaseFragment {
     Button button_select_monster;
     @BindView(R.id.button_go_fight)
     Button button_go_fight;
-    @BindView(R.id.imageView_user_picture)
+    @BindView(R.id.imageView_user_background)
     ImageView imageViewUserPicture;
     @BindView(R.id.imageview_opponent_picture)
     ImageView imageViewOpponentPicture;
@@ -154,6 +154,10 @@ public class TeamSelectionFragment extends BaseFragment {
 
             //Retrieve userMonster
             mUserMonsters = Select.from(UserMonster.class).list();
+            if (mUserMonsters.size() < mNeededMonster) {
+                Toast.makeText(mContext, "You don't have enough monster (" + mNeededMonster + "required)", Toast.LENGTH_LONG).show();
+                ((BaseAppCompatActivity) mContext).finish();
+            }
 
             //Init the viewPager (it will display player's monster)
             setUpViewPager();

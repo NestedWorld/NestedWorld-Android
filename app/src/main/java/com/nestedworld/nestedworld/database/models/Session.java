@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.database.models;
 import android.support.annotation.Nullable;
 
 import com.orm.SugarRecord;
-import com.orm.dsl.Unique;
+import com.orm.annotation.Unique;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 

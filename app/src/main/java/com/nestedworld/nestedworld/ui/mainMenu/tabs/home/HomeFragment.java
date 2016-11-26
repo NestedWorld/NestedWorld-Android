@@ -69,7 +69,7 @@ public class HomeFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-    @BindView(R.id.imageView_user_picture)
+    @BindView(R.id.imageView_user_background)
     ImageView imageViewUserBackground;
 
     /*
@@ -149,7 +149,7 @@ public class HomeFragment extends BaseFragment {
         startImagePickerIntent(PICK_PROFIL_IMAGE_REQUEST);
     }
 
-    @OnClick(R.id.imageView_user_picture)
+    @OnClick(R.id.imageView_user_background)
     public void selectBackgroundPicture() {
         startImagePickerIntent(PICK_BACKGROUND_IMAGE_REQUEST);
     }
@@ -210,22 +210,31 @@ public class HomeFragment extends BaseFragment {
 
         //Display player picture
         if (user.avatar != null) {
-            Glide.with(mContext)
-                    .load(user.avatar)
-                    .placeholder(R.drawable.default_avatar_rounded)
-                    .error(R.drawable.default_avatar_rounded)
-                    .centerCrop()
-                    .bitmapTransform(new CropCircleTransformation(mContext))
-                    .into(imageViewUser);
+            try {
+                Glide.with(mContext)
+                        .load(user.avatar)
+                        .placeholder(R.drawable.default_avatar_rounded)
+                        .error(R.drawable.default_avatar_rounded)
+                        .centerCrop()
+                        .bitmapTransform(new CropCircleTransformation(mContext))
+                        .into(imageViewUser);
+            } catch (OutOfMemoryError e) {
+                //can no display picture, probably due to CropCircleTransaction()
+            }
         }
 
         //Display player background
         if (user.background != null) {
-            Glide.with(mContext)
-                    .load(user.background)
-                    .placeholder(R.drawable.logo)
-                    .error(R.drawable.logo)
-                    .into(imageViewUserBackground);
+            try {
+                Glide.with(mContext)
+                        .load(user.background)
+                        .placeholder(R.drawable.logo)
+                        .error(R.drawable.logo)
+                        .centerCrop()
+                        .into(imageViewUserBackground);
+            } catch (OutOfMemoryError e) {
+                //can no display picture, don't really know why...
+            }
         }
     }
 

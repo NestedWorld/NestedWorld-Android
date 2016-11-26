@@ -52,7 +52,7 @@ public final class NestedWorldGcm {
                 Combat combat = availableMessage.saveAsCombat();
 
                 //Display notification
-                GcmHelper.displayNotification(context, "Un combat est diposnible : " + combat.origin, LaunchActivity.class);
+                GcmHelper.displayNotification(context, "Un combat est disponible : " + combat.origin, LaunchActivity.class);
             }
         });
         return handlers;

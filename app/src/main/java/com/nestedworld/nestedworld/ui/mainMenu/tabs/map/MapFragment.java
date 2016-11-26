@@ -28,6 +28,7 @@ import com.nestedworld.nestedworld.helpers.map.NestedWorldMap;
 import com.nestedworld.nestedworld.helpers.permission.PermissionUtils;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.mainMenu.tabs.monster.MonstersFragment;
 import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
@@ -61,6 +62,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.fade_out, R.anim.fade_in)
+                .replace(R.id.container, new MapFragment())
                 .addToBackStack(FRAGMENT_NAME)
                 .commit();
     }
@@ -79,36 +81,32 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
             EventBus.getDefault().register(this);
         }
 
-
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
-        if (savedInstanceState != null) {
-            //init MapView
-            mMapView.onCreate(savedInstanceState);
-            mMapView.onResume();//We display the map immediately
+        //init MapView
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();//We display the map immediately
 
-            //retrieve GoogleMap from mapView
-            mMapView.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-
-                    //Check if fragment hasn't been detach
-                    if (mContext == null) {
-                        return;
-                    }
-
-                    //Init the mapView
-                    googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style));
-                    googleMap.setOnMarkerClickListener(MapFragment.this);
-
-                    mMap = new NestedWorldMap(googleMap);
-                    initMap();
+        //retrieve GoogleMap from mapView
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
                 }
-            });
-        }
+
+                //Init the mapView
+                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style));
+                googleMap.setOnMarkerClickListener(MapFragment.this);
+
+                mMap = new NestedWorldMap(googleMap);
+                initMap();
+            }
+        });
     }
 
     @Override
