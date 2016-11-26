@@ -91,7 +91,7 @@ public abstract class BattlePlayerFragment extends BaseFragment {
 
         //Loop over current monster attack for finding an attack of the given type
         for (MonsterAttackResponse.MonsterAttack monsterAttack : mCurrentMonsterAttacks) {
-            if (monsterAttack.infos.getType() == attackTypeWanted) {
+            if (monsterAttack.infos.getTypeKind() == attackTypeWanted) {
                 return monsterAttack;
             }
         }

@@ -25,7 +25,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Combat;
+import com.nestedworld.nestedworld.database.models.CombatDao;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.Session;
@@ -42,8 +44,6 @@ import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.fight.battle.BattleFragment;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -82,8 +82,6 @@ public class TeamSelectionFragment extends BaseFragment {
     @BindView(R.id.progressView)
     ProgressView progressView;
     private List<UserMonster> mUserMonsters;
-    private int mNeededMonster;
-    private Combat mCurrentCombat;
     private final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -105,6 +103,8 @@ public class TeamSelectionFragment extends BaseFragment {
             //DO What you want
         }
     };
+    private int mNeededMonster;
+    private Combat mCurrentCombat;
 
     /*
     ** Public method
@@ -116,7 +116,7 @@ public class TeamSelectionFragment extends BaseFragment {
         //Add fragment param
         Bundle args = new Bundle();
         args.putInt("MONSTER_NEEDED_KEY", monsterNeeded);
-        args.putLong("combatId", combat.getId());
+        args.putString("combatId", combat.getCombatId());
         newFragment.setArguments(args);
 
         //Display the fragment
@@ -153,7 +153,11 @@ public class TeamSelectionFragment extends BaseFragment {
             setupActionBar();
 
             //Retrieve userMonster
-            mUserMonsters = Select.from(UserMonster.class).list();
+            mUserMonsters = NestedWorldDatabase.getInstance()
+                    .getDataBase()
+                    .getUserMonsterDao()
+                    .loadAll();
+            
             if (mUserMonsters.size() < mNeededMonster) {
                 Toast.makeText(mContext, "You don't have enough monster (" + mNeededMonster + "required)", Toast.LENGTH_LONG).show();
                 ((BaseAppCompatActivity) mContext).finish();
@@ -205,7 +209,10 @@ public class TeamSelectionFragment extends BaseFragment {
             LogHelper.d(TAG, "onNewCombatStart > accept");
 
             //Delete the combat from Orm
-            mCurrentCombat.delete();
+            NestedWorldDatabase
+                    .getInstance()
+                    .getDataBase()
+                    .delete(mCurrentCombat);
 
             //Start fight fragment
             BattleFragment.load(getFragmentManager(), startMessage, mSelectedMonster);
@@ -217,32 +224,44 @@ public class TeamSelectionFragment extends BaseFragment {
     /*
     ** Private method
      */
+    private void parseArgsNeededMonster() {
+        //Retrieve needed monster
+        if (!getArguments().containsKey("MONSTER_NEEDED_KEY")) {
+            throw new IllegalArgumentException("Must provide needed monster count");
+        }
+        mNeededMonster = getArguments().getInt("MONSTER_NEEDED_KEY", -1);
+    }
+
+    private void parseArgsWantedCombat() {
+        if (!getArguments().containsKey("combatId")) {
+            throw new IllegalArgumentException("Must provide wanted combat");
+        }
+        String combatId = getArguments().getString("combatId", "");
+        mCurrentCombat = NestedWorldDatabase
+                .getInstance()
+                .getDataBase()
+                .getCombatDao()
+                .queryBuilder()
+                .where(CombatDao.Properties.CombatId.eq(combatId))
+                .unique();
+    }
+
     private boolean parseArgs() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return false;
         }
 
-        if (!getArguments().containsKey("MONSTER_NEEDED_KEY")) {
-            throw new IllegalArgumentException("Must provide needed monster count");
+        parseArgsNeededMonster();
+        parseArgsWantedCombat();
+
+        if ((mNeededMonster < 0) || mCurrentCombat == null) {
+            LogHelper.d(TAG, "mCurrentCombat = null || mNeededMonster < 0");
+            return false;
         } else {
-            mNeededMonster = getArguments().getInt("MONSTER_NEEDED_KEY", -1);
+            LogHelper.d(TAG, "Combat=" + mCurrentCombat.toString() + "\nmonsterNeeded=" + mNeededMonster);
+            return true;
         }
-
-        if (!getArguments().containsKey("combatId")) {
-            throw new IllegalArgumentException("Must provide wanted combat");
-        } else {
-            long combatId = getArguments().getLong("combatId", -1);
-            mCurrentCombat = Select
-                    .from(Combat.class)
-                    .where(Condition.prop("id").eq(combatId))
-                    .first();
-        }
-
-        //Display some log
-        LogHelper.d(TAG, "Combat=" + mCurrentCombat.toString() + "\nmonsterNeeded=" + mNeededMonster);
-
-        return (mNeededMonster > 0 && mCurrentCombat != null);
     }
 
     private void setupHeader() {
@@ -260,7 +279,7 @@ public class TeamSelectionFragment extends BaseFragment {
         }
 
         //Retrieve the player
-        Player user = session.getUser();
+        Player user = session.getPlayer();
         if (user == null) {
             LogHelper.d(TAG, "No User");
             ((BaseAppCompatActivity) mContext).finish();
@@ -315,7 +334,7 @@ public class TeamSelectionFragment extends BaseFragment {
     private void onMonsterSelected() {
         //Get the selected monster
         UserMonster selectedMonster = mUserMonsters.get(viewPager.getCurrentItem());
-        Monster selectedMonserInfo = selectedMonster.info();
+        Monster selectedMonserInfo = selectedMonster.getMonster();
 
         //Display some log
         LogHelper.d(TAG, "Monster selected: " + selectedMonster.toString());
@@ -435,33 +454,37 @@ public class TeamSelectionFragment extends BaseFragment {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_monster_selector, container, false);
 
             //Retrieve the monster we'll display
-            UserMonster monster = mUserMonsters.get(position);
-            Monster monsterInfo = monster.info();
+            UserMonster userMonster = mUserMonsters.get(position);
 
-            if (monsterInfo == null) {
+            if (userMonster == null) {
+                return null;
+            }
+
+            Monster monster = userMonster.getMonster();
+            if (monster == null) {
                 return null;
             }
 
             //Populate monster information
             Resources res = mContext.getResources();
-            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monsterInfo.name);
+            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monster.name);
             ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(res.getString(
                     R.string.integer),
-                    monster.level));
+                    userMonster.level));
             ((TextView) view.findViewById(R.id.textview_monster_hp)).setText(String.format(res.getString(
                     R.string.teamSelection_msg_monsterHp),
-                    (int) monsterInfo.hp));
+                    (int) monster.hp));
             ((TextView) view.findViewById(R.id.textview_monster_attack)).setText(String.format(res.getString(
                     R.string.teamSelection_msg_monsterAttack),
-                    (int) monsterInfo.attack));
+                    (int) monster.attack));
             ((TextView) view.findViewById(R.id.textview_monster_defense)).setText(String.format(res.getString(
                     R.string.teamSelection_msg_monsterDefence),
-                    (int) monsterInfo.defense));
+                    (int) monster.defense));
 
             //Display monster picture
             ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(mContext)
-                    .load(monsterInfo.baseSprite)
+                    .load(monster.baseSprite)
                     .placeholder(R.drawable.default_monster)
                     .centerCrop()
                     .into(imageViewMonster);
@@ -490,12 +513,7 @@ public class TeamSelectionFragment extends BaseFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            UserMonster monster = mUserMonsters.get(position);
-            Monster monsterInfo = monster.info();
-            if (monsterInfo == null) {
-                return "";
-            }
-            return monsterInfo.name;
+            return mUserMonsters.get(position).getMonster().name;
         }
     }
 }

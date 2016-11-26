@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.database.updater;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.database.models.Portal;
+import com.nestedworld.nestedworld.database.models.PortalDao;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.http.OnPortalUpdatedEvent;
 import com.nestedworld.nestedworld.network.http.models.response.geo.portal.PortalsResponse;
@@ -39,16 +40,20 @@ public class PortalUpdater extends EntityUpdater<PortalsResponse> {
 
     @Override
     protected void updateEntity(@NonNull Response<PortalsResponse> response) {
+
+        PortalDao portalDao = getDatabase().getPortalDao();
+
         //Delete old entity
-        com.nestedworld.nestedworld.database.models.Portal.deleteAll(com.nestedworld.nestedworld.database.models.Portal.class);
+        portalDao.deleteAll();
 
-        List<com.nestedworld.nestedworld.database.models.Portal> newPortals = new ArrayList<>();
-
-        //Save new entity
-        for (PortalsResponse.Portal item : response.body().portals) {
+        //Parse response
+        List<Portal> newPortals = new ArrayList<>();
+        for (PortalsResponse.PortalResponse item : response.body().portals) {
             newPortals.add(item.asPortal());
         }
-        Portal.saveInTx(newPortals);
+
+        //Save entity
+        portalDao.insertInTx(newPortals);
 
         //Notify
         EventBus.getDefault().post(new OnPortalUpdatedEvent());

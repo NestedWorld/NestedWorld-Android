@@ -1,19 +1,21 @@
 package com.nestedworld.nestedworld;
 
+import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.crashlytics.android.Crashlytics;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.orm.SugarApp;
-import com.orm.SugarContext;
 
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Application implementation
  * it allow the crash logger to be launch at the very start of the application
  */
-public class NestedWorldApp extends SugarApp {
+public class NestedWorldApp extends Application {
 
     private final static String TAG = NestedWorldApp.class.getSimpleName();
 
@@ -23,20 +25,15 @@ public class NestedWorldApp extends SugarApp {
     @Override
     public void onCreate() {
         super.onCreate();
-        SugarContext.init(getApplicationContext());
+        Fabric.with(this, new Crashlytics());
         initFontOverrider();
+        setupGreenDao();
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        SugarContext.terminate();
     }
 
     /*
@@ -49,5 +46,13 @@ public class NestedWorldApp extends SugarApp {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+    }
+
+    private void setupGreenDao() {
+        LogHelper.d(TAG, "setupGreenDao");
+        NestedWorldDatabase.setup(this);
+        if (BuildConfig.LOG) {
+            NestedWorldDatabase.enableQueryBuilderLog();
+        }
     }
 }

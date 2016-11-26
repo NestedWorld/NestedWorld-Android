@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.ArrayAdapter.ShopObjectAdapter;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
@@ -19,7 +20,6 @@ import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;
-import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -159,7 +159,10 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void populateAdapter() {
-        List<ShopItem> shopItemList = Select.from(ShopItem.class).list();
+        List<ShopItem> shopItemList = NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getShopItemDao()
+                .loadAll();
 
         if (shopItemList == null || shopItemList.isEmpty()) {
             mAdapter.clear();

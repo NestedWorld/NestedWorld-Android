@@ -4,33 +4,43 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
-import com.orm.annotation.Unique;
 
-/**
- * Simple model for :
- * - mapping a json response with Gson anotation
- * - mapping a sql table with SugarORM
- * /!\ Keep the default constructor empty (see sugarOrm doc)
- */
-public class Attack extends SugarRecord {
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
 
+@Entity()
+public class Attack {
     @Expose
     @SerializedName("id")
     @Unique
-    public Long attackId;// the sql table will be called attackid (see sugarOrm doc)
+    public Long attackId;
+
     @Expose
     public String name;
+
     @Expose
     public String type;
 
-    //Empty constructor for SugarRecord
+    @Id(autoincrement = true)
+    @Unique
+    private Long id;
+
+    @Generated(hash = 175367029)
+    public Attack(Long attackId, String name, String type, Long id) {
+        this.attackId = attackId;
+        this.name = name;
+        this.type = type;
+        this.id = id;
+    }
+
+    @Generated(hash = 699029211)
     public Attack() {
-        //Keep empty
     }
 
     @NonNull
-    public AttackType getType() {
+    public AttackType getTypeKind() {
         if (this.type != null) {
             switch (this.type) {
                 case "attack":
@@ -48,14 +58,36 @@ public class Attack extends SugarRecord {
         return AttackType.UNKNOWN;
     }
 
-    //Generated
-    @Override
-    public String toString() {
-        return "Attack{" +
-                "attackId=" + attackId +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getAttackId() {
+        return this.attackId;
+    }
+
+    public void setAttackId(Long attackId) {
+        this.attackId = attackId;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public enum AttackType {

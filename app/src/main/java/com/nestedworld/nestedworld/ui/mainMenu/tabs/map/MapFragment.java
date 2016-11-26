@@ -19,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Portal;
 import com.nestedworld.nestedworld.database.updater.PortalUpdater;
 import com.nestedworld.nestedworld.dialog.EngagePortalFightDialog;
@@ -28,8 +29,6 @@ import com.nestedworld.nestedworld.helpers.map.NestedWorldMap;
 import com.nestedworld.nestedworld.helpers.permission.PermissionUtils;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.mainMenu.tabs.monster.MonstersFragment;
-import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -252,7 +251,10 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
             ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mMap.draw(mContext, Select.from(Portal.class).list());
+                    mMap.draw(mContext, NestedWorldDatabase.getInstance()
+                            .getDataBase()
+                            .getPortalDao()
+                            .loadAll());
                 }
             });
         }

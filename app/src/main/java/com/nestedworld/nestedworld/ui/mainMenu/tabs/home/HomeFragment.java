@@ -21,17 +21,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.FragmentStatePager.TabsAdapter;
-import com.nestedworld.nestedworld.database.models.Friend;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.Session;
-import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.http.OnUserUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.aws.AwsHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.orm.query.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -191,7 +189,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         //Retrieve the player
-        Player user = session.getUser();
+        Player user = session.getPlayer();
         if (user == null) {
             LogHelper.d(TAG, "No User");
             return;
@@ -200,9 +198,20 @@ public class HomeFragment extends BaseFragment {
         //Display player information
         Resources res = getResources();
         textViewUserLevel.setText(String.format(res.getString(R.string.tabHome_msg_userLvl), user.level));
-        textViewAllyOnline.setText(String.format(res.getString(R.string.tabHome_msg_allyOnline), Friend.getNumberOfAllyOnline()));
+        textViewAllyOnline.setText(String.format(res.getString(
+                R.string.tabHome_msg_allyOnline),
+                NestedWorldDatabase.getInstance()
+                        .getDataBase()
+                        .getFriendDao()
+                        .loadAll()
+                        .size()));
         textViewUsername.setText(user.pseudo);
-        textViewMonsterCaptured.setText(String.format(res.getString(R.string.tabHome_msg_monsterCaptured), Select.from(UserMonster.class).list().size()));
+        textViewMonsterCaptured.setText(String.format(res.getString(
+                R.string.tabHome_msg_monsterCaptured),
+                NestedWorldDatabase.getInstance()
+                        .getDataBase()
+                        .getUserMonsterDao()
+                        .count()));
 
         //TODO display credits and areaCaptured
         textViewCreditsNumber.setText("0");

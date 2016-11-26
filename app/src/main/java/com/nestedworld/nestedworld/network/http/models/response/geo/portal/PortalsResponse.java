@@ -6,12 +6,12 @@ import java.util.List;
 
 public class PortalsResponse {
     @Expose
-    public List<Portal> portals;
+    public List<PortalResponse> portals;
 
     /*
     ** Inner class (used for parsing)
      */
-    public static class Portal {
+    public static class PortalResponse {
 
         @Expose
         public List<Double> position;

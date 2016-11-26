@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.google.gson.JsonSyntaxException;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
+import com.nestedworld.nestedworld.database.models.DaoSession;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -17,14 +19,6 @@ import retrofit2.Response;
 
 public abstract class EntityUpdater<T> {
     protected final static String TAG = EntityUpdater.class.getSimpleName();
-    private final NestedWorldHttpApi mNestedWorldHttpApi;
-
-    /*
-    ** Constructor
-     */
-    protected EntityUpdater() {
-        mNestedWorldHttpApi = NestedWorldHttpApi.getInstance();
-    }
 
     /*
     ** Method every child will have to implement
@@ -66,7 +60,11 @@ public abstract class EntityUpdater<T> {
     ** Utils for child
      */
     protected NestedWorldHttpApi getApi() {
-        return mNestedWorldHttpApi;
+        return NestedWorldHttpApi.getInstance();
+    }
+
+    protected DaoSession getDatabase() {
+        return NestedWorldDatabase.getInstance().getDataBase();
     }
 
     /*

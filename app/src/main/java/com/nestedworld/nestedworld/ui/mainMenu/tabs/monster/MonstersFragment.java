@@ -16,13 +16,13 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.RecyclerView.MonsterAdapter;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.orm.query.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -181,7 +181,10 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         //Retrieve monsters from ORM
-        List<Monster> monsters = Select.from(Monster.class).list();
+        List<Monster> monsters = NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getMonsterDao()
+                .loadAll();
 
         mAdapter.clear();
         if (monsters == null || monsters.isEmpty()) {

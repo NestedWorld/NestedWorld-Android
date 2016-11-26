@@ -91,7 +91,7 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
         //Populate monster list
         for (UserMonster userMonster : mTeam) {
-            mAdapter.add(userMonster.info());
+            mAdapter.add(userMonster.getMonster());
         }
     }
 
@@ -159,7 +159,7 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
                 mAdapter.clear();
                 for (UserMonster userMonster : mTeam) {
-                    mAdapter.add(userMonster.info());
+                    mAdapter.add(userMonster.getMonster());
                 }
                 return;
             }

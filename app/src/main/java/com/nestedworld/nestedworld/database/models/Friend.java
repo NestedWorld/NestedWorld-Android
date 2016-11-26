@@ -1,56 +1,115 @@
 package com.nestedworld.nestedworld.database.models;
 
-import android.support.annotation.Nullable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
-import com.orm.query.Select;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 
-/**
- * Simple model for :
- * - mapping a json response with Gson anotation
- * - mapping a sql table with SugarORM
- * /!\ Keep the default constructor empty (see sugarOrm doc)
- */
-public class Friend extends SugarRecord {
+import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Transient;
+import org.greenrobot.greendao.annotation.Unique;
+
+@Entity(active = true)
+public class Friend {
+    @Id(autoincrement = true)
+    @Unique
+    private Long id;
+
+    @Unique
+    private long playerId;
+
     @Expose
     @SerializedName("user")
-    public Player info;
+    @Transient
+    public Player player;
 
-    public Long playerId;//key for User<->Friend relationship
+    /**
+     * Used to resolve relations
+     */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+    /**
+     * Used for active entity operations.
+     */
+    @Generated(hash = 76285035)
+    private transient FriendDao myDao;
 
-    //Empty constructor for SugarRecord
+    @Generated(hash = 787398198)
+    public Friend(Long id, long playerId) {
+        this.id = id;
+        this.playerId = playerId;
+    }
+
+    @Generated(hash = 287143722)
     public Friend() {
-        //Keep empty
     }
 
-    //Utils
-    public static int getNumberOfAllyOnline() {
-        int allyOnline = 0;
-        for (Friend friend : Select.from(Friend.class).list()) {
-            Player friendInfo = friend.info;
-            if (friendInfo != null && friendInfo.isConnected) {
-                allyOnline++;
-            }
+    public Player getPlayer() {
+        return daoSession
+                .getPlayerDao()
+                .queryBuilder()
+                .where(PlayerDao.Properties.PlayerId.eq(playerId))
+                .unique();
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getPlayerId() {
+        return this.playerId;
+    }
+
+    public void setPlayerId(long playerId) {
+        this.playerId = playerId;
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
         }
-        return allyOnline;
+        myDao.delete(this);
     }
 
-    @Nullable
-    public Player info() {
-        if (info == null) {
-            info = Friend.findById(Player.class, playerId);
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
         }
-        return info;
+        myDao.refresh(this);
     }
 
-    //Generated
-    @Override
-    public String toString() {
-        return "Friend{" +
-                "infos=" + info +
-                ", playerId=" + playerId +
-                '}';
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1516049992)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getFriendDao() : null;
     }
 }

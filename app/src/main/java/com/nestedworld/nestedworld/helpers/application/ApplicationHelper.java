@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.helpers.application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.helpers.database.DataBaseHelper;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
@@ -18,14 +18,14 @@ public final class ApplicationHelper {
         //remove player
         SessionHelper.deleteSession();
 
-        //avoid leak with the static instance
-        NestedWorldHttpApi.reset();
+        //stop socketService and close socket
+        ServiceHelper.stopSocketService(context);
         NestedWorldSocketAPI.reset();
 
-        //clean db
-        DataBaseHelper.cleanDataBase();
+        //avoid leak with the static instance
+        NestedWorldHttpApi.reset();
 
-        //stop socketService
-        ServiceHelper.stopSocketService(context);
+        //clean db
+        NestedWorldDatabase.reset();
     }
 }

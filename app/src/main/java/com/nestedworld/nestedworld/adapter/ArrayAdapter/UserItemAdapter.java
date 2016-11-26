@@ -55,7 +55,7 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
     ** Internal method
      */
     private void populateView(@NonNull final View view, @NonNull final UserItem userItem) {
-        ShopItem shopItem = userItem.infos();
+        ShopItem shopItem = userItem.getShopItem();
         if (shopItem != null) {
             //Retrieve widget
             TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);

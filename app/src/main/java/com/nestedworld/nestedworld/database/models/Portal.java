@@ -3,19 +3,21 @@ package com.nestedworld.nestedworld.database.models;
 import android.support.annotation.ColorRes;
 
 import com.nestedworld.nestedworld.R;
-import com.orm.SugarRecord;
 
-public class Portal extends SugarRecord {
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
+
+@Entity()
+public class Portal {
     public double latitude;
     public double longitude;
     public String name;
     public String type;
-
-
-    //Empty constructor for SugarRecord
-    public Portal() {
-        //Keep empty
-    }
+    @Id(autoincrement = true)
+    @Unique
+    private Long id;
 
     /*
     ** Utils
@@ -25,6 +27,19 @@ public class Portal extends SugarRecord {
         this.longitude = longitude;
         this.name = name;
         this.type = type;
+    }
+
+    @Generated(hash = 2046645952)
+    public Portal(double latitude, double longitude, String name, String type, Long id) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.name = name;
+        this.type = type;
+        this.id = id;
+    }
+
+    @Generated(hash = 1547652620)
+    public Portal() {
     }
 
     /*
@@ -50,5 +65,45 @@ public class Portal extends SugarRecord {
             default:
                 return R.color.black;
         }
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getLatitude() {
+        return this.latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

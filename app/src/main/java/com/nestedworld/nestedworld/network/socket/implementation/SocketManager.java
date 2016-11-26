@@ -21,9 +21,9 @@ public final class SocketManager {
     private final String TAG = getClass().getSimpleName();
     private final String hostname;
     private final int port;
-    private final LinkedList<SocketListener> listeners; /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
+    private final LinkedList<SocketListener> listeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private int timeOut;
-    private Socket socket;
+    private Socket socket = new Socket();
     private MessagePacker messagePacker;/*input stream reader.*/
     private MessageUnpacker messageUnpacker;/*output stream writer.*/
 
@@ -40,9 +40,6 @@ public final class SocketManager {
         this.hostname = hostname;
         this.port = port;
         this.timeOut = timeOut;
-
-        this.socket = new Socket();
-        this.listeners = new LinkedList<>();
 
         this.messagePacker = null;
         this.messageUnpacker = null;
@@ -73,6 +70,9 @@ public final class SocketManager {
 
         try {
             /*Init socket*/
+            if (socket == null) {
+                throw new IllegalArgumentException("Can't connect if socket is null");
+            }
             socket.connect(new InetSocketAddress(hostname, port), timeOut);
 
             /*Init serializer / deserializer */
@@ -106,20 +106,24 @@ public final class SocketManager {
     // It is not possible to reconnect or rebind to the socket
     // which means a new socket instance has to be created.
     public synchronized void disconnect() {
-        if (socket == null) {
-            return;
-        }
         try {
-            socket.close();
-            messagePacker.close();
-            messageUnpacker.close();
-            LogHelper.d(TAG, "Socked closed");
+            if (socket != null) {
+                socket.close();
+                socket = null;
+            }
+            if (messagePacker != null) {
+                messagePacker.close();
+                messagePacker = null;
+            }
+            if (messageUnpacker != null) {
+                messageUnpacker.close();
+                messageUnpacker = null;
+            }
+
         } catch (IOException e) {
-            LogHelper.e(TAG, "Can't close socket");
+            e.printStackTrace();
         }
-        socket = null;
-        messagePacker = null;
-        messageUnpacker = null;
+
         notifySocketDisconnected();
     }
 
@@ -171,7 +175,7 @@ public final class SocketManager {
                         }
                     }
 
-                } catch (IOException | MessageInsufficientBufferException e) {
+                } catch (IOException | MessageInsufficientBufferException | UnsupportedOperationException e) {
                     LogHelper.d(TAG, "Connection close by server");
                     notifySocketDisconnected();
                 }

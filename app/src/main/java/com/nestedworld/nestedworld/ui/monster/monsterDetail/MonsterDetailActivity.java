@@ -10,10 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.MonsterDao;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 
 import butterknife.BindView;
 
@@ -49,9 +49,12 @@ public class MonsterDetailActivity extends BaseAppCompatActivity {
             throw new IllegalArgumentException("You should provide a monsterId in intent");
         } else {
             long monserId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
-            mMonster = Select.from(Monster.class)
-                    .where(Condition.prop("monster_id").eq(monserId))
-                    .first();
+            mMonster = NestedWorldDatabase.getInstance()
+                    .getDataBase()
+                    .getMonsterDao()
+                    .queryBuilder()
+                    .where(MonsterDao.Properties.MonsterId.eq(monserId))
+                    .unique();
             if (mMonster == null) {
                 Toast.makeText(this, R.string.error_unexpected, Toast.LENGTH_LONG).show();
                 finish();

@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.network.socket.models.message.combat;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Combat;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
@@ -14,8 +15,8 @@ import java.util.Map;
 
 public class AvailableMessage extends DefaultMessage {
 
+    public String combatId;
     private String type;
-    private String combatId;
     private String origin;
     private long monsterId;
     private String opponentPseudo;
@@ -50,7 +51,6 @@ public class AvailableMessage extends DefaultMessage {
             Map<Value, Value> userInfo = message.get(ValueFactory.newString("player")).asMapValue().map();
             this.opponentPseudo = combat.opponentPseudo = userInfo.get(ValueFactory.newString("pseudo")).asStringValue().asString();
         }
-        combat.save();
     }
 
     /*
@@ -64,7 +64,10 @@ public class AvailableMessage extends DefaultMessage {
         combat.monsterId = this.monsterId;
         combat.opponentPseudo = this.opponentPseudo;
 
-        combat.save();
+        NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getCombatDao()
+                .insert(combat);
 
         return combat;
     }

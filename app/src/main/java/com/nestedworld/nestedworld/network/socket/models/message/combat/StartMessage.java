@@ -3,11 +3,11 @@ package com.nestedworld.nestedworld.network.socket.models.message.combat;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Monster;
+import com.nestedworld.nestedworld.database.models.MonsterDao;
 import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.network.socket.models.message.DefaultMessage;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
@@ -147,7 +147,12 @@ public class StartMessage extends DefaultMessage {
          */
         @Nullable
         public Monster info() {
-            return Select.from(Monster.class).where(Condition.prop("monster_id").eq(monsterId)).first();
+            return NestedWorldDatabase.getInstance()
+                    .getDataBase()
+                    .getMonsterDao()
+                    .queryBuilder()
+                    .where(MonsterDao.Properties.MonsterId.eq(monsterId))
+                    .unique();
         }
 
         /*

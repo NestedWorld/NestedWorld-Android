@@ -10,11 +10,11 @@ import android.widget.TextView;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.RecyclerView.UserMonsterAdapter;
 import com.nestedworld.nestedworld.customView.recycler.GridAutoFitRecyclerView;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.UserMonster;
 import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.orm.query.Select;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -100,7 +100,10 @@ public class HomeMonsterFragment extends BaseFragment {
         }
 
         //Retrieve monsters
-        List<UserMonster> userMonsters = Select.from(UserMonster.class).list();
+        List<UserMonster> userMonsters = NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getUserMonsterDao()
+                .loadAll();
 
         userMonsterAdapter.clear();
         if (userMonsters == null || userMonsters.isEmpty()) {

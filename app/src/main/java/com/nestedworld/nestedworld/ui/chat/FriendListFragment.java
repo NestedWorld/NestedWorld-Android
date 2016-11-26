@@ -15,13 +15,13 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.ArrayAdapter.FriendsAdapter;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
-import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -78,10 +78,10 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        super.onDestroyView();
     }
 
     /*
@@ -175,6 +175,11 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
+                }
+
                 Friend selectedFriend = mAdapter.getItem(position);
                 if (selectedFriend != null) {
                     ChatFragment.load(((BaseAppCompatActivity) mContext).getSupportFragmentManager(), selectedFriend);
@@ -188,7 +193,10 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
     @UiThread
     private void populateFriendList() {
         //Retrieve friend from ORM
-        List<Friend> friends = Select.from(Friend.class).list();
+        List<Friend> friends = NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getFriendDao()
+                .loadAll();
 
         if (friends == null || friends.isEmpty()) {
             mAdapter.clear();

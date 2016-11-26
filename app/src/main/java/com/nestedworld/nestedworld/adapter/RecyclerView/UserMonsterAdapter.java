@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.Monster;
 import com.nestedworld.nestedworld.database.models.UserMonster;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.ui.monster.userMonsterDetail.UserMonsterDetailActivity;
 
 import java.util.ArrayList;
@@ -61,18 +63,15 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
     @Override
     public void onBindViewHolder(UserMonsterViewHolder holder, int position) {
         //Get current monster
-        UserMonster monster = mItems.get(position);
-        if (monster == null) {
-            return;
-        }
+        UserMonster userMonster = mItems.get(position);
+        if (userMonster != null) {
+            holder.populateUserMonsterInfo(userMonster);
 
-        //Get current monster information
-        Monster monsterInfo = monster.info();
-        if (monsterInfo == null) {
-            return;
+            Monster monster = userMonster.getMonster();
+            if (monster != null) {
+                holder.populateMonsterInfo(monster);
+            }
         }
-
-        holder.populateLate(monster, monsterInfo);
     }
 
     @Override
@@ -96,35 +95,45 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
         @BindView(R.id.user_monster_shape)
         View viewUserMonsterShape;
 
-
         public UserMonsterViewHolder(View itemView) {
             super(itemView);
         }
 
-        public void populateLate(@NonNull final UserMonster monster, @NonNull final Monster monsterInfo) {
-            final Context context = itemView.getContext();
+        /*
+        ** Internal method
+         */
+        private void populateMonsterInfo(@NonNull final Monster monster) {
+            Context context = itemView.getContext();
             if (context != null) {
-                //Add listener
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        UserMonsterDetailActivity.start(context, monster);
-                    }
-                });
-
-                //Populate name & lvl
-                textViewMonsterName.setText(monsterInfo.name);
-                textViewMonsterLvl.setText(String.format(context.getResources().getString(R.string.integer), monster.level));
+                textViewMonsterName.setText(monster.name);
 
                 //Display monster picture
                 Glide.with(itemView.getContext())
-                        .load(monsterInfo.baseSprite)
+                        .load(monster.baseSprite)
                         .placeholder(R.drawable.default_monster)
                         .centerCrop()
                         .into(imageViewMonster);
 
                 //Add color shape around monster picture
                 viewUserMonsterShape.setBackgroundColor(ContextCompat.getColor(context, monster.getColorResource()));
+            }
+        }
+
+        private void populateUserMonsterInfo(@NonNull final UserMonster userMonster) {
+            final Context context = itemView.getContext();
+            if (context != null) {
+                //Add listener
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UserMonsterDetailActivity.start(context, userMonster);
+                    }
+                });
+
+                //Populate name & lvl
+                textViewMonsterLvl.setText(String.format(context.getResources().getString(
+                        R.string.integer),
+                        userMonster.level));
             }
         }
     }

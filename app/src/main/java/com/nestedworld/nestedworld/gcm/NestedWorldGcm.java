@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Combat;
+import com.nestedworld.nestedworld.database.models.CombatDao;
 import com.nestedworld.nestedworld.gcm.handler.GcmHandler;
 import com.nestedworld.nestedworld.gcm.model.NotificationMessage;
 import com.nestedworld.nestedworld.helpers.gcm.GcmHelper;
@@ -32,7 +34,10 @@ public final class NestedWorldGcm {
     /*
     ** Public method
      */
-    public static void onMessageReceived(@NonNull final Context context, @NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
+    public static void onMessageReceived(@NonNull final Context context,
+                                         @NonNull final Map<Value, Value> message,
+                                         @NonNull final SocketMessageType.MessageKind messageKind,
+                                         @Nullable final SocketMessageType.MessageKind idKind) {
         NotificationMessage notificationMessage = new NotificationMessage();
         notificationMessage.type = messageKind;
         notificationMessage.content = message;
@@ -47,12 +52,23 @@ public final class NestedWorldGcm {
         Map<SocketMessageType.MessageKind, GcmHandler> handlers = new HashMap<>();
         handlers.put(SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE, new GcmHandler() {
             @Override
-            public void handle(@NonNull Context context, @NonNull NotificationMessage notification, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            public void handle(@NonNull Context context,
+                               @NonNull NotificationMessage notification,
+                               @NonNull SocketMessageType.MessageKind messageKind,
+                               @Nullable SocketMessageType.MessageKind idKind) {
                 AvailableMessage availableMessage = new AvailableMessage(notification.content, messageKind, idKind);
-                Combat combat = availableMessage.saveAsCombat();
 
-                //Display notification
-                GcmHelper.displayNotification(context, "Un combat est disponible : " + combat.origin, LaunchActivity.class);
+                Combat combat = NestedWorldDatabase.getInstance()
+                        .getDataBase()
+                        .getCombatDao()
+                        .queryBuilder()
+                        .where(CombatDao.Properties.CombatId.eq(availableMessage.combatId))
+                        .unique();
+
+                if (combat != null) {
+                    //Display notification
+                    GcmHelper.displayNotification(context, "A new combat is available: " + combat.origin, LaunchActivity.class);
+                }
             }
         });
         return handlers;

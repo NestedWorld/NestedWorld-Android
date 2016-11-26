@@ -1,5 +1,6 @@
 package com.nestedworld.nestedworld.adapter.RecyclerView;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -18,9 +19,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.orm.util.ContextUtil.getContext;
-
 
 public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdapter.BattleMonsterViewHolder> {
     private final List<Monster> mMonsters = new ArrayList<>();
@@ -76,13 +74,16 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     ** Internal method
      */
     private void populateMonsterInfo(@NonNull final BattleMonsterViewHolder holder, @NonNull final Monster monster) {
-        holder.textViewMonsterName.setText(monster.name);
+        Context context = holder.itemView.getContext();
 
-        //Display monster picture
-        Glide.with(getContext())
-                .load(monster.baseSprite)
-                .placeholder(R.drawable.default_monster)
-                .into(holder.imageViewMonster);
+        if (context != null) {
+            holder.textViewMonsterName.setText(monster.name);
+            //Display monster picture
+            Glide.with(context)
+                    .load(monster.baseSprite)
+                    .placeholder(R.drawable.default_monster)
+                    .into(holder.imageViewMonster);
+        }
     }
 
     public static class BattleMonsterViewHolder extends RecyclerView.ViewHolder {

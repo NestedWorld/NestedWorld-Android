@@ -79,7 +79,7 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
         }
 
         //get current friend information
-        Player currentFriendInfo = currentFriend.info();
+        Player currentFriendInfo = currentFriend.getPlayer();
         if (currentFriendInfo == null) {
             return view;
         }

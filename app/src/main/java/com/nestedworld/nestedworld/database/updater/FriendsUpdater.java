@@ -2,16 +2,15 @@ package com.nestedworld.nestedworld.database.updater;
 
 import android.support.annotation.NonNull;
 
+import com.nestedworld.nestedworld.database.models.DaoSession;
 import com.nestedworld.nestedworld.database.models.Friend;
-import com.nestedworld.nestedworld.database.models.Player;
+import com.nestedworld.nestedworld.database.models.FriendDao;
+import com.nestedworld.nestedworld.database.models.PlayerDao;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.network.http.models.response.users.friend.FriendsResponse;
-import com.orm.query.Select;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -29,23 +28,23 @@ public class FriendsUpdater extends EntityUpdater<FriendsResponse> {
 
     @Override
     public void updateEntity(@NonNull final Response<FriendsResponse> response) {
+        DaoSession dataBase = getDatabase();
+        FriendDao friendDao = dataBase.getFriendDao();
+        PlayerDao playerDao = dataBase.getPlayerDao();
+
         //Delete old entity
-        List<Friend> oldFriend = Select.from(Friend.class).list();
-        for (Friend friend : oldFriend) {
-            Player friendInfo = friend.info();
-            if (friendInfo != null) {
-                friendInfo.delete();
-            }
+        for (Friend friend : friendDao.loadAll()) {
+            friend.getPlayer().delete();
             friend.delete();
         }
 
-        //Update foreign key
+        //Save entity
         for (Friend friend : response.body().friends) {
-            friend.playerId = friend.info.save();
+            playerDao.insertOrReplace(friend.player);
+            friend.setPlayerId(friend.player.playerId);
         }
 
-        //Save entity
-        Friend.saveInTx(response.body().friends);
+        friendDao.insertInTx(response.body().friends);
 
         //Send event
         EventBus.getDefault().post(new OnFriendsUpdatedEvent());

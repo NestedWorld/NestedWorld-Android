@@ -91,12 +91,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!--Sugar-->
-        <meta-data android:name="DATABASE" android:value="nestedword.db" />
-        <meta-data android:name="VERSION" android:value="2" />
-        <meta-data android:name="QUERY_LOG" android:value="true"/>
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.nestedworld.nestedworld.database.models" />
-
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="9d424512a46103a0bfd9135c022a439b28bac103" />
     </application>
 
 </manifest>

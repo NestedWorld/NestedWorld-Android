@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.database.updater;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.database.models.ShopItem;
+import com.nestedworld.nestedworld.database.models.ShopItemDao;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;
 import com.nestedworld.nestedworld.network.http.models.response.object.ObjectsResponse;
@@ -25,11 +25,13 @@ public class ShopItemsUpdater extends EntityUpdater<ObjectsResponse> {
 
     @Override
     protected void updateEntity(@NonNull Response<ObjectsResponse> response) {
-        //Delete old entity
-        ShopItem.deleteAll(ShopItem.class);
+        ShopItemDao shopItemDao = getDatabase().getShopItemDao();
 
-        //Save new entity
-        ShopItem.saveInTx(response.body().objects);
+        //Delete old entity
+        shopItemDao.deleteAll();
+
+        //Save entity
+        shopItemDao.insertInTx(response.body().objects);
 
         EventBus.getDefault().post(new OnShopItemsUpdated());
     }

@@ -67,7 +67,10 @@ public final class NestedWorldSocketAPI implements SocketListener {
     ** Avoid leek when log out
      */
     public static void reset() {
-        mSingleton = null;
+        if (mSingleton != null) {
+            mSingleton.disconect();
+            mSingleton = null;
+        }
     }
 
     /*
@@ -116,12 +119,15 @@ public final class NestedWorldSocketAPI implements SocketListener {
         mConnectionListener.remove(connectionListener);
     }
 
-    public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind) {
+    public void sendRequest(@NonNull final DefaultRequest data,
+                            @NonNull final SocketMessageType.MessageKind messageKind) {
         //Send a message with generic id (from MESSAGE_TYPE)
         sendRequest(data, messageKind, SocketMessageType.MESSAGE_TYPE.getValueFromKey(messageKind));
     }
 
-    public void sendRequest(@NonNull final DefaultRequest data, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
+    public void sendRequest(@NonNull final DefaultRequest data,
+                            @NonNull final SocketMessageType.MessageKind messageKind,
+                            @NonNull final String requestId) {
         //Send a message with the given id
         sendMessage(data.serialise(), messageKind, requestId);
     }
@@ -143,7 +149,9 @@ public final class NestedWorldSocketAPI implements SocketListener {
         }
     }
 
-    private void sendMessage(@NonNull final ValueFactory.MapBuilder mapBuilder, @NonNull final SocketMessageType.MessageKind messageKind, @NonNull final String requestId) {
+    private void sendMessage(@NonNull final ValueFactory.MapBuilder mapBuilder,
+                             @NonNull final SocketMessageType.MessageKind messageKind,
+                             @NonNull final String requestId) {
         //Add id field
         mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
 
@@ -236,6 +244,10 @@ public final class NestedWorldSocketAPI implements SocketListener {
     /*
     ** Notification (will call listener on the main thread)
      */
+    private void disconect() {
+        mSocketManager.disconnect();
+    }
+
     private void notifySocketDisconnected() {
         //Call connectionListener.onConnectionLost() inside the main thread
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -250,7 +262,9 @@ public final class NestedWorldSocketAPI implements SocketListener {
         });
     }
 
-    private void notifyMessageReceive(@NonNull final Map<Value, Value> message, @NonNull final SocketMessageType.MessageKind messageKind, @Nullable final SocketMessageType.MessageKind idKind) {
+    private void notifyMessageReceive(@NonNull final Map<Value, Value> message,
+                                      @NonNull final SocketMessageType.MessageKind messageKind,
+                                      @Nullable final SocketMessageType.MessageKind idKind) {
         LogHelper.d(TAG, "Notify: " + SocketMessageType.MESSAGE_TYPE.getValueFromKey(messageKind));
 
         //Call connectionListener.onMessageReceived() inside the main thread
@@ -279,6 +293,5 @@ public final class NestedWorldSocketAPI implements SocketListener {
             }
         });
     }
-
 }
 

@@ -1,75 +1,158 @@
 package com.nestedworld.nestedworld.database.models;
 
-import android.support.annotation.ColorRes;
-import android.support.annotation.Nullable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.R;
-import com.orm.SugarRecord;
-import com.orm.annotation.Unique;
-import com.orm.query.Condition;
-import com.orm.query.Select;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
-/**
- * Simple model for :
- * - mapping a json response with Gson anotation
- * - mapping a sql table with SugarORM
- * /!\ Keep the default constructor empty (see sugarOrm doc)
- */
-public class UserMonster extends SugarRecord {
+import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Transient;
+import org.greenrobot.greendao.annotation.Unique;
 
+@Entity(active = true)
+public class UserMonster {
     @Expose
     @SerializedName("id")
     @Unique
     public Long userMonsterId;// the sql table will be called usermonsterid (see sugarOrm doc)
-
     @Expose
-    public Monster infos;
-
+    @SerializedName("infos")
+    @Transient
+    public Monster monster;
     @Expose
     public Long level;
     public Long monsterId;//key for Monster<->UserMonster relationship
-
     @Expose
     public String surname;
-
     @Expose
     public long experience;
+    @Id(autoincrement = true)
+    @Unique
+    private Long id;
+    /**
+     * Used to resolve relations
+     */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+    /**
+     * Used for active entity operations.
+     */
+    @Generated(hash = 1432864299)
+    private transient UserMonsterDao myDao;
 
-    //Empty constructor for SugarRecord
+    @Generated(hash = 17730337)
+    public UserMonster(Long userMonsterId, Long level, Long monsterId, String surname,
+            long experience, Long id) {
+        this.userMonsterId = userMonsterId;
+        this.level = level;
+        this.monsterId = monsterId;
+        this.surname = surname;
+        this.experience = experience;
+        this.id = id;
+    }
+
+    @Generated(hash = 120169445)
     public UserMonster() {
-        //Keep empty
     }
 
-    @Nullable
-    public Monster info() {
-        if (infos == null) {
-            infos = Select.from(Monster.class).where(Condition.prop("monster_id").eq(monsterId)).first();
+    public Monster getMonster() {
+        return daoSession.getMonsterDao()
+                .queryBuilder()
+                .where(MonsterDao.Properties.MonsterId.eq(monsterId))
+                .unique();
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserMonsterId() {
+        return this.userMonsterId;
+    }
+
+    public void setUserMonsterId(Long userMonsterId) {
+        this.userMonsterId = userMonsterId;
+    }
+
+    public Long getLevel() {
+        return this.level;
+    }
+
+    public void setLevel(Long level) {
+        this.level = level;
+    }
+
+    public Long getMonsterId() {
+        return this.monsterId;
+    }
+
+    public void setMonsterId(Long monsterId) {
+        this.monsterId = monsterId;
+    }
+
+    public String getSurname() {
+        return this.surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public long getExperience() {
+        return this.experience;
+    }
+
+    public void setExperience(long experience) {
+        this.experience = experience;
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
         }
-        return infos;
+        myDao.delete(this);
     }
 
-    //Generated
-    @Override
-    public String toString() {
-        return "UserMonster{" +
-                "experience='" + experience + '\'' +
-                ", userMonsterId=" + userMonsterId +
-                ", infos=" + infos +
-                ", level=" + level +
-                ", monsterId=" + monsterId +
-                ", surname='" + surname + '\'' +
-                '}';
-    }
-
-    //Utils
-    @ColorRes
-    public int getColorResource() {
-        Monster info = info();
-        if (info == null) {
-            return R.color.black;
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
         }
-        return info.getColorResource();
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1557456353)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getUserMonsterDao() : null;
     }
 }

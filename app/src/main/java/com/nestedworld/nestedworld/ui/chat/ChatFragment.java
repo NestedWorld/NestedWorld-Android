@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Friend;
+import com.nestedworld.nestedworld.database.models.FriendDao;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
@@ -64,10 +66,16 @@ public class ChatFragment extends BaseFragment {
         }
 
         //Check args
-        mFriend = Friend.findById(Friend.class, getArguments().getLong("FRIEND_ID"));
+        long mFriendId = getArguments().getLong("FRIEND_ID", -1);
+        mFriend = NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getFriendDao()
+                .queryBuilder()
+                .where(FriendDao.Properties.Id.eq(mFriendId))
+                .unique();
         if (mFriend == null) {
             Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_SHORT).show();
-            ((BaseAppCompatActivity) mContext).finish();
+            ((BaseAppCompatActivity) mContext).getSupportFragmentManager().popBackStack();
         } else {
             setupActionBar();
             initChat();
@@ -100,7 +108,7 @@ public class ChatFragment extends BaseFragment {
 
         ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
-            Player friendInfo = mFriend.info;
+            Player friendInfo = mFriend.getPlayer();
             if (friendInfo != null) {
                 actionBar.setTitle(friendInfo.pseudo);
             } else {

@@ -30,14 +30,14 @@ public class UserUpdater extends EntityUpdater<UserResponse> {
         //Delete old entity
         Session session = SessionHelper.getSession();
         if (session != null) {
-            Player oldUser = session.getUser();
+            Player oldUser = session.getPlayer();
             if (oldUser != null) {
                 oldUser.delete();
             }
         }
 
         //Save entity
-        response.body().player.save();
+        getDatabase().getPlayerDao().insertOrReplace(response.body().player);
 
         //Send event
         EventBus.getDefault().post(new OnUserUpdatedEvent());

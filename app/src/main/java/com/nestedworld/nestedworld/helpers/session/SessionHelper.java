@@ -3,10 +3,10 @@ package com.nestedworld.nestedworld.helpers.session;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Player;
 import com.nestedworld.nestedworld.database.models.Session;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.orm.query.Select;
 
 /**
  * /!\ this implementation only allow one session per application (it's a personal choice) /!\
@@ -19,13 +19,13 @@ public final class SessionHelper {
     ** Constructor
      */
     private SessionHelper() {
+        //private constructor for avoiding this class to be construct
     }
 
     /*
     ** public method
      */
     public static void newSession(@NonNull final String email, @NonNull final String password, @NonNull final String authToken) {
-
         //Display some log
         LogHelper.d(TAG, "newSession : "
                 + " name=" + email
@@ -41,7 +41,10 @@ public final class SessionHelper {
         session.email = email;
 
         //Save the new session
-        session.save();
+        NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getSessionDao()
+                .insert(session);
     }
 
     public static void deleteSession() {
@@ -51,7 +54,7 @@ public final class SessionHelper {
         //Delete the player linked to the session
         Session session = getSession();
         if (session != null) {
-            Player user = session.getUser();
+            Player user = session.getPlayer();
             if (user != null) {
                 LogHelper.d(TAG, "delete player: " + user.toString());
                 user.delete();
@@ -64,6 +67,10 @@ public final class SessionHelper {
 
     @Nullable
     public static Session getSession() {
-        return Select.from(Session.class).first();
+        return NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getSessionDao()
+                .queryBuilder()
+                .unique();
     }
 }

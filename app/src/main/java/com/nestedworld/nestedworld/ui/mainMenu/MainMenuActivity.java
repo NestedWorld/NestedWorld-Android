@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.FragmentStatePager.TabsAdapter;
-import com.nestedworld.nestedworld.database.models.Combat;
+import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.updater.AttacksUpdater;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.database.updater.MonsterUpdater;
@@ -41,7 +41,6 @@ import com.nestedworld.nestedworld.ui.mainMenu.tabs.map.MapFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.monster.MonstersFragment;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.shop.ShopFragment;
 import com.nestedworld.nestedworld.ui.profil.ProfileActivity;
-import com.orm.query.Select;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -117,7 +116,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         //Calculate the number of fight and update icon
         //we don't have to check for 0 (see buildCounterDrawable())
-        int numberOfFight = Select.from(Combat.class).list().size();
+        int numberOfFight = NestedWorldDatabase.getInstance()
+                .getDataBase()
+                .getCombatDao()
+                .loadAll()
+                .size();
         menuItem.setIcon(DrawableHelper.buildCounterDrawable(this, numberOfFight, R.drawable.ic_swords_cross_24dp));
         return true;
     }

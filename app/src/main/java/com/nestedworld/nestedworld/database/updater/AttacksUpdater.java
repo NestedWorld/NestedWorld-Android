@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.database.updater;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.database.models.Attack;
+import com.nestedworld.nestedworld.database.models.AttackDao;
 import com.nestedworld.nestedworld.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.events.http.OnAttacksUpdatedEvent;
 import com.nestedworld.nestedworld.network.http.models.response.attack.AttacksResponse;
@@ -24,11 +24,13 @@ public class AttacksUpdater extends EntityUpdater<AttacksResponse> {
 
     @Override
     public void updateEntity(@NonNull final Response<AttacksResponse> response) {
+        AttackDao attackDao = getDatabase().getAttackDao();
+
         //Delete old entity
-        Attack.deleteAll(Attack.class);
+        attackDao.deleteAll();
 
         //Save entity
-        Attack.saveInTx(response.body().attacks);
+        attackDao.insertInTx(response.body().attacks);
 
         //Send event
         EventBus.getDefault().post(new OnAttacksUpdatedEvent());

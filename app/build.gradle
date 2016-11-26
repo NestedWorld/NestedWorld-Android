@@ -1,6 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'//Needed by butterknife
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'//Needed by greeenDao
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'android-apt'
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -85,6 +106,10 @@ android {
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+greendao {
+    schemaVersion 2
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
 ext {
     supportLibVersion = '25.0.1'
     retrofitVersion = '2.1.0'
@@ -120,8 +145,7 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:${okHttpVersion}"
 
     //ORM
-    //compile 'com.github.satyan:sugar:1.5'
-    compile 'com.github.satyan:sugar:f7f6b0553a9e367752850d8a0534b650da27a020'
+    compile 'org.greenrobot:greendao:3.2.0'
 
     //MessagePack (real time API)
     compile 'org.msgpack:msgpack-core:0.8.11'
@@ -143,4 +167,7 @@ dependencies {
     compile "com.amazonaws:aws-android-sdk-core:${awsVersion}"
     compile "com.amazonaws:aws-android-sdk-s3:${awsVersion}"
     compile "com.amazonaws:aws-android-sdk-ddb:${awsVersion}"
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
 }

@@ -77,7 +77,7 @@ public class ProfileFragment extends BaseFragment {
         }
 
         //Retrieve the player
-        Player user = session.getUser();
+        Player user = session.getPlayer();
         if (user == null) {
             LogHelper.d(TAG, "No User");
             return;
