@@ -273,6 +273,9 @@ public class TeamSelectionFragment extends BaseFragment {
         for (ImageView imageView : selectedMonsterView) {
             imageView.setImageResource(R.drawable.ic_clear_24dp);
         }
+
+        //Clear arrow state
+        updateArrowState();
     }
 
     /*
