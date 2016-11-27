@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dip"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="72dip"
+        android:layout_height="match_parent"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:paddingTop="8dip"
+        android:paddingBottom="8dip">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView_chat_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/default_avatar"
+            app:civ_border_color="@color/apptheme_color"
+            app:civ_border_width="1dip"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:alpha="0.5"
+            android:src="@color/apptheme_color"
+            android:id="@+id/imageView_chat_picture_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView_chat_name"
+        style="@style/TypefaceStyle.ProximaNova.light"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center|start"
+        android:padding="8dip"
+        android:textColor="@color/apptheme_background"/>
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.ArrayAdapter.ChatAdapter;
 import com.nestedworld.nestedworld.adapter.ArrayAdapter.FriendsAdapter;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Friend;
@@ -31,9 +32,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class FriendListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public final static String NAME = FriendListFragment.class.getSimpleName();
+    public final static String NAME = ChatListFragment.class.getSimpleName();
 
     @BindView(R.id.listView_chat_list)
     ListView listView;
@@ -44,14 +45,14 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
     @BindView(R.id.textview_no_friend)
     TextView textViewNoFriend;
 
-    private FriendsAdapter mAdapter;
+    private ChatAdapter mAdapter;
 
     /*
     ** Public method
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
-                .replace(R.id.container, new FriendListFragment(), NAME)
+                .replace(R.id.container, new ChatListFragment(), NAME)
                 .addToBackStack(null)
                 .commit();
     }
@@ -168,7 +169,7 @@ public class FriendListFragment extends BaseFragment implements SwipeRefreshLayo
         }
 
         //init adapter for our listView
-        mAdapter = new FriendsAdapter(mContext);
+        mAdapter = new ChatAdapter(mContext);
         listView.setAdapter(mAdapter);
 
         //add listener on the listView

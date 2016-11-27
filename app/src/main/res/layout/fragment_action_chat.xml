@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dip">
+    android:background="@color/apptheme_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:gravity="center"
             android:padding="8dip"
             android:text="@string/chat_msg_start_chat"
-            android:textColor="@color/apptheme_color"/>
+            android:textColor="@color/apptheme_background"/>
 
         <TextView
             android:id="@+id/textview_no_friend"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:padding="8dip"
             android:text="You don't have any friend"
-            android:textColor="@color/apptheme_color"/>
+            android:textColor="@color/apptheme_background"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout_friend_list"
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:divider="@color/apptheme_color"
+                android:divider="@color/apptheme_background"
                 android:dividerHeight="0.5dip"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>

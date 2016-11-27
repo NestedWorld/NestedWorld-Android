@@ -32,7 +32,7 @@ import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.chat.FriendListFragment;
+import com.nestedworld.nestedworld.ui.chat.ChatListFragment;
 import com.nestedworld.nestedworld.ui.fight.FightProcessActivity;
 import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
 import com.nestedworld.nestedworld.ui.mainMenu.tabs.home.HomeFragment;
@@ -192,13 +192,13 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment fragment : fragments) {
-                if (fragment instanceof FriendListFragment) {
+                if (fragment instanceof ChatListFragment) {
                     onBackPressed();
                     return;
                 }
             }
         }
-        FriendListFragment.load(getSupportFragmentManager());
+        ChatListFragment.load(getSupportFragmentManager());
     }
 
     private void initSocketService() {

@@ -78,7 +78,7 @@ public class ChatFragment extends BaseFragment {
             ((BaseAppCompatActivity) mContext).getSupportFragmentManager().popBackStack();
         } else {
             setupActionBar();
-            initChat();
+            setUpChat();
         }
     }
 
@@ -117,15 +117,17 @@ public class ChatFragment extends BaseFragment {
         }
     }
 
-    private void initChat() {
+    private void setUpChat() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
         //init a string adapter for our listView
-        itemAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_expandable_list_item_1);
+        itemAdapter = new ArrayAdapter<>(mContext, R.layout.item_discution, R.id.textview_discution_content);
         listViewChat.setAdapter(itemAdapter);
+
+        itemAdapter.add("Welcome on the chat: " + mFriend.getPlayer().pseudo);
 
         editTextChat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
