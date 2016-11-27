@@ -15,7 +15,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.ShopItem;
 
 
-public class ShopObjectAdapter extends ArrayAdapter<ShopItem> {
+public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
 
     @LayoutRes
     private final static int layoutRes = R.layout.item_shop_object;
@@ -23,7 +23,7 @@ public class ShopObjectAdapter extends ArrayAdapter<ShopItem> {
     /*
     ** Constructor
      */
-    public ShopObjectAdapter(@NonNull final Context context) {
+    public ShopItemAdapter(@NonNull final Context context) {
         super(context, layoutRes);
     }
 
@@ -65,11 +65,12 @@ public class ShopObjectAdapter extends ArrayAdapter<ShopItem> {
         ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
 
         //Populate widget
-        textViewObjectName.setText("Name: " + shopObject.name);
+        textViewObjectName.setText(shopObject.name);
+        textViewObjectDescription.setText(shopObject.description);
+
         textViewObjectKind.setText("Kind: " + shopObject.kind);
         textViewObjectPower.setText("Power: " + shopObject.power);
         textViewObjectPrenium.setText("Is prenium : " + (shopObject.premium ? "yes" : "no"));
-        textViewObjectDescription.setText("Description : " + shopObject.description);
         textViewObjectPrice.setText("Price : " + String.valueOf(shopObject.price));
         Glide.with(getContext()).load(shopObject.image).into(imageViewObject);
     }

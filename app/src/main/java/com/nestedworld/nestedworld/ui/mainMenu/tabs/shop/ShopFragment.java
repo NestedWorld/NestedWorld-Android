@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.ArrayAdapter.ShopObjectAdapter;
+import com.nestedworld.nestedworld.adapter.ArrayAdapter.ShopItemAdapter;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.updater.ShopItemsUpdater;
@@ -42,7 +42,7 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private ShopObjectAdapter mAdapter;
+    private ShopItemAdapter mAdapter;
 
     /*
     ** Public method
@@ -154,7 +154,7 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             return;
         }
 
-        mAdapter = new ShopObjectAdapter(mContext);
+        mAdapter = new ShopItemAdapter(mContext);
         listViewShop.setAdapter(mAdapter);
     }
 
