@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -12,6 +13,8 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.ArrayAdapter.FriendsAdapter;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Friend;
+import com.nestedworld.nestedworld.database.updater.FriendsUpdater;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.dialog.AddFriendDialog;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.events.socket.generic.OnResultResponseEvent;
@@ -30,13 +33,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeFriendFragment extends BaseFragment {
+public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.listView_home_friends)
     ListView listView;
     @BindView(R.id.progressView)
     ProgressView progressView;
-
+    @BindView(R.id.swipeRefreshLayout_home_friend)
+    SwipeRefreshLayout swipeRefreshLayout;
     private FriendsAdapter mAdapter;
 
     /*
@@ -50,6 +54,7 @@ public class HomeFriendFragment extends BaseFragment {
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         setupListView();
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -60,10 +65,30 @@ public class HomeFriendFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        super.onDestroyView();
+    }
+
+    /*
+    ** SwipeRefreshLayout.OnRefreshListener implementation
+     */
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        new FriendsUpdater().start(new OnEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind) {
+                swipeRefreshLayout.setRefreshing(false);
+                //TODO check kind and display error
+            }
+        });
     }
 
     /*

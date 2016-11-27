@@ -6,12 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listView_home_friends"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/apptheme_color"
-        android:dividerHeight="0.5dip"/>
+        android:id="@+id/swipeRefreshLayout_home_friend">
+
+        <ListView
+            android:id="@+id/listView_home_friends"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/apptheme_color"
+            android:dividerHeight="0.5dip"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_friend"
