@@ -112,7 +112,7 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
                     }
 
                     // Actions to do after 1s
-                    view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.WhiteSmokeHalf));
+                    view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.apptheme_background_half));
                 }
             }, 1000);
         }

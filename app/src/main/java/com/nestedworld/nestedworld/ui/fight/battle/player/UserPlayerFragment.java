@@ -46,8 +46,10 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     TextView monsterLife;
     @BindView(R.id.RecyclerView_battle_monster)
     RecyclerView recyclerViewMonsters;
-    @BindView(R.id.container_monster_detail)
-    View viewMonsterDetailContainer;
+    @BindView(R.id.view_body)
+    View viewBody;
+    @BindView(R.id.view_header_border)
+    View viewHeaderBorder;
 
     private List<UserMonster> mTeam = null;
 
@@ -125,24 +127,23 @@ public class UserPlayerFragment extends BattlePlayerFragment {
             return;
         }
 
-        final View view = getView();
-        if (view != null) {
-            //Set background to red
-            view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.material_red_500));
+        viewBody.setBackgroundColor(Color.RED);
+        viewHeaderBorder.setBackgroundColor(Color.RED);
 
-            //Set background to normal after 1s
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    //Check if fragment hasn't been detach
-                    if (mContext == null) {
-                        return;
-                    }
-
-                    // Actions to do after 1s
-                    view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.WhiteSmokeHalf));
+        //Set background to normal after 1s
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                //Check if fragment hasn't been detach
+                if (mContext == null) {
+                    return;
                 }
-            }, 1000);
-        }
+
+                //Set "normal" background color
+                int color = ContextCompat.getColor(mContext, R.color.apptheme_background_half);
+                viewBody.setBackgroundColor(color);
+                viewHeaderBorder.setBackgroundColor(color);
+            }
+        }, 1000);
     }
 
     @Override
@@ -153,7 +154,8 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     @Override
     public void displayMonsterKo(@NonNull StartMessage.StartMessagePlayerMonster monsterKo) {
         LogHelper.d(TAG, "displayMonsterKo");
-        viewMonsterDetailContainer.setBackgroundColor(Color.RED);
+        viewBody.setBackgroundColor(Color.RED);
+        viewHeaderBorder.setBackgroundColor(Color.RED);
 
         Iterator<UserMonster> iterator = mTeam.iterator();
         while (iterator.hasNext()) {
@@ -177,7 +179,6 @@ public class UserPlayerFragment extends BattlePlayerFragment {
         progressBarMonsterHp.setMax(monster.hp);
         progressBarMonsterHp.setProgress(monster.hp);
         monsterLife.setText(String.valueOf(monster.hp));
-        viewMonsterDetailContainer.setBackgroundColor(Color.TRANSPARENT);
 
         //Populate monster sprite
         Monster monsterInfos = monster.info();

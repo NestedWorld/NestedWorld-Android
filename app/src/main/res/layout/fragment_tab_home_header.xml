@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:background="@color/WhiteSmokeHalf"
+        android:background="@color/apptheme_background_half"
         android:orientation="vertical">
 
         <LinearLayout
