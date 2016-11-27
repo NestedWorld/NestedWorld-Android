@@ -490,7 +490,7 @@ public class TeamSelectionFragment extends BaseFragment {
                     .into(imageViewMonster);
 
             //Add color shape around monster picture
-            view.findViewById(R.id.user_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getColorResource()));
+            view.findViewById(R.id.user_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getElementColorResource()));
 
             container.addView(view);
             return view;

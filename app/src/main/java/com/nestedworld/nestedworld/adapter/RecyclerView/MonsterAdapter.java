@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.adapter.RecyclerView;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Custom Adapter for displaying monsters
@@ -86,11 +86,8 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
         TextView textViewMonsterName;
         @BindView(R.id.imageView_monster)
         ImageView imageViewMonster;
-        @BindView(R.id.user_monster_shape)
-        View viewUserMonsterShape;
         @BindView(R.id.imageview_monster_type)
         ImageView imageViewMonsterType;
-
 
         public MonsterViewHolder(View itemView) {
             super(itemView);
@@ -110,15 +107,15 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
                 //Populate name & lvl
                 textViewMonsterName.setText(monster.name);
 
+                //Populate element image
+                imageViewMonsterType.setImageResource(monster.getElementImageResource());
+
                 //Display monster picture
                 Glide.with(itemView.getContext())
-                        .load(monster.baseSprite)
+                        .load(monster.enragedSprite)
                         .placeholder(R.drawable.default_monster)
-                        .centerCrop()
+                        .bitmapTransform(new CropCircleTransformation(context))
                         .into(imageViewMonster);
-
-                //Add color shape around monster picture
-                viewUserMonsterShape.setBackgroundColor(ContextCompat.getColor(context, monster.getColorResource()));
             }
         }
     }

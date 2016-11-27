@@ -179,7 +179,7 @@ public class DrawingGestureView extends View {
                     && y < (view.getY() + view.getHeight())/*check bottom limit*/)) {
 
                 //if he touch, we change the tile background color and we call the listener
-                view.setBackgroundResource(R.drawable.background_rounded);
+                view.setBackgroundResource(R.drawable.circle_fill_apptheme);
                 if (mOnTileTouchListener != null) {
                     LogHelper.i(TAG, "onTouchEvent > mOnFinishMoveListener.onTouch(id=" + view.getId() + ")");
                     if (mLastTilesTouch == null || mLastTilesTouch != view.getId()) {

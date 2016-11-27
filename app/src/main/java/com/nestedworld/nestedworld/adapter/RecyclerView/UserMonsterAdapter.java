@@ -113,7 +113,7 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
                         .into(imageViewMonster);
 
                 //Add color shape around monster picture
-                viewUserMonsterShape.setBackgroundColor(ContextCompat.getColor(context, monster.getColorResource()));
+                viewUserMonsterShape.setBackgroundColor(ContextCompat.getColor(context, monster.getElementColorResource()));
             }
         }
 

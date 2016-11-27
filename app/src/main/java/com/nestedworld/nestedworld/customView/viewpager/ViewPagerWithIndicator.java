@@ -61,7 +61,7 @@ public class ViewPagerWithIndicator extends LinearLayout {
             mRoundEnable = a.getBoolean(R.styleable.ViewPagerWithIndicator_round_enable, true);
             if (mRoundEnable) {
                 mRoundSize = a.getLayoutDimension(R.styleable.ViewPagerWithIndicator_round_size, ViewGroup.LayoutParams.WRAP_CONTENT);
-                mRoundDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_round_drawable, R.drawable.background_rounded);
+                mRoundDrawable = a.getResourceId(R.styleable.ViewPagerWithIndicator_round_drawable, R.drawable.circle_fill_apptheme);
                 mRoundDefaultColor = a.getColor(R.styleable.ViewPagerWithIndicator_round_color_default, Color.TRANSPARENT);
                 mRoundSelectedColor = a.getColor(R.styleable.ViewPagerWithIndicator_round_color_selected, Color.BLUE);
             }

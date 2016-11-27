@@ -1,6 +1,7 @@
 package com.nestedworld.nestedworld.database.models;
 
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -77,7 +78,7 @@ public class Monster {
 
     //Utils
     @ColorRes
-    public int getColorResource() {
+    public int getElementColorResource() {
         if (type == null) {
             return R.color.black;
         }
@@ -95,6 +96,28 @@ public class Monster {
                 return R.color.monster_plant;
             default:
                 return R.color.black;
+        }
+    }
+
+    @DrawableRes
+    public int getElementImageResource() {
+        if (type == null) {
+            return R.color.black;
+        }
+
+        switch (type) {
+            case "water":
+                return R.drawable.elem_water;
+            case "fire":
+                return R.drawable.element_fire;
+            case "earth":
+                return R.drawable.element_earth;
+            case "electric":
+                return R.drawable.elem_electric;
+            case "plant":
+                return R.drawable.element_plant;
+            default:
+                return R.drawable.ic_help_outline_24dp;
         }
     }
 

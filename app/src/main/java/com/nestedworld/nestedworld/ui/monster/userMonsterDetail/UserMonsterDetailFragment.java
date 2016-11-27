@@ -39,8 +39,8 @@ public class UserMonsterDetailFragment extends BaseFragment {
     TextView textViewMonsterSurname;
 
     //Sub header related
-    @BindView(R.id.textView_type)
-    TextView textViewType;
+    @BindView(R.id.imageview_monster_type)
+    ImageView imageViewType;
     @BindView(R.id.textView_lvl)
     TextView textViewLevel;
     @BindView(R.id.textView_exp)
@@ -72,8 +72,8 @@ public class UserMonsterDetailFragment extends BaseFragment {
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private UserMonster mMonster;
-    private Monster mMonsterInfo;
+    private UserMonster mUserMonster;
+    private Monster mMonster;
 
     /*
     ** Public method
@@ -99,7 +99,7 @@ public class UserMonsterDetailFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        if (mMonster == null) {
+        if (mUserMonster == null) {
             throw new IllegalArgumentException("You should call setMonster()");
         } else {
             populateView();
@@ -111,12 +111,12 @@ public class UserMonsterDetailFragment extends BaseFragment {
     ** Internal method
      */
     private UserMonsterDetailFragment setMonster(@NonNull final UserMonster monster) {
-        mMonster = monster;
+        mUserMonster = monster;
         return this;
     }
 
     private UserMonsterDetailFragment setMonsterInfo(@NonNull final Monster monsterInfo) {
-        mMonsterInfo = monsterInfo;
+        mMonster = monsterInfo;
         return this;
     }
 
@@ -127,47 +127,47 @@ public class UserMonsterDetailFragment extends BaseFragment {
         }
 
         Glide.with(getContext())
-                .load(mMonsterInfo.baseSprite)
+                .load(mMonster.baseSprite)
                 .into(imageViewSprite);
 
 
-        textViewMonsterName.setText(mMonsterInfo.name);
-        textViewMonsterSurname.setText(mMonster.surname);
-        textViewType.setText(mMonsterInfo.type);
-        textViewLevel.setText(String.valueOf(mMonster.level));
-        textViewExp.setText(String.valueOf(mMonster.experience));
+        textViewMonsterName.setText(mMonster.name);
+        textViewMonsterSurname.setText(mUserMonster.surname);
+        imageViewType.setImageResource(mMonster.getElementImageResource());
+        textViewLevel.setText(String.valueOf(mUserMonster.level));
+        textViewExp.setText(String.valueOf(mUserMonster.experience));
 
         //Populate hp
         textViewHp.setText(String.format(getResources().getString(
                 R.string.tabMonster_msg_monsterHp),
-                (int) mMonsterInfo.hp,
+                (int) mMonster.hp,
                 100));
         progressBarHp.setMax(100);
-        progressBarHp.setProgress((int) mMonsterInfo.hp);
+        progressBarHp.setProgress((int) mMonster.hp);
 
         //Populate attack
         textViewAttack.setText(String.format(getResources().getString(
                 R.string.tabMonster_msg_monsterAttack),
-                (int) mMonsterInfo.attack,
+                (int) mMonster.attack,
                 100));
         progressBarAttack.setMax(100);
-        progressBarAttack.setProgress((int) mMonsterInfo.attack);
+        progressBarAttack.setProgress((int) mMonster.attack);
 
         //Populate defence
         textViewDefence.setText(String.format(
                 getResources().getString(R.string.tabMonster_msg_monsterDefence),
-                (int) mMonsterInfo.defense,
+                (int) mMonster.defense,
                 100));
         progressBarDefence.setMax(100);
-        progressBarDefence.setProgress((int) mMonsterInfo.defense);
+        progressBarDefence.setProgress((int) mMonster.defense);
 
         //Populate speed
         textViewSpeed.setText(String.format(
                 getResources().getString(R.string.tabMonster_msg_monsterSpeed),
-                (int) mMonsterInfo.speed,
+                (int) mMonster.speed,
                 100));
         progressBarSpeed.setMax(100);
-        progressBarSpeed.setProgress((int) mMonsterInfo.speed);
+        progressBarSpeed.setProgress((int) mMonster.speed);
     }
 
     private void populateMonsterAttack(@NonNull final List<MonsterAttackResponse.MonsterAttack> monsterAttacks) {
@@ -200,7 +200,7 @@ public class UserMonsterDetailFragment extends BaseFragment {
         //Retrieve monster spell
         NestedWorldHttpApi
                 .getInstance()
-                .getMonsterAttack(mMonster.monsterId)
+                .getMonsterAttack(mUserMonster.monsterId)
                 .enqueue(new NestedWorldHttpCallback<MonsterAttackResponse>() {
                     @Override
                     public void onSuccess(@NonNull Response<MonsterAttackResponse> response) {

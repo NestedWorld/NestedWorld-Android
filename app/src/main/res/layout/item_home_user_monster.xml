@@ -30,7 +30,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_margin="1dip"
-            android:background="@drawable/background_rounded"
+            android:background="@drawable/circle_fill_apptheme"
             android:gravity="center"
             android:textColor="@color/apptheme_accent"
             android:textSize="12sp"

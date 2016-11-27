@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -86,26 +87,31 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
         }
 
         //init MapView
-        mMapView.onCreate(savedInstanceState);
-        mMapView.onResume();//We display the map immediately
+        try {
+            mMapView.onCreate(savedInstanceState);
+            mMapView.onResume();//We display the map immediately
 
-        //retrieve GoogleMap from mapView
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
+            //retrieve GoogleMap from mapView
+            mMapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    //Check if fragment hasn't been detach
+                    if (mContext == null) {
+                        return;
+                    }
+
+                    //Init the mapView
+                    googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style));
+                    googleMap.setOnMarkerClickListener(MapFragment.this);
+
+                    mMap = new NestedWorldMap(googleMap);
+                    initMap();
                 }
+            });
+        } catch (android.content.res.Resources.NotFoundException e) {
+            //DO want you want, fk instant run
+        }
 
-                //Init the mapView
-                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mContext, R.raw.map_style));
-                googleMap.setOnMarkerClickListener(MapFragment.this);
-
-                mMap = new NestedWorldMap(googleMap);
-                initMap();
-            }
-        });
     }
 
     @Override

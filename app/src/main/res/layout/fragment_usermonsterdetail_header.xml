@@ -91,8 +91,8 @@
                     android:text="Type"
                     android:textSize="14sp"/>
 
-                <TextView
-                    android:id="@+id/textView_type"
+                <ImageView
+                    android:id="@+id/imageview_monster_type"
                     style="@style/TypefaceStyle.ProximaNova.semibold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
