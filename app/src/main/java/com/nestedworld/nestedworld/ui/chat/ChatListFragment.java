@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.adapter.ArrayAdapter.ChatAdapter;
-import com.nestedworld.nestedworld.adapter.ArrayAdapter.FriendsAdapter;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Friend;
 import com.nestedworld.nestedworld.database.updater.FriendsUpdater;

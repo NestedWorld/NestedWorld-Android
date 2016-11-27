@@ -23,10 +23,9 @@ import java.util.Map;
 
 public final class NestedWorldSocketAPI implements SocketListener {
 
-    private final String TAG = getClass().getSimpleName();
-
     private final static int TIME_OUT = 10000;
     private static NestedWorldSocketAPI mSingleton;
+    private final String TAG = getClass().getSimpleName();
     @Nullable private final SocketManager mSocketManager;
     private final List<ConnectionListener> mConnectionListener = new ArrayList<>();
     private boolean isAuth = false;

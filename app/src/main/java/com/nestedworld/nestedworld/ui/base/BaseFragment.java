@@ -16,9 +16,6 @@ import android.widget.Toast;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
-import com.nestedworld.nestedworld.helpers.session.SessionHelper;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.ui.welcome.WelcomeActivity;
 
 import butterknife.ButterKnife;

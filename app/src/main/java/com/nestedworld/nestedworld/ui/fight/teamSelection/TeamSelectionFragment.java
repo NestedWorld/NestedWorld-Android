@@ -1,9 +1,7 @@
 package com.nestedworld.nestedworld.ui.fight.teamSelection;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.ServiceConnection;
-import android.content.res.Resources;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -11,13 +9,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +19,6 @@ import android.widget.Toast;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.adapter.RecyclerView.UserMonsterAdapter;
 import com.nestedworld.nestedworld.adapter.pagerAdapter.UserMonsterPagerAdapter;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
@@ -60,12 +53,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TeamSelectionFragment extends BaseFragment {
 
     private final List<UserMonster> mSelectedMonster = new ArrayList<>();
+    private final UserMonsterPagerAdapter mAdapter = new UserMonsterPagerAdapter();
     @BindViews({
             R.id.imageview_selectedmonster_1,
             R.id.imageview_selectedmonster_2,
@@ -88,9 +81,7 @@ public class TeamSelectionFragment extends BaseFragment {
     ProgressView progressView;
     @BindView(R.id.textView_state)
     TextView textViewState;
-
     private List<UserMonster> mUserMonsters;
-    private final UserMonsterPagerAdapter mAdapter = new UserMonsterPagerAdapter();
     private int mMonsterCountRecommended;
     private int mMonsterRequire;
     private Combat mCombat = null;

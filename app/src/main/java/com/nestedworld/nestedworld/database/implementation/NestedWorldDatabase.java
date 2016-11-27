@@ -11,7 +11,7 @@ import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.QueryBuilder;
 
-public class NestedWorldDatabase {
+public final class NestedWorldDatabase {
     private final static String TAG = NestedWorldDatabase.class.getSimpleName();
 
     private static NestedWorldDatabase mSingleton = null;

@@ -125,21 +125,24 @@ public class UserPlayerFragment extends BattlePlayerFragment {
             return;
         }
 
-        //Set background to red
-        getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.material_red_500));
+        final View view = getView();
+        if (view != null) {
+            //Set background to red
+            view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.material_red_500));
 
-        //Set background to normal after 1s
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
+            //Set background to normal after 1s
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    //Check if fragment hasn't been detach
+                    if (mContext == null) {
+                        return;
+                    }
+
+                    // Actions to do after 1s
+                    view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.WhiteSmokeHalf));
                 }
-
-                // Actions to do after 1s
-                getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.WhiteSmokeHalf));
-            }
-        }, 1000);
+            }, 1000);
+        }
     }
 
     @Override

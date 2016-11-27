@@ -76,7 +76,7 @@ public class UserMonsterPagerAdapter extends PagerAdapter {
 
             container.addView(view);
         } else {
-            return view;
+            return null;
         }
 
         return view;

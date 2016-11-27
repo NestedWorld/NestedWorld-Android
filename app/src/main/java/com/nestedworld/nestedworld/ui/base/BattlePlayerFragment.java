@@ -54,6 +54,11 @@ public abstract class BattlePlayerFragment extends BaseFragment {
 
     @CallSuper
     public void setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final List<MonsterAttackResponse.MonsterAttack> attacks) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
         mCurrentMonster = monster;
         mCurrentMonsterAttacks = attacks;
 

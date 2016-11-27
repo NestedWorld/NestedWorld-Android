@@ -30,22 +30,6 @@ public class UserMonster {
     @Id(autoincrement = true)
     @Unique
     private Long id;
-
-    @Override
-    public String toString() {
-        return "UserMonster{" +
-                "daoSession=" + daoSession +
-                ", userMonsterId=" + userMonsterId +
-                ", monster=" + monster +
-                ", level=" + level +
-                ", monsterId=" + monsterId +
-                ", surname='" + surname + '\'' +
-                ", experience=" + experience +
-                ", id=" + id +
-                ", myDao=" + myDao +
-                '}';
-    }
-
     /**
      * Used to resolve relations
      */
@@ -56,7 +40,6 @@ public class UserMonster {
      */
     @Generated(hash = 1432864299)
     private transient UserMonsterDao myDao;
-
     @Generated(hash = 17730337)
     public UserMonster(Long userMonsterId, Long level, Long monsterId, String surname,
                        long experience, Long id) {

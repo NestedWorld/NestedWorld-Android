@@ -110,6 +110,7 @@ public class ChatAdapter extends ArrayAdapter<Friend> {
             chatHolder.chatPictureOverlay.setVisibility(View.GONE);
         }
     }
+
     /*
     ** Inner class
      */

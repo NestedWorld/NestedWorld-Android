@@ -87,9 +87,6 @@
     <string name="teamSelection_msg_help">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
     <string name="teamSelection_title">Team selection</string>
     <string name="teamSelection_msg_progress" formatted="false">%d recommended (%d required)</string>
-    <string name="teamSelection_msg_startFight">Go !</string>
-    <string name="teamSelection_msg_monsterName">Name: %s</string>
-    <string name="teamSelection_msg_monsterLvl">lvl: %d</string>
     <string name="teamSelection_msg_monsterAttack">Attack %d</string>
     <string name="teamSelection_msg_monsterDefence">Defence: %d</string>
     <string name="teamSelection_msg_monsterHp">Hp: %d</string>

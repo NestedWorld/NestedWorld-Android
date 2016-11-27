@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.nestedworld.nestedworld.analytics.sender.Answer;
 import com.nestedworld.nestedworld.database.models.Player;
 
-public class NestedWorldAnalytics {
+public final class NestedWorldAnalytics {
 
     /*
     * Constructor

@@ -22,9 +22,9 @@ public final class SocketManager {
     private final String TAG = getClass().getSimpleName();
     private final String hostname;
     private final int port;
+    private final LinkedList<SocketListener> listeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private int timeOut;
     private boolean isConnected = false;
-    private final LinkedList<SocketListener> listeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     @Nullable private Socket socket = new Socket();
     @Nullable private MessagePacker messagePacker;/*input stream reader.*/
     @Nullable private MessageUnpacker messageUnpacker;/*output stream writer.*/
