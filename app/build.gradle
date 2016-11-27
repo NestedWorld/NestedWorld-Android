@@ -138,6 +138,9 @@ dependencies {
     compile 'com.github.rey5137:material:1.2.4'
     compile 'com.avast:android-styled-dialogs:2.3.3'
 
+    //Rounded image (with border)
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+
     //API
     compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"//send request
     compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"//use Json converter

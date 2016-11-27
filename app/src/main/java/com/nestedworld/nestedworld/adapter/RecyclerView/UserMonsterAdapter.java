@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /*
 ** Custom Adapter for displaying userMonsters
@@ -88,10 +88,8 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
         TextView textViewMonsterLvl;
 
         @BindView(R.id.imageView_monster)
-        ImageView imageViewMonster;
+        CircleImageView imageViewMonster;
 
-        @BindView(R.id.user_monster_shape)
-        View viewUserMonsterShape;
 
         public UserMonsterViewHolder(View itemView) {
             super(itemView);
@@ -109,11 +107,10 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
                 Glide.with(itemView.getContext())
                         .load(monster.baseSprite)
                         .placeholder(R.drawable.default_monster)
-                        .centerCrop()
                         .into(imageViewMonster);
 
-                //Add color shape around monster picture
-                viewUserMonsterShape.setBackgroundColor(ContextCompat.getColor(context, monster.getElementColorResource()));
+                //Set stroke color
+                imageViewMonster.setBorderColor(ContextCompat.getColor(context, monster.getElementColorResource()));
             }
         }
 
