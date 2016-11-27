@@ -20,11 +20,19 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal">
 
-        <com.nestedworld.nestedworld.customView.recycler.GridAutoFitRecyclerView
-            android:id="@+id/recycler_home_monster"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:columnWidth="@dimen/item_user_monster_width"/>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout_home_monster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.nestedworld.nestedworld.customView.recycler.GridAutoFitRecyclerView
+                android:id="@+id/recycler_home_monster"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:columnWidth="@dimen/item_user_monster_width"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +13,8 @@ import com.nestedworld.nestedworld.adapter.RecyclerView.UserMonsterAdapter;
 import com.nestedworld.nestedworld.customView.recycler.GridAutoFitRecyclerView;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.UserMonster;
+import com.nestedworld.nestedworld.database.updater.UserMonsterUpdater;
+import com.nestedworld.nestedworld.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.base.BaseFragment;
@@ -23,7 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomeMonsterFragment extends BaseFragment {
+public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final UserMonsterAdapter userMonsterAdapter = new UserMonsterAdapter();
     @BindView(R.id.recycler_home_monster)
@@ -32,6 +35,8 @@ public class HomeMonsterFragment extends BaseFragment {
     View viewRecyclerContainer;
     @BindView(R.id.textview_no_monster)
     TextView textViewNoMonster;
+    @BindView(R.id.swipeRefreshLayout_home_monster)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     /*
     ** Life cycle
@@ -44,6 +49,7 @@ public class HomeMonsterFragment extends BaseFragment {
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         setupAdapter();
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -58,6 +64,29 @@ public class HomeMonsterFragment extends BaseFragment {
             EventBus.getDefault().unregister(this);
         }
         super.onDestroyView();
+    }
+
+    /*
+    ** SwipeRefreshLayout.OnRefreshListener implementation
+     */
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        new UserMonsterUpdater().start(new OnEntityUpdated() {
+            @Override
+            public void onSuccess() {
+                swipeRefreshLayout.setRefreshing(false);
+
+                //Do not update adapter here, see onUserMonstersUpdated()
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind) {
+                swipeRefreshLayout.setRefreshing(false);
+
+                //TODO check kind and display error
+            }
+        });
     }
 
     /*
