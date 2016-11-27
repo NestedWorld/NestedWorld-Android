@@ -53,15 +53,15 @@ public class Portal {
 
         switch (type) {
             case "water":
-                return R.color.holo_blue_light;
+                return R.color.monster_water;
             case "fire":
-                return R.color.holo_red_light;
+                return R.color.monster_fire;
             case "earth":
-                return R.color.DarkKhaki;
+                return R.color.monster_earth;
             case "electric":
-                return R.color.holo_orange_light;
+                return R.color.monster_electric;
             case "plant":
-                return R.color.holo_green_light;
+                return R.color.monster_plant;
             default:
                 return R.color.black;
         }

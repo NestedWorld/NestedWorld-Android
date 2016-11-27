@@ -11,11 +11,11 @@
     <color name="apptheme_background">#EEEEEE</color>
 
     <!-- Monster overlay color-->
-    <color name="holo_blue_light">#ff33b5e5</color>
-    <color name="holo_red_light">#ffff4444</color>
-    <color name="DarkKhaki">#BDB76B</color>
-    <color name="holo_orange_light">#ffffbb33</color>
-    <color name="holo_green_light">#ff99cc00</color>
+    <color name="monster_water">#2196F3</color>
+    <color name="monster_fire">#F44336</color>
+    <color name="monster_earth">#795548</color>
+    <color name="monster_electric">#FFEB3B</color>
+    <color name="monster_plant">#4CAF50</color>
 
     <!--Generic color-->
     <color name="material_red_500">#f44336</color>
