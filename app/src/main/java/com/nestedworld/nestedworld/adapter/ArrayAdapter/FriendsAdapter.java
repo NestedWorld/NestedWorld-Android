@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +30,7 @@ import com.nestedworld.nestedworld.network.socket.models.request.combat.AskReque
 import com.nestedworld.nestedworld.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -62,7 +63,8 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
             view = layoutInflater.inflate(resource, parent, false);
 
             friendHolder = new FriendHolder();
-            friendHolder.friendPicture = (ImageView) view.findViewById(R.id.imageView_item_friend);
+            friendHolder.friendPicture = (CircleImageView) view.findViewById(R.id.imageView_item_friend);
+            friendHolder.friendPictureOverlay = (CircleImageView) view.findViewById(R.id.imageView_item_friend_overlay);
             friendHolder.friendName = (TextView) view.findViewById(R.id.textView_item_friend);
             friendHolder.buttonDefy = (Button) view.findViewById(R.id.button_defy_friend);
 
@@ -92,29 +94,40 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
     /*
     ** Internal method
      */
-    private void populateView(@NonNull final FriendHolder friendHolder, @NonNull final Player currentFriendInfo) {
+    private void populateView(@NonNull final FriendHolder friendHolder, @NonNull final Player friend) {
+        Context context = getContext();
+
         //display the friend name
-        friendHolder.friendName.setText(currentFriendInfo.pseudo);
+        friendHolder.friendName.setText(friend.pseudo);
 
         //display a rounded placeHolder for friend's avatar
-        Resources resources = getContext().getResources();
+        Resources resources = context.getResources();
         Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
         roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
 
         //display friend's avatar
-        Glide.with(getContext())
-                .load(currentFriendInfo.avatar)
+        Glide.with(context)
+                .load(friend.avatar)
                 .placeholder(roundedBitmapDrawable)
                 .centerCrop()
-                .bitmapTransform(new CropCircleTransformation(getContext()))
+                .bitmapTransform(new CropCircleTransformation(context))
                 .into(friendHolder.friendPicture);
+
+        //set overlay and stroke
+        if (friend.isConnected) {
+            friendHolder.friendPicture.setBorderColor(ContextCompat.getColor(context, R.color.apptheme_color));
+            friendHolder.friendPictureOverlay.setVisibility(View.VISIBLE);
+        } else {
+            friendHolder.friendPicture.setBorderColor(ContextCompat.getColor(context, R.color.apptheme_accent));
+            friendHolder.friendPictureOverlay.setVisibility(View.GONE);
+        }
 
         //set listener on defy button
         friendHolder.buttonDefy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onDefyFriendClick(currentFriendInfo);
+                onDefyFriendClick(friend);
             }
         });
     }
@@ -149,8 +162,9 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
     ** Inner class
      */
     private static class FriendHolder {
-        public ImageView friendPicture;
+        public CircleImageView friendPicture;
         public TextView friendName;
         public Button buttonDefy;
+        public CircleImageView friendPictureOverlay;
     }
 }

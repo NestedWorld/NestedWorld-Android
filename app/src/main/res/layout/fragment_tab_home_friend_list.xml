@@ -6,15 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <ListView
         android:id="@+id/listView_home_friends"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/apptheme_color"
-        android:dividerHeight="0.5dip"
-        android:paddingEnd="8dip"
-        android:paddingStart="8dip"/>
+        android:dividerHeight="0.5dip"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_friend"
