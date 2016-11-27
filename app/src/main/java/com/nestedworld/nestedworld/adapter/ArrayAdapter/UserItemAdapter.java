@@ -15,6 +15,8 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.database.models.ShopItem;
 import com.nestedworld.nestedworld.database.models.UserItem;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
 public class UserItemAdapter extends ArrayAdapter<UserItem> {
 
     @LayoutRes
@@ -56,20 +58,21 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
      */
     private void populateView(@NonNull final View view, @NonNull final UserItem userItem) {
         ShopItem shopItem = userItem.getShopItem();
+        Context context = getContext();
+
         if (shopItem != null) {
             //Retrieve widget
             TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
-            TextView textViewObjectKind = (TextView) view.findViewById(R.id.textview_object_kind);
-            TextView textViewObjectPower = (TextView) view.findViewById(R.id.textview_object_power);
             TextView textViewObjectDescription = (TextView) view.findViewById(R.id.textview_object_description);
             ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
 
             //Populate widget
-            textViewObjectName.setText("Name: " + shopItem.name);
-            textViewObjectKind.setText("Kind: " + shopItem.kind);
-            textViewObjectPower.setText("Power: " + shopItem.power);
-            textViewObjectDescription.setText("Description : " + shopItem.description);
-            Glide.with(getContext()).load(shopItem.image).into(imageViewObject);
+            textViewObjectName.setText(shopItem.name);
+            textViewObjectDescription.setText(shopItem.description);
+            Glide.with(context)
+                    .load(shopItem.image)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(imageViewObject);
         }
     }
 }

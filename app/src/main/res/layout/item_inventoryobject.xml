@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:padding="8dip">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/imageView_object"
-        android:layout_width="58dip"
-        android:layout_height="58dip"
-        android:layout_gravity="center"
-        android:src="@drawable/default_monster"/>
+    <LinearLayout
+        android:layout_width="72dip"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dip"
+        android:paddingRight="16dip"
+        android:paddingTop="8dip"
+        android:paddingBottom="8dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_stroke_apptheme">
+
+            <ImageView
+                android:padding="3dip"
+                android:id="@+id/imageView_object"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/default_monster"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -20,36 +38,19 @@
 
         <TextView
             android:id="@+id/textview_object_name"
-            style="@style/TypefaceStyle.ProximaNova"
+            style="@style/TypefaceStyle.ProximaNova.semibold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textview_object_kind"
-            style="@style/TypefaceStyle.ProximaNova"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/textview_object_power"
-            style="@style/TypefaceStyle.ProximaNova"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/apptheme_color"
-            android:textSize="14sp"/>
+            android:textSize="17sp"/>
 
         <TextView
             android:id="@+id/textview_object_description"
-            style="@style/TypefaceStyle.ProximaNova"
+            style="@style/TypefaceStyle.ProximaNova.light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/apptheme_color"
             android:textSize="14sp"/>
-
 
     </LinearLayout>
 
