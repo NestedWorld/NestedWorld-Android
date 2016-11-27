@@ -123,28 +123,6 @@
             android:layout_marginTop="8dip"
             android:padding="8dip"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dip"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="8dip">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_help_outline_24dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/teamSelection_msg_hint"
-                android:textColor="@color/apptheme_color"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <com.rey.material.widget.ProgressView

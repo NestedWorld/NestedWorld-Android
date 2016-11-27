@@ -15,6 +15,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avast.android.dialogs.core.BaseDialogFragment;
+import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
@@ -141,6 +146,8 @@ public class TeamSelectionFragment extends BaseFragment {
             return;
         }
 
+        setHasOptionsMenu(true);//Force toolbar redraw
+
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -181,6 +188,23 @@ public class TeamSelectionFragment extends BaseFragment {
                     updateArrowState();//Update the 'select monster' button
                 }
             });
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_team_selection, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                handleHelpClick();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -263,6 +287,18 @@ public class TeamSelectionFragment extends BaseFragment {
             LogHelper.d(TAG, "Combat=" + mCurrentCombat.toString() + "\nmonsterNeeded=" + mNeededMonster);
             return true;
         }
+    }
+
+    private void handleHelpClick() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        SimpleDialogFragment
+                .createBuilder(mContext, ((BaseAppCompatActivity) mContext).getSupportFragmentManager())
+                .setMessage(R.string.teamSelection_msg_help)
+                .show();
     }
 
     private void setupHeader() {

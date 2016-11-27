@@ -84,7 +84,7 @@
     <string name="tab_home_msg_addFriendFailed">Cannot add your friend</string>
 
     <!--Fight.teamSelection-->
-    <string name="teamSelection_msg_hint">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
+    <string name="teamSelection_msg_help">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
     <string name="teamSelection_title">Team selection</string>
     <string name="teamSelection_msg_progress" formatted="false">%d / %d</string>
     <string name="teamSelection_msg_startFight">Go !</string>
