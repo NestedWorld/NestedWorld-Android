@@ -107,6 +107,7 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
                 Glide.with(itemView.getContext())
                         .load(monster.baseSprite)
                         .placeholder(R.drawable.default_monster)
+                        .error(R.drawable.default_monster)
                         .into(imageViewMonster);
 
                 //Set stroke color
