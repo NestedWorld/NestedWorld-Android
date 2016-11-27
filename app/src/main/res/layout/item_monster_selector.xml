@@ -23,8 +23,8 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="@dimen/item_user_monster_width"
-            android:layout_height="wrap_content"
+            android:layout_width="88dip"
+            android:layout_height="72dip"
             android:orientation="vertical">
 
             <RelativeLayout

@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:scaleType="fitEnd"
-            app:srcCompat="@drawable/ic_help_outline_24dp"/>
+            app:srcCompat="@drawable/ic_help_outline_accent_24dp"/>
 
     </LinearLayout>
 

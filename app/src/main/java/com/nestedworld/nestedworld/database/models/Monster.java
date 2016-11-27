@@ -117,7 +117,7 @@ public class Monster {
             case "plant":
                 return R.drawable.element_plant;
             default:
-                return R.drawable.ic_help_outline_24dp;
+                return R.drawable.ic_help_outline_accent_24dp;
         }
     }
 

@@ -30,6 +30,22 @@ public class UserMonster {
     @Id(autoincrement = true)
     @Unique
     private Long id;
+
+    @Override
+    public String toString() {
+        return "UserMonster{" +
+                "daoSession=" + daoSession +
+                ", userMonsterId=" + userMonsterId +
+                ", monster=" + monster +
+                ", level=" + level +
+                ", monsterId=" + monsterId +
+                ", surname='" + surname + '\'' +
+                ", experience=" + experience +
+                ", id=" + id +
+                ", myDao=" + myDao +
+                '}';
+    }
+
     /**
      * Used to resolve relations
      */

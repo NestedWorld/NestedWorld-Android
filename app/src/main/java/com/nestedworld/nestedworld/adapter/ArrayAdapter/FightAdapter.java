@@ -3,6 +3,7 @@ package com.nestedworld.nestedworld.adapter.ArrayAdapter;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
+import android.content.res.Resources;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -99,10 +100,14 @@ public class FightAdapter extends ArrayAdapter<Combat> {
 
         //Yes just accept the combat, we have to choose our team
         //Display the team selection
+        Context context = getContext();
+        Resources resources = context.getResources();
+
         TeamSelectionFragment
-                .load(((BaseAppCompatActivity) getContext()).getSupportFragmentManager(),
+                .load(((BaseAppCompatActivity) context).getSupportFragmentManager(),
                         combat,
-                        getContext().getResources().getInteger(R.integer.duel_monster_needed));
+                        resources.getInteger(R.integer.duel_monster_recommended),
+                        resources.getInteger(R.integer.duel_monster_required));
     }
 
     private void refuseCombat(@NonNull final Combat combat) {

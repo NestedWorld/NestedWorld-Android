@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -15,20 +16,17 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.avast.android.dialogs.core.BaseDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.adapter.RecyclerView.UserMonsterAdapter;
+import com.nestedworld.nestedworld.adapter.pagerAdapter.UserMonsterPagerAdapter;
 import com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.database.models.Combat;
@@ -61,6 +59,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -78,50 +77,38 @@ public class TeamSelectionFragment extends BaseFragment {
     @BindView(R.id.ViewPagerArrowIndicator)
     ViewPagerWithIndicator viewPagerArrowIndicator;
     @BindView(R.id.button_select_monster)
-    Button button_select_monster;
-    @BindView(R.id.button_go_fight)
-    Button button_go_fight;
+    ImageView buttonSelectMonster;
+    @BindView(R.id.view_go_fight)
+    View buttonGoFight;
     @BindView(R.id.imageView_user_background)
     ImageView imageViewUserPicture;
     @BindView(R.id.imageview_opponent_picture)
     ImageView imageViewOpponentPicture;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    @BindView(R.id.textView_state)
+    TextView textViewState;
+
     private List<UserMonster> mUserMonsters;
-    private final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            //DO What you want
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            //Check if fragment hasn't been detach
-            if (mContext == null) {
-                return;
-            }
-
-            updateArrowState();
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-            //DO What you want
-        }
-    };
-    private int mNeededMonster;
-    private Combat mCurrentCombat;
+    private final UserMonsterPagerAdapter mAdapter = new UserMonsterPagerAdapter();
+    private int mMonsterCountRecommended;
+    private int mMonsterRequire;
+    private Combat mCombat = null;
 
     /*
     ** Public method
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final Combat combat, final int monsterNeeded) {
+    public static void load(@NonNull final FragmentManager fragmentManager,
+                            @NonNull final Combat combat,
+                            final int monsterCountRecommended,
+                            final int monsterCountRequire) {
         //Instantiate new fragment
         Fragment newFragment = new TeamSelectionFragment();
 
         //Add fragment param
         Bundle args = new Bundle();
-        args.putInt("MONSTER_NEEDED_KEY", monsterNeeded);
+        args.putInt("MONSTER_RECOMMENDED_KEY", monsterCountRecommended);
+        args.putInt("MONSTER_REQUIRE_KEY", monsterCountRequire);
         args.putString("combatId", combat.getCombatId());
         newFragment.setArguments(args);
 
@@ -146,8 +133,6 @@ public class TeamSelectionFragment extends BaseFragment {
             return;
         }
 
-        setHasOptionsMenu(true);//Force toolbar redraw
-
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -166,8 +151,8 @@ public class TeamSelectionFragment extends BaseFragment {
                     .getUserMonsterDao()
                     .loadAll();
 
-            if (mUserMonsters.size() < mNeededMonster) {
-                Toast.makeText(mContext, "You don't have enough monster (" + mNeededMonster + "required)", Toast.LENGTH_LONG).show();
+            if (mUserMonsters.size() < mMonsterCountRecommended) {
+                Toast.makeText(mContext, "You don't have enough monster (" + mMonsterCountRecommended + "required)", Toast.LENGTH_LONG).show();
                 ((BaseAppCompatActivity) mContext).finish();
             }
 
@@ -177,34 +162,12 @@ public class TeamSelectionFragment extends BaseFragment {
             //init header block (with players information)
             setupHeader();
 
-            //Init button 'start_fight' text (it will display the number of selected monster)
-            button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), 0, mNeededMonster));
-
-            //Init button 'select_monster'
-            button_select_monster.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onMonsterSelected();
-                    updateArrowState();//Update the 'select monster' button
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_team_selection, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_help:
-                handleHelpClick();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            //Init button textViewState (it display the number of selected monster)
+            textViewState.setPaintFlags(textViewState.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            textViewState.setText(String.format(getResources().getString(
+                    R.string.teamSelection_msg_progress),
+                    mMonsterCountRecommended,
+                    mMonsterRequire));
         }
     }
 
@@ -217,7 +180,7 @@ public class TeamSelectionFragment extends BaseFragment {
     }
 
     /*
-    ** Eventbus
+    ** EventBus
      */
     @Subscribe
     public void onNewCombatStart(OnCombatStartMessageEvent event) {
@@ -230,14 +193,14 @@ public class TeamSelectionFragment extends BaseFragment {
 
         StartMessage startMessage = event.getMessage();
 
-        if (startMessage.id.equals(mCurrentCombat.combatId)) {
+        if (startMessage.id.equals(mCombat.combatId)) {
             LogHelper.d(TAG, "onNewCombatStart > accept");
 
             //Delete the combat from Orm
             NestedWorldDatabase
                     .getInstance()
                     .getDataBase()
-                    .delete(mCurrentCombat);
+                    .delete(mCombat);
 
             //Start fight fragment
             BattleFragment.load(getFragmentManager(), startMessage, mSelectedMonster);
@@ -247,58 +210,121 @@ public class TeamSelectionFragment extends BaseFragment {
     }
 
     /*
+    ** Butterknife
+     */
+    @OnClick(R.id.button_select_monster)
+    public void onSelectMonsterClick() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Get the selected monster
+        UserMonster selectedUserMonster = mAdapter.getItemAtPosition(viewPager.getCurrentItem());
+        if (selectedUserMonster != null) {
+            Monster selectedMonster = selectedUserMonster.getMonster();
+            if (selectedMonster != null) {
+                LogHelper.d(TAG, "UserMonster selected: " + selectedUserMonster.toString());
+                //Add the monster in the list of selected monster
+                mSelectedMonster.add(selectedUserMonster);
+
+                //Update button 'selectMonster' color (can't select the same monster 2 time)
+                updateArrowState();
+
+                //Display monster sprite
+                Glide.with(mContext)
+                        .load(selectedMonster.baseSprite)
+                        .placeholder(R.drawable.default_monster)
+                        .bitmapTransform(new CropCircleTransformation(mContext))
+                        .error(R.drawable.default_monster)
+                        .into(selectedMonsterView.get(mSelectedMonster.size() - 1));
+            }
+        }
+    }
+
+    @OnClick(R.id.view_go_fight)
+    public void onStartFightClick() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (mSelectedMonster.size() >= 1) {
+            sendAcceptRequest();
+        } else {
+            Toast.makeText(mContext, "You should select at least 1 monster", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @OnClick(R.id.imageview_help)
+    public void onHelpClick() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Display a dialog with instruction
+        SimpleDialogFragment
+                .createBuilder(mContext, ((BaseAppCompatActivity) mContext).getSupportFragmentManager())
+                .setTitle("Hint")
+                .setMessage(R.string.teamSelection_msg_help)
+                .show();
+    }
+
+    @OnClick(R.id.view_reset)
+    public void onResetClick() {
+        //Reset monster selector
+        mAdapter.clear();
+        mAdapter.addAll(mUserMonsters);
+
+        //Clear select monster
+        mSelectedMonster.clear();
+        for (ImageView imageView : selectedMonsterView) {
+            imageView.setImageResource(R.drawable.ic_clear_24dp);
+        }
+    }
+
+    /*
     ** Private method
      */
-    private void parseArgsNeededMonster() {
-        //Retrieve needed monster
-        if (!getArguments().containsKey("MONSTER_NEEDED_KEY")) {
-            throw new IllegalArgumentException("Must provide needed monster count");
-        }
-        mNeededMonster = getArguments().getInt("MONSTER_NEEDED_KEY", -1);
-    }
-
-    private void parseArgsWantedCombat() {
-        if (!getArguments().containsKey("combatId")) {
-            throw new IllegalArgumentException("Must provide wanted combat");
-        }
-        String combatId = getArguments().getString("combatId", "");
-        mCurrentCombat = NestedWorldDatabase
-                .getInstance()
-                .getDataBase()
-                .getCombatDao()
-                .queryBuilder()
-                .where(CombatDao.Properties.CombatId.eq(combatId))
-                .unique();
-    }
-
     private boolean parseArgs() {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return false;
         }
 
-        parseArgsNeededMonster();
-        parseArgsWantedCombat();
+        //Retrieve recommended monster
+        if (!getArguments().containsKey("MONSTER_RECOMMENDED_KEY")) {
+            throw new IllegalArgumentException("Must provide needed monster count");
+        }
+        mMonsterCountRecommended = getArguments().getInt("MONSTER_RECOMMENDED_KEY", -1);
 
-        if ((mNeededMonster < 0) || mCurrentCombat == null) {
-            LogHelper.d(TAG, "mCurrentCombat = null || mNeededMonster < 0");
+        //Retrieve require monster
+        if (!getArguments().containsKey("MONSTER_REQUIRE_KEY")) {
+            throw new IllegalArgumentException("Must provide needed monster count");
+        }
+        mMonsterRequire = getArguments().getInt("MONSTER_REQUIRE_KEY", -1);
+
+        //Retrieve combat
+        if (!getArguments().containsKey("combatId")) {
+            throw new IllegalArgumentException("Must provide wanted combat");
+        }
+        String combatId = getArguments().getString("combatId", "");
+        mCombat = NestedWorldDatabase
+                .getInstance()
+                .getDataBase()
+                .getCombatDao()
+                .queryBuilder()
+                .where(CombatDao.Properties.CombatId.eq(combatId))
+                .unique();
+
+        if ((mMonsterCountRecommended < 0) || (mMonsterRequire < 0) || mCombat == null) {
+            LogHelper.d(TAG, "mCombat = null || mMonsterCountRecommended < 0");
             return false;
         } else {
-            LogHelper.d(TAG, "Combat=" + mCurrentCombat.toString() + "\nmonsterNeeded=" + mNeededMonster);
+            LogHelper.d(TAG, "Combat=" + mCombat.toString() + "\nmonsterNeeded=" + mMonsterCountRecommended);
             return true;
         }
-    }
-
-    private void handleHelpClick() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        SimpleDialogFragment
-                .createBuilder(mContext, ((BaseAppCompatActivity) mContext).getSupportFragmentManager())
-                .setMessage(R.string.teamSelection_msg_help)
-                .show();
     }
 
     private void setupHeader() {
@@ -311,7 +337,7 @@ public class TeamSelectionFragment extends BaseFragment {
         Session session = SessionHelper.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
-            onFatalError();
+            onFatalError();//Should logout if we didn't have a session
             return;
         }
 
@@ -323,6 +349,7 @@ public class TeamSelectionFragment extends BaseFragment {
             return;
         }
 
+        //Display player avatar in header
         if (user.avatar != null) {
             Glide.with(mContext)
                     .load(user.avatar)
@@ -333,27 +360,7 @@ public class TeamSelectionFragment extends BaseFragment {
                     .into(imageViewUserPicture);
         }
 
-        //TODO display real opponent picture
-        Glide.with(mContext)
-                .load(R.drawable.default_avatar_rounded)
-                .placeholder(R.drawable.default_avatar_rounded)
-                .error(R.drawable.default_avatar_rounded)
-                .centerCrop()
-                .bitmapTransform(new CropCircleTransformation(mContext))
-                .into(imageViewOpponentPicture);
-    }
-
-    private void setUpViewPager() {
-        //check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        //Set up viewPager
-        UserMonsterPagerAdapter mUserMonsterPagerAdapter = new UserMonsterPagerAdapter(mContext, mUserMonsters);
-        viewPager.setAdapter(mUserMonsterPagerAdapter);
-        viewPagerArrowIndicator.setViewPager(viewPager);
-        viewPager.addOnPageChangeListener(onPageChangeListener);
+        //TODO display opponent avatar
     }
 
     private void setupActionBar() {
@@ -368,50 +375,41 @@ public class TeamSelectionFragment extends BaseFragment {
         }
     }
 
-    private void onMonsterSelected() {
-        //Get the selected monster
-        UserMonster selectedMonster = mUserMonsters.get(viewPager.getCurrentItem());
-        Monster selectedMonserInfo = selectedMonster.getMonster();
-
-        //Display some log
-        LogHelper.d(TAG, "Monster selected: " + selectedMonster.toString());
-
-        //Show the selected monster
-        if (selectedMonserInfo != null) {
-            Glide.with(mContext)
-                    .load(selectedMonserInfo.baseSprite)
-                    .placeholder(R.drawable.default_monster)
-                    .bitmapTransform(new CropCircleTransformation(mContext))
-                    .error(R.drawable.default_monster)
-                    .into(selectedMonsterView.get(mSelectedMonster.size()));
+    private void setUpViewPager() {
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
         }
 
-        //Add the monster in the list (of selected monster)
-        mSelectedMonster.add(selectedMonster);
-
-        //Update 'start_fight' button with the current state
-        button_go_fight.setText(String.format(getResources().getString(R.string.teamSelection_msg_progress), mSelectedMonster.size(), mNeededMonster));
-
-        //If we've selected enough monster, we enable the button
-        if (mSelectedMonster.size() == mNeededMonster) {
-            onEnoughMonsterSelected();
-        }
-    }
-
-    private void onEnoughMonsterSelected() {
-        //Change text on the button
-        button_go_fight.setText(getResources().getString(R.string.teamSelection_msg_startFight));
-
-        //Set a listener for starting the fight
-        button_go_fight.setOnClickListener(new View.OnClickListener() {
+        mAdapter.addAll(mUserMonsters);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(View v) {
-                sendAcceptRequest();
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateArrowState();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
+        viewPager.setAdapter(mAdapter);
+        viewPagerArrowIndicator.setViewPager(viewPager);
+    }
 
-        //Disable monster selection
-        button_select_monster.setOnClickListener(null);
+    private void updateArrowState() {
+        if (mSelectedMonster.contains(mUserMonsters.get(viewPager.getCurrentItem()))) {
+            buttonSelectMonster.setImageResource(R.drawable.ic_expand_more_red_24dp);
+            buttonSelectMonster.setClickable(false);
+        } else {
+            buttonSelectMonster.setImageResource(R.drawable.ic_expand_more_accent_24dp);
+            buttonSelectMonster.setClickable(true);
+        }
     }
 
     private void sendAcceptRequest() {
@@ -439,7 +437,7 @@ public class TeamSelectionFragment extends BaseFragment {
                     map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
 
                     ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCurrentCombat.combatId);
+                    nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCombat.combatId);
 
                 } else {
                     onServiceDisconnected(null);
@@ -460,98 +458,5 @@ public class TeamSelectionFragment extends BaseFragment {
                 }
             }
         });
-    }
-
-    private void updateArrowState() {
-        if (mSelectedMonster.contains(mUserMonsters.get(viewPager.getCurrentItem()))) {
-            button_select_monster.setBackgroundResource(R.drawable.ic_arrow_downward_red_24dp);
-            button_select_monster.setClickable(false);
-        } else {
-            button_select_monster.setBackgroundResource(R.drawable.ic_arrow_downward_accent_24dp);
-            button_select_monster.setClickable(true);
-        }
-    }
-
-    /**
-     * Simple pager Adapter for displaying our monster
-     */
-    private static class UserMonsterPagerAdapter extends PagerAdapter {
-
-        private final List<UserMonster> mUserMonsters;
-        private final Context mContext;
-
-        public UserMonsterPagerAdapter(@NonNull Context context, @NonNull List<UserMonster> userMonsters) {
-            mUserMonsters = userMonsters;
-            mContext = context;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-
-            //Create the view
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_monster_selector, container, false);
-
-            //Retrieve the monster we'll display
-            UserMonster userMonster = mUserMonsters.get(position);
-
-            if (userMonster == null) {
-                return null;
-            }
-
-            Monster monster = userMonster.getMonster();
-            if (monster == null) {
-                return null;
-            }
-
-            //Populate monster information
-            Resources res = mContext.getResources();
-            ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monster.name);
-            ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(res.getString(
-                    R.string.integer),
-                    userMonster.level));
-            ((TextView) view.findViewById(R.id.textview_monster_hp)).setText(String.format(res.getString(
-                    R.string.teamSelection_msg_monsterHp),
-                    (int) monster.hp));
-            ((TextView) view.findViewById(R.id.textview_monster_attack)).setText(String.format(res.getString(
-                    R.string.teamSelection_msg_monsterAttack),
-                    (int) monster.attack));
-            ((TextView) view.findViewById(R.id.textview_monster_defense)).setText(String.format(res.getString(
-                    R.string.teamSelection_msg_monsterDefence),
-                    (int) monster.defense));
-
-            //Display monster picture
-            CircleImageView imageViewMonster = (CircleImageView) view.findViewById(R.id.imageView_monster);
-            Glide.with(mContext)
-                    .load(monster.baseSprite)
-                    .placeholder(R.drawable.default_monster)
-                    .centerCrop()
-                    .into(imageViewMonster);
-
-            //Add color shape around monster picture
-            imageViewMonster.setBorderColor(ContextCompat.getColor(mContext, monster.getElementColorResource()));
-
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public int getCount() {
-            return mUserMonsters.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mUserMonsters.get(position).getMonster().name;
-        }
     }
 }

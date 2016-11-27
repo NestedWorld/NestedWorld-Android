@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -220,8 +221,10 @@ public class ViewPagerWithIndicator extends LinearLayout {
     private void updateRoundIndicator() {
         for (int i = 0; i < mViewPager.getAdapter().getCount(); i++) {
             View view = roundedIndicatorContainer.getChildAt(i);
-            GradientDrawable background = (GradientDrawable) view.getBackground();
-            background.setColor(i == mViewPager.getCurrentItem() ? mRoundSelectedColor : mRoundDefaultColor);
+            if (view != null) {
+                GradientDrawable background = (GradientDrawable) view.getBackground();
+                background.setColor(i == mViewPager.getCurrentItem() ? mRoundSelectedColor : mRoundDefaultColor);
+            }
         }
     }
 
