@@ -72,37 +72,45 @@
             android:background="@drawable/ic_arrow_downward_accent_24dp"
             android:padding="8dip"/>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dip">
 
             <ImageView
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
                 android:id="@+id/imageview_selectedmonster_1"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                app:srcCompat="@drawable/ic_clear_black_24dp"/>
+                app:srcCompat="@drawable/ic_clear_24dp"/>
 
             <ImageView
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
                 android:id="@+id/imageview_selectedmonster_2"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                app:srcCompat="@drawable/ic_clear_black_24dp"/>
+                app:srcCompat="@drawable/ic_clear_24dp"/>
 
             <ImageView
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
                 android:id="@+id/imageview_selectedmonster_3"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                app:srcCompat="@drawable/ic_clear_black_24dp"/>
+                app:srcCompat="@drawable/ic_clear_24dp"/>
 
             <ImageView
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
                 android:id="@+id/imageview_selectedmonster_4"
                 android:layout_width="58dip"
                 android:layout_height="58dip"
-                app:srcCompat="@drawable/ic_clear_black_24dp"/>
+                app:srcCompat="@drawable/ic_clear_24dp"/>
 
         </LinearLayout>
 

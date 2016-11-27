@@ -56,6 +56,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
+import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class TeamSelectionFragment extends BaseFragment {
@@ -344,6 +345,7 @@ public class TeamSelectionFragment extends BaseFragment {
             Glide.with(mContext)
                     .load(selectedMonserInfo.baseSprite)
                     .placeholder(R.drawable.default_monster)
+                    .bitmapTransform(new CropCircleTransformation(mContext))
                     .error(R.drawable.default_monster)
                     .into(selectedMonsterView.get(mSelectedMonster.size()));
         }
@@ -482,7 +484,7 @@ public class TeamSelectionFragment extends BaseFragment {
                     (int) monster.defense));
 
             //Display monster picture
-            ImageView imageViewMonster = (ImageView) view.findViewById(R.id.imageView_monster);
+            CircleImageView imageViewMonster = (CircleImageView) view.findViewById(R.id.imageView_monster);
             Glide.with(mContext)
                     .load(monster.baseSprite)
                     .placeholder(R.drawable.default_monster)
@@ -490,7 +492,7 @@ public class TeamSelectionFragment extends BaseFragment {
                     .into(imageViewMonster);
 
             //Add color shape around monster picture
-            view.findViewById(R.id.user_monster_shape).setBackgroundColor(ContextCompat.getColor(mContext, monster.getElementColorResource()));
+            imageViewMonster.setBorderColor(ContextCompat.getColor(mContext, monster.getElementColorResource()));
 
             container.addView(view);
             return view;
