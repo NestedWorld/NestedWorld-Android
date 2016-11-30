@@ -5,7 +5,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'//Needed by butterknife
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'//Needed by greeenDao
         classpath 'io.fabric.tools:gradle:1.+'
     }
@@ -19,9 +18,7 @@ repositories {
 }
 
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'android-apt'
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -127,7 +124,7 @@ dependencies {
 
     //Annotation replacing findViewById()
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
-    apt "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
     //Support library
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
@@ -146,10 +143,6 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"//use Json converter
     compile "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"//display log
     compile "com.squareup.okhttp3:okhttp:${okHttpVersion}"
-
-    //Dependencies injection
-    compile 'com.google.dagger:dagger:2.x'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.x'
 
     //ORM
     compile 'org.greenrobot:greendao:3.2.0'
