@@ -147,6 +147,10 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"//display log
     compile "com.squareup.okhttp3:okhttp:${okHttpVersion}"
 
+    //Dependencies injection
+    compile 'com.google.dagger:dagger:2.x'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.x'
+
     //ORM
     compile 'org.greenrobot:greendao:3.2.0'
 
