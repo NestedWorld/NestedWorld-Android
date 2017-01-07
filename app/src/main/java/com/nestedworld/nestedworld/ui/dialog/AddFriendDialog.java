@@ -27,14 +27,6 @@ import retrofit2.Response;
 public class AddFriendDialog extends BaseDialogFragment {
 
     private final static String TAG = AddFriendDialog.class.getSimpleName();
-
-    /*
-     * #############################################################################################
-     * # Private field
-     * #############################################################################################
-     */
-    private Unbinder mUnbinder;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -46,6 +38,12 @@ public class AddFriendDialog extends BaseDialogFragment {
     TextInputEditText textInputEditTextFriendPseudo;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
+    private Unbinder mUnbinder;
 
     /*
      * #############################################################################################

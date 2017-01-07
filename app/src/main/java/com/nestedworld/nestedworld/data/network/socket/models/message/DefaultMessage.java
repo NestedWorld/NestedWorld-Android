@@ -26,11 +26,6 @@ public abstract class DefaultMessage {
     }
 
     /*
-    ** Child method
-     */
-    protected abstract void unSerialise(@NonNull final Map<Value, Value> message);
-
-    /*
     ** Utils
      */
     public SocketMessageType.MessageKind getIdKind() {
@@ -40,4 +35,9 @@ public abstract class DefaultMessage {
     public SocketMessageType.MessageKind getMessageKind() {
         return mMessageKind;
     }
+
+    /*
+    ** Child method
+     */
+    protected abstract void unSerialise(@NonNull final Map<Value, Value> message);
 }

@@ -19,13 +19,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.Portal;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.updater.PortalUpdater;
-import com.nestedworld.nestedworld.ui.dialog.EngagePortalFightDialog;
 import com.nestedworld.nestedworld.events.http.OnPortalUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.permission.PermissionHelper;
+import com.nestedworld.nestedworld.ui.dialog.EngagePortalFightDialog;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -63,6 +63,29 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
                 .replace(R.id.container, new MapFragment())
                 .addToBackStack(FRAGMENT_NAME)
                 .commit();
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onPortalsUpdated(OnPortalUpdatedEvent event) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        if (mMap != null) {
+            ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMap.draw(mContext, NestedWorldDatabase.getInstance()
+                            .getDataBase()
+                            .getPortalDao()
+                            .loadAll());
+                }
+            });
+        }
     }
 
     /*
@@ -239,29 +262,6 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     @Override
     public void onProviderDisabled(String provider) {
         LogHelper.d(TAG, "provider disable:" + provider);
-    }
-
-    /*
-    ** EventBus
-     */
-    @Subscribe
-    public void onPortalsUpdated(OnPortalUpdatedEvent event) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        if (mMap != null) {
-            ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mMap.draw(mContext, NestedWorldDatabase.getInstance()
-                            .getDataBase()
-                            .getPortalDao()
-                            .loadAll());
-                }
-            });
-        }
     }
 
     /*

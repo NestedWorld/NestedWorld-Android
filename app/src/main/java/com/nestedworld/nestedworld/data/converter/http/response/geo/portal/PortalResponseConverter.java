@@ -6,7 +6,7 @@ import com.nestedworld.nestedworld.data.converter.http.response.HttpResponseConv
 import com.nestedworld.nestedworld.data.database.entities.Portal;
 import com.nestedworld.nestedworld.data.network.http.models.response.geo.portal.PortalsResponse;
 
-public class PortalResponseConverter implements HttpResponseConverter<PortalsResponse.PortalResponse,Portal> {
+public class PortalResponseConverter implements HttpResponseConverter<PortalsResponse.PortalResponse, Portal> {
 
     /*
      * #############################################################################################

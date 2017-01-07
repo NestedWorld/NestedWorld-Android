@@ -43,6 +43,14 @@ public class WelcomeActivity extends BaseAppCompatActivity implements FragmentMa
         return super.onOptionsItemSelected(menuItem);
     }
 
+    @Override
+    public void onBackStackChanged() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
+        }
+    }
+
     /*
     ** Internal method
      */
@@ -57,14 +65,6 @@ public class WelcomeActivity extends BaseAppCompatActivity implements FragmentMa
 
             //Remove title
             actionBar.setDisplayShowTitleEnabled(false);
-        }
-    }
-
-    @Override
-    public void onBackStackChanged() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
         }
     }
 }

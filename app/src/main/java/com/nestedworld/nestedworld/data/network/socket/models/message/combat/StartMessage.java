@@ -3,9 +3,9 @@ package com.nestedworld.nestedworld.data.network.socket.models.message.combat;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.Monster;
 import com.nestedworld.nestedworld.data.database.entities.MonsterDao;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.data.network.socket.models.message.DefaultMessage;
 
@@ -132,19 +132,6 @@ public class StartMessage extends DefaultMessage {
         }
 
         /*
-        ** Life cycle
-         */
-        @Override
-        protected void unSerialise(@NonNull Map<Value, Value> message) {
-            this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
-            this.name = message.get(ValueFactory.newString("name")).asStringValue().asString();
-            this.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asLong();
-            this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asLong();
-            this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
-            this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();
-        }
-
-        /*
         ** Utils
          */
         @Nullable
@@ -155,6 +142,19 @@ public class StartMessage extends DefaultMessage {
                     .queryBuilder()
                     .where(MonsterDao.Properties.MonsterId.eq(monsterId))
                     .unique();
+        }
+
+        /*
+        ** Life cycle
+         */
+        @Override
+        protected void unSerialise(@NonNull Map<Value, Value> message) {
+            this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
+            this.name = message.get(ValueFactory.newString("name")).asStringValue().asString();
+            this.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asLong();
+            this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asLong();
+            this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
+            this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();
         }
 
         /*

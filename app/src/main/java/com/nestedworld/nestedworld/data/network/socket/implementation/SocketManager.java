@@ -38,8 +38,10 @@ public final class SocketManager {
      * # Constructor
      * #############################################################################################
      */
+
     /**
      * See {@link #SocketManager(String, int, int)}
+     *
      * @param hostname
      * @param port
      */
@@ -50,6 +52,7 @@ public final class SocketManager {
 
     /**
      * Create a new unconnectedSocket
+     *
      * @param hostname
      * @param port
      * @param timeOut

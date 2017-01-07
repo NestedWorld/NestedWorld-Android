@@ -24,17 +24,17 @@ public class ResultMessage extends DefaultMessage {
     }
 
     /*
+    ** Getter & Setter
+     */
+    public Map<Value, Value> getMessage() {
+        return message;
+    }
+
+    /*
     ** Default message implementation
      */
     @Override
     protected void unSerialise(@NonNull Map<Value, Value> message) {
         this.message = message;
-    }
-
-    /*
-    ** Getter & Setter
-     */
-    public Map<Value, Value> getMessage() {
-        return message;
     }
 }

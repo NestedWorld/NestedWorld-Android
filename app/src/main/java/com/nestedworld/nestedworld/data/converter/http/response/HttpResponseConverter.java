@@ -7,6 +7,7 @@ import com.nestedworld.nestedworld.data.network.http.models.response.BaseHttpEnt
 
 /**
  * Used to convert a source into a target
+ *
  * @param <S> Response (source)
  * @param <T> Realm object (target)
  */

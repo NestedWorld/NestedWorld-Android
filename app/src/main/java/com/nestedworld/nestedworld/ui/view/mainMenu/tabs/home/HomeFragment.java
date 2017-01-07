@@ -19,14 +19,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.session.Session;
 import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
-import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.events.http.OnUserUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.aws.AwsHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
+import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 
@@ -88,48 +88,6 @@ public class HomeFragment extends BaseFragment {
 
     /*
      * #############################################################################################
-     * # Life cycle
-     * #############################################################################################
-     */
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_tab_home;
-    }
-
-    @Override
-    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-
-        setupTabs();
-        displayUserInfo();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode,int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK) {
-            if ((requestCode == PICK_BACKGROUND_IMAGE_REQUEST) || (requestCode == PICK_PROFIL_IMAGE_REQUEST)) {
-                if (data != null && data.getData() != null) {
-                    Uri uri = data.getData();
-                    handleImagePickerResult(requestCode, uri);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
-
-    /*
-     * #############################################################################################
      * # Event bus
      * #############################################################################################
      */
@@ -161,6 +119,48 @@ public class HomeFragment extends BaseFragment {
     @OnClick(R.id.imageView_user_background)
     public void selectBackgroundPicture() {
         startImagePickerIntent(PICK_BACKGROUND_IMAGE_REQUEST);
+    }
+
+    /*
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_tab_home;
+    }
+
+    @Override
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+        setupTabs();
+        displayUserInfo();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if ((requestCode == PICK_BACKGROUND_IMAGE_REQUEST) || (requestCode == PICK_PROFIL_IMAGE_REQUEST)) {
+                if (data != null && data.getData() != null) {
+                    Uri uri = data.getData();
+                    handleImagePickerResult(requestCode, uri);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /*

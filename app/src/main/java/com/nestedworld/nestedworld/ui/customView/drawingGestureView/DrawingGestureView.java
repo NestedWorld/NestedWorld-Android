@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.ui.customView.drawingGestureView.listener.DrawingGestureListener;
 import com.nestedworld.nestedworld.ui.customView.drawingGestureView.listener.OnFinishMoveListener;
-import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +25,14 @@ import java.util.List;
  **/
 public class DrawingGestureView extends View {
     private final static String TAG = DrawingGestureView.class.getSimpleName();
-
     private static final float TOUCH_TOLERANCE = 4;
+
     private final Paint mPaint;
     private final Path mPath;
     private final Paint mBitmapPaint;
     private final Paint circlePaint;
     private final Path circlePath;
+
     private int width;
     private int height;
     private Canvas mCanvas;
@@ -49,8 +50,8 @@ public class DrawingGestureView extends View {
      * # Constructor
      * #############################################################################################
      */
-    public DrawingGestureView(@NonNull final Context c) {
-        super(c);
+    public DrawingGestureView(@NonNull final Context context) {
+        super(context);
 
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);

@@ -9,13 +9,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.UserMonster;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
+import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.adapter.recycler.UserMonsterAdapter;
 import com.nestedworld.nestedworld.ui.customView.recycler.GridAutoFitRecyclerView;
-import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 
@@ -43,6 +43,26 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
     TextView textViewNoMonster;
     @BindView(R.id.swipeRefreshLayout_home_monster)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    /*
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
+     */
+    @Subscribe
+    public void onUserMonstersUpdated(OnUserMonstersUpdatedEvent onUserMonstersUpdatedEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateMonstersList();
+            }
+        });
+    }
 
     /*
      * #############################################################################################
@@ -95,26 +115,6 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
                 swipeRefreshLayout.setRefreshing(false);
 
                 //TODO check kind and display error
-            }
-        });
-    }
-
-    /*
-     * #############################################################################################
-     * # EventBus
-     * #############################################################################################
-     */
-    @Subscribe
-    public void onUserMonstersUpdated(OnUserMonstersUpdatedEvent onUserMonstersUpdatedEvent) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                populateMonstersList();
             }
         });
     }

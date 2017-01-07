@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.data.network.http.models.response.geo.portal;
 
 import com.google.gson.annotations.Expose;
-import com.nestedworld.nestedworld.data.database.entities.Portal;
 import com.nestedworld.nestedworld.data.network.http.models.response.BaseHttpEntity;
 
 import java.util.List;

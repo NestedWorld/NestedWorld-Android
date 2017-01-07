@@ -35,6 +35,7 @@ public final class NestedWorldDatabase {
      * # Public (static) method
      * #############################################################################################
      */
+
     /**
      * Should be called for avoiding leak
      */

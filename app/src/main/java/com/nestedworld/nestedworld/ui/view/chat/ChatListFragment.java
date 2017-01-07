@@ -14,12 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.friend.Friend;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.ui.adapter.array.ChatAdapter;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
+import com.nestedworld.nestedworld.ui.adapter.array.ChatAdapter;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -34,14 +34,6 @@ import butterknife.BindView;
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public final static String FRAGMENT_NAME = ChatListFragment.class.getSimpleName();
-
-    /*
-     * #############################################################################################
-     * # Private field
-     * #############################################################################################
-     */
-    private ChatAdapter mAdapter;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -55,6 +47,12 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.textview_no_friend)
     TextView textViewNoFriend;
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
+    private ChatAdapter mAdapter;
 
     /*
      * #############################################################################################
@@ -66,6 +64,26 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
                 .replace(R.id.container, new ChatListFragment(), FRAGMENT_NAME)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /*
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
+     */
+    @Subscribe
+    public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateFriendList();
+            }
+        });
     }
 
     /*
@@ -138,26 +156,6 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
 
                 //Display error message
                 Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    /*
-     * #############################################################################################
-     * # EventBus
-     * #############################################################################################
-     */
-    @Subscribe
-    public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                populateFriendList();
             }
         });
     }

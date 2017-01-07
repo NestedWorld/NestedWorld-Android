@@ -8,7 +8,6 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,15 +29,15 @@ import com.nestedworld.nestedworld.data.network.socket.models.message.combat.Sta
 import com.nestedworld.nestedworld.data.network.socket.models.request.combat.ReplaceMonsterRequest;
 import com.nestedworld.nestedworld.data.network.socket.models.request.combat.SendAttackRequest;
 import com.nestedworld.nestedworld.data.network.socket.service.SocketService;
-import com.nestedworld.nestedworld.ui.customView.drawingGestureView.DrawingGestureView;
-import com.nestedworld.nestedworld.ui.customView.drawingGestureView.listener.DrawingGestureListener;
-import com.nestedworld.nestedworld.ui.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.events.socket.combat.OnAttackReceiveEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatEndEvent;
 import com.nestedworld.nestedworld.events.socket.combat.OnMonsterKoEvent;
 import com.nestedworld.nestedworld.helpers.battle.BattleHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.ui.customView.drawingGestureView.DrawingGestureView;
+import com.nestedworld.nestedworld.ui.customView.drawingGestureView.listener.DrawingGestureListener;
+import com.nestedworld.nestedworld.ui.customView.drawingGestureView.listener.OnFinishMoveListener;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.view.base.BattlePlayerFragment;
@@ -58,6 +57,23 @@ import retrofit2.Response;
 
 public class BattleFragment extends BaseFragment {
 
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
+    @BindView(R.id.progressView)
+    ProgressView progressView;
+    @BindView(R.id.imageView_battle_background)
+    ImageView battleBackground;
+    @BindViews({
+            R.id.imageView_top,
+            R.id.imageView_top_right,
+            R.id.imageView_bottom_right,
+            R.id.imageView_bottom,
+            R.id.imageView_bottom_left,
+            R.id.imageView_top_left})
+    List<ImageView> mTitles;
     private String mUserGestureInput = "";
     private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
         @Override
@@ -100,24 +116,6 @@ public class BattleFragment extends BaseFragment {
 
     /*
      * #############################################################################################
-     * # Butterknife widget binding
-     * #############################################################################################
-     */
-    @BindView(R.id.progressView)
-    ProgressView progressView;
-    @BindView(R.id.imageView_battle_background)
-    ImageView battleBackground;
-    @BindViews({
-            R.id.imageView_top,
-            R.id.imageView_top_right,
-            R.id.imageView_bottom_right,
-            R.id.imageView_bottom,
-            R.id.imageView_bottom_left,
-            R.id.imageView_top_left})
-    List<ImageView> mTitles;
-
-    /*
-     * #############################################################################################
      * # Public (static) method
      * #############################################################################################
      */
@@ -132,58 +130,6 @@ public class BattleFragment extends BaseFragment {
                 .beginTransaction()
                 .replace(R.id.container, fightFragment)
                 .commit();
-    }
-
-    /*
-     * #############################################################################################
-     * # Life cycle
-     * #############################################################################################
-     */
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_fight_battle;
-    }
-
-    @Override
-    protected void init(@NonNull final View rootView, @Nullable Bundle savedInstanceState) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        //Check arg
-        if (mUserTeam == null || mStartMessage == null) {
-            //Display some log
-            LogHelper.d(TAG, "You should call setStartMessage() and setUserTeam() before binding the fragment");
-
-            //Warm the player we can't start this battle
-            Toast.makeText(mContext, "Sorry, can't start your battle", Toast.LENGTH_LONG).show();
-
-            //Stop current activity
-            ((BaseAppCompatActivity) mContext).finish();
-            return;
-        }
-
-        //start loading animation
-        progressView.start();
-
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-
-        //Init
-        setupEnvironment();
-        setupActionBar();
-        setupDrawingGestureView(rootView);
-        setupPlayers();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     /*
@@ -264,6 +210,58 @@ public class BattleFragment extends BaseFragment {
         }
 
         BattleResultFragment.load(getFragmentManager(), "Fight Ended");
+    }
+
+    /*
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_fight_battle;
+    }
+
+    @Override
+    protected void init(@NonNull final View rootView, @Nullable Bundle savedInstanceState) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Check arg
+        if (mUserTeam == null || mStartMessage == null) {
+            //Display some log
+            LogHelper.d(TAG, "You should call setStartMessage() and setUserTeam() before binding the fragment");
+
+            //Warm the player we can't start this battle
+            Toast.makeText(mContext, "Sorry, can't start your battle", Toast.LENGTH_LONG).show();
+
+            //Stop current activity
+            ((BaseAppCompatActivity) mContext).finish();
+            return;
+        }
+
+        //start loading animation
+        progressView.start();
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+        //Init
+        setupEnvironment();
+        setupActionBar();
+        setupDrawingGestureView(rootView);
+        setupPlayers();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /*

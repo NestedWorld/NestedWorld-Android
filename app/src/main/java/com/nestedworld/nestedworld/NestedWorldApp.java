@@ -25,18 +25,18 @@ public class NestedWorldApp extends Application {
      * #############################################################################################
      */
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
 
         initFontOverrider();
         setupCrashLogger();
         setupGreenDao();
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     /*

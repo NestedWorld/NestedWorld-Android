@@ -10,13 +10,13 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.Combat;
 import com.nestedworld.nestedworld.data.database.entities.CombatDao;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.AvailableMessage;
-import com.nestedworld.nestedworld.ui.adapter.array.FightAdapter;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.ui.adapter.array.FightAdapter;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 
@@ -43,6 +43,25 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         fragmentManager.beginTransaction()
                 .replace(R.id.container, new FightListFragment())
                 .commit();
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
+        LogHelper.d(TAG, "onNewCombatAvailable");
+
+        AvailableMessage message = event.getMessage();
+        Combat newCombat = NestedWorldDatabase
+                .getInstance()
+                .getDataBase()
+                .getCombatDao()
+                .queryBuilder()
+                .where(CombatDao.Properties.CombatId.eq(message.getMessageId()))
+                .unique();
+
+        mAdapter.add(newCombat);
     }
 
     /*
@@ -76,19 +95,6 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         }
     }
 
-    /*
-    ** Private method
-     */
-    private void setupAdapter() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        mAdapter = new FightAdapter(mContext);
-        listView.setAdapter(mAdapter);
-    }
-
     @Override
     public void onRefresh() {
         //Start loading animation
@@ -115,6 +121,19 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         swipeRefreshLayout.setRefreshing(false);
     }
 
+    /*
+    ** Private method
+     */
+    private void setupAdapter() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        mAdapter = new FightAdapter(mContext);
+        listView.setAdapter(mAdapter);
+    }
+
     private void setupSwipeRefresh() {
         swipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -129,24 +148,5 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         if (actionBar != null) {
             actionBar.setTitle(getResources().getString(R.string.fightList_title));
         }
-    }
-
-    /*
-    ** EventBus
-     */
-    @Subscribe
-    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
-        LogHelper.d(TAG, "onNewCombatAvailable");
-
-        AvailableMessage message = event.getMessage();
-        Combat newCombat = NestedWorldDatabase
-                .getInstance()
-                .getDataBase()
-                .getCombatDao()
-                .queryBuilder()
-                .where(CombatDao.Properties.CombatId.eq(message.getMessageId()))
-                .unique();
-
-        mAdapter.add(newCombat);
     }
 }

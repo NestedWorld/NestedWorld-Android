@@ -64,6 +64,7 @@ public final class NestedWorldHttpApi {
      * # Public (static) method
      * #############################################################################################
      */
+
     /**
      * Singleton
      *
@@ -82,56 +83,6 @@ public final class NestedWorldHttpApi {
      */
     public static void reset() {
         mSingleton = null;
-    }
-
-    /*
-     * #############################################################################################
-     * # Internal method
-     * #############################################################################################
-     */
-    private void init() {
-        LogHelper.d(TAG, "Init API(http) (end_point = " + HttpEndPoint.BASE_END_POINT + ")");
-
-        // Define a request interceptor for displaying some log
-        final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        // Define a request interception for adding some custom headers
-        final Interceptor httpHeaderInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-
-                final Request.Builder requestBuilder = chain.request().newBuilder();
-
-                final Session session = SessionHelper.getSession();
-                if (session != null) {
-                    requestBuilder.addHeader("X-User-Email", session.email);
-                    requestBuilder.addHeader("Authorization", session.authToken);
-                }
-
-                return chain.proceed(requestBuilder.build());
-            }
-        };
-
-        // We declare the client and we add our interceptors …
-        final OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(httpHeaderInterceptor)
-                .addInterceptor(httpLoggingInterceptor)// we add logging interceptor as last httpHeaderInterceptor
-                .build();
-
-        // Create the converterFactory
-        final GsonBuilder builder = new GsonBuilder();
-        builder.excludeFieldsWithoutExposeAnnotation();
-        final GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(builder.create());
-
-        // Init retrofit
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(HttpEndPoint.BASE_END_POINT)
-                .addConverterFactory(gsonConverterFactory)
-                .client(client)
-                .build();
-
-        mClient = retrofit.create(NestedWorldApiInterface.class);
     }
 
     /*
@@ -212,5 +163,55 @@ public final class NestedWorldHttpApi {
     public Call<PortalsResponse> getPortals(final double latitude,
                                             final double longitude) {
         return mClient.getPortals(latitude, longitude);
+    }
+
+    /*
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
+     */
+    private void init() {
+        LogHelper.d(TAG, "Init API(http) (end_point = " + HttpEndPoint.BASE_END_POINT + ")");
+
+        // Define a request interceptor for displaying some log
+        final HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        // Define a request interception for adding some custom headers
+        final Interceptor httpHeaderInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+
+                final Request.Builder requestBuilder = chain.request().newBuilder();
+
+                final Session session = SessionHelper.getSession();
+                if (session != null) {
+                    requestBuilder.addHeader("X-User-Email", session.email);
+                    requestBuilder.addHeader("Authorization", session.authToken);
+                }
+
+                return chain.proceed(requestBuilder.build());
+            }
+        };
+
+        // We declare the client and we add our interceptors …
+        final OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(httpHeaderInterceptor)
+                .addInterceptor(httpLoggingInterceptor)// we add logging interceptor as last httpHeaderInterceptor
+                .build();
+
+        // Create the converterFactory
+        final GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+        final GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(builder.create());
+
+        // Init retrofit
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpEndPoint.BASE_END_POINT)
+                .addConverterFactory(gsonConverterFactory)
+                .client(client)
+                .build();
+
+        mClient = retrofit.create(NestedWorldApiInterface.class);
     }
 }

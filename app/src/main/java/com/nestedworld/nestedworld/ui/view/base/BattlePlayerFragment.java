@@ -9,17 +9,11 @@ import com.nestedworld.nestedworld.data.network.http.models.response.monsters.Mo
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.ui.adapter.recycler.BattleMonsterAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BattlePlayerFragment extends BaseFragment {
-
-    /*
-     * #############################################################################################
-     * # Private field
-     * #############################################################################################
-     */
-    private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
 
     /*
      * #############################################################################################
@@ -29,8 +23,15 @@ public abstract class BattlePlayerFragment extends BaseFragment {
     protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
     protected final List<StartMessage.StartMessagePlayerMonster> mFrontMonster = new ArrayList<>();
     protected final List<StartMessage.StartMessagePlayerMonster> mDeadMonster = new ArrayList<>();
-    @Nullable protected List<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
+    @Nullable
+    protected List<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
     protected int mRemainingMonster;
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
+    private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
 
     /*
      * #############################################################################################
@@ -38,10 +39,10 @@ public abstract class BattlePlayerFragment extends BaseFragment {
      * #############################################################################################
      */
     public abstract void updateCurrentMonsterLife(@NonNull final AttackReceiveMessage.AttackReceiveMessageMonster monster);
+
     public abstract void displayAttackReceive();
+
     public abstract void displayAttackSend();
-    protected abstract void displayMonsterKo(@NonNull final StartMessage.StartMessagePlayerMonster monster);
-    protected abstract void displayMonsterDetails(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 
     /*
      * #############################################################################################
@@ -114,4 +115,8 @@ public abstract class BattlePlayerFragment extends BaseFragment {
         }
         return null;
     }
+
+    protected abstract void displayMonsterKo(@NonNull final StartMessage.StartMessagePlayerMonster monster);
+
+    protected abstract void displayMonsterDetails(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 }

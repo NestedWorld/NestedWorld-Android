@@ -59,8 +59,10 @@ public final class NestedWorldSocketAPI implements SocketListener {
      * # Public (static) method
      * #############################################################################################
      */
+
     /**
      * Singleton
+     *
      * @return singleton instance
      */
     @NonNull

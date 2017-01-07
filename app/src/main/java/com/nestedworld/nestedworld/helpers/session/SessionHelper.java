@@ -3,9 +3,9 @@ package com.nestedworld.nestedworld.helpers.session;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.session.Session;
 import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 /**

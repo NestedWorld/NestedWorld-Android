@@ -148,6 +148,17 @@ public class SocketService extends Service {
 
     /*
      * #############################################################################################
+     * # Public method (for client)
+     * #############################################################################################
+     */
+    @Nullable
+    public NestedWorldSocketAPI getApiInstance() {
+        LogHelper.d(TAG, "returning instance (isNull=" + (mNestedWorldSocketAPI == null) + ")");
+        return mNestedWorldSocketAPI;
+    }
+
+    /*
+     * #############################################################################################
      * # Service implementation
      * #############################################################################################
      */
@@ -198,17 +209,6 @@ public class SocketService extends Service {
     @Override
     public void onDestroy() {
         NestedWorldSocketAPI.getInstance().disconnect();
-    }
-
-    /*
-     * #############################################################################################
-     * # Public method (for client)
-     * #############################################################################################
-     */
-    @Nullable
-    public NestedWorldSocketAPI getApiInstance() {
-        LogHelper.d(TAG, "returning instance (isNull=" + (mNestedWorldSocketAPI == null) + ")");
-        return mNestedWorldSocketAPI;
     }
 
     /*

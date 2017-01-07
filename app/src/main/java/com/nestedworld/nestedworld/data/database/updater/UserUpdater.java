@@ -3,7 +3,6 @@ package com.nestedworld.nestedworld.data.database.updater;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
-import com.nestedworld.nestedworld.data.database.entities.session.SessionDao;
 import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
 import com.nestedworld.nestedworld.data.database.entities.session.SessionDataDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;

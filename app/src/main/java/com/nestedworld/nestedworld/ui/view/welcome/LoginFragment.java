@@ -56,18 +56,6 @@ public class LoginFragment extends BaseFragment {
     }
 
     /*
-    ** Life Cycle
-     */
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_login;
-    }
-
-    @Override
-    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-    }
-
-    /*
     ** ButterKnife callback
      */
     @OnClick(R.id.button_login)
@@ -101,6 +89,18 @@ public class LoginFragment extends BaseFragment {
         }
 
         sendForgotPasswordRequest(email);
+    }
+
+    /*
+    ** Life Cycle
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_login;
+    }
+
+    @Override
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
     }
 
     /*

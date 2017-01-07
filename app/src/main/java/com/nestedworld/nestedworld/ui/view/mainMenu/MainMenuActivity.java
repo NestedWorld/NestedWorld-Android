@@ -26,11 +26,11 @@ import com.nestedworld.nestedworld.data.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.data.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
+import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.chat.ChatListFragment;
 import com.nestedworld.nestedworld.ui.view.fight.FightProcessActivity;
@@ -78,6 +78,15 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     ProgressView progressView;
 
     /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
+        //We want to redraw the toolbar
+        invalidateOptionsMenu();
+    }
+
+    /*
     ** Life cycle
      */
     @Override
@@ -104,6 +113,16 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         invalidateOptionsMenu();
 
         updateDataBase();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopSocketService();
+
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -146,16 +165,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopSocketService();
-
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
-
-    @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
@@ -174,15 +183,6 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    /*
-    ** EventBus
-     */
-    @Subscribe
-    public void onNewCombatAvailable(OnAvailableMessageEvent event) {
-        //We want to redraw the toolbar
-        invalidateOptionsMenu();
     }
 
     /*

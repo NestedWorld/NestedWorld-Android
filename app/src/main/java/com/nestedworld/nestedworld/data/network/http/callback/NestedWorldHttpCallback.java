@@ -13,6 +13,16 @@ public abstract class NestedWorldHttpCallback<T> implements retrofit2.Callback<T
 
     /*
      * #############################################################################################
+     * # Method every child will have to implement
+     * #############################################################################################
+     */
+    public abstract void onSuccess(@NonNull final Response<T> response);
+
+    public abstract void onError(@NonNull final KIND errorKind,
+                                 @Nullable final Response<T> response);
+
+    /*
+     * #############################################################################################
      * # retrofit2.Callback<T> implementation
      * #############################################################################################
      */
@@ -35,16 +45,6 @@ public abstract class NestedWorldHttpCallback<T> implements retrofit2.Callback<T
             onError(KIND.UNEXPECTED, null);
         }
     }
-
-    /*
-     * #############################################################################################
-     * # Method every child will have to implement
-     * #############################################################################################
-     */
-    public abstract void onSuccess(@NonNull final Response<T> response);
-
-    public abstract void onError(@NonNull final KIND errorKind,
-                                 @Nullable final Response<T> response);
 
     public enum KIND {
         NETWORK,

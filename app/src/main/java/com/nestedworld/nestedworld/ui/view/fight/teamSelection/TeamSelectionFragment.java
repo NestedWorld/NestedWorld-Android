@@ -19,24 +19,24 @@ import android.widget.Toast;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.Combat;
 import com.nestedworld.nestedworld.data.database.entities.CombatDao;
 import com.nestedworld.nestedworld.data.database.entities.Monster;
-import com.nestedworld.nestedworld.data.database.entities.session.Session;
 import com.nestedworld.nestedworld.data.database.entities.UserMonster;
+import com.nestedworld.nestedworld.data.database.entities.session.Session;
 import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.data.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.data.network.socket.service.SocketService;
-import com.nestedworld.nestedworld.ui.adapter.pager.UserMonsterPagerAdapter;
-import com.nestedworld.nestedworld.ui.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
+import com.nestedworld.nestedworld.ui.adapter.pager.UserMonsterPagerAdapter;
+import com.nestedworld.nestedworld.ui.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.view.fight.battle.BattleFragment;
@@ -107,67 +107,6 @@ public class TeamSelectionFragment extends BaseFragment {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, newFragment)
                 .commit();
-    }
-
-    /*
-    ** Life cycle
-     */
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_team_selection;
-    }
-
-    @Override
-    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        //Check if fragment has been attach
-        if (mContext == null) {
-            return;
-        }
-
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-
-        if (!parseArgs()) {
-            //Cannot get selected Combat, display error and finish current activity
-            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
-            ((BaseAppCompatActivity) mContext).finish();
-        } else {
-            //Change action bar title
-            setupActionBar();
-
-            //Retrieve userMonster
-            mUserMonsters = NestedWorldDatabase.getInstance()
-                    .getDataBase()
-                    .getUserMonsterDao()
-                    .loadAll();
-
-            if (mUserMonsters.size() < mMonsterCountRecommended) {
-                Toast.makeText(mContext, "You don't have enough monster (" + mMonsterCountRecommended + "required)", Toast.LENGTH_LONG).show();
-                ((BaseAppCompatActivity) mContext).finish();
-            }
-
-            //Init the viewPager (it will display player's monster)
-            setUpViewPager();
-
-            //init header block (with players information)
-            setupHeader();
-
-            //Init button textViewState (it display the number of selected monster)
-            textViewState.setPaintFlags(textViewState.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            textViewState.setText(String.format(getResources().getString(
-                    R.string.teamSelection_msg_progress),
-                    mMonsterCountRecommended,
-                    mMonsterRequire));
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-        super.onDestroyView();
     }
 
     /*
@@ -276,6 +215,67 @@ public class TeamSelectionFragment extends BaseFragment {
 
         //Clear arrow state
         updateArrowState();
+    }
+
+    /*
+    ** Life cycle
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_team_selection;
+    }
+
+    @Override
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        //Check if fragment has been attach
+        if (mContext == null) {
+            return;
+        }
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+        if (!parseArgs()) {
+            //Cannot get selected Combat, display error and finish current activity
+            Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
+            ((BaseAppCompatActivity) mContext).finish();
+        } else {
+            //Change action bar title
+            setupActionBar();
+
+            //Retrieve userMonster
+            mUserMonsters = NestedWorldDatabase.getInstance()
+                    .getDataBase()
+                    .getUserMonsterDao()
+                    .loadAll();
+
+            if (mUserMonsters.size() < mMonsterCountRecommended) {
+                Toast.makeText(mContext, "You don't have enough monster (" + mMonsterCountRecommended + "required)", Toast.LENGTH_LONG).show();
+                ((BaseAppCompatActivity) mContext).finish();
+            }
+
+            //Init the viewPager (it will display player's monster)
+            setUpViewPager();
+
+            //init header block (with players information)
+            setupHeader();
+
+            //Init button textViewState (it display the number of selected monster)
+            textViewState.setPaintFlags(textViewState.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            textViewState.setText(String.format(getResources().getString(
+                    R.string.teamSelection_msg_progress),
+                    mMonsterCountRecommended,
+                    mMonsterRequire));
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroyView();
     }
 
     /*

@@ -61,18 +61,6 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     /*
-    ** Life cycle
-     */
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_create_account;
-    }
-
-    @Override
-    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-    }
-
-    /*
     ** ButterKnife callback
      */
     @OnClick(R.id.button_inscription)
@@ -90,6 +78,18 @@ public class CreateAccountFragment extends BaseFragment {
 
         //Send request
         sendCreateAccountRequest(email, password, pseudo);
+    }
+
+    /*
+    ** Life cycle
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_create_account;
+    }
+
+    @Override
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
     }
 
     /*

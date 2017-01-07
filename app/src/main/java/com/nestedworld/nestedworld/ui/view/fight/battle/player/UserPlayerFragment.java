@@ -76,6 +76,19 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
     /*
      * #############################################################################################
+     * # Public method
+     * #############################################################################################
+     */
+    @Nullable
+    public UserMonster getNextMonster() {
+        if (mTeam.isEmpty()) {
+            return null;
+        }
+        return mTeam.get(0);
+    }
+
+    /*
+     * #############################################################################################
      * # Life cycle
      * #############################################################################################
      */
@@ -107,17 +120,24 @@ public class UserPlayerFragment extends BattlePlayerFragment {
         }
     }
 
-    /*
-     * #############################################################################################
-     * # Public method
-     * #############################################################################################
-     */
-    @Nullable
-    public UserMonster getNextMonster() {
-        if (mTeam.isEmpty()) {
-            return null;
+    @Override
+    protected void displayMonsterDetails(@NonNull StartMessage.StartMessagePlayerMonster monster) {
+        //Populate widget;
+        monsterName.setText(monster.name);
+        monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
+        progressBarMonsterHp.setMax(monster.hp);
+        progressBarMonsterHp.setProgress(monster.hp);
+        monsterLife.setText(String.valueOf(monster.hp));
+
+        //Populate monster sprite
+        final Monster monsterInfos = monster.info();
+        if (monsterInfos != null) {
+            Glide.with(mContext)
+                    .load(monsterInfos.baseSprite)
+                    .placeholder(R.drawable.default_monster)
+                    .error(R.drawable.default_monster)
+                    .into(monsterPicture);
         }
-        return mTeam.get(0);
     }
 
     /*
@@ -182,26 +202,6 @@ public class UserPlayerFragment extends BattlePlayerFragment {
                 }
                 return;
             }
-        }
-    }
-
-    @Override
-    protected void displayMonsterDetails(@NonNull StartMessage.StartMessagePlayerMonster monster) {
-        //Populate widget;
-        monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(getString(R.string.combat_msg_monster_lvl), monster.level));
-        progressBarMonsterHp.setMax(monster.hp);
-        progressBarMonsterHp.setProgress(monster.hp);
-        monsterLife.setText(String.valueOf(monster.hp));
-
-        //Populate monster sprite
-        final Monster monsterInfos = monster.info();
-        if (monsterInfos != null) {
-            Glide.with(mContext)
-                    .load(monsterInfos.baseSprite)
-                    .placeholder(R.drawable.default_monster)
-                    .error(R.drawable.default_monster)
-                    .into(monsterPicture);
         }
     }
 

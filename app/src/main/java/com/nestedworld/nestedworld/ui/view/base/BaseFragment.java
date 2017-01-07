@@ -39,6 +39,7 @@ public abstract class BaseFragment extends Fragment {
      * # Method every child will have to implement
      * #############################################################################################
      */
+
     /**
      * get the layout id
      * it will be use under onCreateView()
@@ -51,6 +52,37 @@ public abstract class BaseFragment extends Fragment {
      * init the fragment, this is the equivalent of onCreateView
      */
     protected abstract void init(@NonNull final View rootView, @Nullable final Bundle savedInstanceState);
+
+    /*
+     * #############################################################################################
+     * # Protected method
+     * #############################################################################################
+     */
+    protected void onFatalError() {
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ApplicationHelper.logout(mContext);
+
+        Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
+
+        //go to launch screen
+        final Intent intent = new Intent(mContext, WelcomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    protected void startActivity(@NonNull final Class clazz) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        final Intent intent = new Intent(mContext, clazz);
+        startActivity(intent);
+    }
 
     /*
      * #############################################################################################
@@ -96,36 +128,5 @@ public abstract class BaseFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mContext = null;
-    }
-
-    /*
-     * #############################################################################################
-     * # Protected method
-     * #############################################################################################
-     */
-    protected void onFatalError() {
-        //check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        ApplicationHelper.logout(mContext);
-
-        Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
-
-        //go to launch screen
-        final Intent intent = new Intent(mContext, WelcomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
-
-    protected void startActivity(@NonNull final Class clazz) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        final Intent intent = new Intent(mContext, clazz);
-        startActivity(intent);
     }
 }

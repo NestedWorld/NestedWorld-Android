@@ -15,10 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.friend.Friend;
 import com.nestedworld.nestedworld.data.database.entities.friend.FriendDao;
 import com.nestedworld.nestedworld.data.database.entities.friend.FriendData;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 
@@ -26,9 +26,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
-
-    private ArrayAdapter<String> itemAdapter;
-    private Friend mFriend;
 
     /*
      * #############################################################################################
@@ -39,6 +36,8 @@ public class ChatFragment extends BaseFragment {
     EditText editTextChat;
     @BindView(R.id.listView_chat)
     ListView listViewChat;
+    private ArrayAdapter<String> itemAdapter;
+    private Friend mFriend;
 
     /*
      * #############################################################################################
@@ -57,6 +56,21 @@ public class ChatFragment extends BaseFragment {
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /*
+    ** Butterknife callback
+     */
+    @OnClick(R.id.button_send_message)
+    public void sendMessage() {
+        //add the text on the adapter
+        itemAdapter.add(editTextChat.getText().toString());
+
+        //update adapter
+        itemAdapter.notifyDataSetChanged();
+
+        //clear editText content
+        editTextChat.setText("");
     }
 
     /*
@@ -91,21 +105,6 @@ public class ChatFragment extends BaseFragment {
             setupActionBar();
             setUpChat();
         }
-    }
-
-    /*
-    ** Butterknife callback
-     */
-    @OnClick(R.id.button_send_message)
-    public void sendMessage() {
-        //add the text on the adapter
-        itemAdapter.add(editTextChat.getText().toString());
-
-        //update adapter
-        itemAdapter.notifyDataSetChanged();
-
-        //clear editText content
-        editTextChat.setText("");
     }
 
     /*

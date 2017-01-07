@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.google.gson.JsonSyntaxException;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.DaoSession;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.data.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -19,15 +19,6 @@ import retrofit2.Response;
 
 public abstract class EntityUpdater<T> {
     protected final static String TAG = EntityUpdater.class.getSimpleName();
-
-    /*
-     * #############################################################################################
-     * # Method every child will have to implement
-     * #############################################################################################
-     */
-    @NonNull
-    protected abstract Call<T> getRequest();
-    protected abstract void updateEntity(@NonNull final Response<T> response);
 
     /*
      * #############################################################################################
@@ -58,6 +49,16 @@ public abstract class EntityUpdater<T> {
             }
         }.execute();
     }
+
+    /*
+     * #############################################################################################
+     * # Method every child will have to implement
+     * #############################################################################################
+     */
+    @NonNull
+    protected abstract Call<T> getRequest();
+
+    protected abstract void updateEntity(@NonNull final Response<T> response);
 
     /*
      * #############################################################################################

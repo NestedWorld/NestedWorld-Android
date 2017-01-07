@@ -59,6 +59,37 @@ public class ProfileFragment extends BaseFragment {
     }
 
     /*
+    ** Butterknife callback
+     */
+    @OnClick(R.id.button_logout)
+    public void logout() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        /*Send logout request*/
+        NestedWorldHttpApi.getInstance().logout().enqueue(new NestedWorldHttpCallback<LogoutResponse>() {
+            @Override
+            public void onSuccess(@NonNull Response<LogoutResponse> response) {
+                //Logout success
+            }
+
+            @Override
+            public void onError(@NonNull KIND errorKind, @Nullable Response<LogoutResponse> response) {
+                //Logout failed
+            }
+        });
+
+        ApplicationHelper.logout(mContext);
+
+        //go to launch screen & kill the current context
+        Intent intent = new Intent(mContext, WelcomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    /*
     ** Life cycle
      */
     @Override
@@ -94,36 +125,5 @@ public class ProfileFragment extends BaseFragment {
         textViewBackgroundUrl.setText(String.format(res.getString(R.string.profile_msg_background), sessionData.background));
         textViewLevel.setText(String.format(res.getString(R.string.profile_msg_level), String.valueOf(sessionData.level)));
         textViewAvatar.setText(String.format(res.getString(R.string.profile_msg_avatar), sessionData.avatar));
-    }
-
-    /*
-    ** Butterknife callback
-     */
-    @OnClick(R.id.button_logout)
-    public void logout() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        /*Send logout request*/
-        NestedWorldHttpApi.getInstance().logout().enqueue(new NestedWorldHttpCallback<LogoutResponse>() {
-            @Override
-            public void onSuccess(@NonNull Response<LogoutResponse> response) {
-                //Logout success
-            }
-
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<LogoutResponse> response) {
-                //Logout failed
-            }
-        });
-
-        ApplicationHelper.logout(mContext);
-
-        //go to launch screen & kill the current context
-        Intent intent = new Intent(mContext, WelcomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 }

@@ -10,17 +10,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.friend.Friend;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.updater.FriendsUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.AskMessage;
 import com.nestedworld.nestedworld.data.network.socket.models.message.generic.ResultMessage;
-import com.nestedworld.nestedworld.ui.adapter.array.FriendsAdapter;
-import com.nestedworld.nestedworld.ui.dialog.AddFriendDialog;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
 import com.nestedworld.nestedworld.events.socket.generic.OnResultResponseEvent;
+import com.nestedworld.nestedworld.ui.adapter.array.FriendsAdapter;
+import com.nestedworld.nestedworld.ui.dialog.AddFriendDialog;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -42,6 +42,66 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     @BindView(R.id.swipeRefreshLayout_home_friend)
     SwipeRefreshLayout swipeRefreshLayout;
     private FriendsAdapter mAdapter;
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateFriendList();
+            }
+        });
+    }
+
+    @Subscribe
+    public void onResultMessage(OnResultResponseEvent resultResponseEvent) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        //Parse response
+        ResultMessage resultMessage = resultResponseEvent.getMessage();
+        if (resultMessage.getIdKind() == SocketMessageType.MessageKind.TYPE_COMBAT_ASK) {
+            AskMessage askMessage = new AskMessage(resultMessage.getMessage(), resultMessage.getMessageKind(), resultMessage.getIdKind());
+
+            //Check if we have an error
+            if (askMessage.getResult() != null && askMessage.getResult().equals("error")) {
+
+                //Check if we have an error message
+                if (askMessage.getMessage() != null) {
+                    //display error from server
+                    Toast.makeText(mContext, askMessage.getMessage(), Toast.LENGTH_LONG).show();
+                } else {
+                    //Display generic error
+                    Toast.makeText(mContext, R.string.tabHome_msg_requestFightFail, Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(mContext, R.string.tabHome_msg_requestFightSuccess, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    /*
+    ** Butterknife callback
+     */
+    @OnClick(R.id.fab_add_friend)
+    public void addFriend() {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        AddFriendDialog.show(getChildFragmentManager());
+    }
 
     /*
     ** Life cycle
@@ -92,53 +152,6 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
     /*
-    ** EventBus
-     */
-    @Subscribe
-    public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                populateFriendList();
-            }
-        });
-    }
-
-    @Subscribe
-    public void onResultMessage(OnResultResponseEvent resultResponseEvent) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        //Parse response
-        ResultMessage resultMessage = resultResponseEvent.getMessage();
-        if (resultMessage.getIdKind() == SocketMessageType.MessageKind.TYPE_COMBAT_ASK) {
-            AskMessage askMessage = new AskMessage(resultMessage.getMessage(), resultMessage.getMessageKind(), resultMessage.getIdKind());
-
-            //Check if we have an error
-            if (askMessage.getResult() != null && askMessage.getResult().equals("error")) {
-
-                //Check if we have an error message
-                if (askMessage.getMessage() != null) {
-                    //display error from server
-                    Toast.makeText(mContext, askMessage.getMessage(), Toast.LENGTH_LONG).show();
-                } else {
-                    //Display generic error
-                    Toast.makeText(mContext, R.string.tabHome_msg_requestFightFail, Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(mContext, R.string.tabHome_msg_requestFightSuccess, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    /*
     ** Private method
      */
     private void setupListView() {
@@ -169,18 +182,5 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
             mAdapter.clear();
             mAdapter.addAll(friends);
         }
-    }
-
-    /*
-    ** Butterknife callback
-     */
-    @OnClick(R.id.fab_add_friend)
-    public void addFriend() {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        AddFriendDialog.show(getChildFragmentManager());
     }
 }

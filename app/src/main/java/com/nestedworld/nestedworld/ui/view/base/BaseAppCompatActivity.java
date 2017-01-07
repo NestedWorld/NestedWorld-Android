@@ -34,6 +34,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      * # Method every child will have to implement
      * #############################################################################################
      */
+
     /**
      * get the layout id
      * it will be use under onCreate()
@@ -47,6 +48,34 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      * This method is equivalent to onCreate()
      */
     protected abstract void init(@Nullable Bundle savedInstanceState);
+
+    /*
+     * #############################################################################################
+     * # Protected method
+     * #############################################################################################
+     */
+    protected boolean isUiBinded() {
+        boolean isBinded;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+            isBinded = (mUnbinder != null && !super.isDestroyed());
+        } else {
+            isBinded = isUiBindedOnJellyBean();
+        }
+        LogHelper.d(TAG, "isUiBinded > " + isBinded);
+        return isBinded;
+    }
+
+    protected void startActivity(@NonNull final Class clazz, @Nullable Bundle bundle) {
+        final Intent intent = new Intent(this, clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
+    protected void startActivity(@NonNull final Class clazz) {
+        startActivity(clazz, null);
+    }
 
     /*
      * #############################################################################################
@@ -79,6 +108,13 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        //We override the font
+        //See https://github.com/chrisjenx/Calligraphy
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
@@ -91,41 +127,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
             default:
                 return (super.onOptionsItemSelected(menuItem));
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        //We override the font
-        //See https://github.com/chrisjenx/Calligraphy
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    /*
-     * #############################################################################################
-     * # Protected method
-     * #############################################################################################
-     */
-    protected boolean isUiBinded() {
-        boolean isBinded;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            isBinded = (mUnbinder != null && !super.isDestroyed());
-        } else {
-            isBinded = isUiBindedOnJellyBean();
-        }
-        LogHelper.d(TAG, "isUiBinded > " + isBinded);
-        return isBinded;
-    }
-
-    protected void startActivity(@NonNull final Class clazz, @Nullable Bundle bundle) {
-        final Intent intent = new Intent(this, clazz);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        startActivity(intent);
-    }
-
-    protected void startActivity(@NonNull final Class clazz) {
-        startActivity(clazz, null);
     }
 
     /*

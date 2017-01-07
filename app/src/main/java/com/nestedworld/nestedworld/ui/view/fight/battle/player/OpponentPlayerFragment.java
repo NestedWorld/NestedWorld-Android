@@ -84,6 +84,28 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
         }
     }
 
+    @Override
+    protected void displayMonsterDetails(@NonNull StartMessage.StartMessagePlayerMonster monster) {
+        final Context context = recyclerViewMonsters.getContext();
+
+        monsterName.setText(monster.name);
+        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
+        progressBarMonsterHp.setMax(monster.hp);
+        progressBarMonsterHp.setProgress(monster.hp);
+        monsterLife.setText(String.valueOf(monster.hp));
+        viewMonsterDetailContainer.setBackgroundColor(Color.TRANSPARENT);
+
+        //Populate monster sprite
+        final Monster monsterInfos = monster.info();
+        if (monsterInfos != null) {
+            Glide.with(context)
+                    .load(monsterInfos.baseSprite)
+                    .placeholder(R.drawable.default_monster)
+                    .error(R.drawable.default_monster)
+                    .into(monsterPicture);
+        }
+    }
+
     /*
      * #############################################################################################
      * # PlayerManager Implementation
@@ -137,28 +159,6 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
         mAdapter.clear();
         for (int i = 0; i < mRemainingMonster; i++) {
             mAdapter.add(null);
-        }
-    }
-
-    @Override
-    protected void displayMonsterDetails(@NonNull StartMessage.StartMessagePlayerMonster monster) {
-        final Context context = recyclerViewMonsters.getContext();
-
-        monsterName.setText(monster.name);
-        monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
-        progressBarMonsterHp.setMax(monster.hp);
-        progressBarMonsterHp.setProgress(monster.hp);
-        monsterLife.setText(String.valueOf(monster.hp));
-        viewMonsterDetailContainer.setBackgroundColor(Color.TRANSPARENT);
-
-        //Populate monster sprite
-        final Monster monsterInfos = monster.info();
-        if (monsterInfos != null) {
-            Glide.with(context)
-                    .load(monsterInfos.baseSprite)
-                    .placeholder(R.drawable.default_monster)
-                    .error(R.drawable.default_monster)
-                    .into(monsterPicture);
         }
     }
 }

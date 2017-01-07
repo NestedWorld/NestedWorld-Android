@@ -26,19 +26,6 @@ public class WelcomeFragment extends BaseFragment {
     }
 
     /*
-    ** Life Cycle
-     */
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.fragment_welcome;
-    }
-
-    @Override
-    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        //Do your job here
-    }
-
-    /*
     ** ButterKnife callback
      */
     @OnClick(R.id.button_login)
@@ -49,5 +36,18 @@ public class WelcomeFragment extends BaseFragment {
     @OnClick(R.id.button_inscription)
     public void createAccount() {
         CreateAccountFragment.load(getFragmentManager());
+    }
+
+    /*
+    ** Life Cycle
+     */
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_welcome;
+    }
+
+    @Override
+    protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
+        //Do your job here
     }
 }

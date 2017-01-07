@@ -29,6 +29,19 @@ public class AskMessage extends DefaultMessage {
 
     /*
      * #############################################################################################
+     * # Getter and Setter
+     * #############################################################################################
+     */
+    public String getMessage() {
+        return mMessage;
+    }
+
+    public String getResult() {
+        return mResult;
+    }
+
+    /*
+     * #############################################################################################
      * # Default message implementation
      * #############################################################################################
      */
@@ -40,18 +53,5 @@ public class AskMessage extends DefaultMessage {
         if (message.containsKey(ValueFactory.newString("message"))) {
             mMessage = message.get(ValueFactory.newString("message")).asStringValue().asString();
         }
-    }
-
-    /*
-     * #############################################################################################
-     * # Getter and Setter
-     * #############################################################################################
-     */
-    public String getMessage() {
-        return mMessage;
-    }
-
-    public String getResult() {
-        return mResult;
     }
 }

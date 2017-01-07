@@ -11,12 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.ShopItem;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.updater.ShopItemsUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.ui.adapter.array.ShopItemAdapter;
 import com.nestedworld.nestedworld.events.http.OnShopItemsUpdated;
+import com.nestedworld.nestedworld.ui.adapter.array.ShopItemAdapter;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 import com.nestedworld.nestedworld.ui.view.mainMenu.tabs.home.HomeFragment;
@@ -52,6 +52,24 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 .replace(R.id.container, new HomeFragment())
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /*
+    ** EventBus
+     */
+    @Subscribe
+    public void onShopItemUpdated(OnShopItemsUpdated onShopItemsUpdated) {
+        //Check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateAdapter();
+            }
+        });
     }
 
     /*
@@ -123,24 +141,6 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                 //Display error message
                 Toast.makeText(mContext, R.string.error_unexpected, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    /*
-    ** EventBus
-     */
-    @Subscribe
-    public void onShopItemUpdated(OnShopItemsUpdated onShopItemsUpdated) {
-        //Check if fragment hasn't been detach
-        if (mContext == null) {
-            return;
-        }
-
-        ((BaseAppCompatActivity) mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                populateAdapter();
             }
         });
     }
