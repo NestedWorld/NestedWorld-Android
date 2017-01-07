@@ -1,15 +1,16 @@
-package com.nestedworld.nestedworld.data.database.models.session;
+package com.nestedworld.nestedworld.data.database.entities.session;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity(active = true)
-public class SessionData {
+public class SessionData extends BaseEntity {
     @SerializedName("id")
     public
     long playerId;

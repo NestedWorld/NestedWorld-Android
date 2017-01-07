@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.data.database.updater;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.data.database.models.AttackDao;
+import com.nestedworld.nestedworld.data.database.entities.AttackDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.network.http.models.response.attacks.AttacksResponse;
 import com.nestedworld.nestedworld.events.http.OnAttacksUpdatedEvent;

@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
-import com.nestedworld.nestedworld.data.database.models.session.SessionData;
+import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
 
 public final class Answer {
 

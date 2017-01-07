@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
-import com.nestedworld.nestedworld.data.database.models.UserMonster;
+import com.nestedworld.nestedworld.data.database.entities.UserMonster;
 import com.nestedworld.nestedworld.data.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.ui.adapter.RecyclerView.UserMonsterAdapter;

@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.models.session.Session;
-import com.nestedworld.nestedworld.data.database.models.session.SessionData;
+import com.nestedworld.nestedworld.data.database.entities.session.Session;
+import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
 import com.nestedworld.nestedworld.data.network.http.callback.NestedWorldHttpCallback;
 import com.nestedworld.nestedworld.data.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.auth.LogoutResponse;

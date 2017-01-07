@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.models.Combat;
+import com.nestedworld.nestedworld.data.database.entities.Combat;
 import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.data.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.data.network.socket.service.SocketService;

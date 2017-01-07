@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.data.database.models;
+package com.nestedworld.nestedworld.data.database.entities;
 
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -6,6 +6,7 @@ import android.support.annotation.DrawableRes;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -13,7 +14,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 
 @Entity()
-public class Monster {
+public class Monster extends BaseEntity {
     @Expose
     @SerializedName("id")
     @Unique

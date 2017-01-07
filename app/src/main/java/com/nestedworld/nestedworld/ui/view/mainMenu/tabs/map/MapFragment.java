@@ -20,7 +20,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
-import com.nestedworld.nestedworld.data.database.models.Portal;
+import com.nestedworld.nestedworld.data.database.entities.Portal;
 import com.nestedworld.nestedworld.data.database.updater.PortalUpdater;
 import com.nestedworld.nestedworld.ui.dialog.EngagePortalFightDialog;
 import com.nestedworld.nestedworld.events.http.OnPortalUpdatedEvent;

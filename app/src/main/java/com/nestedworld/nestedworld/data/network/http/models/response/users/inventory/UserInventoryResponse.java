@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.data.network.http.models.response.users.inve
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.data.database.models.UserItem;
+import com.nestedworld.nestedworld.data.database.entities.UserItem;
 
 import java.util.List;
 

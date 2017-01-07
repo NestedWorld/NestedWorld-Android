@@ -2,8 +2,8 @@ package com.nestedworld.nestedworld.data.database.updater;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.data.database.models.UserMonster;
-import com.nestedworld.nestedworld.data.database.models.UserMonsterDao;
+import com.nestedworld.nestedworld.data.database.entities.UserMonster;
+import com.nestedworld.nestedworld.data.database.entities.UserMonsterDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.monster.UserMonsterResponse;
 import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;

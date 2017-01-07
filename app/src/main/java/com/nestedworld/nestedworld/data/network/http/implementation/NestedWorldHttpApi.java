@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.data.network.http.implementation;
 import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
-import com.nestedworld.nestedworld.data.database.models.session.Session;
+import com.nestedworld.nestedworld.data.database.entities.session.Session;
 import com.nestedworld.nestedworld.data.network.http.models.request.friends.AddFriendRequest;
 import com.nestedworld.nestedworld.data.network.http.models.request.users.auth.ForgotPasswordRequest;
 import com.nestedworld.nestedworld.data.network.http.models.request.users.auth.RegisterRequest;

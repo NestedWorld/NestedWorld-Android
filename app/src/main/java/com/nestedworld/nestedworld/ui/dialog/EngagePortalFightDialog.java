@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.avast.android.dialogs.core.BaseDialogFragment;
-import com.nestedworld.nestedworld.data.database.models.Portal;
+import com.nestedworld.nestedworld.data.database.entities.Portal;
 
 public class EngagePortalFightDialog extends BaseDialogFragment {
 

@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.data.database.updater;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.data.database.models.MonsterDao;
+import com.nestedworld.nestedworld.data.database.entities.MonsterDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.events.http.OnMonstersUpdatedEvent;

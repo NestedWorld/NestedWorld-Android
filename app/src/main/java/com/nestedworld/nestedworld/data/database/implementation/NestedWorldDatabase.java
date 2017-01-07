@@ -3,8 +3,8 @@ package com.nestedworld.nestedworld.data.database.implementation;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.data.database.models.DaoMaster;
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.DaoMaster;
+import com.nestedworld.nestedworld.data.database.entities.DaoSession;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import org.greenrobot.greendao.AbstractDao;

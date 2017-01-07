@@ -1,38 +1,33 @@
-package com.nestedworld.nestedworld.data.database.models;
+package com.nestedworld.nestedworld.data.database.entities;
 
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Unique;
 
 @Entity(active = true)
-public class UserMonster {
+public class UserItem extends BaseEntity {
     @Expose
     @SerializedName("id")
     @Unique
-    public Long userMonsterId;// the sql table will be called usermonsterid (see sugarOrm doc)
+    public Long userItemId;
 
     @Expose
+    @ToOne(joinProperty = "shopItemId")
     @SerializedName("infos")
     @Transient
-    public Monster monster;
+    public ShopItem shopItem;
 
-    @Expose
-    public Long level;
-    public Long monsterId;//key for Monster<->UserMonster relationship
-
-    @Expose
-    public String surname;
-
-    @Expose
-    public long experience;
+    public long shopItemId;
 
     @Id(autoincrement = true)
     @Unique
@@ -45,70 +40,43 @@ public class UserMonster {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1432864299)
-    private transient UserMonsterDao myDao;
+    @Generated(hash = 1940058155)
+    private transient UserItemDao myDao;
 
-    @Generated(hash = 17730337)
-    public UserMonster(Long userMonsterId, Long level, Long monsterId, String surname,
-                       long experience, Long id) {
-        this.userMonsterId = userMonsterId;
-        this.level = level;
-        this.monsterId = monsterId;
-        this.surname = surname;
-        this.experience = experience;
+    @Generated(hash = 2011444659)
+    public UserItem(Long userItemId, long shopItemId, Long id) {
+        this.userItemId = userItemId;
+        this.shopItemId = shopItemId;
         this.id = id;
     }
 
-    @Generated(hash = 120169445)
-    public UserMonster() {
+    @Generated(hash = 402134942)
+    public UserItem() {
     }
 
     @Nullable
-    public Monster getMonster() {
-        return daoSession.getMonsterDao()
+    public ShopItem getShopItem() {
+        return daoSession
+                .getShopItemDao()
                 .queryBuilder()
-                .where(MonsterDao.Properties.MonsterId.eq(monsterId))
+                .where(ShopItemDao.Properties.ShopItemId.eq(shopItemId))
                 .unique();
     }
 
-    public Long getUserMonsterId() {
-        return this.userMonsterId;
+    public Long getUserItemId() {
+        return this.userItemId;
     }
 
-    public void setUserMonsterId(Long userMonsterId) {
-        this.userMonsterId = userMonsterId;
+    public void setUserItemId(Long userItemId) {
+        this.userItemId = userItemId;
     }
 
-    public Long getLevel() {
-        return this.level;
+    public long getShopItemId() {
+        return this.shopItemId;
     }
 
-    public void setLevel(Long level) {
-        this.level = level;
-    }
-
-    public Long getMonsterId() {
-        return this.monsterId;
-    }
-
-    public void setMonsterId(Long monsterId) {
-        this.monsterId = monsterId;
-    }
-
-    public String getSurname() {
-        return this.surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public long getExperience() {
-        return this.experience;
-    }
-
-    public void setExperience(long experience) {
-        this.experience = experience;
+    public void setShopItemId(long shopItemId) {
+        this.shopItemId = shopItemId;
     }
 
     public Long getId() {
@@ -156,9 +124,9 @@ public class UserMonster {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1557456353)
+    @Generated(hash = 1771036168)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getUserMonsterDao() : null;
+        myDao = daoSession != null ? daoSession.getUserItemDao() : null;
     }
 }

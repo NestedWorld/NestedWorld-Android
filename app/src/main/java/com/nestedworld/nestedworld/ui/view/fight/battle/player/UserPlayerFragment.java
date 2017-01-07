@@ -17,8 +17,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.models.Monster;
-import com.nestedworld.nestedworld.data.database.models.UserMonster;
+import com.nestedworld.nestedworld.data.database.entities.Monster;
+import com.nestedworld.nestedworld.data.database.entities.UserMonster;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;

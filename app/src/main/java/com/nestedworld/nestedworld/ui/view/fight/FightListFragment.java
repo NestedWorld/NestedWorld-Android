@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
-import com.nestedworld.nestedworld.data.database.models.Combat;
-import com.nestedworld.nestedworld.data.database.models.CombatDao;
+import com.nestedworld.nestedworld.data.database.entities.Combat;
+import com.nestedworld.nestedworld.data.database.entities.CombatDao;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.ui.adapter.array.FightAdapter;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;

@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
-import com.nestedworld.nestedworld.data.database.models.Combat;
+import com.nestedworld.nestedworld.data.database.entities.Combat;
 import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
 import com.nestedworld.nestedworld.data.network.socket.models.message.DefaultMessage;
 

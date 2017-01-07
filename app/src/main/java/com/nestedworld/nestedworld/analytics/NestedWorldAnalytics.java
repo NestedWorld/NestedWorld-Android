@@ -3,7 +3,7 @@ package com.nestedworld.nestedworld.analytics;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.analytics.sender.Answer;
-import com.nestedworld.nestedworld.data.database.models.session.SessionData;
+import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
 
 public final class NestedWorldAnalytics {
 

@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.models.Attack;
+import com.nestedworld.nestedworld.data.database.entities.Attack;
 
 import java.util.List;
 

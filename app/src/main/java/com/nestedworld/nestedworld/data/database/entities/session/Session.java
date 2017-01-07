@@ -1,29 +1,28 @@
-package com.nestedworld.nestedworld.data.database.models.friend;
+package com.nestedworld.nestedworld.data.database.entities.session;
 
 import android.support.annotation.Nullable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Unique;
 
 @Entity(active = true)
-public class Friend {
-    @Expose
-    @SerializedName("user")
-    @Transient
-    public FriendData friendData;
+public class Session extends BaseEntity {
     @Unique
-    public long friendDataIdFk;
+    public String authToken;
+
+    @Unique
+    public String email;
+
     @Id(autoincrement = true)
     @Unique
     private Long id;
+
     /**
      * Used to resolve relations
      */
@@ -33,18 +32,43 @@ public class Friend {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 76285035)
-    private transient FriendDao myDao;
+    @Generated(hash = 1616835709)
+    private transient SessionDao myDao;
 
-
-    @Generated(hash = 287143722)
-    public Friend() {
+    @Generated(hash = 372044256)
+    public Session(String authToken, String email, Long id) {
+        this.authToken = authToken;
+        this.email = email;
+        this.id = id;
     }
 
-    @Generated(hash = 331711400)
-    public Friend(long friendDataIdFk, Long id) {
-        this.friendDataIdFk = friendDataIdFk;
-        this.id = id;
+    @Generated(hash = 1317889643)
+    public Session() {
+    }
+
+    @Nullable
+    public SessionData getSessionData() {
+        return daoSession
+                .getSessionDataDao()
+                .queryBuilder()
+                .where(SessionDataDao.Properties.Email.eq(email))
+                .unique();
+    }
+
+    public String getAuthToken() {
+        return this.authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getId() {
@@ -94,26 +118,9 @@ public class Friend {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1516049992)
+    @Generated(hash = 1458438772)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getFriendDao() : null;
-    }
-
-    @Nullable
-    public FriendData getData() {
-        return daoSession
-                .getFriendDataDao()
-                .queryBuilder()
-                .where(FriendDataDao.Properties.PlayerId.eq(friendDataIdFk))
-                .unique();
-    }
-
-    public long getFriendDataIdFk() {
-        return this.friendDataIdFk;
-    }
-
-    public void setFriendDataIdFk(long friendDataIdFk) {
-        this.friendDataIdFk = friendDataIdFk;
+        myDao = daoSession != null ? daoSession.getSessionDao() : null;
     }
 }

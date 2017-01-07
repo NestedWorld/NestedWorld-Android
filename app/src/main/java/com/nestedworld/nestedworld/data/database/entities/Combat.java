@@ -1,8 +1,6 @@
-package com.nestedworld.nestedworld.data.database.models.session;
+package com.nestedworld.nestedworld.data.database.entities;
 
-import android.support.annotation.Nullable;
-
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
@@ -11,63 +9,80 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 
 @Entity(active = true)
-public class Session {
+public class Combat extends BaseEntity {
     @Unique
-    public String authToken;
-
-    @Unique
-    public String email;
-
+    public String combatId;
+    public String type;
+    public String origin;
+    public long monsterId;
+    public String opponentPseudo;
     @Id(autoincrement = true)
     @Unique
     private Long id;
-
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1616835709)
-    private transient SessionDao myDao;
+    @Generated(hash = 1538902355)
+    private transient CombatDao myDao;
 
-    @Generated(hash = 372044256)
-    public Session(String authToken, String email, Long id) {
-        this.authToken = authToken;
-        this.email = email;
+    @Generated(hash = 2144243660)
+    public Combat(String combatId, String type, String origin, long monsterId,
+                  String opponentPseudo, Long id) {
+        this.combatId = combatId;
+        this.type = type;
+        this.origin = origin;
+        this.monsterId = monsterId;
+        this.opponentPseudo = opponentPseudo;
         this.id = id;
     }
 
-    @Generated(hash = 1317889643)
-    public Session() {
+    @Generated(hash = 175565533)
+    public Combat() {
     }
 
-    @Nullable
-    public SessionData getSessionData() {
-        return daoSession
-                .getSessionDataDao()
-                .queryBuilder()
-                .where(SessionDataDao.Properties.Email.eq(email))
-                .unique();
+    public String getCombatId() {
+        return this.combatId;
     }
 
-    public String getAuthToken() {
-        return this.authToken;
+    public void setCombatId(String combatId) {
+        this.combatId = combatId;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public String getType() {
+        return this.type;
     }
 
-    public String getEmail() {
-        return this.email;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getOrigin() {
+        return this.origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public long getMonsterId() {
+        return this.monsterId;
+    }
+
+    public void setMonsterId(long monsterId) {
+        this.monsterId = monsterId;
+    }
+
+    public String getOpponentPseudo() {
+        return this.opponentPseudo;
+    }
+
+    public void setOpponentPseudo(String opponentPseudo) {
+        this.opponentPseudo = opponentPseudo;
     }
 
     public Long getId() {
@@ -114,12 +129,10 @@ public class Session {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
-    @Generated(hash = 1458438772)
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 255570220)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getSessionDao() : null;
+        myDao = daoSession != null ? daoSession.getCombatDao() : null;
     }
 }

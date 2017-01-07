@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.data.network.http.models.response.monsters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.data.database.models.Attack;
+import com.nestedworld.nestedworld.data.database.entities.Attack;
 
 import java.util.List;
 

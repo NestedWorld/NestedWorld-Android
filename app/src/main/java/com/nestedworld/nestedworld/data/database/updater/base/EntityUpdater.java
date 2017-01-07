@@ -7,7 +7,7 @@ import android.support.annotation.WorkerThread;
 
 import com.google.gson.JsonSyntaxException;
 import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.DaoSession;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.data.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;

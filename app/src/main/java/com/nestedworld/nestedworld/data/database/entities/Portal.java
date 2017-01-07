@@ -1,8 +1,9 @@
-package com.nestedworld.nestedworld.data.database.models;
+package com.nestedworld.nestedworld.data.database.entities;
 
 import android.support.annotation.ColorRes;
 
 import com.nestedworld.nestedworld.R;
+import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -10,7 +11,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 
 @Entity()
-public class Portal {
+public class Portal extends BaseEntity {
     public double latitude;
 
     public double longitude;

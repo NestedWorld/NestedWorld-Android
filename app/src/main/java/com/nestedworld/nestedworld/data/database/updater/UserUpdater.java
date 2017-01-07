@@ -3,9 +3,9 @@ package com.nestedworld.nestedworld.data.database.updater;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
-import com.nestedworld.nestedworld.data.database.models.session.SessionDao;
-import com.nestedworld.nestedworld.data.database.models.session.SessionData;
-import com.nestedworld.nestedworld.data.database.models.session.SessionDataDao;
+import com.nestedworld.nestedworld.data.database.entities.session.SessionDao;
+import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
+import com.nestedworld.nestedworld.data.database.entities.session.SessionDataDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.UserResponse;
 import com.nestedworld.nestedworld.events.http.OnUserUpdatedEvent;

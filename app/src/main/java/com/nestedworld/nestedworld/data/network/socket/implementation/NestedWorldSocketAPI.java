@@ -5,7 +5,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.data.database.models.session.Session;
+import com.nestedworld.nestedworld.data.database.entities.session.Session;
 import com.nestedworld.nestedworld.data.network.socket.listener.ConnectionListener;
 import com.nestedworld.nestedworld.data.network.socket.listener.SocketListener;
 import com.nestedworld.nestedworld.data.network.socket.models.request.DefaultRequest;

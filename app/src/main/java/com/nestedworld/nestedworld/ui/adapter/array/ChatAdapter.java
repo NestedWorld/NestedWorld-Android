@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.data.database.models.friend.Friend;
-import com.nestedworld.nestedworld.data.database.models.friend.FriendData;
+import com.nestedworld.nestedworld.data.database.entities.friend.Friend;
+import com.nestedworld.nestedworld.data.database.entities.friend.FriendData;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;

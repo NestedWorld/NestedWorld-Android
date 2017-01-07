@@ -2,7 +2,7 @@ package com.nestedworld.nestedworld.helpers.battle;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.data.database.models.Attack;
+import com.nestedworld.nestedworld.data.database.entities.Attack;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.ui.view.fight.battle.BattleFragment;
 

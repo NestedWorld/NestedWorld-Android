@@ -2,8 +2,8 @@ package com.nestedworld.nestedworld.data.database.updater;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.data.database.models.Portal;
-import com.nestedworld.nestedworld.data.database.models.PortalDao;
+import com.nestedworld.nestedworld.data.database.entities.Portal;
+import com.nestedworld.nestedworld.data.database.entities.PortalDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.network.http.models.response.geo.portal.PortalsResponse;
 import com.nestedworld.nestedworld.events.http.OnPortalUpdatedEvent;

@@ -2,10 +2,10 @@ package com.nestedworld.nestedworld.data.database.updater;
 
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
-import com.nestedworld.nestedworld.data.database.models.friend.Friend;
-import com.nestedworld.nestedworld.data.database.models.friend.FriendDao;
-import com.nestedworld.nestedworld.data.database.models.friend.FriendDataDao;
+import com.nestedworld.nestedworld.data.database.entities.DaoSession;
+import com.nestedworld.nestedworld.data.database.entities.friend.Friend;
+import com.nestedworld.nestedworld.data.database.entities.friend.FriendDao;
+import com.nestedworld.nestedworld.data.database.entities.friend.FriendDataDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.friend.FriendsResponse;
 import com.nestedworld.nestedworld.events.http.OnFriendsUpdatedEvent;
