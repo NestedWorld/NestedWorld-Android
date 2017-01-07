@@ -143,6 +143,8 @@ public class UserMonsterDetailFragment extends BaseFragment {
 
         Glide.with(getContext())
                 .load(mMonster.baseSprite)
+                .error(R.drawable.default_monster)
+                .placeholder(R.drawable.default_monster)
                 .into(imageViewSprite);
 
 
