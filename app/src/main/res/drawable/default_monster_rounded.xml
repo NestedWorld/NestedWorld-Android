@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/white"/>
+        </shape>
+    </item>
+    <item
+        android:bottom="100dip"
+        android:drawable="@drawable/default_monster"
+        android:left="100dip"
+        android:right="100dip"
+        android:top="100dip"/>
+</layer-list>
