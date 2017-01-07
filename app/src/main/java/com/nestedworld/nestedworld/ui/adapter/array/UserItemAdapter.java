@@ -23,14 +23,18 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
     private final static int layoutRes = R.layout.item_inventoryobject;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public UserItemAdapter(@NonNull final Context context) {
         super(context, layoutRes);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # ArrayAdapter<UserItem> implementation
+     * #############################################################################################
      */
     @NonNull
     @Override
@@ -43,7 +47,7 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
         }
 
         //Get current object
-        UserItem currentObject = getItem(position);
+        final UserItem currentObject = getItem(position);
         if (currentObject == null) {
             return view;
         }
@@ -54,17 +58,20 @@ public class UserItemAdapter extends ArrayAdapter<UserItem> {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
-    private void populateView(@NonNull final View view, @NonNull final UserItem userItem) {
-        ShopItem shopItem = userItem.getShopItem();
-        Context context = getContext();
+    private void populateView(@NonNull final View view,
+                              @NonNull final UserItem userItem) {
+        final ShopItem shopItem = userItem.getShopItem();
+        final Context context = getContext();
 
         if (shopItem != null) {
             //Retrieve widget
-            TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
-            TextView textViewObjectDescription = (TextView) view.findViewById(R.id.textview_object_description);
-            ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
+            final TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
+            final TextView textViewObjectDescription = (TextView) view.findViewById(R.id.textview_object_description);
+            final ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
 
             //Populate widget
             textViewObjectName.setText(shopItem.name);

@@ -27,22 +27,30 @@ import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
-    @BindView(R.id.editText_chat)
-    EditText editTextChat;
-    @BindView(R.id.listView_chat)
-    ListView listViewChat;
     private ArrayAdapter<String> itemAdapter;
     private Friend mFriend;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
+    @BindView(R.id.editText_chat)
+    EditText editTextChat;
+    @BindView(R.id.listView_chat)
+    ListView listViewChat;
+
+    /*
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager,
                             @NonNull final Friend friend) {
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putLong("FRIEND_ID", friend.getId());
 
-        ChatFragment fragment = new ChatFragment();
+        final ChatFragment fragment = new ChatFragment();
         fragment.setArguments(bundle);
 
         fragmentManager.beginTransaction()
@@ -52,7 +60,9 @@ public class ChatFragment extends BaseFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -67,7 +77,7 @@ public class ChatFragment extends BaseFragment {
         }
 
         //Check args
-        long mFriendId = getArguments().getLong("FRIEND_ID", -1);
+        final long mFriendId = getArguments().getLong("FRIEND_ID", -1);
         mFriend = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getFriendDao()
@@ -107,7 +117,7 @@ public class ChatFragment extends BaseFragment {
             return;
         }
 
-        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
+        final ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             FriendData friendInfo = mFriend.getData();
             if (friendInfo != null) {

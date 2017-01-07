@@ -12,11 +12,19 @@ import butterknife.BindView;
 
 
 public class PortalFightProcess extends BaseAppCompatActivity {
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -30,8 +38,10 @@ public class PortalFightProcess extends BaseAppCompatActivity {
     }
 
     /*
-    ** Utils
-    */
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
+     */
     private void setUpToolbar() {
         //Set the toolbar as actionBar
         setSupportActionBar(toolbar);

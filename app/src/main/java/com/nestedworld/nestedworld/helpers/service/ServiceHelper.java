@@ -9,32 +9,38 @@ import com.nestedworld.nestedworld.data.network.socket.service.SocketService;
 
 public final class ServiceHelper {
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     private ServiceHelper() {
         //Empty constructor for avoiding this class to be construct
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void startSocketService(@NonNull final Context context) {
         //Start the service
-        Intent intent = new Intent(context, SocketService.class);
+        final Intent intent = new Intent(context, SocketService.class);
         context.startService(intent);
     }
 
     public static void stopSocketService(@NonNull final Context context) {
         //Start the service
-        Intent intent = new Intent(context, SocketService.class);
+        final Intent intent = new Intent(context, SocketService.class);
         context.stopService(intent);
     }
 
-    public static void bindToSocketService(@NonNull final Context context, @NonNull final ServiceConnection serviceConnection) {
+    public static void bindToSocketService(@NonNull final Context context,
+                                           @NonNull final ServiceConnection serviceConnection) {
         context.bindService(new Intent(context, SocketService.class), serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    public static void unbindFromSocketService(@NonNull final Context context, @NonNull final ServiceConnection serviceConnection) {
+    public static void unbindFromSocketService(@NonNull final Context context,
+                                               @NonNull final ServiceConnection serviceConnection) {
         context.unbindService(serviceConnection);
     }
 }

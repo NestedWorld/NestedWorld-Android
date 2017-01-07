@@ -2,6 +2,7 @@ package com.nestedworld.nestedworld.data.database.updater;
 
 import android.support.annotation.NonNull;
 
+import com.nestedworld.nestedworld.data.converter.http.response.geo.portal.PortalResponseConverter;
 import com.nestedworld.nestedworld.data.database.entities.Portal;
 import com.nestedworld.nestedworld.data.database.entities.PortalDao;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
@@ -53,7 +54,7 @@ public class PortalUpdater extends EntityUpdater<PortalsResponse> {
         //Parse response
         final List<Portal> newPortals = new ArrayList<>();
         for (PortalsResponse.PortalResponse item : response.body().portals) {
-            newPortals.add(item.asPortal());
+            newPortals.add(new PortalResponseConverter().convert(item));
         }
 
         //Save entity

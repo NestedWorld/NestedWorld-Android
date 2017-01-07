@@ -31,7 +31,7 @@ import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMess
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.StartMessage;
 import com.nestedworld.nestedworld.data.network.socket.models.request.result.ResultRequest;
 import com.nestedworld.nestedworld.data.network.socket.service.SocketService;
-import com.nestedworld.nestedworld.ui.adapter.pagerAdapter.UserMonsterPagerAdapter;
+import com.nestedworld.nestedworld.ui.adapter.pager.UserMonsterPagerAdapter;
 import com.nestedworld.nestedworld.ui.customView.viewpager.ViewPagerWithIndicator;
 import com.nestedworld.nestedworld.events.socket.combat.OnCombatStartMessageEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;

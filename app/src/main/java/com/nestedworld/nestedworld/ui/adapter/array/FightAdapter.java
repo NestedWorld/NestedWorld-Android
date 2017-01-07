@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.os.IBinder;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,17 +33,23 @@ import org.msgpack.value.ValueFactory;
 public class FightAdapter extends ArrayAdapter<Combat> {
 
     private static final String TAG = FightAdapter.class.getSimpleName();
-    private static final int resource = R.layout.item_fight_list;
+
+    @LayoutRes
+    private static final int mResource = R.layout.item_fight_list;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public FightAdapter(@NonNull final Context context) {
-        super(context, resource);
+        super(context, mResource);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # ArrayAdapter<Combat> implementation
+     * #############################################################################################
      */
     @NonNull
     @Override
@@ -52,8 +59,8 @@ public class FightAdapter extends ArrayAdapter<Combat> {
         FightHolder fightHolder;
 
         if (convertView == null) {
-            LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
-            view = layoutInflater.inflate(resource, parent, false);
+            final LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
+            view = layoutInflater.inflate(mResource, parent, false);
 
             fightHolder = new FightHolder();
             fightHolder.textViewFightDescription = (TextView) view.findViewById(R.id.textView_item_fight_dsc);
@@ -92,7 +99,9 @@ public class FightAdapter extends ArrayAdapter<Combat> {
     }
 
     /*
-    ** Utils
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void acceptCombat(@NonNull final Combat combat) {
         //Display some log
@@ -100,8 +109,8 @@ public class FightAdapter extends ArrayAdapter<Combat> {
 
         //Yes just accept the combat, we have to choose our team
         //Display the team selection
-        Context context = getContext();
-        Resources resources = context.getResources();
+        final Context context = getContext();
+        final Resources resources = context.getResources();
 
         TeamSelectionFragment
                 .load(((BaseAppCompatActivity) context).getSupportFragmentManager(),
@@ -124,13 +133,16 @@ public class FightAdapter extends ArrayAdapter<Combat> {
         ServiceHelper.bindToSocketService(getContext(), new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                SocketService socketService = ((SocketService.LocalBinder) service).getService();
+                final SocketService socketService = ((SocketService.LocalBinder) service).getService();
                 if (socketService.getApiInstance() != null) {
-                    ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+                    final ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
                     map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(false));
 
-                    ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
-                    socketService.getApiInstance().sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, combat.combatId);
+                    final ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                    socketService.getApiInstance().sendRequest(
+                            resultRequest,
+                            SocketMessageType.MessageKind.TYPE_RESULT,
+                            combat.combatId);
                 } else {
                     onServiceDisconnected(null);
                 }

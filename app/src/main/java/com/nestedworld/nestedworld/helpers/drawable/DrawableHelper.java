@@ -16,18 +16,25 @@ import com.nestedworld.nestedworld.R;
 public final class DrawableHelper {
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     private DrawableHelper() {
         //Private constructor for avoiding this class to be construct
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
-    public static Drawable buildCounterDrawable(@NonNull final Context context, final int count, final int backgroundImageId) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.menuitem_counter_layout, null);
+    @NonNull
+    public static Drawable buildCounterDrawable(@NonNull final Context context,
+                                                final int count,
+                                                final int backgroundImageId) {
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        final View view = inflater.inflate(R.layout.menuitem_counter_layout, null);
 
         if (count == 0) {
             View counterTextPanel = view.findViewById(R.id.counterValuePanel);
@@ -43,7 +50,7 @@ public final class DrawableHelper {
 
         view.setDrawingCacheEnabled(true);
         view.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        final Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
         view.setDrawingCacheEnabled(false);
 
         return new BitmapDrawable(context.getResources(), bitmap);

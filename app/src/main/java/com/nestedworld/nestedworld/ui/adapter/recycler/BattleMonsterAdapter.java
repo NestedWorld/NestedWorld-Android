@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.adapter.RecyclerView;
+package com.nestedworld.nestedworld.ui.adapter.recycler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -24,7 +24,9 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     private final List<Monster> mMonsters = new ArrayList<>();
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     public void add(@Nullable final Monster monster) {
         mMonsters.add(monster);
@@ -37,19 +39,21 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     }
 
     public void clear() {
-        int oldSize = mMonsters.size();
+        final int oldSize = mMonsters.size();
         mMonsters.clear();
         notifyItemRangeRemoved(0, oldSize);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # RecyclerView.Adapter<BattleMonsterAdapter.BattleMonsterViewHolder> implementation
+     * #############################################################################################
      */
     @Override
     public BattleMonsterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fight_battlemonster, parent, false);
-        BattleMonsterViewHolder battleMonsterViewHolder = new BattleMonsterViewHolder(v);
+        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fight_battlemonster, parent, false);
+        final BattleMonsterViewHolder battleMonsterViewHolder = new BattleMonsterViewHolder(v);
         ButterKnife.bind(battleMonsterViewHolder, v);
 
         return battleMonsterViewHolder;
@@ -58,7 +62,7 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     @Override
     public void onBindViewHolder(BattleMonsterViewHolder holder, int position) {
         //Get selectedMonster
-        Monster monster = mMonsters.get(position);
+        final Monster monster = mMonsters.get(position);
 
         if (monster != null) {
             populateMonsterInfo(holder, monster);
@@ -71,11 +75,13 @@ public class BattleMonsterAdapter extends RecyclerView.Adapter<BattleMonsterAdap
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void populateMonsterInfo(@NonNull final BattleMonsterViewHolder holder,
                                      @NonNull final Monster monster) {
-        Context context = holder.itemView.getContext();
+        final Context context = holder.itemView.getContext();
 
         if (context != null) {
             holder.textViewMonsterName.setText(monster.name);

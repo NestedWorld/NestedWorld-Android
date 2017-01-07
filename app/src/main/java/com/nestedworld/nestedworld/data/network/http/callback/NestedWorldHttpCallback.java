@@ -44,7 +44,7 @@ public abstract class NestedWorldHttpCallback<T> implements retrofit2.Callback<T
     public abstract void onSuccess(@NonNull final Response<T> response);
 
     public abstract void onError(@NonNull final KIND errorKind,
-                                 @Nullable Response<T> response);
+                                 @Nullable final Response<T> response);
 
     public enum KIND {
         NETWORK,

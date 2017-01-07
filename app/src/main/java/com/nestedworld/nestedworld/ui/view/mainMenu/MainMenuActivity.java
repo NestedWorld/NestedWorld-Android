@@ -26,7 +26,7 @@ import com.nestedworld.nestedworld.data.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.data.database.updater.UserUpdater;
 import com.nestedworld.nestedworld.data.database.updater.base.EntityUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.ui.adapter.FragmentStatePager.TabsAdapter;
+import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.events.socket.combat.OnAvailableMessageEvent;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
 import com.nestedworld.nestedworld.helpers.drawable.DrawableHelper;

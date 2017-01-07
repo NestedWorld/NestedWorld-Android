@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -26,17 +27,22 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class ChatAdapter extends ArrayAdapter<Friend> {
 
-    private static final int resource = R.layout.item_chat_list;
+    @LayoutRes
+    private static final int mResource = R.layout.item_chat_list;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public ChatAdapter(@NonNull final Context context) {
-        super(context, resource);
+        super(context, mResource);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # ArrayAdapter<Friend> implementation
+     * #############################################################################################
      */
     @NonNull
     @Override
@@ -47,8 +53,8 @@ public class ChatAdapter extends ArrayAdapter<Friend> {
 
         //Check if an existing view is being reused, otherwise inflate the view
         if (view == null) {
-            LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
-            view = layoutInflater.inflate(resource, parent, false);
+            final LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
+            view = layoutInflater.inflate(mResource, parent, false);
 
             chatHolder = new ChatHolder();
             chatHolder.chatPicture = (CircleImageView) view.findViewById(R.id.imageView_chat_picture);
@@ -62,48 +68,50 @@ public class ChatAdapter extends ArrayAdapter<Friend> {
         }
 
         //get the currentFriend
-        Friend currentFriend = getItem(position);
+        final Friend currentFriend = getItem(position);
         if (currentFriend == null) {
             return view;
         }
 
         //get current friend information
-        FriendData currentFriendInfo = currentFriend.getData();
-        if (currentFriendInfo == null) {
+        final FriendData friendData = currentFriend.getData();
+        if (friendData == null) {
             return view;
         }
 
-        populateView(chatHolder, currentFriendInfo);
+        populateView(chatHolder, friendData);
 
         return view;
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void populateView(@NonNull final ChatHolder chatHolder,
-                              @NonNull final FriendData friend) {
-        Context context = getContext();
+                              @NonNull final FriendData friendData) {
+        final Context context = getContext();
 
         //display the friend name
-        chatHolder.chatName.setText(friend.pseudo);
+        chatHolder.chatName.setText(friendData.pseudo);
 
         //display a rounded placeHolder for friend's avatar
-        Resources resources = context.getResources();
-        Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
+        final Resources resources = context.getResources();
+        final Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
+        final RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
         roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
 
         //display friend's avatar
         Glide.with(context)
-                .load(friend.avatar)
+                .load(friendData.avatar)
                 .placeholder(roundedBitmapDrawable)
                 .centerCrop()
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(chatHolder.chatPicture);
 
         //set overlay and stroke
-        if (friend.isConnected) {
+        if (friendData.isConnected) {
             chatHolder.chatPicture.setBorderColor(ContextCompat.getColor(context, R.color.apptheme_color));
             chatHolder.chatPictureOverlay.setVisibility(View.VISIBLE);
         } else {

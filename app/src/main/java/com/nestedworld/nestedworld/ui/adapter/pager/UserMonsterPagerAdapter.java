@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.adapter.pagerAdapter;
+package com.nestedworld.nestedworld.ui.adapter.pager;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.data.database.entities.Monster;
 import com.nestedworld.nestedworld.data.database.entities.UserMonster;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserMonsterPagerAdapter extends PagerAdapter {
 
+    private final static String TAG = UserMonsterPagerAdapter.class.getSimpleName();
+
     private final List<UserMonster> mItems = new ArrayList<>();
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     public void addAll(@NonNull final List<UserMonster> items) {
         mItems.addAll(items);
@@ -48,14 +53,15 @@ public class UserMonsterPagerAdapter extends PagerAdapter {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # PagerAdapter implementation
+     * #############################################################################################
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        View view;
 
-        View view = null;
-
-        Context context = container.getContext();
+        final Context context = container.getContext();
         if (context != null) {
             //Create the view
             view = LayoutInflater
@@ -63,12 +69,12 @@ public class UserMonsterPagerAdapter extends PagerAdapter {
                     .inflate(R.layout.item_monster_selector, container, false);
 
             //Retrieve the monster we'll display
-            UserMonster userMonster = mItems.get(position);
+            final UserMonster userMonster = mItems.get(position);
             if (userMonster == null) {
                 return view;
             }
 
-            Monster monster = userMonster.getMonster();
+            final Monster monster = userMonster.getMonster();
             if (monster == null) {
                 return view;
             }
@@ -99,11 +105,24 @@ public class UserMonsterPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mItems.get(position).getMonster().name;
+        final UserMonster userMonster = mItems.get(position);
+        if (userMonster == null) {
+            LogHelper.d(TAG, "getPageTitle > null userMonster");
+        } else {
+            final Monster monster = userMonster.getMonster();
+            if (monster == null) {
+                LogHelper.d(TAG, "getPageTitle > null monster");
+            } else {
+                return monster.name;
+            }
+        }
+        return "Unknown";
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void populateView(@NonNull final Context context,
                               @NonNull final View view,
@@ -111,7 +130,7 @@ public class UserMonsterPagerAdapter extends PagerAdapter {
                               @NonNull final Monster monster) {
 
         //Populate monster information
-        Resources res = context.getResources();
+        final Resources res = context.getResources();
         ((TextView) view.findViewById(R.id.textview_monster_name)).setText(monster.name);
         ((TextView) view.findViewById(R.id.textview_monster_lvl)).setText(String.format(res.getString(
                 R.string.integer),
@@ -127,7 +146,7 @@ public class UserMonsterPagerAdapter extends PagerAdapter {
                 (int) monster.defense));
 
         //Display monster picture
-        CircleImageView imageViewMonster = (CircleImageView) view.findViewById(R.id.imageView_monster);
+        final CircleImageView imageViewMonster = (CircleImageView) view.findViewById(R.id.imageView_monster);
         Glide.with(context)
                 .load(monster.baseSprite)
                 .placeholder(R.drawable.default_monster)

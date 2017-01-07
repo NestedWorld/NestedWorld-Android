@@ -76,10 +76,14 @@ public class UserMonsterDetailFragment extends BaseFragment {
     private Monster mMonster;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
-    public static void load(@NonNull final FragmentManager supportFragmentManager, @NonNull final UserMonster monster, @NonNull final Monster info) {
-        UserMonsterDetailFragment userMonsterDetailFragment = new UserMonsterDetailFragment()
+    public static void load(@NonNull final FragmentManager supportFragmentManager,
+                            @NonNull final UserMonster monster,
+                            @NonNull final Monster info) {
+        final UserMonsterDetailFragment userMonsterDetailFragment = new UserMonsterDetailFragment()
                 .setMonster(monster)
                 .setMonsterInfo(info);
 
@@ -90,7 +94,9 @@ public class UserMonsterDetailFragment extends BaseFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -108,13 +114,17 @@ public class UserMonsterDetailFragment extends BaseFragment {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
+    @NonNull
     private UserMonsterDetailFragment setMonster(@NonNull final UserMonster monster) {
         mUserMonster = monster;
         return this;
     }
 
+    @NonNull
     private UserMonsterDetailFragment setMonsterInfo(@NonNull final Monster monsterInfo) {
         mMonster = monsterInfo;
         return this;

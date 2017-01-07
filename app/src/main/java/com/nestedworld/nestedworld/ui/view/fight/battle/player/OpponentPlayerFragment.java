@@ -44,9 +44,12 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
     RecyclerView recyclerViewMonsters;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
-    public static OpponentPlayerFragment load(@NonNull final FragmentManager fragmentManager, final int teamSize) {
+    public static OpponentPlayerFragment load(@NonNull final FragmentManager fragmentManager,
+                                              final int teamSize) {
         OpponentPlayerFragment opponentPlayerManager = new OpponentPlayerFragment();
 
         Bundle args = new Bundle();
@@ -61,7 +64,9 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -80,7 +85,9 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
     }
 
     /*
-    ** PlayerViewManager Implementation
+     * #############################################################################################
+     * # PlayerManager Implementation
+     * #############################################################################################
      */
     @Override
     public void updateCurrentMonsterLife(@NonNull final AttackReceiveMessage.AttackReceiveMessageMonster monster) {
@@ -135,7 +142,7 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
 
     @Override
     protected void displayMonsterDetails(@NonNull StartMessage.StartMessagePlayerMonster monster) {
-        Context context = recyclerViewMonsters.getContext();
+        final Context context = recyclerViewMonsters.getContext();
 
         monsterName.setText(monster.name);
         monsterLvl.setText(String.format(context.getString(R.string.combat_msg_monster_lvl), monster.level));
@@ -145,7 +152,7 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
         viewMonsterDetailContainer.setBackgroundColor(Color.TRANSPARENT);
 
         //Populate monster sprite
-        Monster monsterInfos = monster.info();
+        final Monster monsterInfos = monster.info();
         if (monsterInfos != null) {
             Glide.with(context)
                     .load(monsterInfos.baseSprite)

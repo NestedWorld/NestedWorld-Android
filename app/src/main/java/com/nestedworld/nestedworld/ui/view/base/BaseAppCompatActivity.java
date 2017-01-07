@@ -28,10 +28,12 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
     @Nullable
     private Unbinder mUnbinder;
-    /*
-    ** Method that every child will have to implement
-     */
 
+    /*
+     * #############################################################################################
+     * # Method every child will have to implement
+     * #############################################################################################
+     */
     /**
      * get the layout id
      * it will be use under onCreate()
@@ -47,7 +49,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected abstract void init(@Nullable Bundle savedInstanceState);
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,7 +101,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     /*
-    ** Utils
+     * #############################################################################################
+     * # Protected method
+     * #############################################################################################
      */
     protected boolean isUiBinded() {
         boolean isBinded;
@@ -111,7 +117,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     protected void startActivity(@NonNull final Class clazz, @Nullable Bundle bundle) {
-        Intent intent = new Intent(this, clazz);
+        final Intent intent = new Intent(this, clazz);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
@@ -123,7 +129,9 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Private method
+     * #############################################################################################
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private boolean isUiBindedOnJellyBean() {

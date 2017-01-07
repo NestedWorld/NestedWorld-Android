@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.adapter.RecyclerView;
+package com.nestedworld.nestedworld.ui.adapter.recycler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -22,15 +22,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/*
-** Custom Adapter for displaying userMonsters
+/**
+ * Custom Adapter for displaying userMonsters
  */
 public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.UserMonsterViewHolder> {
 
     private final List<UserMonster> mItems = new ArrayList<>();
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     public void addAll(@NonNull final List<UserMonster> items) {
         mItems.clear();
@@ -44,15 +46,17 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # RecyclerView.Adapter<UserMonsterAdapter.UserMonsterViewHolder> implementation
+     * #############################################################################################
      */
     @Override
     public UserMonsterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater
+        final View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.item_home_user_monster, parent, false);
 
-        UserMonsterViewHolder userMonsterViewHolder = new UserMonsterViewHolder(view);
+        final UserMonsterViewHolder userMonsterViewHolder = new UserMonsterViewHolder(view);
         ButterKnife.bind(userMonsterViewHolder, view);
 
         return userMonsterViewHolder;
@@ -61,7 +65,7 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
     @Override
     public void onBindViewHolder(UserMonsterViewHolder holder, int position) {
         //Get current monster
-        UserMonster userMonster = mItems.get(position);
+        final UserMonster userMonster = mItems.get(position);
         if (userMonster != null) {
             holder.populateUserMonsterInfo(userMonster);
 
@@ -99,7 +103,7 @@ public class UserMonsterAdapter extends RecyclerView.Adapter<UserMonsterAdapter.
         ** Internal method
          */
         private void populateMonsterInfo(@NonNull final Monster monster) {
-            Context context = itemView.getContext();
+            final Context context = itemView.getContext();
             if (context != null) {
                 textViewMonsterName.setText(monster.name);
 

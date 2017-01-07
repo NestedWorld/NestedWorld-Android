@@ -64,7 +64,6 @@ public final class NestedWorldHttpApi {
      * # Public (static) method
      * #############################################################################################
      */
-
     /**
      * Singleton
      *

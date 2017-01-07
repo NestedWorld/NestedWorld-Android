@@ -27,7 +27,6 @@ public abstract class EntityUpdater<T> {
      */
     @NonNull
     protected abstract Call<T> getRequest();
-
     protected abstract void updateEntity(@NonNull final Response<T> response);
 
     /*
@@ -35,7 +34,6 @@ public abstract class EntityUpdater<T> {
      * # Public method
      * #############################################################################################
      */
-
     @WorkerThread
     public boolean run() {
         return makeRequest();
@@ -66,10 +64,12 @@ public abstract class EntityUpdater<T> {
      * # Utils (for child)
      * #############################################################################################
      */
+    @NonNull
     protected NestedWorldHttpApi getApi() {
         return NestedWorldHttpApi.getInstance();
     }
 
+    @NonNull
     protected DaoSession getDatabase() {
         return NestedWorldDatabase.getInstance().getDataBase();
     }

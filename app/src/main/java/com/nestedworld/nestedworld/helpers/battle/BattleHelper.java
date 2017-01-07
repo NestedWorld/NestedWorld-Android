@@ -8,14 +8,18 @@ import com.nestedworld.nestedworld.ui.view.fight.battle.BattleFragment;
 
 public final class BattleHelper {
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     private BattleHelper() {
         //Private constructor for avoiding this class to be construct
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     @NonNull
     public static Attack.AttackType gestureToAttackType(@NonNull final String gestureInput) {

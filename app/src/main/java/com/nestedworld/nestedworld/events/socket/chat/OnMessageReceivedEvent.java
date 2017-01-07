@@ -6,7 +6,11 @@ import com.nestedworld.nestedworld.data.network.socket.models.message.message.Me
 import com.nestedworld.nestedworld.events.socket.base.SocketMessageEvent;
 
 public class OnMessageReceivedEvent extends SocketMessageEvent<MessageReceivedMessage> {
-
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
     public OnMessageReceivedEvent(@NonNull final MessageReceivedMessage message) {
         super(message);
     }

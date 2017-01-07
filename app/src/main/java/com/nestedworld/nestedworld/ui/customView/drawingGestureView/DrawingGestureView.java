@@ -45,7 +45,9 @@ public class DrawingGestureView extends View {
     private OnFinishMoveListener mOnFinishMoveListener = null;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public DrawingGestureView(@NonNull final Context c) {
         super(c);
@@ -72,7 +74,9 @@ public class DrawingGestureView extends View {
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     public void setOnTileTouchListener(@Nullable final DrawingGestureListener listener) {
         LogHelper.i(TAG, "setOnTileTouchListener");
@@ -90,7 +94,9 @@ public class DrawingGestureView extends View {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # View implementation
+     * #############################################################################################
      */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -145,18 +151,22 @@ public class DrawingGestureView extends View {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
-    private void initPath(final float x, final float y) {
+    private void initPath(final float x,
+                          final float y) {
         mPath.reset();
         mPath.moveTo(x, y);
         mX = x;
         mY = y;
     }
 
-    private void updatePath(final float x, final float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
+    private void updatePath(final float x,
+                            final float y) {
+        final float dx = Math.abs(x - mX);
+        final float dy = Math.abs(y - mY);
 
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
             mPath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
@@ -168,7 +178,8 @@ public class DrawingGestureView extends View {
         }
     }
 
-    private void updateTiles(final float x, final float y) {
+    private void updateTiles(final float x,
+                             final float y) {
         //We check if the player touch a tiles
         for (ImageView view : mTiles) {
 

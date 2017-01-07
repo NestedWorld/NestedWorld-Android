@@ -8,15 +8,20 @@ public abstract class SocketMessageEvent<T extends DefaultMessage> {
     private final T mMessage;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     protected SocketMessageEvent(@NonNull final T message) {
         mMessage = message;
     }
 
     /*
-    ** public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
+    @NonNull
     public T getMessage() {
         return mMessage;
     }

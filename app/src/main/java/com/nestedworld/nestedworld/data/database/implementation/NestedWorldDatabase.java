@@ -25,7 +25,8 @@ public final class NestedWorldDatabase {
      */
     private NestedWorldDatabase(@NonNull final Context context) {
         mDevOpenHelper = new DaoMaster.DevOpenHelper(context, "nestedworld.db");
-        Database database = mDevOpenHelper.getWritableDb();
+
+        final Database database = mDevOpenHelper.getWritableDb();
         mDaoSession = new DaoMaster(database).newSession();
     }
 
@@ -34,7 +35,6 @@ public final class NestedWorldDatabase {
      * # Public (static) method
      * #############################################################################################
      */
-
     /**
      * Should be called for avoiding leak
      */
@@ -81,6 +81,7 @@ public final class NestedWorldDatabase {
         }
     }
 
+    @NonNull
     public DaoSession getDataBase() {
         return mDaoSession;
     }

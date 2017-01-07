@@ -8,33 +8,45 @@ import com.nestedworld.nestedworld.data.database.entities.Attack;
 import com.nestedworld.nestedworld.data.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.AttackReceiveMessage;
 import com.nestedworld.nestedworld.data.network.socket.models.message.combat.StartMessage;
-import com.nestedworld.nestedworld.ui.adapter.RecyclerView.BattleMonsterAdapter;
+import com.nestedworld.nestedworld.ui.adapter.recycler.BattleMonsterAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BattlePlayerFragment extends BaseFragment {
+
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
+    private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
+
+    /*
+     * #############################################################################################
+     * # Protected field
+     * #############################################################################################
+     */
     protected final BattleMonsterAdapter mAdapter = new BattleMonsterAdapter();
     protected final List<StartMessage.StartMessagePlayerMonster> mFrontMonster = new ArrayList<>();
     protected final List<StartMessage.StartMessagePlayerMonster> mDeadMonster = new ArrayList<>();
     @Nullable protected List<MonsterAttackResponse.MonsterAttack> mCurrentMonsterAttacks = null;
     protected int mRemainingMonster;
-    private StartMessage.StartMessagePlayerMonster mCurrentMonster = null;
 
     /*
-    ** Method for child
+     * #############################################################################################
+     * # Method every child will have to implement
+     * #############################################################################################
      */
     public abstract void updateCurrentMonsterLife(@NonNull final AttackReceiveMessage.AttackReceiveMessageMonster monster);
-
     public abstract void displayAttackReceive();
-
     public abstract void displayAttackSend();
-
     protected abstract void displayMonsterKo(@NonNull final StartMessage.StartMessagePlayerMonster monster);
-
     protected abstract void displayMonsterDetails(@NonNull final StartMessage.StartMessagePlayerMonster monster);
 
     /*
-    ** Utils
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     @CallSuper
     public synchronized void onCurrentMonsterKo() {
@@ -52,7 +64,8 @@ public abstract class BattlePlayerFragment extends BaseFragment {
     }
 
     @CallSuper
-    public void setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster, @NonNull final List<MonsterAttackResponse.MonsterAttack> attacks) {
+    public void setCurrentMonster(@NonNull final StartMessage.StartMessagePlayerMonster monster,
+                                  @NonNull final List<MonsterAttackResponse.MonsterAttack> attacks) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -88,7 +101,7 @@ public abstract class BattlePlayerFragment extends BaseFragment {
     }
 
     @Nullable
-    public MonsterAttackResponse.MonsterAttack getCurrentMonsterAttack(@NonNull Attack.AttackType attackTypeWanted) {
+    public MonsterAttackResponse.MonsterAttack getCurrentMonsterAttack(@NonNull final Attack.AttackType attackTypeWanted) {
         if (mCurrentMonsterAttacks == null) {
             return null;
         }

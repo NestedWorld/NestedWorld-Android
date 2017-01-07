@@ -12,14 +12,18 @@ public final class InputChecker {
     private final static int SHORTEST_PASSWORD_LENGTH = 6;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     private InputChecker() {
         //Empty constructor for avoiding this class to be construct
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static boolean checkEmailFormat(@NonNull final String email) {
         boolean isValid = false;

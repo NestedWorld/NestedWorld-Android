@@ -10,11 +10,19 @@ import com.nestedworld.nestedworld.data.database.entities.Portal;
 public class EngagePortalFightDialog extends BaseDialogFragment {
 
     private final static String TAG = EngagePortalFightDialog.class.getSimpleName();
+
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
     private Portal mPortal;
 
     /*
-    ** Public method
-    */
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
+     */
     public static void show(@NonNull final FragmentManager fragmentManager,
                             @NonNull final Portal portal) {
         new EngagePortalFightDialog()
@@ -23,15 +31,9 @@ public class EngagePortalFightDialog extends BaseDialogFragment {
     }
 
     /*
-    ** Internal method
-     */
-    private EngagePortalFightDialog setPortal(@NonNull final Portal portal) {
-        mPortal = portal;
-        return this;
-    }
-
-    /*
-    ** Life cycle
+     * #############################################################################################
+     * # BaseDialogFragment implementation
+     * #############################################################################################
      */
     @Override
     protected Builder build(Builder initialBuilder) {
@@ -56,5 +58,16 @@ public class EngagePortalFightDialog extends BaseDialogFragment {
             dismiss();
         }
         return initialBuilder;
+    }
+
+    /*
+     * #############################################################################################
+     * # Private method
+     * #############################################################################################
+     */
+    @NonNull
+    private EngagePortalFightDialog setPortal(@NonNull final Portal portal) {
+        mPortal = portal;
+        return this;
     }
 }

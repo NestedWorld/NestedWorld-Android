@@ -63,6 +63,7 @@ public final class NestedWorldSocketAPI implements SocketListener {
      * Singleton
      * @return singleton instance
      */
+    @NonNull
     public static NestedWorldSocketAPI getInstance() {
         if (mSingleton == null) {
             mSingleton = new NestedWorldSocketAPI();

@@ -20,70 +20,88 @@ import java.util.LinkedList;
 
 public final class SocketManager {
     private final String TAG = getClass().getSimpleName();
-    private final String hostname;
-    private final int port;
-    private final LinkedList<SocketListener> listeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
-    private int timeOut;
-    private boolean isConnected = false;
+
+    private final String mHostname;
+    private final int mPort;
+    private final LinkedList<SocketListener> mListeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
+    private int mTimeOut;
+    private boolean mIsConnected = false;
     @Nullable
-    private Socket socket = new Socket();
+    private Socket mSocket = new Socket();
     @Nullable
-    private MessagePacker messagePacker;/*input stream reader.*/
+    private MessagePacker mMessagePacker;/*input stream reader.*/
     @Nullable
-    private MessageUnpacker messageUnpacker;/*output stream writer.*/
+    private MessageUnpacker mMessageUnpacker;/*output stream writer.*/
 
     /*
-    ** Constructor (Creates a new unconnected socket).
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
-    public SocketManager(@NonNull final String hostname, final int port) {
+    /**
+     * See {@link #SocketManager(String, int, int)}
+     * @param hostname
+     * @param port
+     */
+    public SocketManager(@NonNull final String hostname,
+                         final int port) {
         this(hostname, port, 0);
     }
 
-    public SocketManager(@NonNull final String hostname, final int port, final int timeOut) {
-        LogHelper.d(TAG, "init SocketManager: hostname=" + hostname + " port=" + port + " timeOut=" + timeOut);
+    /**
+     * Create a new unconnectedSocket
+     * @param hostname
+     * @param port
+     * @param timeOut
+     */
+    public SocketManager(@NonNull final String hostname,
+                         final int port,
+                         final int timeOut) {
+        LogHelper.d(TAG, "init SocketManager: mHostname=" + hostname + " mPort=" + port + " mTimeOut=" + timeOut);
 
-        this.hostname = hostname;
-        this.port = port;
-        this.timeOut = timeOut;
+        mHostname = hostname;
+        mPort = port;
+        mTimeOut = timeOut;
 
-        this.messagePacker = null;
-        this.messageUnpacker = null;
+        mMessagePacker = null;
+        mMessageUnpacker = null;
     }
 
     /*
-    ** Setter
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     public synchronized void setTimeOut(final int timeOut) {
-        this.timeOut = timeOut;
+        mTimeOut = timeOut;
     }
 
-    /*
-    ** Public method
-     */
     public synchronized void addSocketListener(@NonNull final SocketListener socketListener) {
-        listeners.add(socketListener);
+        mListeners.add(socketListener);
     }
 
     public synchronized void removeSocketListener(@NonNull final SocketListener socketListener) {
-        listeners.remove(socketListener);
+        mListeners.remove(socketListener);
     }
 
-    //Connects the socket to the given remote host address and port specified in the constructor
-    //connecting method will block until the connection is established or an error occurred.
+    /**
+     * Connects the mSocket to the given remote host address and mPort specified in the constructor
+     * connecting method will block until the connection is established or an error occurred.
+     */
     public synchronized void connect() {
         LogHelper.d(TAG, "Trying to connect...");
 
         try {
-            /*Init socket*/
-            if (socket == null) {
-                throw new IllegalArgumentException("Can't connect if socket is null");
+            /*Init mSocket*/
+            if (mSocket == null) {
+                throw new IllegalArgumentException("Can't connect if mSocket is null");
             }
-            socket.connect(new InetSocketAddress(hostname, port), timeOut);
-            isConnected = true;
+            mSocket.connect(new InetSocketAddress(mHostname, mPort), mTimeOut);
+            mIsConnected = true;
 
             /*Init serializer / deserializer */
-            messagePacker = new MessagePack.PackerConfig().newPacker(socket.getOutputStream());
-            messageUnpacker = new MessagePack.UnpackerConfig().newUnpacker(socket.getInputStream());
+            mMessagePacker = new MessagePack.PackerConfig().newPacker(mSocket.getOutputStream());
+            mMessageUnpacker = new MessagePack.UnpackerConfig().newUnpacker(mSocket.getInputStream());
 
             /*Display some log*/
             LogHelper.d(TAG, "Connection Success");
@@ -94,10 +112,10 @@ public final class SocketManager {
             /*Init a listeningThread*/
             startListeningTask();
         } catch (IOException | IllegalArgumentException e) {
-            isConnected = false;
-            socket = null;
-            messagePacker = null;
-            messageUnpacker = null;
+            mIsConnected = false;
+            mSocket = null;
+            mMessagePacker = null;
+            mMessageUnpacker = null;
 
             /*Display some log*/
             LogHelper.e(TAG, "Connection failed");
@@ -109,26 +127,28 @@ public final class SocketManager {
         }
     }
 
-    // Closes the socket.
-    // It is not possible to reconnect or rebind to the socket
-    // which means a new socket instance has to be created.
+    /**
+     * Closes the mSocket.
+     * It is not possible to reconnect or rebind to the mSocket
+     * which means a new mSocket instance has to be created.
+     */
     public synchronized void disconnect() {
         try {
-            isConnected = false;
+            mIsConnected = false;
 
-            if (socket != null) {
-                socket.close();
-                socket = null;
+            if (mSocket != null) {
+                mSocket.close();
+                mSocket = null;
             }
-            if (messagePacker != null) {
-                messagePacker.close();
-                messagePacker = null;
+            if (mMessagePacker != null) {
+                mMessagePacker.close();
+                mMessagePacker = null;
             }
-            if (messageUnpacker != null) {
-                messageUnpacker.close();
-                messageUnpacker = null;
+            if (mMessageUnpacker != null) {
+                mMessageUnpacker.close();
+                mMessageUnpacker = null;
             }
-            listeners.clear();
+            mListeners.clear();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -137,10 +157,10 @@ public final class SocketManager {
         notifySocketDisconnected();
     }
 
-    /*
-    ** Runnable implementation
-     * Listens for messages while the socket is connected.
-	 * use the connect() method before.
+    /**
+     * Runnable implementation
+     * Listens for messages while the mSocket is connected.
+     * use the connect() method before.
      */
     public synchronized void send(@NonNull final MapValue message) {
         LogHelper.d(TAG, "Sending: " + message);
@@ -148,16 +168,18 @@ public final class SocketManager {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void startSendingTask(@NonNull final MapValue message) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    if (messagePacker != null) {
-                        messagePacker.packValue(message);
-                        messagePacker.flush();
+                    if (mMessagePacker != null) {
+                        mMessagePacker.packValue(message);
+                        mMessagePacker.flush();
                     }
                 } catch (IOException e) {
                     LogHelper.d(TAG, "Can't send message");
@@ -172,17 +194,17 @@ public final class SocketManager {
             @Override
             public void run() {
                 try {
-                    if (socket == null || !socket.isConnected()) {
+                    if (mSocket == null || !mSocket.isConnected()) {
                         throw new UnsupportedOperationException("You should call connect() before");
                     }
 
                     /*Send notification*/
                     notifySocketListening();
 
-                    LogHelper.d(TAG, "Listening on socket...");
-                    while (isConnected) {
-                        if (messageUnpacker != null) {
-                            ImmutableValue message = messageUnpacker.unpackValue();
+                    LogHelper.d(TAG, "Listening on mSocket...");
+                    while (mIsConnected) {
+                        if (mMessageUnpacker != null) {
+                            ImmutableValue message = mMessageUnpacker.unpackValue();
                             notifyMessageReceived(message);
                         }
                     }
@@ -195,13 +217,10 @@ public final class SocketManager {
         }).start();
     }
 
-    /*
-    ** Utils
-     */
     private void notifySocketConnected() {
         LogHelper.d(TAG, "notifySocketConnected");
 
-        for (final SocketListener listener : listeners) {
+        for (final SocketListener listener : mListeners) {
             listener.onSocketConnected();
         }
     }
@@ -209,7 +228,7 @@ public final class SocketManager {
     private void notifySocketListening() {
         LogHelper.d(TAG, "notifySocketListening");
 
-        for (final SocketListener listener : listeners) {
+        for (final SocketListener listener : mListeners) {
             listener.onSocketListening();
         }
     }
@@ -217,7 +236,7 @@ public final class SocketManager {
     private void notifySocketDisconnected() {
         LogHelper.d(TAG, "notifySocketDisconnected");
 
-        for (final SocketListener listener : listeners) {
+        for (final SocketListener listener : mListeners) {
             listener.onSocketDisconnected();
         }
     }
@@ -225,7 +244,7 @@ public final class SocketManager {
     private void notifyMessageReceived(@NonNull final ImmutableValue message) {
         LogHelper.d(TAG, "Message receive: " + message.toString());
 
-        for (final SocketListener listener : listeners) {
+        for (final SocketListener listener : mListeners) {
             listener.onMessageReceived(message);
         }
     }

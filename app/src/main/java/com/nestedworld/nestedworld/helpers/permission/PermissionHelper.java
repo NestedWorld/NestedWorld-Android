@@ -24,21 +24,29 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
  * public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
  * in you activity
  */
-public final class PermissionUtils {
+public final class PermissionHelper {
     public final static int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public final static int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
-    private static final String TAG = PermissionUtils.class.getSimpleName();
+    private static final String TAG = PermissionHelper.class.getSimpleName();
 
-    private PermissionUtils() {
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
+    private PermissionHelper() {
         //Empty constructor for avoiding this class to be construct
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     //asking for multiple permissions from an appcompatActivity
-    public static void askForPermissionsFromActivity(@NonNull final Context context, @NonNull final List<String> permissionsName) {
-        List<String> permissionNeeded = new ArrayList<>();
+    public static void askForPermissionsFromActivity(@NonNull final Context context,
+                                                     @NonNull final List<String> permissionsName) {
+        final List<String> permissionNeeded = new ArrayList<>();
 
         for (String p : permissionsName) {
             if (!isPermissionAllow(context, p)) {
@@ -50,7 +58,8 @@ public final class PermissionUtils {
     }
 
     //asking for a single permissions from an appcompatActivity
-    public static void askForPermissionFromActivity(@NonNull final Context context, @NonNull final String permissionName) {
+    public static void askForPermissionFromActivity(@NonNull final Context context,
+                                                    @NonNull final String permissionName) {
         LogHelper.d(TAG, "Asking for permission : " + permissionName);
 
         if (checkSelfPermission(context, permissionName) == PackageManager.PERMISSION_DENIED) {
@@ -59,8 +68,10 @@ public final class PermissionUtils {
     }
 
     //asking for multiple permissions from a v4 fragment
-    public static void askForPermissionsFromFragment(@NonNull final Context context, @NonNull final Fragment fragment, @NonNull final List<String> permissionsName) {
-        List<String> permissionNeeded = new ArrayList<>();
+    public static void askForPermissionsFromFragment(@NonNull final Context context,
+                                                     @NonNull final Fragment fragment,
+                                                     @NonNull final List<String> permissionsName) {
+        final List<String> permissionNeeded = new ArrayList<>();
 
         for (String p : permissionsName) {
             if (!isPermissionAllow(context, p)) {
@@ -72,7 +83,9 @@ public final class PermissionUtils {
     }
 
     //asking for a single permissions from a v4 fragment
-    public static void askForPermissionFromFragment(@NonNull final Context context, @NonNull final Fragment fragment, @NonNull final String permissionName) {
+    public static void askForPermissionFromFragment(@NonNull final Context context,
+                                                    @NonNull final Fragment fragment,
+                                                    @NonNull final String permissionName) {
         LogHelper.d(TAG, "Asking for permission : " + permissionName);
 
         if (checkSelfPermission(context, permissionName) == PackageManager.PERMISSION_DENIED) {
@@ -81,9 +94,12 @@ public final class PermissionUtils {
     }
 
     /*
-    ** Utils
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
-    private static boolean isPermissionAllow(@NonNull final Context context, @NonNull final String permissionName) {
+    private static boolean isPermissionAllow(@NonNull final Context context,
+                                             @NonNull final String permissionName) {
         return checkSelfPermission(context, permissionName) == PackageManager.PERMISSION_GRANTED;
     }
 }

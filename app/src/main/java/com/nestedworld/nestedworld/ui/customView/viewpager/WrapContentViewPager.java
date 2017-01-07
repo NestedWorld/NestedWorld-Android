@@ -10,32 +10,38 @@ import android.view.View;
 public class WrapContentViewPager extends ViewPager {
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public WrapContentViewPager(@NonNull final Context context) {
         super(context);
     }
 
-    public WrapContentViewPager(@NonNull final Context context, @Nullable final AttributeSet attrs) {
+    public WrapContentViewPager(@NonNull final Context context,
+                                @Nullable final AttributeSet attrs) {
         super(context, attrs);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # ViewPager implementation
+     * #############################################################################################
      */
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         int height = 0;
         for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
+            final View child = getChildAt(i);
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            int h = child.getMeasuredHeight();
+
+            final int h = child.getMeasuredHeight();
             if (h > height) {
                 height = h;
             }
         }
 
-        int newMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        final int newMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, newMeasureSpec);
     }

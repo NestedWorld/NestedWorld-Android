@@ -42,10 +42,10 @@ public final class HttpEndPoint {
      * #############################################################################################
      */
     private final static String USER_PREFIX = "users/";
-    public final static String USER_INFO = USER_PREFIX + "me/";
-    public final static String USER_FRIENDS = USER_PREFIX + "friends/";
-    public final static String USER_MONSTERS = USER_PREFIX + "monsters";
-    public final static String USER_INVENTORY = USER_INFO + "inventory/";
+    public final static String USER_INFO = USER_PREFIX + "me";
+    public final static String USER_FRIENDS = USER_PREFIX + "/friends/";
+    public final static String USER_MONSTERS = USER_PREFIX + "/monsters";
+    public final static String USER_INVENTORY = USER_INFO + "/inventory/";
 
     /*
      * #############################################################################################

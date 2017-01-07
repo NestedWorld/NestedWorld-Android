@@ -8,38 +8,69 @@ import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
 
 @Entity(active = true)
 public class FriendData extends BaseEntity {
-    @SerializedName("id")
-    public
-    long playerId;
-    @Expose
-    public String city;
-    @Expose
-    public String gender;
-    @Expose
-    public String avatar;
-    @Expose
-    @SerializedName("is_connected")
-    public Boolean isConnected;
-    @Expose
-    public String background;
-    @Expose
-    @SerializedName("birth_date")
-    public String birthDate;
-    @Expose
-    public String email;
-    @Expose
-    public Long level;
-    @Expose
-    @SerializedName("is_active")
-    public String isActive;
-    @Expose
-    public String pseudo;
+    @Id(autoincrement = true)
+    @Unique
+    private Long id;
+
     @Expose
     @SerializedName("registered_at")
     public String registeredAt;
+
+    @Expose
+    @SerializedName("level")
+    public Long level;
+
+    @Expose
+    public String background;
+
+    @Expose
+    @SerializedName("birth_date")
+    public String birthDate;
+
+    @Expose
+    public String gender;
+
+    @SerializedName("id")
+    @Expose
+    public
+    long playerId;
+
+    @Expose
+    public String pseudo;
+
+    @Expose
+    @SerializedName("is_connected")
+    public Boolean isConnected;
+
+    @Expose
+    public String avatar;
+
+    @Expose
+    public String city;
+
+    @Override
+    public String toString() {
+        return "FriendData{" +
+                "avatar='" + avatar + '\'' +
+                ", playerId=" + playerId +
+                ", city='" + city + '\'' +
+                ", gender='" + gender + '\'' +
+                ", isConnected=" + isConnected +
+                ", background='" + background + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", level=" + level +
+                ", pseudo='" + pseudo + '\'' +
+                ", registeredAt='" + registeredAt + '\'' +
+                ", daoSession=" + daoSession +
+                ", myDao=" + myDao +
+                '}';
+    }
+
     /**
      * Used to resolve relations
      */
@@ -51,22 +82,21 @@ public class FriendData extends BaseEntity {
     @Generated(hash = 1900484213)
     private transient FriendDataDao myDao;
 
-    @Generated(hash = 1576254907)
-    public FriendData(long playerId, String city, String gender, String avatar,
-                      Boolean isConnected, String background, String birthDate, String email,
-                      Long level, String isActive, String pseudo, String registeredAt) {
-        this.playerId = playerId;
-        this.city = city;
-        this.gender = gender;
-        this.avatar = avatar;
-        this.isConnected = isConnected;
+    @Generated(hash = 46554823)
+    public FriendData(Long id, String registeredAt, Long level, String background,
+            String birthDate, String gender, long playerId, String pseudo,
+            Boolean isConnected, String avatar, String city) {
+        this.id = id;
+        this.registeredAt = registeredAt;
+        this.level = level;
         this.background = background;
         this.birthDate = birthDate;
-        this.email = email;
-        this.level = level;
-        this.isActive = isActive;
+        this.gender = gender;
+        this.playerId = playerId;
         this.pseudo = pseudo;
-        this.registeredAt = registeredAt;
+        this.isConnected = isConnected;
+        this.avatar = avatar;
+        this.city = city;
     }
 
     @Generated(hash = 951877157)
@@ -129,28 +159,12 @@ public class FriendData extends BaseEntity {
         this.birthDate = birthDate;
     }
 
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Long getLevel() {
         return this.level;
     }
 
     public void setLevel(Long level) {
         this.level = level;
-    }
-
-    public String getIsActive() {
-        return this.isActive;
-    }
-
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
     }
 
     public String getPseudo() {
@@ -205,12 +219,18 @@ public class FriendData extends BaseEntity {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1312897803)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFriendDataDao() : null;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -3,11 +3,11 @@ package com.nestedworld.nestedworld.data.network.http.models.response.monsters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.nestedworld.nestedworld.data.database.entities.Attack;
-import com.nestedworld.nestedworld.data.network.http.models.response.BaseHttpResponse;
+import com.nestedworld.nestedworld.data.network.http.models.response.BaseHttpEntity;
 
 import java.util.List;
 
-public class MonsterAttackResponse extends BaseHttpResponse {
+public class MonsterAttackResponse extends BaseHttpEntity {
     @Expose
     public List<MonsterAttack> attacks;
 

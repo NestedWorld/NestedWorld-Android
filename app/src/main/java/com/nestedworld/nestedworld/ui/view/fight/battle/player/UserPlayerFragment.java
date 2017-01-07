@@ -34,6 +34,11 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
     private final static String TAG = UserPlayerFragment.class.getSimpleName();
 
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -54,10 +59,13 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     private List<UserMonster> mTeam = null;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
-    public static UserPlayerFragment load(@NonNull final FragmentManager fragmentManager, @NonNull final List<UserMonster> team) {
-        UserPlayerFragment userPlayerFragment = new UserPlayerFragment().setTeam(team);
+    public static UserPlayerFragment load(@NonNull final FragmentManager fragmentManager,
+                                          @NonNull final List<UserMonster> team) {
+        final UserPlayerFragment userPlayerFragment = new UserPlayerFragment().setTeam(team);
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container_player, userPlayerFragment)
@@ -67,7 +75,9 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -98,7 +108,9 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     }
 
     /*
-    ** public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     @Nullable
     public UserMonster getNextMonster() {
@@ -109,7 +121,9 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     }
 
     /*
-    ** PlayerViewManager Implementation
+     * #############################################################################################
+     * # PlayerViewManager Implementation
+     * #############################################################################################
      */
     @Override
     public void updateCurrentMonsterLife(@NonNull final AttackReceiveMessage.AttackReceiveMessageMonster monster) {
@@ -157,7 +171,7 @@ public class UserPlayerFragment extends BattlePlayerFragment {
         viewBody.setBackgroundColor(Color.RED);
         viewHeaderBorder.setBackgroundColor(Color.RED);
 
-        Iterator<UserMonster> iterator = mTeam.iterator();
+        final Iterator<UserMonster> iterator = mTeam.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().userMonsterId == monsterKo.userMonsterId) {
                 iterator.remove();
@@ -181,7 +195,7 @@ public class UserPlayerFragment extends BattlePlayerFragment {
         monsterLife.setText(String.valueOf(monster.hp));
 
         //Populate monster sprite
-        Monster monsterInfos = monster.info();
+        final Monster monsterInfos = monster.info();
         if (monsterInfos != null) {
             Glide.with(mContext)
                     .load(monsterInfos.baseSprite)
@@ -192,7 +206,9 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Private method
+     * #############################################################################################
      */
     private UserPlayerFragment setTeam(@NonNull final List<UserMonster> team) {
         mTeam = team;

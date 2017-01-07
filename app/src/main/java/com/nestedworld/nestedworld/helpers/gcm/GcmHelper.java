@@ -13,18 +13,23 @@ import com.nestedworld.nestedworld.R;
 public final class GcmHelper {
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     private GcmHelper() {
         //Private constructor for avoiding this class to be construct
     }
 
     /*
-    ** Public static method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
-    public static void displayNotification(@NonNull final Context context, @NonNull final String title, Class<?> target) {
+    public static void displayNotification(@NonNull final Context context,
+                                           @NonNull final String title, Class<?> target) {
         //Build notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setAutoCancel(true)
@@ -32,12 +37,12 @@ public final class GcmHelper {
                 .setContentText(title);
 
         //Add action on notification
-        Intent intentTarget = new Intent(context, target);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 1, intentTarget, PendingIntent.FLAG_CANCEL_CURRENT);
+        final Intent intentTarget = new Intent(context, target);
+        final PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 1, intentTarget, PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(resultPendingIntent);
 
         //Display notification
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, builder.build());
     }
 }

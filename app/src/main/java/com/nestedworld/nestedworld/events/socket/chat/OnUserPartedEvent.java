@@ -6,7 +6,11 @@ import com.nestedworld.nestedworld.data.network.socket.models.message.message.Us
 import com.nestedworld.nestedworld.events.socket.base.SocketMessageEvent;
 
 public class OnUserPartedEvent extends SocketMessageEvent<UserPartedMessage> {
-
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
     public OnUserPartedEvent(@NonNull final UserPartedMessage message) {
         super(message);
     }

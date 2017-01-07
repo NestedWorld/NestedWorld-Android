@@ -1,7 +1,6 @@
 package com.nestedworld.nestedworld.analytics;
 
 import android.support.annotation.NonNull;
-
 import com.nestedworld.nestedworld.analytics.sender.Answer;
 import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
 
@@ -18,7 +17,7 @@ public final class NestedWorldAnalytics {
 
     /*
      * #############################################################################################
-     * # Public method
+     * # Public (static) method
      * #############################################################################################
      */
     public static void setUserInfo(@NonNull final SessionData sessionData) {

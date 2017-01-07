@@ -16,16 +16,22 @@ public final class SessionHelper {
     private final static String TAG = SessionHelper.class.getSimpleName();
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     private SessionHelper() {
         //private constructor for avoiding this class to be construct
     }
 
     /*
-    ** public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
-    public static void newSession(@NonNull final String email, @NonNull final String password, @NonNull final String authToken) {
+    public static void newSession(@NonNull final String email,
+                                  @NonNull final String password,
+                                  @NonNull final String authToken) {
         //Display some log
         LogHelper.d(TAG, "newSession : "
                 + " name=" + email
@@ -36,7 +42,7 @@ public final class SessionHelper {
         deleteSession();
 
         //Create a new session
-        Session session = new Session();
+        final Session session = new Session();
         session.authToken = authToken;
         session.email = email;
 
@@ -52,9 +58,9 @@ public final class SessionHelper {
         LogHelper.d(TAG, "deleteSession()");
 
         //Delete the player linked to the session
-        Session session = getSession();
+        final Session session = getSession();
         if (session != null) {
-            SessionData sessionData = session.getSessionData();
+            final SessionData sessionData = session.getSessionData();
             if (sessionData != null) {
                 LogHelper.d(TAG, "delete player: " + sessionData.toString());
                 sessionData.delete();

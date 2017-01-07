@@ -35,9 +35,10 @@ public abstract class BaseFragment extends Fragment {
     private Unbinder mUnbinder;
 
     /*
-    ** Method every child will have to implement
+     * #############################################################################################
+     * # Method every child will have to implement
+     * #############################################################################################
      */
-
     /**
      * get the layout id
      * it will be use under onCreateView()
@@ -52,12 +53,14 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void init(@NonNull final View rootView, @Nullable final Bundle savedInstanceState);
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Fragment implementation
+     * #############################################################################################
      */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(getLayoutResource(), container, false);
+        final View rootView = inflater.inflate(getLayoutResource(), container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         mContext = getContext();
         NestedWorldAnalytics.logViewLoaded("Fragment", TAG);
@@ -96,12 +99,10 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /*
-    ** Utils
+     * #############################################################################################
+     * # Protected method
+     * #############################################################################################
      */
-    public String toString() {
-        return TAG;
-    }
-
     protected void onFatalError() {
         //check if fragment hasn't been detach
         if (mContext == null) {
@@ -113,12 +114,12 @@ public abstract class BaseFragment extends Fragment {
         Toast.makeText(mContext, getString(R.string.error_request_user), Toast.LENGTH_LONG).show();
 
         //go to launch screen
-        Intent intent = new Intent(mContext, WelcomeActivity.class);
+        final Intent intent = new Intent(mContext, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
-    protected void startActivity(Class clazz) {
+    protected void startActivity(@NonNull final Class clazz) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;

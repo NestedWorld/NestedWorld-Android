@@ -6,7 +6,11 @@ import com.nestedworld.nestedworld.data.network.socket.models.message.combat.Mon
 import com.nestedworld.nestedworld.events.socket.base.SocketMessageEvent;
 
 public class OnMonsterKoEvent extends SocketMessageEvent<MonsterKoMessage> {
-
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
     public OnMonsterKoEvent(@NonNull final MonsterKoMessage message) {
         super(message);
     }

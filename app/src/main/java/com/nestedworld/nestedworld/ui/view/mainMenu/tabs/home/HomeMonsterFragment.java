@@ -13,7 +13,7 @@ import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatab
 import com.nestedworld.nestedworld.data.database.entities.UserMonster;
 import com.nestedworld.nestedworld.data.database.updater.UserMonsterUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.ui.adapter.RecyclerView.UserMonsterAdapter;
+import com.nestedworld.nestedworld.ui.adapter.recycler.UserMonsterAdapter;
 import com.nestedworld.nestedworld.ui.customView.recycler.GridAutoFitRecyclerView;
 import com.nestedworld.nestedworld.events.http.OnUserMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
@@ -28,7 +28,13 @@ import butterknife.BindView;
 
 public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private final UserMonsterAdapter userMonsterAdapter = new UserMonsterAdapter();
+    private final UserMonsterAdapter mUserMonsterAdapter = new UserMonsterAdapter();
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.recycler_home_monster)
     GridAutoFitRecyclerView recycler;
     @BindView(R.id.recycler_home_monster_container)
@@ -39,7 +45,9 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
     SwipeRefreshLayout swipeRefreshLayout;
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -67,7 +75,9 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     /*
-    ** SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
+     * # SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
      */
     @Override
     public void onRefresh() {
@@ -90,7 +100,9 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onUserMonstersUpdated(OnUserMonstersUpdatedEvent onUserMonstersUpdatedEvent) {
@@ -108,7 +120,9 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     /*
-    ** Private method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupAdapter() {
         //Check if fragment hasn't been detach
@@ -118,7 +132,7 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
 
         recycler.setHasFixedSize(true);
         recycler.setColumnWidth((int) getResources().getDimension(R.dimen.item_user_monster_width));
-        recycler.setAdapter(userMonsterAdapter);
+        recycler.setAdapter(mUserMonsterAdapter);
     }
 
     @UiThread
@@ -129,19 +143,19 @@ public class HomeMonsterFragment extends BaseFragment implements SwipeRefreshLay
         }
 
         //Retrieve monsters
-        List<UserMonster> userMonsters = NestedWorldDatabase.getInstance()
+        final List<UserMonster> userMonsters = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getUserMonsterDao()
                 .loadAll();
 
-        userMonsterAdapter.clear();
+        mUserMonsterAdapter.clear();
         if (userMonsters == null || userMonsters.isEmpty()) {
             textViewNoMonster.setVisibility(View.VISIBLE);
             viewRecyclerContainer.setVisibility(View.GONE);
         } else {
             textViewNoMonster.setVisibility(View.GONE);
             viewRecyclerContainer.setVisibility(View.VISIBLE);
-            userMonsterAdapter.addAll(userMonsters);
+            mUserMonsterAdapter.addAll(userMonsters);
         }
     }
 }

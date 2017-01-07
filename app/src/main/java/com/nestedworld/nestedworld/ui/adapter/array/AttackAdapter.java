@@ -20,14 +20,19 @@ public class AttackAdapter extends ArrayAdapter<Attack> {
     private final static int layoutRes = R.layout.item_attack;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
-    public AttackAdapter(@NonNull final Context context, @NonNull final List<Attack> objects) {
+    public AttackAdapter(@NonNull final Context context,
+                         @NonNull final List<Attack> objects) {
         super(context, layoutRes, objects);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # ArrayAdapter<Attack> implementation
+     * #############################################################################################
      */
     @NonNull
     @Override
@@ -40,7 +45,7 @@ public class AttackAdapter extends ArrayAdapter<Attack> {
         }
 
         //Get current attack
-        Attack currentAttack = getItem(position);
+        final Attack currentAttack = getItem(position);
         if (currentAttack == null) {
             return view;
         }
@@ -51,14 +56,17 @@ public class AttackAdapter extends ArrayAdapter<Attack> {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
-    private void populateView(@NonNull final View view, @NonNull final Attack attack) {
-        TextView textViewAttackType = (TextView) view.findViewById(R.id.textview_attackType);
-        TextView textViewAttackName = (TextView) view.findViewById(R.id.textView_attackName);
+    private void populateView(@NonNull final View view,
+                              @NonNull final Attack attack) {
+        final TextView textViewAttackType = (TextView) view.findViewById(R.id.textview_attackType);
+        final TextView textViewAttackName = (TextView) view.findViewById(R.id.textView_attackName);
 
-        String attackType = attack.type == null ? "Unknown" : attack.type;
-        String attackName = attack.name == null ? "Unknown" : attack.name;
+        final String attackType = attack.type == null ? "Unknown" : attack.type;
+        final String attackName = attack.name == null ? "Unknown" : attack.name;
 
         textViewAttackType.setText(String.format(getContext().getString(R.string.item_attack_msg_attackType), attackType));
         textViewAttackName.setText(String.format(getContext().getString(R.string.item_attack_msg_attackName), attackName));

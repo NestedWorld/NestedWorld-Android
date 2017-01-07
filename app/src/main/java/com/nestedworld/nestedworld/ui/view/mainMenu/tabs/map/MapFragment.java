@@ -25,8 +25,7 @@ import com.nestedworld.nestedworld.data.database.updater.PortalUpdater;
 import com.nestedworld.nestedworld.ui.dialog.EngagePortalFightDialog;
 import com.nestedworld.nestedworld.events.http.OnPortalUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.helpers.map.NestedWorldMap;
-import com.nestedworld.nestedworld.helpers.permission.PermissionUtils;
+import com.nestedworld.nestedworld.helpers.permission.PermissionHelper;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
 import com.rey.material.widget.ProgressView;
@@ -118,7 +117,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         //check for REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS cause we've asked for 2 permission
-        if (requestCode != PermissionUtils.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS) {
+        if (requestCode != PermissionHelper.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS) {
             LogHelper.d(TAG, "Wrong request code");
             return;
         }
@@ -280,7 +279,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
             LogHelper.d(TAG, "ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permission needed");
 
             //We ask for the permission (it we'll call onRequestPermissionsResult who will call initMap())
-            PermissionUtils.askForPermissionsFromFragment(mContext, this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
+            PermissionHelper.askForPermissionsFromFragment(mContext, this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
         } else {
             // Acquire a reference to the system Location Manager
             LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);

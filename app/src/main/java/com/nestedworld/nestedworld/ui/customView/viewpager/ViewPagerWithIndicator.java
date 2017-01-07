@@ -39,16 +39,19 @@ public class ViewPagerWithIndicator extends LinearLayout {
     private LinearLayout arrowContainer = null;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public ViewPagerWithIndicator(@NonNull final Context context) {
         this(context, null);
     }
 
-    public ViewPagerWithIndicator(@NonNull final Context context, @Nullable final AttributeSet attrs) {
+    public ViewPagerWithIndicator(@NonNull final Context context,
+                                  @Nullable final AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ViewPagerWithIndicator, 0, 0);
+        final TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ViewPagerWithIndicator, 0, 0);
         try {
             mArrowEnable = a.getBoolean(R.styleable.ViewPagerWithIndicator_arrow_enable, true);
             if (mArrowEnable) {
@@ -74,7 +77,9 @@ public class ViewPagerWithIndicator extends LinearLayout {
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     public void setViewPager(@NonNull final ViewPager viewPager) {
         if (viewPager.getAdapter() == null) {
@@ -125,11 +130,13 @@ public class ViewPagerWithIndicator extends LinearLayout {
     }
 
     /*
-    ** Private method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void init() {
-        this.setOrientation(VERTICAL);
-        this.setGravity(Gravity.CENTER);
+        setOrientation(VERTICAL);
+        setGravity(Gravity.CENTER);
 
         if (mArrowEnable) {
             //Init arrow
@@ -140,12 +147,12 @@ public class ViewPagerWithIndicator extends LinearLayout {
             mRightArrow.setImageResource(mRightArrowDrawable);
 
             //Set right arrow param
-            LinearLayout.LayoutParams rightArrowParams = new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight);
+            final LinearLayout.LayoutParams rightArrowParams = new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight);
             rightArrowParams.gravity = Gravity.CENTER;
             mRightArrow.setLayoutParams(rightArrowParams);
 
             //Set left arrow param
-            LinearLayout.LayoutParams leftArrowParams = new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight);
+            final LinearLayout.LayoutParams leftArrowParams = new LinearLayout.LayoutParams(mArrowWidth, mArrowHeight);
             leftArrowParams.gravity = Gravity.CENTER;
             mLeftArrow.setLayoutParams(leftArrowParams);
 
@@ -154,10 +161,10 @@ public class ViewPagerWithIndicator extends LinearLayout {
             arrowContainer.setOrientation(HORIZONTAL);
             arrowContainer.setGravity(Gravity.CENTER);
 
-            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            final LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             arrowContainer.setLayoutParams(params);
 
-            this.addView(arrowContainer);
+            addView(arrowContainer);
         }
 
         if (mRoundEnable) {
@@ -165,7 +172,7 @@ public class ViewPagerWithIndicator extends LinearLayout {
             roundedIndicatorContainer = new LinearLayout(getContext());
             roundedIndicatorContainer.setOrientation(HORIZONTAL);
 
-            LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            final LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             roundedIndicatorContainer.setLayoutParams(params);
 
             this.addView(roundedIndicatorContainer);
@@ -187,7 +194,7 @@ public class ViewPagerWithIndicator extends LinearLayout {
 
         if (mRoundEnable) {
             //populate roundedIndicator container
-            LayoutParams params = new LayoutParams(mRoundSize, mRoundSize);
+            final LayoutParams params = new LayoutParams(mRoundSize, mRoundSize);
 
             for (int i = 0; i < mViewPager.getAdapter().getCount(); i++) {
                 ImageView roundIndicator = new ImageView(getContext());
@@ -200,9 +207,6 @@ public class ViewPagerWithIndicator extends LinearLayout {
         }
     }
 
-    /*
-    ** Utils
-     */
     private void updateArrowVisibility() {
         if (isOnFirstPage()) {
             mLeftArrow.setVisibility(INVISIBLE);
@@ -219,9 +223,9 @@ public class ViewPagerWithIndicator extends LinearLayout {
 
     private void updateRoundIndicator() {
         for (int i = 0; i < mViewPager.getAdapter().getCount(); i++) {
-            View view = roundedIndicatorContainer.getChildAt(i);
+            final View view = roundedIndicatorContainer.getChildAt(i);
             if (view != null) {
-                GradientDrawable background = (GradientDrawable) view.getBackground();
+                final GradientDrawable background = (GradientDrawable) view.getBackground();
                 background.setColor(i == mViewPager.getCurrentItem() ? mRoundSelectedColor : mRoundDefaultColor);
             }
         }

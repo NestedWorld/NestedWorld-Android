@@ -33,8 +33,20 @@ import butterknife.BindView;
 
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    public final static String NAME = ChatListFragment.class.getSimpleName();
+    public final static String FRAGMENT_NAME = ChatListFragment.class.getSimpleName();
 
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
+    private ChatAdapter mAdapter;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.listView_chat_list)
     ListView listView;
     @BindView(R.id.progressView)
@@ -44,20 +56,22 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     @BindView(R.id.textview_no_friend)
     TextView textViewNoFriend;
 
-    private ChatAdapter mAdapter;
-
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
-                .replace(R.id.container, new ChatListFragment(), NAME)
+                .replace(R.id.container, new ChatListFragment(), FRAGMENT_NAME)
                 .addToBackStack(null)
                 .commit();
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -85,7 +99,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /*
-    ** SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
+     * # SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
      */
     @Override
     public void onRefresh() {
@@ -127,7 +143,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
@@ -145,7 +163,9 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupActionBar() {
         //Check if fragment hasn't been detach
@@ -153,7 +173,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
             return;
         }
 
-        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
+        final ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.mainMenu_action_chat));
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -193,7 +213,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     @UiThread
     private void populateFriendList() {
         //Retrieve friend from ORM
-        List<Friend> friends = NestedWorldDatabase.getInstance()
+        final List<Friend> friends = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getFriendDao()
                 .loadAll();

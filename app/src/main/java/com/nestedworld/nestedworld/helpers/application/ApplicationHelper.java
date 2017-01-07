@@ -10,10 +10,20 @@ import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 
 public final class ApplicationHelper {
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
     private ApplicationHelper() {
         //Private constructor for avoiding this class to be constructed
     }
 
+    /*
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
+     */
     public static void logout(@NonNull final Context context) {
         //remove player
         SessionHelper.deleteSession();

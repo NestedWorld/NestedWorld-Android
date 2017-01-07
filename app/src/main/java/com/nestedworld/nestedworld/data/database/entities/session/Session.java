@@ -2,7 +2,6 @@ package com.nestedworld.nestedworld.data.database.entities.session;
 
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.data.database.entities.DaoSession;
 import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.DaoException;
@@ -10,6 +9,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
+import com.nestedworld.nestedworld.data.database.entities.DaoSession;
 
 @Entity(active = true)
 public class Session extends BaseEntity {
@@ -115,9 +115,7 @@ public class Session extends BaseEntity {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1458438772)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

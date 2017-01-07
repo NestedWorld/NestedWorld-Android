@@ -20,14 +20,16 @@ public class NestedWorldApp extends Application {
     private final static String TAG = NestedWorldApp.class.getSimpleName();
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Application implementation
+     * #############################################################################################
      */
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
 
         initFontOverrider();
+        setupCrashLogger();
         setupGreenDao();
     }
 
@@ -38,7 +40,9 @@ public class NestedWorldApp extends Application {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Private method
+     * #############################################################################################
      */
     private void setupCrashLogger() {
         Fabric.with(this, new Crashlytics());

@@ -21,16 +21,20 @@ public class AttackReceiveMessage extends DefaultMessage {
     private long combat;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
-    public AttackReceiveMessage(@NonNull Map<Value, Value> message,
-                                @NonNull SocketMessageType.MessageKind messageKind,
-                                @Nullable SocketMessageType.MessageKind idKind) {
+    public AttackReceiveMessage(@NonNull final Map<Value, Value> message,
+                                @NonNull final SocketMessageType.MessageKind messageKind,
+                                @Nullable final SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # DefaultMessage implementation
+     * #############################################################################################
      */
     @Override
     protected void unSerialise(@NonNull Map<Value, Value> message) {
@@ -42,6 +46,11 @@ public class AttackReceiveMessage extends DefaultMessage {
         this.combat = message.get(ValueFactory.newString("combat")).asIntegerValue().asLong();
     }
 
+    /*
+     * #############################################################################################
+     * # Generated
+     * #############################################################################################
+     */
     @Override
     public String toString() {
         return "AttackReceiveMessage{" +

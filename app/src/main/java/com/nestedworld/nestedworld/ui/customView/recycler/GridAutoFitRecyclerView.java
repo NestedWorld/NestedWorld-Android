@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -13,39 +14,45 @@ public class GridAutoFitRecyclerView extends RecyclerView {
     private GridAutoFitLayoutManager mGridAutoFitLayoutManager;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
-    public GridAutoFitRecyclerView(Context context) {
+    public GridAutoFitRecyclerView(@NonNull final Context context) {
         super(context);
         init(context, null);
     }
 
-    public GridAutoFitRecyclerView(Context context, AttributeSet attrs) {
+    public GridAutoFitRecyclerView(@NonNull final Context context,
+                                   @Nullable final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Pubic method
+     * #############################################################################################
      */
-    public void setColumnWidth(@Dimension int width) {
+    public void setColumnWidth(@Dimension final int width) {
         mGridAutoFitLayoutManager.setColumnWidth(width);
     }
 
     /*
     ** Internal method
      */
-    private void init(Context context, AttributeSet attrs) {
+    private void init(@NonNull final Context context,
+                      @Nullable final AttributeSet attrs) {
         mGridAutoFitLayoutManager = new GridAutoFitLayoutManager(getContext());
 
         if (attrs != null) {
-            int[] attrsArray = {
+            final int[] attrsArray = {
                     android.R.attr.columnWidth
             };
-            TypedArray array = context.obtainStyledAttributes(attrs, attrsArray);
-            int columWidth = array.getDimensionPixelSize(0, -1);
-            if (columWidth > 0) {
-                mGridAutoFitLayoutManager.setColumnWidth(columWidth);
+            final TypedArray array = context.obtainStyledAttributes(attrs, attrsArray);
+            final int columnWidth = array.getDimensionPixelSize(0, -1);
+            if (columnWidth > 0) {
+                mGridAutoFitLayoutManager.setColumnWidth(columnWidth);
             }
             array.recycle();
         }
@@ -82,8 +89,8 @@ public class GridAutoFitRecyclerView extends RecyclerView {
          */
         @Override
         public void onLayoutChildren(final RecyclerView.Recycler recycler, final RecyclerView.State state) {
-            int width = getWidth();
-            int height = getHeight();
+            final int width = getWidth();
+            final int height = getHeight();
             if (mColumnWidthChanged && mColumnWidth > 0 && width > 0 && height > 0) {
                 int totalSpace;
                 if (getOrientation() == VERTICAL) {
@@ -92,7 +99,7 @@ public class GridAutoFitRecyclerView extends RecyclerView {
                     totalSpace = height - getPaddingTop() - getPaddingBottom();
                 }
 
-                int spanCount = Math.max(1, totalSpace / mColumnWidth);
+                final int spanCount = Math.max(1, totalSpace / mColumnWidth);
                 setSpanCount(spanCount);
                 mColumnWidthChanged = false;
             }

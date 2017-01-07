@@ -58,18 +58,6 @@ import retrofit2.Response;
 
 public class BattleFragment extends BaseFragment {
 
-    @BindView(R.id.progressView)
-    ProgressView progressView;
-    @BindView(R.id.imageView_battle_background)
-    ImageView battleBackground;
-    @BindViews({
-            R.id.imageView_top,
-            R.id.imageView_top_right,
-            R.id.imageView_bottom_right,
-            R.id.imageView_bottom,
-            R.id.imageView_bottom_left,
-            R.id.imageView_top_left})
-    List<ImageView> mTitles;
     private String mUserGestureInput = "";
     private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
         @Override
@@ -111,52 +99,45 @@ public class BattleFragment extends BaseFragment {
     };
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
+    @BindView(R.id.progressView)
+    ProgressView progressView;
+    @BindView(R.id.imageView_battle_background)
+    ImageView battleBackground;
+    @BindViews({
+            R.id.imageView_top,
+            R.id.imageView_top_right,
+            R.id.imageView_bottom_right,
+            R.id.imageView_bottom,
+            R.id.imageView_bottom_left,
+            R.id.imageView_top_left})
+    List<ImageView> mTitles;
+
+    /*
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager,
                             @NonNull final StartMessage startMessage,
                             @NonNull final List<UserMonster> selectedMonster) {
-        BattleFragment fightFragment = new BattleFragment();
+        final BattleFragment fightFragment = new BattleFragment();
         fightFragment.setStartMessage(startMessage);
         fightFragment.setUserTeam(selectedMonster);
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fightFragment);
-        fragmentTransaction.commit();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.container, fightFragment)
+                .commit();
     }
 
     /*
-    ** Utils
-     */
-    @Nullable
-    private static List<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Monster monster) {
-        try {
-            //Retrieve current monster attack
-            Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance().getMonsterAttack(monster.monsterId).execute();
-            if (response == null || response.body() == null) {
-                //Can not retrieve monster attack
-                return null;
-            } else {
-                //Success, return monster attack
-                return response.body().attacks;
-            }
-        } catch (IOException e) {
-            //Something wrong happen
-            //Can not retrieve monster attack
-            return null;
-        }
-    }
-
-    private void setStartMessage(@NonNull final StartMessage startMessage) {
-        mStartMessage = startMessage;
-    }
-
-    private void setUserTeam(@NonNull final List<UserMonster> team) {
-        mUserTeam = team;
-    }
-
-    /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -206,7 +187,9 @@ public class BattleFragment extends BaseFragment {
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onAttackReceive(OnAttackReceiveEvent event) {
@@ -284,13 +267,15 @@ public class BattleFragment extends BaseFragment {
     }
 
     /*
-    ** Private method
+     * #############################################################################################
+     * # Private method
+     * #############################################################################################
      */
     private void setupActionBar() {
         //Check if fragment hasn't been detach
         if (mContext != null) {
             //Update toolbar title
-            ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
+            final ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
             if (actionBar != null) {
                 actionBar.hide();
             }
@@ -321,8 +306,8 @@ public class BattleFragment extends BaseFragment {
 
         /*
         ** We don't add listener into the gestureView now
-        *  We'll add listeners after the pre-requisite loading
-        */
+        **  We'll add listeners after the pre-requisite loading
+         */
 
         /*Add the custom view under the rootView*/
         ((ViewGroup) rootView.findViewById(R.id.layout_fight_body)).addView(mDrawingGestureView);
@@ -424,7 +409,8 @@ public class BattleFragment extends BaseFragment {
         }
     }
 
-    private void sendAttackRequest(final long targetId, final long attackId) {
+    private void sendAttackRequest(final long targetId,
+                                   final long attackId) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -490,7 +476,7 @@ public class BattleFragment extends BaseFragment {
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
-                    ReplaceMonsterRequest replaceMonsterRequest = new ReplaceMonsterRequest(nextMonster.userMonsterId, mStartMessage.combatId);
+                    final ReplaceMonsterRequest replaceMonsterRequest = new ReplaceMonsterRequest(nextMonster.userMonsterId, mStartMessage.combatId);
                     nestedWorldSocketAPI.sendRequest(replaceMonsterRequest, SocketMessageType.MessageKind.TYPE_COMBAT_MONSTER_KO_REPLACE);
 
                 } else {
@@ -513,5 +499,37 @@ public class BattleFragment extends BaseFragment {
                 progressView.stop();
             }
         });
+    }
+
+    private void setStartMessage(@NonNull final StartMessage startMessage) {
+        mStartMessage = startMessage;
+    }
+
+    private void setUserTeam(@NonNull final List<UserMonster> team) {
+        mUserTeam = team;
+    }
+
+    /*
+     * #############################################################################################
+     * # Private (static) method
+     * #############################################################################################
+     */
+    @Nullable
+    private static List<MonsterAttackResponse.MonsterAttack> retrieveMonsterAttack(@NonNull final Monster monster) {
+        try {
+            //Retrieve current monster attack
+            final Response<MonsterAttackResponse> response = NestedWorldHttpApi.getInstance().getMonsterAttack(monster.monsterId).execute();
+            if (response == null || response.body() == null) {
+                //Can not retrieve monster attack
+                return null;
+            } else {
+                //Success, return monster attack
+                return response.body().attacks;
+            }
+        } catch (IOException e) {
+            //Something wrong happen
+            //Can not retrieve monster attack
+            return null;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.adapter.RecyclerView;
+package com.nestedworld.nestedworld.ui.adapter.recycler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -29,7 +29,9 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
     private final List<Monster> mItems = new ArrayList<>();
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
     public void addAll(@NonNull final List<Monster> items) {
         mItems.clear();
@@ -48,15 +50,17 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # RecyclerView.Adapter<MonsterAdapter.MonsterViewHolder> implementation
+     * #############################################################################################
      */
     @Override
     public MonsterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater
+        final View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.item_monster, parent, false);
 
-        MonsterViewHolder monsterViewHolder = new MonsterViewHolder(view);
+        final MonsterViewHolder monsterViewHolder = new MonsterViewHolder(view);
         ButterKnife.bind(monsterViewHolder, view);
 
         return monsterViewHolder;
@@ -65,7 +69,7 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
     @Override
     public void onBindViewHolder(MonsterViewHolder holder, int position) {
         //Get current monster
-        Monster monster = mItems.get(position);
+        final Monster monster = mItems.get(position);
         if (monster == null) {
             return;
         }

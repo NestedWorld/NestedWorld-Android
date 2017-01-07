@@ -13,39 +13,45 @@ import java.util.Map;
 
 public class AskMessage extends DefaultMessage {
 
-    private String result;
-    private String message;
+    private String mResult;
+    private String mMessage;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
-    public AskMessage(@NonNull Map<Value, Value> message,
-                      @NonNull SocketMessageType.MessageKind messageKind,
-                      @Nullable SocketMessageType.MessageKind idKind) {
+    public AskMessage(@NonNull final Map<Value, Value> message,
+                      @NonNull final SocketMessageType.MessageKind messageKind,
+                      @Nullable final SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Default message implementation
+     * #############################################################################################
      */
     @Override
     protected void unSerialise(@NonNull Map<Value, Value> message) {
-        if (message.containsKey(ValueFactory.newString("result"))) {
-            this.result = message.get(ValueFactory.newString("result")).asStringValue().asString();
+        if (message.containsKey(ValueFactory.newString("mResult"))) {
+            mResult = message.get(ValueFactory.newString("mResult")).asStringValue().asString();
         }
         if (message.containsKey(ValueFactory.newString("message"))) {
-            this.message = message.get(ValueFactory.newString("message")).asStringValue().asString();
+            mMessage = message.get(ValueFactory.newString("message")).asStringValue().asString();
         }
     }
 
     /*
-    ** Getter / Setter
+     * #############################################################################################
+     * # Getter and Setter
+     * #############################################################################################
      */
     public String getMessage() {
-        return message;
+        return mMessage;
     }
 
     public String getResult() {
-        return result;
+        return mResult;
     }
 }

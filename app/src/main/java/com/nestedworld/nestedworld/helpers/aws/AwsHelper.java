@@ -6,11 +6,22 @@ import android.support.annotation.NonNull;
 import java.io.File;
 
 public final class AwsHelper {
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
     private AwsHelper() {
         //Private constructor for avoiding this class to be construct
     }
 
-    public static void upload(@NonNull final Context context, @NonNull final File file) {
+    /*
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
+     */
+    public static void upload(@NonNull final Context context,
+                              @NonNull final File file) {
         //TODO use good credential
         //CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
         //        context.getApplicationContext(),

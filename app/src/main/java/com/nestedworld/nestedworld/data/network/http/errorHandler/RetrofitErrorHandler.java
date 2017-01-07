@@ -85,13 +85,15 @@ public final class RetrofitErrorHandler {
 
     /*
      * #############################################################################################
-     * # Utils
+     * # Internal (static) method
      * #############################################################################################
      */
+    @NonNull
     private static String getNetworkError(@NonNull final Context context) {
         return context.getResources().getString(R.string.error_no_internet);
     }
 
+    @NonNull
     private static String getUnexpectedError(@NonNull final Context context) {
         return context.getResources().getString(R.string.error_conversion);
     }

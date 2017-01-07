@@ -20,18 +20,22 @@ public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
     private final static int layoutRes = R.layout.item_shop_object;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public ShopItemAdapter(@NonNull final Context context) {
         super(context, layoutRes);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # ArrayAdapter<ShopItem> implementation
+     * #############################################################################################
      */
     @NonNull
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView,@NonNull ViewGroup parent) {
         View view = convertView;
 
         //Check if an existing view is being reused, otherwise inflate the view
@@ -40,7 +44,7 @@ public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
         }
 
         //Get current object
-        ShopItem currentObject = getItem(position);
+        final ShopItem currentObject = getItem(position);
         if (currentObject == null) {
             return view;
         }
@@ -51,25 +55,27 @@ public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
-    private void populateView(@NonNull final View view, @NonNull final ShopItem shopObject) {
+    private void populateView(@NonNull final View view,
+                              @NonNull final ShopItem shopObject) {
         //Retrieve widget
-        TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
-        TextView textViewObjectKind = (TextView) view.findViewById(R.id.textview_object_kind);
-        TextView textViewObjectPower = (TextView) view.findViewById(R.id.textview_object_power);
-        TextView textViewObjectPrenium = (TextView) view.findViewById(R.id.textview_object_prenium);
-        TextView textViewObjectDescription = (TextView) view.findViewById(R.id.textview_object_description);
-        TextView textViewObjectPrice = (TextView) view.findViewById(R.id.textview_object_price);
-        ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
+        final TextView textViewObjectName = (TextView) view.findViewById(R.id.textview_object_name);
+        final TextView textViewObjectKind = (TextView) view.findViewById(R.id.textview_object_kind);
+        final TextView textViewObjectPower = (TextView) view.findViewById(R.id.textview_object_power);
+        final TextView textViewObjectPremium = (TextView) view.findViewById(R.id.textview_object_prenium);
+        final TextView textViewObjectDescription = (TextView) view.findViewById(R.id.textview_object_description);
+        final TextView textViewObjectPrice = (TextView) view.findViewById(R.id.textview_object_price);
+        final ImageView imageViewObject = (ImageView) view.findViewById(R.id.imageView_object);
 
         //Populate widget
         textViewObjectName.setText(shopObject.name);
         textViewObjectDescription.setText(shopObject.description);
-
         textViewObjectKind.setText("Kind: " + shopObject.kind);
         textViewObjectPower.setText("Power: " + shopObject.power);
-        textViewObjectPrenium.setText("Is prenium : " + (shopObject.premium ? "yes" : "no"));
+        textViewObjectPremium.setText("Is prenium : " + (shopObject.premium ? "yes" : "no"));
         textViewObjectPrice.setText("Price : " + String.valueOf(shopObject.price));
         Glide.with(getContext()).load(shopObject.image).into(imageViewObject);
     }

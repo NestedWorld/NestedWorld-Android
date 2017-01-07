@@ -41,6 +41,7 @@ import java.util.Map;
 public class SocketService extends Service {
 
     private final static String TAG = SocketService.class.getSimpleName();
+
     private final static Map<SocketMessageType.MessageKind, SocketMessageHandler> mHandlers = new HashMap<SocketMessageType.MessageKind, SocketMessageHandler>() {{
         put(SocketMessageType.MessageKind.TYPE_CHAT_USER_JOINED, new SocketMessageHandler() {
             @Override
@@ -183,7 +184,9 @@ public class SocketService extends Service {
             }
 
             @Override
-            public void onMessageReceived(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+            public void onMessageReceived(@NonNull Map<Value, Value> message,
+                                          @NonNull SocketMessageType.MessageKind messageKind,
+                                          @Nullable SocketMessageType.MessageKind idKind) {
                 //Do internal job
                 handleMessage(message, messageKind, idKind);
             }

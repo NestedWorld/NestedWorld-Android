@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.adapter.FragmentStatePager;
+package com.nestedworld.nestedworld.ui.adapter.fragmentStatePager;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,27 +16,36 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
     private boolean mDisplayPageTitle = true;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public TabsAdapter(@NonNull final FragmentManager fm) {
         super(fm);
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
-    public TabsAdapter addFragment(@NonNull final Fragment fragment, @Nullable final String title) {
+    @NonNull
+    public TabsAdapter addFragment(@NonNull final Fragment fragment,
+                                   @Nullable final String title) {
         mTabs.add(new ViewPagerItem(fragment, title));
         return this;
     }
 
+    @NonNull
     public TabsAdapter setDisplayPageTitle(boolean displayPageTitle) {
         mDisplayPageTitle = displayPageTitle;
         return this;
     }
 
     /*
-    ** Parents method
+     * #############################################################################################
+     * # FragmentStatePagerAdapter implementation
+     * #############################################################################################
      */
     @Override
     public Fragment getItem(int position) {
@@ -64,7 +73,8 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
         private final Fragment mFragment;
         private String mTitle = null;
 
-        public ViewPagerItem(@NonNull final Fragment fragment, @Nullable final String title) {
+        public ViewPagerItem(@NonNull final Fragment fragment,
+                             @Nullable final String title) {
             mTitle = title;
             mFragment = fragment;
         }

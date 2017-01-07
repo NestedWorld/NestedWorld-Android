@@ -6,9 +6,10 @@ import com.nestedworld.nestedworld.data.network.socket.models.message.generic.Re
 import com.nestedworld.nestedworld.events.socket.base.SocketMessageEvent;
 
 public class OnResultResponseEvent extends SocketMessageEvent<ResultMessage> {
-
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public OnResultResponseEvent(@NonNull final ResultMessage message) {
         super(message);

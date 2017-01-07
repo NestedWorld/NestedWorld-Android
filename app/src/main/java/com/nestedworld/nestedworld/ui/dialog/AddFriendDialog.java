@@ -28,6 +28,18 @@ public class AddFriendDialog extends BaseDialogFragment {
 
     private final static String TAG = AddFriendDialog.class.getSimpleName();
 
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
+    private Unbinder mUnbinder;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textInputLayout_friendPseudo)
     TextInputLayout textInputLayoutFriendPseudo;
     @BindView(R.id.editText_friendPseudo)
@@ -35,17 +47,19 @@ public class AddFriendDialog extends BaseDialogFragment {
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private Unbinder mUnbinder;
-
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void show(@NonNull final FragmentManager fragmentManager) {
         new AddFriendDialog().show(fragmentManager, TAG);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # BaseDialogFragment implementation
+     * #############################################################################################
      */
     @Override
     protected Builder build(Builder initialBuilder) {
@@ -68,12 +82,16 @@ public class AddFriendDialog extends BaseDialogFragment {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     @NonNull
     private View getViewContent() {
         //Create the view
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.inflater_alertdialog_add_friend, null);
+        final View view = LayoutInflater
+                .from(getActivity())
+                .inflate(R.layout.inflater_alertdialog_add_friend, null);
 
         //Retrieve widget
         mUnbinder = ButterKnife.bind(this, view);
@@ -99,7 +117,7 @@ public class AddFriendDialog extends BaseDialogFragment {
         setOnLoadingMode(true);
 
         //Retrieve input
-        String pseudo = textInputEditTextFriendPseudo.getText().toString();
+        final String pseudo = textInputEditTextFriendPseudo.getText().toString();
 
         //Send request
         NestedWorldHttpApi

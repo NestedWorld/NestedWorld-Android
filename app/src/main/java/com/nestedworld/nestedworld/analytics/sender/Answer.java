@@ -14,17 +14,15 @@ public final class Answer {
      * # Constructor
      * #############################################################################################
      */
-
     private Answer() {
         //Private constructor for avoiding this class to be construct
     }
 
     /*
      * #############################################################################################
-     * # Public method
+     * # Public (static) method
      * #############################################################################################
      */
-
     public static void logUser(@NonNull final SessionData sessionPlayer) {
         //Set generic field
         Crashlytics.setUserIdentifier(String.valueOf(sessionPlayer.playerId));

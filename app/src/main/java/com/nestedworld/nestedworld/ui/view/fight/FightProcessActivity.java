@@ -11,11 +11,18 @@ import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import butterknife.BindView;
 
 public class FightProcessActivity extends BaseAppCompatActivity {
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -29,8 +36,10 @@ public class FightProcessActivity extends BaseAppCompatActivity {
     }
 
     /*
-    ** Utils
-    */
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
+     */
     private void setUpToolbar() {
         //Set the toolbar as actionBar
         setSupportActionBar(toolbar);

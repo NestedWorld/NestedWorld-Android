@@ -19,7 +19,7 @@ import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatab
 import com.nestedworld.nestedworld.data.database.entities.Monster;
 import com.nestedworld.nestedworld.data.database.updater.MonsterUpdater;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
-import com.nestedworld.nestedworld.ui.adapter.RecyclerView.MonsterAdapter;
+import com.nestedworld.nestedworld.ui.adapter.recycler.MonsterAdapter;
 import com.nestedworld.nestedworld.events.http.OnMonstersUpdatedEvent;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;

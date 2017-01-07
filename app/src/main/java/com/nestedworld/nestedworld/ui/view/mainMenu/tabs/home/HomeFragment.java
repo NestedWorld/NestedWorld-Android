@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +22,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.database.entities.session.Session;
 import com.nestedworld.nestedworld.data.database.entities.session.SessionData;
-import com.nestedworld.nestedworld.ui.adapter.FragmentStatePager.TabsAdapter;
+import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.events.http.OnUserUpdatedEvent;
 import com.nestedworld.nestedworld.helpers.aws.AwsHelper;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
@@ -49,6 +48,11 @@ public class HomeFragment extends BaseFragment {
     private final static int PICK_PROFIL_IMAGE_REQUEST = 1;
     private final static int PICK_BACKGROUND_IMAGE_REQUEST = 2;
 
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textView_username)
     TextView textViewUsername;
     @BindView(R.id.textView_userLevel)
@@ -71,18 +75,21 @@ public class HomeFragment extends BaseFragment {
     ImageView imageViewUserBackground;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static)
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction
+        fragmentManager.beginTransaction()
                 .replace(R.id.container, new HomeFragment())
                 .addToBackStack(null)
                 .commit();
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -100,7 +107,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
@@ -122,7 +129,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # Event bus
+     * #############################################################################################
      */
     @Subscribe
     public void onUserUpdated(OnUserUpdatedEvent onUserUpdatedEvent) {
@@ -140,7 +149,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     /*
-    ** Butterknife callback
+     * #############################################################################################
+     * # Butterknife callback
+     * #############################################################################################
      */
     @OnClick(R.id.imageView_user)
     public void selectProfilPicture() {
@@ -153,7 +164,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     /*
-    ** Private method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupTabs() {
         //Check if fragment hasn't been detach
@@ -162,7 +175,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         //Setup adapter
-        TabsAdapter viewPagerAdapter = new TabsAdapter(getChildFragmentManager())
+        final TabsAdapter viewPagerAdapter = new TabsAdapter(getChildFragmentManager())
                 .setDisplayPageTitle(true)
                 .addFragment(new HomeMonsterFragment(), getString(R.string.tabHome_title_monsterList))
                 .addFragment(new HomeFriendFragment(), getString(R.string.tabHome_title_friendList));
@@ -181,7 +194,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         //Retrieve the session
-        Session session = SessionHelper.getSession();
+        final Session session = SessionHelper.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
             onFatalError();
@@ -189,14 +202,14 @@ public class HomeFragment extends BaseFragment {
         }
 
         //Retrieve the player
-        SessionData user = session.getSessionData();
+        final SessionData user = session.getSessionData();
         if (user == null) {
             LogHelper.d(TAG, "No User");
             return;
         }
 
         //Display player information
-        Resources res = getResources();
+        final Resources res = getResources();
         textViewUserLevel.setText(String.format(res.getString(R.string.tabHome_msg_userLvl), user.level));
         textViewAllyOnline.setText(String.format(res.getString(
                 R.string.tabHome_msg_allyOnline),
@@ -248,7 +261,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void startImagePickerIntent(final int requestCode) {
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
 
         //We only want image
         intent.setType("image/*");
@@ -266,7 +279,7 @@ public class HomeFragment extends BaseFragment {
         }
 
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
+            final Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), uri);
             switch (requestCode) {
                 case PICK_BACKGROUND_IMAGE_REQUEST:
                     AwsHelper.upload(mContext, new File(uri.getPath()));

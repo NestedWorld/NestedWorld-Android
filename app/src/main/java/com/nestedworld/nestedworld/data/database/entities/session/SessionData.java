@@ -2,41 +2,60 @@ package com.nestedworld.nestedworld.data.database.entities.session;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nestedworld.nestedworld.data.database.entities.DaoSession;
 import com.nestedworld.nestedworld.data.database.entities.base.BaseEntity;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
+
+import com.nestedworld.nestedworld.data.database.entities.DaoSession;
 
 @Entity(active = true)
 public class SessionData extends BaseEntity {
+
+    @Id(autoincrement = true)
+    @Unique
+    private Long id;
+
     @SerializedName("id")
     public
     long playerId;
+
     @Expose
     public String city;
+
     @Expose
     public String gender;
+
     @Expose
     public String avatar;
+
     @Expose
     @SerializedName("is_connected")
     public Boolean isConnected;
+
     @Expose
     public String background;
+
     @Expose
     @SerializedName("birth_date")
     public String birthDate;
+
     @Expose
     public String email;
+
     @Expose
     public Long level;
+
     @Expose
     @SerializedName("is_active")
     public String isActive;
+
     @Expose
     public String pseudo;
+
     @Expose
     @SerializedName("registered_at")
     public String registeredAt;
@@ -51,10 +70,11 @@ public class SessionData extends BaseEntity {
     @Generated(hash = 1698094633)
     private transient SessionDataDao myDao;
 
-    @Generated(hash = 1664055197)
-    public SessionData(long playerId, String city, String gender, String avatar,
-                       Boolean isConnected, String background, String birthDate, String email,
-                       Long level, String isActive, String pseudo, String registeredAt) {
+    @Generated(hash = 172607404)
+    public SessionData(Long id, long playerId, String city, String gender, String avatar,
+            Boolean isConnected, String background, String birthDate, String email,
+            Long level, String isActive, String pseudo, String registeredAt) {
+        this.id = id;
         this.playerId = playerId;
         this.city = city;
         this.gender = gender;
@@ -205,12 +225,18 @@ public class SessionData extends BaseEntity {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 645204408)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getSessionDataDao() : null;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

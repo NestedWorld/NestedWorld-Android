@@ -15,7 +15,7 @@ import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Unique;
 
 @Entity(active = true)
-public class Friend extends BaseEntity{
+public class Friend extends BaseEntity {
     @Expose
     @SerializedName("user")
     @Transient
@@ -25,6 +25,18 @@ public class Friend extends BaseEntity{
     @Id(autoincrement = true)
     @Unique
     private Long id;
+
+    @Override
+    public String toString() {
+        return "Friend{" +
+                "daoSession=" + daoSession +
+                ", friendData=" + friendData +
+                ", friendDataIdFk=" + friendDataIdFk +
+                ", id=" + id +
+                ", myDao=" + myDao +
+                '}';
+    }
+
     /**
      * Used to resolve relations
      */
@@ -92,15 +104,6 @@ public class Friend extends BaseEntity{
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
-    @Generated(hash = 1516049992)
-    public void __setDaoSession(DaoSession daoSession) {
-        this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getFriendDao() : null;
-    }
-
     @Nullable
     public FriendData getData() {
         return daoSession
@@ -116,5 +119,12 @@ public class Friend extends BaseEntity{
 
     public void setFriendDataIdFk(long friendDataIdFk) {
         this.friendDataIdFk = friendDataIdFk;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1516049992)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getFriendDao() : null;
     }
 }

@@ -5,7 +5,7 @@ import com.nestedworld.nestedworld.helpers.bimap.BiMap;
 public final class SocketMessageType {
 
     public final static BiMap<MessageKind, String> MESSAGE_TYPE = new BiMap<MessageKind, String>() {{
-         /*
+        /*
         ** Spontaneous message (server side)
         ** Key = request.type
         ** -> we'll use the key for message parsing

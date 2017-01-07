@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -34,21 +35,26 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
- * * Custom adapter for displaying friend on the listView
- **/
+ * Custom adapter for displaying friend on the listview
+ */
 public class FriendsAdapter extends ArrayAdapter<Friend> {
 
-    private static final int resource = R.layout.item_friend_list;
+    @LayoutRes
+    private static final int mResource = R.layout.item_friend_list;
 
     /*
-    ** Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     public FriendsAdapter(@NonNull final Context context) {
-        super(context, resource);
+        super(context, mResource);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # ArrayAdapter<Friend> implementation
+     * #############################################################################################
      */
     @NonNull
     @Override
@@ -59,8 +65,8 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
 
         //Check if an existing view is being reused, otherwise inflate the view
         if (view == null) {
-            LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
-            view = layoutInflater.inflate(resource, parent, false);
+            final LayoutInflater layoutInflater = ((BaseAppCompatActivity) getContext()).getLayoutInflater();
+            view = layoutInflater.inflate(mResource, parent, false);
 
             friendHolder = new FriendHolder();
             friendHolder.friendPicture = (CircleImageView) view.findViewById(R.id.imageView_item_friend);
@@ -75,13 +81,13 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
         }
 
         //get the currentFriend
-        Friend currentFriend = getItem(position);
+        final Friend currentFriend = getItem(position);
         if (currentFriend == null) {
             return view;
         }
 
         //get current friend information
-        FriendData currentFriendInfo = currentFriend.getData();
+        final FriendData currentFriendInfo = currentFriend.getData();
         if (currentFriendInfo == null) {
             return view;
         }
@@ -92,19 +98,21 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void populateView(@NonNull final FriendHolder friendHolder,
                               @NonNull final FriendData friend) {
-        Context context = getContext();
+        final Context context = getContext();
 
         //display the friend name
         friendHolder.friendName.setText(friend.pseudo);
 
         //display a rounded placeHolder for friend's avatar
-        Resources resources = context.getResources();
-        Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
+        final Resources resources = context.getResources();
+        final Bitmap bitmap = BitmapFactory.decodeResource(resources, R.drawable.default_avatar);
+        final RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, bitmap);
         roundedBitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
 
         //display friend's avatar
@@ -139,8 +147,8 @@ public class FriendsAdapter extends ArrayAdapter<Friend> {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 //Retrieve NestedworldSocketApi from service instance
-                SocketService socketService = ((SocketService.LocalBinder) service).getService();
-                NestedWorldSocketAPI nestedWorldSocketAPI = socketService.getApiInstance();
+                final SocketService socketService = ((SocketService.LocalBinder) service).getService();
+                final NestedWorldSocketAPI nestedWorldSocketAPI = socketService.getApiInstance();
 
                 if (nestedWorldSocketAPI != null) {
                     //Send request and display message
