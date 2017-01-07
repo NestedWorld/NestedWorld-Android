@@ -177,8 +177,8 @@ public class TeamSelectionFragment extends BaseFragment {
                 //Display monster sprite
                 Glide.with(mContext)
                         .load(selectedMonster.baseSprite)
-                        .placeholder(R.drawable.default_monster_rounded)
                         .bitmapTransform(new CropCircleTransformation(mContext))
+                        .placeholder(R.drawable.default_monster_rounded)
                         .error(R.drawable.default_monster_rounded)
                         .into(selectedMonsterView.get(mSelectedMonster.size() - 1));
             }
