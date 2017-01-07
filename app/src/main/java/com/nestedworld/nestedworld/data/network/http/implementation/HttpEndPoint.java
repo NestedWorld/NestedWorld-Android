@@ -41,38 +41,40 @@ public final class HttpEndPoint {
      * # User related
      * #############################################################################################
      */
-    private final static String USER_PREFIX = "users/";
-    public final static String USER_INFO = USER_PREFIX + "me";
-    public final static String USER_FRIENDS = USER_PREFIX + "/friends/";
+    private final static String USER_PREFIX = "users";
+    public final static String USER_INFO = USER_PREFIX + "/me";
+    public final static String USER_FRIENDS = USER_PREFIX + "/friends";
     public final static String USER_MONSTERS = USER_PREFIX + "/monsters";
-    public final static String USER_INVENTORY = USER_INFO + "/inventory/";
+    public final static String USER_INVENTORY = USER_INFO + "/inventory";
+    public final static String USER_DETAIL = USER_PREFIX + "/{userId]";
+    public final static String USER_STATS = USER_PREFIX + "/{userId]/stats";
 
     /*
      * #############################################################################################
      * # Object related
      * #############################################################################################
      */
-    private final static String OBJECT_PREFIX = "objects/";
+    private final static String OBJECT_PREFIX = "objects";
     public final static String OBJECT_LIST = OBJECT_PREFIX;
-    public final static String OBJECT_DETAIL = "objects/{objectId}";
+    public final static String OBJECT_DETAIL = "/objects/{objectId}";
 
     /*
      * #############################################################################################
      * # Auth related
      * #############################################################################################
      */
-    private final static String AUTH_PREFIX = USER_PREFIX + "auth/";
-    public final static String USER_SIGN_IN = AUTH_PREFIX + "login/simple";
-    public final static String USER_REGISTER = AUTH_PREFIX + "register";
-    public final static String USER_PASSWORD = AUTH_PREFIX + "resetpassword";
-    public final static String USER_LOGOUT = AUTH_PREFIX + "logout";
+    private final static String AUTH_PREFIX = USER_PREFIX + "/auth";
+    public final static String USER_SIGN_IN = AUTH_PREFIX + "/login/simple";
+    public final static String USER_REGISTER = AUTH_PREFIX + "/register";
+    public final static String USER_PASSWORD = AUTH_PREFIX + "/resetpassword";
+    public final static String USER_LOGOUT = AUTH_PREFIX + "/logout";
 
     /*
      * #############################################################################################
      * # Attack related
      * #############################################################################################
      */
-    private final static String ATTACK_PREFIX = "attacks/";
+    private final static String ATTACK_PREFIX = "attacks";
     public final static String ATTACK_LIST = ATTACK_PREFIX;
 
     /*
