@@ -3,11 +3,11 @@ package com.nestedworld.nestedworld.helpers.application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
+import com.nestedworld.nestedworld.data.network.http.implementation.NestedWorldHttpApi;
+import com.nestedworld.nestedworld.data.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
-import com.nestedworld.nestedworld.network.http.implementation.NestedWorldHttpApi;
-import com.nestedworld.nestedworld.network.socket.implementation.NestedWorldSocketAPI;
 
 public final class ApplicationHelper {
     private ApplicationHelper() {

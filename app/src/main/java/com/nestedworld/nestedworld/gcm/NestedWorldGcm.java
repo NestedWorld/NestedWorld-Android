@@ -5,15 +5,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
-import com.nestedworld.nestedworld.database.models.Combat;
-import com.nestedworld.nestedworld.database.models.CombatDao;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
+import com.nestedworld.nestedworld.data.database.models.Combat;
+import com.nestedworld.nestedworld.data.database.models.CombatDao;
+import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.data.network.socket.models.message.combat.AvailableMessage;
 import com.nestedworld.nestedworld.gcm.handler.GcmHandler;
 import com.nestedworld.nestedworld.gcm.model.NotificationMessage;
 import com.nestedworld.nestedworld.helpers.gcm.GcmHelper;
-import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
-import com.nestedworld.nestedworld.network.socket.models.message.combat.AvailableMessage;
-import com.nestedworld.nestedworld.ui.launch.LaunchActivity;
+import com.nestedworld.nestedworld.ui.view.launch.LaunchActivity;
 
 import org.msgpack.value.Value;
 
@@ -22,35 +22,9 @@ import java.util.Map;
 
 public final class NestedWorldGcm {
     private final static String TAG = NestedWorldGcm.class.getSimpleName();
-    private final static Map<SocketMessageType.MessageKind, GcmHandler> mHandlers = buildHandlers();
-
-    /*
-    ** Constructor
-     */
-    private NestedWorldGcm() {
-        //Private constructor for avoiding this class to be construct
-    }
-
-    /*
-    ** Public method
-     */
-    public static void onMessageReceived(@NonNull final Context context,
-                                         @NonNull final Map<Value, Value> message,
-                                         @NonNull final SocketMessageType.MessageKind messageKind,
-                                         @Nullable final SocketMessageType.MessageKind idKind) {
-        NotificationMessage notificationMessage = new NotificationMessage();
-        notificationMessage.type = messageKind;
-        notificationMessage.content = message;
-
-        handleMessage(context, notificationMessage, messageKind, idKind);
-    }
-
-    /*
-    ** Internal method
-     */
-    private static Map<SocketMessageType.MessageKind, GcmHandler> buildHandlers() {
-        Map<SocketMessageType.MessageKind, GcmHandler> handlers = new HashMap<>();
-        handlers.put(SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE, new GcmHandler() {
+    
+    private final static Map<SocketMessageType.MessageKind, GcmHandler> mHandlers = new HashMap<SocketMessageType.MessageKind, GcmHandler>() {{
+        put(SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE, new GcmHandler() {
             @Override
             public void handle(@NonNull Context context,
                                @NonNull NotificationMessage notification,
@@ -71,15 +45,44 @@ public final class NestedWorldGcm {
                 }
             }
         });
-        return handlers;
+    }};
+
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
+    private NestedWorldGcm() {
+        //Private constructor for avoiding this class to be construct
     }
 
+    /*
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
+     */
+    public static void onMessageReceived(@NonNull final Context context,
+                                         @NonNull final Map<Value, Value> message,
+                                         @NonNull final SocketMessageType.MessageKind messageKind,
+                                         @Nullable final SocketMessageType.MessageKind idKind) {
+        final NotificationMessage notificationMessage = new NotificationMessage();
+        notificationMessage.type = messageKind;
+        notificationMessage.content = message;
+
+        handleMessage(context, notificationMessage, messageKind, idKind);
+    }
+
+    /*
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
+     */
     private static void handleMessage(@NonNull final Context context,
                                       @NonNull final NotificationMessage notification,
                                       @NonNull final SocketMessageType.MessageKind messageKind,
                                       @Nullable final SocketMessageType.MessageKind idKind) {
 
-        GcmHandler gcmHandler = mHandlers.get(notification.type);
+        final GcmHandler gcmHandler = mHandlers.get(notification.type);
         if (gcmHandler == null) {
             Log.d(TAG, "Unsuported messageType: " + notification.type);
         } else {

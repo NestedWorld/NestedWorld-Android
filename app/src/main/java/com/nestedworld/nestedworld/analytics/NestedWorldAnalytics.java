@@ -3,25 +3,30 @@ package com.nestedworld.nestedworld.analytics;
 import android.support.annotation.NonNull;
 
 import com.nestedworld.nestedworld.analytics.sender.Answer;
-import com.nestedworld.nestedworld.database.models.Player;
+import com.nestedworld.nestedworld.data.database.models.session.SessionData;
 
 public final class NestedWorldAnalytics {
 
     /*
-    * Constructor
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
      */
     private NestedWorldAnalytics() {
         //Private constructor for avoiding this class to be construct
     }
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public method
+     * #############################################################################################
      */
-    public static void setUserInfo(@NonNull final Player player) {
-        Answer.logUser(player);
+    public static void setUserInfo(@NonNull final SessionData sessionData) {
+        Answer.logUser(sessionData);
     }
 
-    public static void logViewLoaded(@NonNull final String viewType, @NonNull final String viewName) {
+    public static void logViewLoaded(@NonNull final String viewType,
+                                     @NonNull final String viewName) {
         Answer.logViewLoaded(viewType, viewName);
     }
 }

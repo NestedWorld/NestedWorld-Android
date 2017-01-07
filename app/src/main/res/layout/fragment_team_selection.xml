@@ -55,7 +55,7 @@
                 android:layout_height="24dip"
                 android:src="@drawable/ic_help_outline_accent_24dp"/>
 
-            <com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator
+            <com.nestedworld.nestedworld.ui.customView.viewpager.ViewPagerWithIndicator
                 android:id="@+id/ViewPagerArrowIndicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,12 +65,12 @@
                 app:round.color.selected="@color/apptheme_accent"
                 app:round.size="15dip">
 
-                <com.nestedworld.nestedworld.customView.viewpager.WrapContentViewPager
+                <com.nestedworld.nestedworld.ui.customView.viewpager.WrapContentViewPager
                     android:id="@+id/viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-            </com.nestedworld.nestedworld.customView.viewpager.ViewPagerWithIndicator>
+            </com.nestedworld.nestedworld.ui.customView.viewpager.ViewPagerWithIndicator>
 
         </RelativeLayout>
 

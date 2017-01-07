@@ -31,7 +31,7 @@
         <!-- Acitivty -->
         <activity
             android:theme="@style/AppTheme.Launcher"
-            android:name=".ui.launch.LaunchActivity"
+            android:name=".ui.view.launch.LaunchActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateHidden">
 
@@ -42,34 +42,34 @@
 
         </activity>
 
-        <activity android:name=".ui.monster.userMonsterDetail.UserMonsterDetailActivity"
+        <activity android:name=".ui.view.monster.userMonsterDetail.UserMonsterDetailActivity"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <activity
-            android:name=".ui.monster.monsterDetail.MonsterDetailActivity"
+            android:name=".ui.view.monster.monsterDetail.MonsterDetailActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <activity
-            android:name=".ui.welcome.WelcomeActivity"
+            android:name=".ui.view.welcome.WelcomeActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".ui.mainMenu.MainMenuActivity"
+            android:name=".ui.view.mainMenu.MainMenuActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".ui.profil.ProfileActivity"
+            android:name=".ui.view.profil.ProfileActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".ui.mainMenu.MainMenuActivity"
+            android:parentActivityName=".ui.view.mainMenu.MainMenuActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <activity android:name=".ui.fight.FightProcessActivity"
+        <activity android:name=".ui.view.fight.FightProcessActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".ui.mainMenu.MainMenuActivity"
+            android:parentActivityName=".ui.view.mainMenu.MainMenuActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!--Service-->

@@ -3,9 +3,9 @@ package com.nestedworld.nestedworld.helpers.session;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
-import com.nestedworld.nestedworld.database.models.Player;
-import com.nestedworld.nestedworld.database.models.Session;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
+import com.nestedworld.nestedworld.data.database.models.session.Session;
+import com.nestedworld.nestedworld.data.database.models.session.SessionData;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 /**
@@ -54,10 +54,10 @@ public final class SessionHelper {
         //Delete the player linked to the session
         Session session = getSession();
         if (session != null) {
-            Player user = session.getPlayer();
-            if (user != null) {
-                LogHelper.d(TAG, "delete player: " + user.toString());
-                user.delete();
+            SessionData sessionData = session.getSessionData();
+            if (sessionData != null) {
+                LogHelper.d(TAG, "delete player: " + sessionData.toString());
+                sessionData.delete();
             }
 
             LogHelper.d(TAG, "DeleteOldSession : " + session.toString());

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
-import com.nestedworld.nestedworld.database.implementation.NestedWorldDatabase;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 
 import io.fabric.sdk.android.Fabric;

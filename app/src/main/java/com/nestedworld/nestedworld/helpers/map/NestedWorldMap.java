@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.nestedworld.nestedworld.R;
-import com.nestedworld.nestedworld.database.models.Portal;
+import com.nestedworld.nestedworld.data.database.models.Portal;
 
 import java.util.List;
 

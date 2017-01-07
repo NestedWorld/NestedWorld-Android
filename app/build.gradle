@@ -4,7 +4,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'//Needed by greeenDao
         classpath 'io.fabric.tools:gradle:1.+'
     }
@@ -58,7 +58,7 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField "com.nestedworld.nestedworld.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.network.NetworkConstant.Environement.PROD"
+            buildConfigField "com.nestedworld.nestedworld.data.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.data.network.NetworkConstant.Environement.PROD"
             resValue "string", "app_name", "Nestedworld"
             buildConfigField "Boolean", "LOG", 'false'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -71,12 +71,12 @@ android {
         }
         with_back_dev {
             initWith debug // inherit from debug (attribute and signing configurations).
-            buildConfigField "com.nestedworld.nestedworld.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.network.NetworkConstant.Environement.DEV"
+            buildConfigField "com.nestedworld.nestedworld.data.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.data.network.NetworkConstant.Environement.DEV"
             resValue "string", "app_name", "Nestedworld Dev"
         }
         with_back_prod {
             initWith debug // inherit from debug (attribute and signing configurations).
-            buildConfigField "com.nestedworld.nestedworld.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.network.NetworkConstant.Environement.PROD"
+            buildConfigField "ccom.nestedworld.nestedworld.data.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.data.network.NetworkConstant.Environement.PROD"
             resValue "string", "app_name", "Nestedworld Prod"
         }
     }

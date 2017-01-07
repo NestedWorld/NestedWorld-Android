@@ -1,6 +1,6 @@
 package com.nestedworld.nestedworld.gcm.model;
 
-import com.nestedworld.nestedworld.network.socket.implementation.SocketMessageType;
+import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
 
 import org.msgpack.value.Value;
 

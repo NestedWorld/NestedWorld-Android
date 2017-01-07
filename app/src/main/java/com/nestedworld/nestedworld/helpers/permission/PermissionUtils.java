@@ -7,7 +7,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
-import com.nestedworld.nestedworld.ui.base.BaseAppCompatActivity;
+import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
