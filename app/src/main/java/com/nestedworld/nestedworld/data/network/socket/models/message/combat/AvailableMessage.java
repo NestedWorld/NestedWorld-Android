@@ -16,37 +16,18 @@ import java.util.Map;
 public class AvailableMessage extends DefaultMessage {
 
     public String combatId;
-    private String type;
-    private String origin;
-    private long monsterId;
-    private String opponentPseudo;
+    public String type;
+    public String origin;
+    public long monsterId;
+    public String opponentPseudo;
 
     /*
     ** Constructor
      */
-    public AvailableMessage(@NonNull Map<Value, Value> message,
-                            @NonNull SocketMessageType.MessageKind messageKind,
-                            @Nullable SocketMessageType.MessageKind idKind) {
+    public AvailableMessage(@NonNull final Map<Value, Value> message,
+                            @NonNull final SocketMessageType.MessageKind messageKind,
+                            @Nullable final SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
-    }
-
-    /*
-    ** Utils
-     */
-    public Combat saveAsCombat() {
-        Combat combat = new Combat();
-        combat.type = this.type;
-        combat.combatId = this.combatId;
-        combat.origin = this.origin;
-        combat.monsterId = this.monsterId;
-        combat.opponentPseudo = this.opponentPseudo;
-
-        NestedWorldDatabase.getInstance()
-                .getDataBase()
-                .getCombatDao()
-                .insertOrReplace(combat);//Could be replace if you start a combat with yourself
-
-        return combat;
     }
 
     /*

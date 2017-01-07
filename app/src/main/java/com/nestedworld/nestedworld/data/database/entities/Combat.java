@@ -19,6 +19,7 @@ public class Combat extends BaseEntity {
     @Id(autoincrement = true)
     @Unique
     private Long id;
+
     /**
      * Used to resolve relations
      */

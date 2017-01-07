@@ -7,6 +7,9 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.data.converter.socket.combat.AvailableMessageConverter;
+import com.nestedworld.nestedworld.data.database.entities.Combat;
+import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
 import com.nestedworld.nestedworld.data.network.socket.handlers.SocketMessageHandler;
 import com.nestedworld.nestedworld.data.network.socket.implementation.NestedWorldSocketAPI;
 import com.nestedworld.nestedworld.data.network.socket.implementation.SocketMessageType;
@@ -92,7 +95,16 @@ public class SocketService extends Service {
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
                 AvailableMessage availableMessage = new AvailableMessage(message, messageKind, idKind);
-                availableMessage.saveAsCombat();
+
+                //Convert response into entity
+                Combat combat = new AvailableMessageConverter().convert(availableMessage);
+
+                //Save entity
+                NestedWorldDatabase.getInstance()
+                        .getDataBase()
+                        .getCombatDao()
+                        .insertOrReplace(combat);//insertOrReplace cause user can start a combat with himself
+
 
                 //Send event
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
