@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.data.network.http.callback.NestedWorldHttpCallback;
-import com.nestedworld.nestedworld.data.network.http.models.response.ErrorResponse;
+import com.nestedworld.nestedworld.data.network.http.models.response.error.ErrorResponse;
 
 import java.io.IOException;
 
