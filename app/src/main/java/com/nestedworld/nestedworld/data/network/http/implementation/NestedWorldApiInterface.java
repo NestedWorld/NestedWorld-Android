@@ -12,7 +12,9 @@ import com.nestedworld.nestedworld.data.network.http.models.response.geo.portal.
 import com.nestedworld.nestedworld.data.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.objects.ObjectsResponse;
+import com.nestedworld.nestedworld.data.network.http.models.response.users.UserDetailResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.UserResponse;
+import com.nestedworld.nestedworld.data.network.http.models.response.users.UserStatsResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.auth.RegisterResponse;
@@ -84,4 +86,12 @@ public interface NestedWorldApiInterface {
     @NonNull
     Call<PortalsResponse> getPortals(@Path("latitude") final double latitude,
                                      @Path("longitude") final double longitude);
+
+    @GET(HttpEndPoint.USER_DETAIL)
+    @NonNull
+    Call<UserDetailResponse> getUserDetail(@Path("userId") final long userId);
+
+    @GET(HttpEndPoint.USER_STATS)
+    @NonNull
+    Call<UserStatsResponse> getUserStats(@Path("userId") final long userId);
 }
