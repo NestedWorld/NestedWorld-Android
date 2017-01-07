@@ -31,6 +31,12 @@ import retrofit2.Response;
  * A placeholder fragment containing a simple view.
  */
 public class LoginFragment extends BaseFragment {
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.editText_userEmail)
     TextInputEditText etEmail;
     @BindView(R.id.textInputLayout_userEmail)
@@ -45,7 +51,9 @@ public class LoginFragment extends BaseFragment {
     ImageView imageViewBackground;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -56,7 +64,9 @@ public class LoginFragment extends BaseFragment {
     }
 
     /*
-    ** ButterKnife callback
+     * #############################################################################################
+     * # Butterknife callback
+     * #############################################################################################
      */
     @OnClick(R.id.button_login)
     public void login() {
@@ -66,8 +76,8 @@ public class LoginFragment extends BaseFragment {
         }
 
         //Retrieve player input
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
 
         //Send login request
         sendLoginRequest(email, password);
@@ -81,7 +91,7 @@ public class LoginFragment extends BaseFragment {
         }
 
         //Retrieve player input
-        String email = etEmail.getText().toString();
+        final String email = etEmail.getText().toString();
 
         //Check player input
         if (!checkInputForForgotPassword(email)) {
@@ -92,7 +102,9 @@ public class LoginFragment extends BaseFragment {
     }
 
     /*
-    ** Life Cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -104,7 +116,9 @@ public class LoginFragment extends BaseFragment {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private boolean checkInputForForgotPassword(@NonNull final String email) {
         //We don't care about email, stop display error on it
@@ -125,71 +139,78 @@ public class LoginFragment extends BaseFragment {
         progressView.start();
 
         //Send request
-        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new NestedWorldHttpCallback<SignInResponse>() {
-            @Override
-            public void onSuccess(@NonNull Response<SignInResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+        NestedWorldHttpApi
+                .getInstance()
+                .signIn(email, password)
+                .enqueue(new NestedWorldHttpCallback<SignInResponse>() {
+                    @Override
+                    public void onSuccess(@NonNull Response<SignInResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
-                //Stop the loading animation
-                progressView.stop();
+                        //Stop the loading animation
+                        progressView.stop();
 
-                //Create a new session
-                SessionHelper.newSession(email, password, response.body().token);
+                        //Create a new session
+                        SessionHelper.newSession(email, password, response.body().token);
 
-                //display the mainMenu and stop the launchActivity
-                startActivity(MainMenuActivity.class);
-                ((BaseAppCompatActivity) mContext).finish();
-            }
+                        //display the mainMenu and stop the launchActivity
+                        startActivity(MainMenuActivity.class);
+                        ((BaseAppCompatActivity) mContext).finish();
+                    }
 
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+                    @Override
+                    public void onError(@NonNull KIND errorKind,
+                                        @Nullable Response<SignInResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
-                //Stop loading animation
-                progressView.stop();
+                        //Stop loading animation
+                        progressView.stop();
 
-                //Get error message
-                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
+                        //Get error message
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
 
-                //Display error message
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+                        //Display error message
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void sendForgotPasswordRequest(@NonNull final String email) {
         //Send request
-        NestedWorldHttpApi.getInstance().forgotPassword(email).enqueue(new NestedWorldHttpCallback<ForgotPasswordResponse>() {
-            @Override
-            public void onSuccess(@NonNull Response<ForgotPasswordResponse> response) {
-                //check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+        NestedWorldHttpApi
+                .getInstance()
+                .forgotPassword(email)
+                .enqueue(new NestedWorldHttpCallback<ForgotPasswordResponse>() {
+                    @Override
+                    public void onSuccess(@NonNull Response<ForgotPasswordResponse> response) {
+                        //check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
-                //Warn player an email has been send
-                Toast.makeText(mContext, getString(R.string.registration_msg_passwordSend), Toast.LENGTH_LONG).show();
-            }
+                        //Warn player an email has been send
+                        Toast.makeText(mContext, getString(R.string.registration_msg_passwordSend), Toast.LENGTH_LONG).show();
+                    }
 
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<ForgotPasswordResponse> response) {
-                //check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+                    @Override
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<ForgotPasswordResponse> response) {
+                        //check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
-                //Get error message
-                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_forgotPassword), response);
+                        //Get error message
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_forgotPassword), response);
 
-                //Display error message
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+                        //Display error message
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

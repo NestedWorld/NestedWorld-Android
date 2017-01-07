@@ -37,7 +37,14 @@ import butterknife.BindView;
 public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public final static String FRAGMENT_NAME = MonstersFragment.class.getSimpleName();
+
     private final MonsterAdapter mAdapter = new MonsterAdapter();
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.recycler_monsters_list)
     RecyclerView recyclerViewMonsters;
     @BindView(R.id.swipeRefreshLayout_monster_list)
@@ -45,6 +52,11 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     @BindView(R.id.textview_no_monster)
     TextView textViewNoMonster;
 
+    /*
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
+     */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, new MonstersFragment())
@@ -53,7 +65,9 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onMonsterUpdated(OnMonstersUpdatedEvent onMonstersUpdatedEvent) {
@@ -71,7 +85,9 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -103,7 +119,9 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /*
-    ** SwipeRefreshLayout.OnRefreshListener Implementation
+     * #############################################################################################
+     * # SwipeRefreshLayout.OnRefreshListener Implementation
+     * #############################################################################################
      */
     @Override
     public void onRefresh() {
@@ -159,7 +177,9 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupListView() {
         //Check if fragment hasn't been detach
@@ -181,7 +201,7 @@ public class MonstersFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         //Retrieve monsters from ORM
-        List<Monster> monsters = NestedWorldDatabase.getInstance()
+        final List<Monster> monsters = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getMonsterDao()
                 .loadAll();

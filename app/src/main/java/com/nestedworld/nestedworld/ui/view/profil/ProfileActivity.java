@@ -12,11 +12,18 @@ import butterknife.BindView;
 
 public class ProfileActivity extends BaseAppCompatActivity {
 
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     /*
-    ** Life Cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -30,7 +37,9 @@ public class ProfileActivity extends BaseAppCompatActivity {
     }
 
     /*
-    ** Utils
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setUpToolbar() {
         //Set the toolbar as actionBar

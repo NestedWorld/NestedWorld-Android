@@ -30,6 +30,14 @@ import retrofit2.Response;
 
 public class UserMonsterDetailFragment extends BaseFragment {
 
+    private UserMonster mUserMonster;
+    private Monster mMonster;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     //Header related
     @BindView(R.id.imageView_monster)
     ImageView imageViewSprite;
@@ -71,9 +79,6 @@ public class UserMonsterDetailFragment extends BaseFragment {
     ListView listView;
     @BindView(R.id.progressView)
     ProgressView progressView;
-
-    private UserMonster mUserMonster;
-    private Monster mMonster;
 
     /*
      * #############################################################################################
@@ -188,7 +193,7 @@ public class UserMonsterDetailFragment extends BaseFragment {
             textViewMonsterNoAttack.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
 
-            List<Attack> attacks = new ArrayList<>();
+            final List<Attack> attacks = new ArrayList<>();
             for (MonsterAttackResponse.MonsterAttack monsterAttack : monsterAttacks) {
                 attacks.add(monsterAttack.infos);
             }
@@ -196,7 +201,7 @@ public class UserMonsterDetailFragment extends BaseFragment {
             if (listView.getAdapter() == null) {
                 listView.setAdapter(new AttackAdapter(getContext(), attacks));
             } else {
-                AttackAdapter attackAdapter = (AttackAdapter) listView.getAdapter();
+                final AttackAdapter attackAdapter = (AttackAdapter) listView.getAdapter();
                 attackAdapter.clear();
                 attackAdapter.addAll(attacks);
             }
@@ -225,7 +230,8 @@ public class UserMonsterDetailFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<MonsterAttackResponse> response) {
+                    public void onError(@NonNull KIND errorKind,
+                                        @Nullable Response<MonsterAttackResponse> response) {
                         //Stop loading animation
                         progressView.stop();
                     }

@@ -15,11 +15,18 @@ import com.nestedworld.nestedworld.ui.view.welcome.WelcomeActivity;
 import butterknife.BindView;
 
 public class LaunchActivity extends BaseAppCompatActivity {
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.imageView_logo_launch)
     ImageView imageView;
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -59,7 +66,9 @@ public class LaunchActivity extends BaseAppCompatActivity {
     }
 
     /*
-    ** Utils
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private boolean checkForExistingSession() {
         return (SessionHelper.getSession() != null);

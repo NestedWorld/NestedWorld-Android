@@ -27,6 +27,9 @@ import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
+    private ArrayAdapter<String> mItemAdapter;
+    private Friend mFriend;
+
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -36,8 +39,6 @@ public class ChatFragment extends BaseFragment {
     EditText editTextChat;
     @BindView(R.id.listView_chat)
     ListView listViewChat;
-    private ArrayAdapter<String> itemAdapter;
-    private Friend mFriend;
 
     /*
      * #############################################################################################
@@ -64,10 +65,10 @@ public class ChatFragment extends BaseFragment {
     @OnClick(R.id.button_send_message)
     public void sendMessage() {
         //add the text on the adapter
-        itemAdapter.add(editTextChat.getText().toString());
+        mItemAdapter.add(editTextChat.getText().toString());
 
         //update adapter
-        itemAdapter.notifyDataSetChanged();
+        mItemAdapter.notifyDataSetChanged();
 
         //clear editText content
         editTextChat.setText("");
@@ -134,10 +135,10 @@ public class ChatFragment extends BaseFragment {
         }
 
         //init a string adapter for our listView
-        itemAdapter = new ArrayAdapter<>(mContext, R.layout.item_discution, R.id.textview_discution_content);
-        listViewChat.setAdapter(itemAdapter);
+        mItemAdapter = new ArrayAdapter<>(mContext, R.layout.item_discution, R.id.textview_discution_content);
+        listViewChat.setAdapter(mItemAdapter);
 
-        itemAdapter.add("Welcome on the chat: " + mFriend.getData().pseudo);
+        mItemAdapter.add("Welcome on the chat: " + mFriend.getData().pseudo);
 
         editTextChat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

@@ -68,6 +68,12 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         add(new ShopItemsUpdater());
         add(new UserItemUpdater());
     }};
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.viewpager)
@@ -78,7 +84,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     ProgressView progressView;
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onNewCombatAvailable(OnAvailableMessageEvent event) {
@@ -87,7 +95,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -131,11 +141,11 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         //Retrieve widget
-        MenuItem menuItem = menu.findItem(R.id.action_fight);
+        final MenuItem menuItem = menu.findItem(R.id.action_fight);
 
         //Calculate the number of fight and update icon
         //we don't have to check for 0 (see buildCounterDrawable())
-        int numberOfFight = NestedWorldDatabase.getInstance()
+        final int numberOfFight = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getCombatDao()
                 .loadAll()
@@ -166,7 +176,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
 
             fragmentManager.popBackStackImmediate();
@@ -186,10 +196,12 @@ public class MainMenuActivity extends BaseAppCompatActivity {
     }
 
     /*
-    ** private method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void handleChatClick() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        final List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment fragment : fragments) {
                 if (fragment instanceof ChatListFragment) {
@@ -213,7 +225,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
     private void setupViewPager() {
         //Create adapter
-        TabsAdapter viewPagerAdapter = new TabsAdapter(getSupportFragmentManager()).setDisplayPageTitle(false);
+        final TabsAdapter viewPagerAdapter = new TabsAdapter(getSupportFragmentManager()).setDisplayPageTitle(false);
 
         //Populate adapter
         for (Tabs tabs : mTabs) {
@@ -230,8 +242,8 @@ public class MainMenuActivity extends BaseAppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 //Update toolbar title
-                ActionBar actionBar = getSupportActionBar();
-                Tabs selectedTabs = mTabs.get(tab.getPosition());
+                final ActionBar actionBar = getSupportActionBar();
+                final Tabs selectedTabs = mTabs.get(tab.getPosition());
 
                 if (actionBar != null && selectedTabs != null) {
                     actionBar.setTitle(selectedTabs.title);
@@ -254,7 +266,7 @@ public class MainMenuActivity extends BaseAppCompatActivity {
 
         //Display tab icon
         for (int i = 0; i < mTabs.size(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            final TabLayout.Tab tab = tabLayout.getTabAt(i);
             if (tab != null) {
                 tab.setIcon(mTabs.get(i).icon);
             }
@@ -332,7 +344,9 @@ public class MainMenuActivity extends BaseAppCompatActivity {
         @DrawableRes
         public final int icon;
 
-        public Tabs(@NonNull final Fragment fragment, @Nullable final String title, @DrawableRes final int icon) {
+        public Tabs(@NonNull final Fragment fragment,
+                    @Nullable final String title,
+                    @DrawableRes final int icon) {
             this.icon = icon;
             this.fragment = fragment;
             this.title = title;

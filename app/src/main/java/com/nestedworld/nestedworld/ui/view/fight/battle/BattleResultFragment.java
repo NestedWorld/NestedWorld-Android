@@ -14,16 +14,24 @@ import butterknife.BindView;
 
 public class BattleResultFragment extends BaseFragment {
 
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textview_result)
     TextView textViewResult;
 
     /*
-    ** public static method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
-    public static void load(@NonNull final FragmentManager fragmentManager, @NonNull final String result) {
-        BattleResultFragment fightResultFragment = new BattleResultFragment();
+    public static void load(@NonNull final FragmentManager fragmentManager,
+                            @NonNull final String result) {
+        final BattleResultFragment fightResultFragment = new BattleResultFragment();
 
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putString("RESULT", result);
 
         fightResultFragment.setArguments(args);
@@ -35,7 +43,9 @@ public class BattleResultFragment extends BaseFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -44,7 +54,7 @@ public class BattleResultFragment extends BaseFragment {
 
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
-        String result = getArguments().getString("RESULT");
+        final String result = getArguments().getString("RESULT");
         textViewResult.setText(result);
     }
 }

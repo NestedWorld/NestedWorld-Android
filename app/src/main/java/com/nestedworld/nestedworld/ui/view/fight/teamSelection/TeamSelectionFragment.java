@@ -59,6 +59,17 @@ public class TeamSelectionFragment extends BaseFragment {
 
     private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     private final UserMonsterPagerAdapter mAdapter = new UserMonsterPagerAdapter();
+
+    private List<UserMonster> mUserMonsters;
+    private int mMonsterCountRecommended;
+    private int mMonsterRequire;
+    private Combat mCombat = null;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindViews({
             R.id.imageview_selectedmonster_1,
             R.id.imageview_selectedmonster_2,
@@ -81,23 +92,21 @@ public class TeamSelectionFragment extends BaseFragment {
     ProgressView progressView;
     @BindView(R.id.textView_state)
     TextView textViewState;
-    private List<UserMonster> mUserMonsters;
-    private int mMonsterCountRecommended;
-    private int mMonsterRequire;
-    private Combat mCombat = null;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager,
                             @NonNull final Combat combat,
                             final int monsterCountRecommended,
                             final int monsterCountRequire) {
         //Instantiate new fragment
-        Fragment newFragment = new TeamSelectionFragment();
+        final Fragment newFragment = new TeamSelectionFragment();
 
         //Add fragment param
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putInt("MONSTER_RECOMMENDED_KEY", monsterCountRecommended);
         args.putInt("MONSTER_REQUIRE_KEY", monsterCountRequire);
         args.putString("combatId", combat.getCombatId());
@@ -110,7 +119,9 @@ public class TeamSelectionFragment extends BaseFragment {
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onNewCombatStart(OnCombatStartMessageEvent event) {
@@ -121,7 +132,7 @@ public class TeamSelectionFragment extends BaseFragment {
 
         LogHelper.d(TAG, "onNewCombatStart");
 
-        StartMessage startMessage = event.getMessage();
+        final StartMessage startMessage = event.getMessage();
 
         if (startMessage.id.equals(mCombat.combatId)) {
             LogHelper.d(TAG, "onNewCombatStart > accept");
@@ -140,7 +151,9 @@ public class TeamSelectionFragment extends BaseFragment {
     }
 
     /*
-    ** Butterknife
+     * #############################################################################################
+     * # Widget callback binding
+     * #############################################################################################
      */
     @OnClick(R.id.button_select_monster)
     public void onSelectMonsterClick() {
@@ -150,9 +163,9 @@ public class TeamSelectionFragment extends BaseFragment {
         }
 
         //Get the selected monster
-        UserMonster selectedUserMonster = mAdapter.getItemAtPosition(viewPager.getCurrentItem());
+        final UserMonster selectedUserMonster = mAdapter.getItemAtPosition(viewPager.getCurrentItem());
         if (selectedUserMonster != null) {
-            Monster selectedMonster = selectedUserMonster.getMonster();
+            final Monster selectedMonster = selectedUserMonster.getMonster();
             if (selectedMonster != null) {
                 LogHelper.d(TAG, "UserMonster selected: " + selectedUserMonster.toString());
                 //Add the monster in the list of selected monster
@@ -218,7 +231,9 @@ public class TeamSelectionFragment extends BaseFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -279,7 +294,9 @@ public class TeamSelectionFragment extends BaseFragment {
     }
 
     /*
-    ** Private method
+     * #############################################################################################
+     * # Private method
+     * #############################################################################################
      */
     private boolean parseArgs() {
         //Check if fragment hasn't been detach
@@ -303,7 +320,7 @@ public class TeamSelectionFragment extends BaseFragment {
         if (!getArguments().containsKey("combatId")) {
             throw new IllegalArgumentException("Must provide wanted combat");
         }
-        String combatId = getArguments().getString("combatId", "");
+        final String combatId = getArguments().getString("combatId", "");
         mCombat = NestedWorldDatabase
                 .getInstance()
                 .getDataBase()
@@ -328,7 +345,7 @@ public class TeamSelectionFragment extends BaseFragment {
         }
 
         //Retrieve the session
-        Session session = SessionHelper.getSession();
+        final Session session = SessionHelper.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
             onFatalError();//Should logout if we didn't have a session
@@ -336,7 +353,7 @@ public class TeamSelectionFragment extends BaseFragment {
         }
 
         //Retrieve the player
-        SessionData sessionData = session.getSessionData();
+        final SessionData sessionData = session.getSessionData();
         if (sessionData == null) {
             LogHelper.d(TAG, "No User");
             ((BaseAppCompatActivity) mContext).finish();
@@ -363,7 +380,7 @@ public class TeamSelectionFragment extends BaseFragment {
             return;
         }
 
-        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
+        final ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getResources().getString(R.string.teamSelection_title));
         }
@@ -418,11 +435,11 @@ public class TeamSelectionFragment extends BaseFragment {
         ServiceHelper.bindToSocketService(mContext, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
+                final NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
                 if (nestedWorldSocketAPI != null) {
-                    ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
+                    final ValueFactory.MapBuilder map = ValueFactory.newMapBuilder();
 
-                    List<Value> selectedMonsterIdList = new ArrayList<>();
+                    final List<Value> selectedMonsterIdList = new ArrayList<>();
                     for (UserMonster userMonster : mSelectedMonster) {
                         selectedMonsterIdList.add(ValueFactory.newInteger(userMonster.userMonsterId));
                     }
@@ -430,7 +447,7 @@ public class TeamSelectionFragment extends BaseFragment {
                     map.put(ValueFactory.newString("accept"), ValueFactory.newBoolean(true));
                     map.put(ValueFactory.newString("monsters"), ValueFactory.newArray(selectedMonsterIdList));
 
-                    ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
+                    final ResultRequest resultRequest = new ResultRequest(map.build().map(), true);
                     nestedWorldSocketAPI.sendRequest(resultRequest, SocketMessageType.MessageKind.TYPE_RESULT, mCombat.combatId);
 
                 } else {

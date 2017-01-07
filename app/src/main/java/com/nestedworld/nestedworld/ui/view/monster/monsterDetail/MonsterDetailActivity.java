@@ -27,17 +27,21 @@ public class MonsterDetailActivity extends BaseAppCompatActivity {
     private Monster mMonster;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void start(@NonNull final Context context,
                              @NonNull final Monster monster) {
-        Intent intent = new Intent(context, MonsterDetailActivity.class);
+        final Intent intent = new Intent(context, MonsterDetailActivity.class);
         intent.putExtra(ARG_MONSTER, monster.monsterId);
         context.startActivity(intent);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -49,12 +53,12 @@ public class MonsterDetailActivity extends BaseAppCompatActivity {
         if (!getIntent().getExtras().containsKey(ARG_MONSTER)) {
             throw new IllegalArgumentException("You should provide a monsterId in intent");
         } else {
-            long monserId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
+            final long monsterId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
             mMonster = NestedWorldDatabase.getInstance()
                     .getDataBase()
                     .getMonsterDao()
                     .queryBuilder()
-                    .where(MonsterDao.Properties.MonsterId.eq(monserId))
+                    .where(MonsterDao.Properties.MonsterId.eq(monsterId))
                     .unique();
             if (mMonster == null) {
                 Toast.makeText(this, R.string.error_unexpected, Toast.LENGTH_LONG).show();
@@ -67,7 +71,9 @@ public class MonsterDetailActivity extends BaseAppCompatActivity {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupToolbar() {
         //Set the toolbar as actionBar

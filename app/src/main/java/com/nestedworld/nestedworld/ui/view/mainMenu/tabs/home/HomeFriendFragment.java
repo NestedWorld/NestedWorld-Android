@@ -35,16 +35,24 @@ import butterknife.OnClick;
 
 public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private FriendsAdapter mAdapter;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.listView_home_friends)
     ListView listView;
     @BindView(R.id.progressView)
     ProgressView progressView;
     @BindView(R.id.swipeRefreshLayout_home_friend)
     SwipeRefreshLayout swipeRefreshLayout;
-    private FriendsAdapter mAdapter;
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onFriendUpdated(OnFriendsUpdatedEvent onFriendsUpdatedEvent) {
@@ -69,9 +77,9 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
         }
 
         //Parse response
-        ResultMessage resultMessage = resultResponseEvent.getMessage();
+        final ResultMessage resultMessage = resultResponseEvent.getMessage();
         if (resultMessage.getIdKind() == SocketMessageType.MessageKind.TYPE_COMBAT_ASK) {
-            AskMessage askMessage = new AskMessage(resultMessage.getMessage(), resultMessage.getMessageKind(), resultMessage.getIdKind());
+            final AskMessage askMessage = new AskMessage(resultMessage.getMessage(), resultMessage.getMessageKind(), resultMessage.getIdKind());
 
             //Check if we have an error
             if (askMessage.getResult() != null && askMessage.getResult().equals("error")) {
@@ -91,7 +99,9 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
     /*
-    ** Butterknife callback
+     * #############################################################################################
+     * # Widget callback binding
+     * #############################################################################################
      */
     @OnClick(R.id.fab_add_friend)
     public void addFriend() {
@@ -104,7 +114,9 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -132,7 +144,9 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
     /*
-    ** SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
+     * # SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
      */
     @Override
     public void onRefresh() {
@@ -152,7 +166,9 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
     /*
-    ** Private method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupListView() {
         //Check if fragment hasn't been detach
@@ -168,7 +184,7 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     @UiThread
     private void populateFriendList() {
         //Retrieve entity from orm
-        List<Friend> friends = NestedWorldDatabase.getInstance()
+        final List<Friend> friends = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getFriendDao()
                 .loadAll();

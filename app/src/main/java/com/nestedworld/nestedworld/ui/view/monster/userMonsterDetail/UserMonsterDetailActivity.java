@@ -20,22 +20,32 @@ import butterknife.BindView;
 public class UserMonsterDetailActivity extends BaseAppCompatActivity {
     private final static String ARG_MONSTER = "UserMonsterDetailActivity_ARG_MONSTER";
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     private UserMonster mUserMonster;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
      */
-    public static void start(@NonNull final Context context, @NonNull final UserMonster userMonster) {
-        Intent intent = new Intent(context, UserMonsterDetailActivity.class);
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    /*
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
+     */
+    public static void start(@NonNull final Context context,
+                             @NonNull final UserMonster userMonster) {
+        final Intent intent = new Intent(context, UserMonsterDetailActivity.class);
         intent.putExtra(ARG_MONSTER, userMonster.getUserMonsterId());
         context.startActivity(intent);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -47,7 +57,7 @@ public class UserMonsterDetailActivity extends BaseAppCompatActivity {
         if (!getIntent().getExtras().containsKey(ARG_MONSTER)) {
             throw new IllegalArgumentException("You should provide a monsterId in intent");
         } else {
-            long monsterId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
+            final long monsterId = getIntent().getExtras().getLong(ARG_MONSTER, -1);
 
             mUserMonster = NestedWorldDatabase
                     .getInstance()
@@ -68,7 +78,9 @@ public class UserMonsterDetailActivity extends BaseAppCompatActivity {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupToolbar() {
         //Set the toolbar as actionBar

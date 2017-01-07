@@ -34,6 +34,13 @@ import butterknife.BindView;
  */
 public class UserInventoryFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private UserItemAdapter mAdapter;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textview_inventory_empty)
     TextView textViewInventoryEmpty;
     @BindView(R.id.swipeRefreshLayout_inventory)
@@ -43,10 +50,10 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private UserItemAdapter mAdapter;
-
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -56,7 +63,9 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     }
 
     /*
-    ** Eventbus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onUserItemUpdated(OnUserItemUpdated onUserItemUpdated) {
@@ -74,7 +83,9 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -142,10 +153,12 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void populateAdapter() {
-        List<UserItem> userItems = NestedWorldDatabase.getInstance()
+        final List<UserItem> userItems = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getUserItemDao()
                 .loadAll();
@@ -161,9 +174,6 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
         progressView.stop();
     }
 
-    /*
-    ** Internal method
-     */
     private void setupListView() {
         //Check if fragment hasn't been detach
         if (mContext == null) {

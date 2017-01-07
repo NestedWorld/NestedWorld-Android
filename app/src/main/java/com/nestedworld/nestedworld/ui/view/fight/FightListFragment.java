@@ -29,15 +29,22 @@ import butterknife.BindView;
 
 public class FightListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private FightAdapter mAdapter;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.listView_fightList)
     ListView listView;
     @BindView(R.id.swipeRefreshLayout_fight_list)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private FightAdapter mAdapter;
-
     /*
-    ** Public static method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -46,14 +53,16 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onNewCombatAvailable(OnAvailableMessageEvent event) {
         LogHelper.d(TAG, "onNewCombatAvailable");
 
-        AvailableMessage message = event.getMessage();
-        Combat newCombat = NestedWorldDatabase
+        final AvailableMessage message = event.getMessage();
+        final Combat newCombat = NestedWorldDatabase
                 .getInstance()
                 .getDataBase()
                 .getCombatDao()
@@ -65,7 +74,9 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -101,7 +112,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
         swipeRefreshLayout.setRefreshing(true);
 
         //Retrieve list of available combat from Orm
-        List<Combat> combats = NestedWorldDatabase.getInstance()
+        final List<Combat> combats = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getCombatDao()
                 .loadAll();
@@ -122,7 +133,9 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     /*
-    ** Private method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupAdapter() {
         //Check if fragment hasn't been detach
@@ -144,7 +157,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
             return;
         }
 
-        ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
+        final ActionBar actionBar = ((BaseAppCompatActivity) mContext).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getResources().getString(R.string.fightList_title));
         }

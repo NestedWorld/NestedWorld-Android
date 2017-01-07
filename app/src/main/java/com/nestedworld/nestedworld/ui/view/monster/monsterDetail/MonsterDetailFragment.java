@@ -29,6 +29,13 @@ import retrofit2.Response;
 
 public class MonsterDetailFragment extends BaseFragment {
 
+    private Monster mMonster;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     //Header related
     @BindView(R.id.imageView_monster)
     ImageView imageViewSprite;
@@ -65,14 +72,14 @@ public class MonsterDetailFragment extends BaseFragment {
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private Monster mMonster;
-
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager supportFragmentManager,
                             @NonNull final Monster monster) {
-        MonsterDetailFragment monsterDetailFragment = new MonsterDetailFragment().setMonster(monster);
+        final MonsterDetailFragment monsterDetailFragment = new MonsterDetailFragment().setMonster(monster);
 
         supportFragmentManager
                 .beginTransaction()
@@ -81,7 +88,9 @@ public class MonsterDetailFragment extends BaseFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -99,8 +108,11 @@ public class MonsterDetailFragment extends BaseFragment {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
+    @NonNull
     private MonsterDetailFragment setMonster(@NonNull final Monster monster) {
         mMonster = monster;
         return this;
@@ -162,7 +174,7 @@ public class MonsterDetailFragment extends BaseFragment {
             textViewMonsterNoAttack.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
 
-            List<Attack> attacks = new ArrayList<>();
+            final List<Attack> attacks = new ArrayList<>();
             for (MonsterAttackResponse.MonsterAttack monsterAttack : monsterAttacks) {
                 attacks.add(monsterAttack.infos);
             }
@@ -170,7 +182,7 @@ public class MonsterDetailFragment extends BaseFragment {
             if (listView.getAdapter() == null) {
                 listView.setAdapter(new AttackAdapter(getContext(), attacks));
             } else {
-                AttackAdapter attackAdapter = (AttackAdapter) listView.getAdapter();
+                final AttackAdapter attackAdapter = (AttackAdapter) listView.getAdapter();
                 attackAdapter.clear();
                 attackAdapter.addAll(attacks);
             }
@@ -204,7 +216,8 @@ public class MonsterDetailFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onError(@NonNull KIND errorKind, @Nullable Response<MonsterAttackResponse> response) {
+                    public void onError(@NonNull KIND errorKind,
+                                        @Nullable Response<MonsterAttackResponse> response) {
                         //Check if fragment hasn't been detach
                         if (mContext == null) {
                             return;

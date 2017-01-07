@@ -34,6 +34,8 @@ public class UserPlayerFragment extends BattlePlayerFragment {
 
     private final static String TAG = UserPlayerFragment.class.getSimpleName();
 
+    private List<UserMonster> mTeam = null;
+
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -56,13 +58,12 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     @BindView(R.id.view_header_border)
     View viewHeaderBorder;
 
-    private List<UserMonster> mTeam = null;
-
     /*
      * #############################################################################################
      * # Public (static) method
      * #############################################################################################
      */
+    @NonNull
     public static UserPlayerFragment load(@NonNull final FragmentManager fragmentManager,
                                           @NonNull final List<UserMonster> team) {
         final UserPlayerFragment userPlayerFragment = new UserPlayerFragment().setTeam(team);
@@ -173,7 +174,7 @@ public class UserPlayerFragment extends BattlePlayerFragment {
                 }
 
                 //Set "normal" background color
-                int color = ContextCompat.getColor(mContext, R.color.apptheme_background_half);
+                final int color = ContextCompat.getColor(mContext, R.color.apptheme_background_half);
                 viewBody.setBackgroundColor(color);
                 viewHeaderBorder.setBackgroundColor(color);
             }

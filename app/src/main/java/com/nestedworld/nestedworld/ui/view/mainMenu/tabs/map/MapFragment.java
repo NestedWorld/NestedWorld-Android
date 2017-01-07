@@ -47,15 +47,22 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     private final static int MIN_DIST = 1; //Minimum distance between 2 update (in meter)
     private final static int ZOOM = 15;
 
+    private NestedWorldMap mMap = null;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.mapView)
     MapView mMapView;
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private NestedWorldMap mMap = null;
-
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -66,7 +73,9 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onPortalsUpdated(OnPortalUpdatedEvent event) {
@@ -89,7 +98,9 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -212,11 +223,13 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     }
 
     /*
-    **  GoogleMap.OnMarkerClickListener implementation
+     * #############################################################################################
+     * # GoogleMap.OnMarkerClickListener implementation
+     * #############################################################################################
      */
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Portal portal = (Portal) marker.getTag();
+        final Portal portal = (Portal) marker.getTag();
         if (portal != null) {
             EngagePortalFightDialog.show(getChildFragmentManager(), portal);
             return true;
@@ -226,7 +239,9 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     }
 
     /*
-    ** Location listener Implementation
+     * #############################################################################################
+     * # Location listener Implementation
+     * #############################################################################################
      */
     @Override
     public void onLocationChanged(@NonNull final Location location) {
@@ -236,8 +251,8 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
         }
 
         //Get new position
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
+        final double latitude = location.getLatitude();
+        final double longitude = location.getLongitude();
 
         //Display some log
         LogHelper.d(TAG, "set location to: " + latitude + ", " + longitude);
@@ -265,7 +280,9 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     }
 
     /*
-    ** private method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void initMap() {
         //check if fragment hasn't been detach
@@ -279,10 +296,13 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
             LogHelper.d(TAG, "ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permission needed");
 
             //We ask for the permission (it we'll call onRequestPermissionsResult who will call initMap())
-            PermissionHelper.askForPermissionsFromFragment(mContext, this, Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
+            PermissionHelper.askForPermissionsFromFragment(
+                    mContext,
+                    this,
+                    Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
         } else {
             // Acquire a reference to the system Location Manager
-            LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+            final LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
             // Register the listener with the Location Manager to receive location updates
             for (String provider : locationManager.getProviders(false)) {
@@ -292,7 +312,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
                     onProviderEnabled(LocationManager.GPS_PROVIDER);
 
                     //get location fix
-                    Location lastLocation = locationManager.getLastKnownLocation(provider);
+                    final Location lastLocation = locationManager.getLastKnownLocation(provider);
                     if (lastLocation != null) {
                         //Update the NestedWorldMap
                         onLocationChanged(lastLocation);

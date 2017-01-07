@@ -13,11 +13,18 @@ import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import butterknife.BindView;
 
 public class WelcomeActivity extends BaseAppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -52,12 +59,14 @@ public class WelcomeActivity extends BaseAppCompatActivity implements FragmentMa
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupActionBar() {
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //Setup back navigation
             actionBar.setDisplayShowHomeEnabled(true);

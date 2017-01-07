@@ -31,6 +31,11 @@ import retrofit2.Response;
  * A placeholder fragment containing a simple view.
  */
 public class CreateAccountFragment extends BaseFragment {
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.editText_pseudo)
     TextInputEditText etPseudo;
     @BindView(R.id.textInputLayout_pseudo)
@@ -49,7 +54,9 @@ public class CreateAccountFragment extends BaseFragment {
     ImageView imageViewBackground;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager
@@ -61,15 +68,17 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     /*
-    ** ButterKnife callback
+     * #############################################################################################
+     * # Widget callback binding
+     * #############################################################################################
      */
     @OnClick(R.id.button_inscription)
     public void sendCreateAccountRequest() {
 
         //Retrieve player input
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
-        String pseudo = etPseudo.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
+        final String pseudo = etPseudo.getText().toString();
 
         //Check input
         if (!checkInputRegistration(email, password, pseudo)) {
@@ -81,7 +90,9 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -93,9 +104,13 @@ public class CreateAccountFragment extends BaseFragment {
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
-    private boolean checkInputRegistration(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
+    private boolean checkInputRegistration(@NonNull final String email,
+                                           @NonNull final String password,
+                                           @NonNull final String pseudo) {
         //Check email
         if (!InputChecker.checkEmailFormat(email)) {
             textInputLayoutUserEmail.setError(getString(R.string.error_emailInvalid));
@@ -123,7 +138,9 @@ public class CreateAccountFragment extends BaseFragment {
         return true;
     }
 
-    private void sendCreateAccountRequest(@NonNull final String email, @NonNull final String password, @NonNull final String pseudo) {
+    private void sendCreateAccountRequest(@NonNull final String email,
+                                          @NonNull final String password,
+                                          @NonNull final String pseudo) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
@@ -133,76 +150,84 @@ public class CreateAccountFragment extends BaseFragment {
         progressView.start();
 
         //Send request
-        NestedWorldHttpApi.getInstance().register(email, password, pseudo).enqueue(new NestedWorldHttpCallback<RegisterResponse>() {
-            @Override
-            public void onSuccess(@NonNull Response<RegisterResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+        NestedWorldHttpApi
+                .getInstance()
+                .register(email, password, pseudo)
+                .enqueue(new NestedWorldHttpCallback<RegisterResponse>() {
+                    @Override
+                    public void onSuccess(@NonNull Response<RegisterResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
-                //Account successfully created, we can log in
-                sendLoginRequest(email, password);
-            }
+                        //Account successfully created, we can log in
+                        sendLoginRequest(email, password);
+                    }
 
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+                    @Override
+                    public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                           return;
+                        }
 
-                //Stop loading animation
-                progressView.stop();
+                        //Stop loading animation
+                        progressView.stop();
 
-                //Get error message
-                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_createAccount), response);
+                        //Get error message
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_createAccount), response);
 
-                //Display error message
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                        //Display error message
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void sendLoginRequest(@NonNull final String email, @NonNull final String password) {
+    private void sendLoginRequest(@NonNull final String email,
+                                  @NonNull final String password) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;
         }
 
         //Send request
-        NestedWorldHttpApi.getInstance().signIn(email, password).enqueue(new NestedWorldHttpCallback<SignInResponse>() {
-            @Override
-            public void onSuccess(@NonNull Response<SignInResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+        NestedWorldHttpApi
+                .getInstance()
+                .signIn(email, password)
+                .enqueue(new NestedWorldHttpCallback<SignInResponse>() {
+                    @Override
+                    public void onSuccess(@NonNull Response<SignInResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
-                //Create a new session
-                SessionHelper.newSession(email, password, response.body().token);
+                        //Create a new session
+                        SessionHelper.newSession(email, password, response.body().token);
 
-                //display MainMenu and stop this activity
-                startActivity(MainMenuActivity.class);
-                ((BaseAppCompatActivity) mContext).finish();
-            }
+                        //display MainMenu and stop this activity
+                        startActivity(MainMenuActivity.class);
+                        ((BaseAppCompatActivity) mContext).finish();
+                    }
 
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<SignInResponse> response) {
-                //Check if fragment hasn't been detach
-                if (mContext == null) {
-                    return;
-                }
+                    @Override
+                    public void onError(@NonNull KIND errorKind,
+                                        @Nullable Response<SignInResponse> response) {
+                        //Check if fragment hasn't been detach
+                        if (mContext == null) {
+                            return;
+                        }
 
-                //Stop loading animation
-                progressView.stop();
+                        //Stop loading animation
+                        progressView.stop();
 
-                //Get error message
-                String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
+                        //Get error message
+                        final String errorMessage = RetrofitErrorHandler.getErrorMessage(mContext, errorKind, getString(R.string.error_request_login), response);
 
-                //Display error message
-                Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+                        //Display error message
+                        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

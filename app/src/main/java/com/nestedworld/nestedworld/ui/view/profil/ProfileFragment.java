@@ -30,6 +30,11 @@ import retrofit2.Response;
  */
 public class ProfileFragment extends BaseFragment {
 
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textView_gender)
     TextView textViewGender;
     @BindView(R.id.textView_pseudo)
@@ -50,7 +55,9 @@ public class ProfileFragment extends BaseFragment {
     TextView textViewAvatar;
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -59,7 +66,9 @@ public class ProfileFragment extends BaseFragment {
     }
 
     /*
-    ** Butterknife callback
+     * #############################################################################################
+     * # Widget callback
+     * #############################################################################################
      */
     @OnClick(R.id.button_logout)
     public void logout() {
@@ -69,28 +78,34 @@ public class ProfileFragment extends BaseFragment {
         }
 
         /*Send logout request*/
-        NestedWorldHttpApi.getInstance().logout().enqueue(new NestedWorldHttpCallback<LogoutResponse>() {
-            @Override
-            public void onSuccess(@NonNull Response<LogoutResponse> response) {
-                //Logout success
-            }
+        NestedWorldHttpApi
+                .getInstance()
+                .logout()
+                .enqueue(new NestedWorldHttpCallback<LogoutResponse>() {
+                    @Override
+                    public void onSuccess(@NonNull Response<LogoutResponse> response) {
+                        //Logout success
+                    }
 
-            @Override
-            public void onError(@NonNull KIND errorKind, @Nullable Response<LogoutResponse> response) {
-                //Logout failed
-            }
-        });
+                    @Override
+                    public void onError(@NonNull KIND errorKind,
+                                        @Nullable Response<LogoutResponse> response) {
+                        //Logout failed
+                    }
+                });
 
         ApplicationHelper.logout(mContext);
 
         //go to launch screen & kill the current context
-        Intent intent = new Intent(mContext, WelcomeActivity.class);
+        final Intent intent = new Intent(mContext, WelcomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -100,7 +115,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     protected void init(@NonNull View rootView, @Nullable Bundle savedInstanceState) {
         //Retrieve the session
-        Session session = SessionHelper.getSession();
+        final Session session = SessionHelper.getSession();
         if (session == null) {
             LogHelper.d(TAG, "No Session");
             onFatalError();
@@ -108,14 +123,14 @@ public class ProfileFragment extends BaseFragment {
         }
 
         //Retrieve the player
-        SessionData sessionData = session.getSessionData();
+        final SessionData sessionData = session.getSessionData();
         if (sessionData == null) {
             LogHelper.d(TAG, "No User");
             return;
         }
 
         /*We display some information*/
-        Resources res = getResources();
+        final Resources res = getResources();
         textViewGender.setText(String.format(res.getString(R.string.profile_msg_gender), sessionData.gender));
         textViewPseudo.setText(String.format(res.getString(R.string.profile_msg_pseudo), sessionData.pseudo));
         textViewBirthDate.setText(String.format(res.getString(R.string.profile_msg_birthDay), sessionData.birthDate));

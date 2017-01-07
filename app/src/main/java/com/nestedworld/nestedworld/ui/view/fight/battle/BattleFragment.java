@@ -57,23 +57,6 @@ import retrofit2.Response;
 
 public class BattleFragment extends BaseFragment {
 
-    /*
-     * #############################################################################################
-     * # Butterknife widget binding
-     * #############################################################################################
-     */
-    @BindView(R.id.progressView)
-    ProgressView progressView;
-    @BindView(R.id.imageView_battle_background)
-    ImageView battleBackground;
-    @BindViews({
-            R.id.imageView_top,
-            R.id.imageView_top_right,
-            R.id.imageView_bottom_right,
-            R.id.imageView_bottom,
-            R.id.imageView_bottom_left,
-            R.id.imageView_top_left})
-    List<ImageView> mTitles;
     private String mUserGestureInput = "";
     private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
         @Override
@@ -116,6 +99,25 @@ public class BattleFragment extends BaseFragment {
 
     /*
      * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
+    @BindView(R.id.progressView)
+    ProgressView progressView;
+    @BindView(R.id.imageView_battle_background)
+    ImageView battleBackground;
+    @BindViews({
+            R.id.imageView_top,
+            R.id.imageView_top_right,
+            R.id.imageView_bottom_right,
+            R.id.imageView_bottom,
+            R.id.imageView_bottom_left,
+            R.id.imageView_top_left})
+    List<ImageView> mTitles;
+
+
+    /*
+     * #############################################################################################
      * # Public (static) method
      * #############################################################################################
      */
@@ -145,7 +147,7 @@ public class BattleFragment extends BaseFragment {
         }
 
         //Retrieve message
-        AttackReceiveMessage message = event.getMessage();
+        final AttackReceiveMessage message = event.getMessage();
 
         BattlePlayerFragment attacker;
         BattlePlayerFragment target;
@@ -177,7 +179,7 @@ public class BattleFragment extends BaseFragment {
 
     @Subscribe
     public void onMonsterKo(OnMonsterKoEvent event) {
-        MonsterKoMessage message = event.getMessage();
+        final MonsterKoMessage message = event.getMessage();
 
         if (mUserPlayerFragment.hasMonsterInFront(message.monster)) {
             LogHelper.d(TAG, "onMonsterKo > player");
@@ -370,7 +372,7 @@ public class BattleFragment extends BaseFragment {
         }
 
         //Retrieve and clear player gesture
-        Attack.AttackType attackTypeWanted = BattleHelper.gestureToAttackType(mUserGestureInput);
+        final Attack.AttackType attackTypeWanted = BattleHelper.gestureToAttackType(mUserGestureInput);
         mUserGestureInput = "";
 
         //Check if the player monster is alive
@@ -425,7 +427,7 @@ public class BattleFragment extends BaseFragment {
                 }
 
                 //Service connected, retrieving socketApi instance
-                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
+               final NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request
@@ -470,7 +472,7 @@ public class BattleFragment extends BaseFragment {
                 }
 
                 //Service connected, retrieving socketApi instance
-                NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
+                final NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request

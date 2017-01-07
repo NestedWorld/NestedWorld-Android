@@ -33,6 +33,14 @@ import butterknife.BindView;
  * A placeholder fragment containing a simple view.
  */
 public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    private ShopItemAdapter mAdapter;
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textview_inventory_empty)
     TextView textViewShopEmpty;
     @BindView(R.id.swipeRefreshLayout_shop)
@@ -42,10 +50,10 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @BindView(R.id.progressView)
     ProgressView progressView;
 
-    private ShopItemAdapter mAdapter;
-
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -55,7 +63,9 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     /*
-    ** EventBus
+     * #############################################################################################
+     * # EventBus
+     * #############################################################################################
      */
     @Subscribe
     public void onShopItemUpdated(OnShopItemsUpdated onShopItemsUpdated) {
@@ -73,7 +83,9 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     /*
-    ** Life cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
@@ -108,7 +120,9 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     /*
-    ** SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
+     * # SwipeRefreshLayout.OnRefreshListener implementation
+     * #############################################################################################
      */
     @Override
     public void onRefresh() {
@@ -146,7 +160,9 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     /*
-    ** Internal method
+     * #############################################################################################
+     * # Internal method
+     * #############################################################################################
      */
     private void setupListView() {
         //Check if fragment hasn't been detach
@@ -159,7 +175,7 @@ public class ShopFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void populateAdapter() {
-        List<ShopItem> shopItemList = NestedWorldDatabase.getInstance()
+        final List<ShopItem> shopItemList = NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getShopItemDao()
                 .loadAll();

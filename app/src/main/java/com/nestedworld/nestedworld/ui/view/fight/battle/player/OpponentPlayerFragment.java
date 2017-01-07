@@ -28,6 +28,12 @@ import butterknife.BindView;
 public class OpponentPlayerFragment extends BattlePlayerFragment {
 
     private final static String TAG = OpponentPlayerFragment.class.getSimpleName();
+
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
     @BindView(R.id.textview_monster_lvl)
     TextView monsterLvl;
     @BindView(R.id.textview_monster_name)
@@ -50,9 +56,9 @@ public class OpponentPlayerFragment extends BattlePlayerFragment {
      */
     public static OpponentPlayerFragment load(@NonNull final FragmentManager fragmentManager,
                                               final int teamSize) {
-        OpponentPlayerFragment opponentPlayerManager = new OpponentPlayerFragment();
+        final OpponentPlayerFragment opponentPlayerManager = new OpponentPlayerFragment();
 
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putInt("TEAM_SIZE", teamSize);
         opponentPlayerManager.setArguments(args);
 

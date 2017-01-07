@@ -17,7 +17,9 @@ import butterknife.OnClick;
 public class WelcomeFragment extends BaseFragment {
 
     /*
-    ** Public method
+     * #############################################################################################
+     * # Public (static) method
+     * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
         fragmentManager.beginTransaction()
@@ -26,7 +28,9 @@ public class WelcomeFragment extends BaseFragment {
     }
 
     /*
-    ** ButterKnife callback
+     * #############################################################################################
+     * # Widget callback binding
+     * #############################################################################################
      */
     @OnClick(R.id.button_login)
     public void login() {
@@ -39,7 +43,9 @@ public class WelcomeFragment extends BaseFragment {
     }
 
     /*
-    ** Life Cycle
+     * #############################################################################################
+     * # Life cycle
+     * #############################################################################################
      */
     @Override
     protected int getLayoutResource() {
