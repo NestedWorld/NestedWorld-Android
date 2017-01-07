@@ -4,14 +4,14 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.nestedworld.nestedworld.data.database.models.DaoSession;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Unique;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
 
 @Entity(active = true)
 public class Friend {
@@ -19,19 +19,20 @@ public class Friend {
     @SerializedName("user")
     @Transient
     public FriendData friendData;
-
+    @Unique
+    public long friendDataIdFk;
     @Id(autoincrement = true)
     @Unique
     private Long id;
-
-    @Unique
-    public long friendDataIdFk;
-
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 76285035)
     private transient FriendDao myDao;
 
@@ -40,10 +41,10 @@ public class Friend {
     public Friend() {
     }
 
-    @Generated(hash = 1376049821)
-    public Friend(Long id, long friendDataIdFk) {
-        this.id = id;
+    @Generated(hash = 331711400)
+    public Friend(long friendDataIdFk, Long id) {
         this.friendDataIdFk = friendDataIdFk;
+        this.id = id;
     }
 
     public Long getId() {
@@ -90,7 +91,9 @@ public class Friend {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1516049992)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

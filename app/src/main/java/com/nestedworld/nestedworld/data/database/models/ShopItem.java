@@ -42,8 +42,8 @@ public class ShopItem {
 
     @Generated(hash = 33734647)
     public ShopItem(long shopItemId, String name, String kind, String power,
-            Boolean premium, String description, long price, String image,
-            Long id) {
+                    Boolean premium, String description, long price, String image,
+                    Long id) {
         this.shopItemId = shopItemId;
         this.name = name;
         this.kind = kind;

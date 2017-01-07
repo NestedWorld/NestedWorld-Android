@@ -1,11 +1,6 @@
 package com.nestedworld.nestedworld.data.network;
 
 public final class NetworkConstant {
-    public enum Environement {
-        DEV,
-        PROD
-    }
-
     /*
      * #############################################################################################
      * # Constructor
@@ -13,5 +8,10 @@ public final class NetworkConstant {
      */
     private NetworkConstant() {
         //Private constructor for avoiding this class to be construct
+    }
+
+    public enum Environement {
+        DEV,
+        PROD
     }
 }

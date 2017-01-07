@@ -2,12 +2,13 @@ package com.nestedworld.nestedworld.data.database.models.session;
 
 import android.support.annotation.Nullable;
 
+import com.nestedworld.nestedworld.data.database.models.DaoSession;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
-import com.nestedworld.nestedworld.data.database.models.DaoSession;
 
 @Entity(active = true)
 public class Session {
@@ -21,11 +22,15 @@ public class Session {
     @Unique
     private Long id;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1616835709)
     private transient SessionDao myDao;
 
@@ -109,7 +114,9 @@ public class Session {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1458438772)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

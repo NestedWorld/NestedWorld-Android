@@ -22,7 +22,7 @@ import java.util.Map;
 
 public final class NestedWorldGcm {
     private final static String TAG = NestedWorldGcm.class.getSimpleName();
-    
+
     private final static Map<SocketMessageType.MessageKind, GcmHandler> mHandlers = new HashMap<SocketMessageType.MessageKind, GcmHandler>() {{
         put(SocketMessageType.MessageKind.TYPE_COMBAT_AVAILABLE, new GcmHandler() {
             @Override

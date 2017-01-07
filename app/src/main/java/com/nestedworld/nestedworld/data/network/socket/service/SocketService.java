@@ -41,8 +41,6 @@ import java.util.Map;
 public class SocketService extends Service {
 
     private final static String TAG = SocketService.class.getSimpleName();
-    private final IBinder mBinder = new LocalBinder();
-    private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
     private final static Map<SocketMessageType.MessageKind, SocketMessageHandler> mHandlers = new HashMap<SocketMessageType.MessageKind, SocketMessageHandler>() {{
         put(SocketMessageType.MessageKind.TYPE_CHAT_USER_JOINED, new SocketMessageHandler() {
             @Override
@@ -144,6 +142,8 @@ public class SocketService extends Service {
             }
         });
     }};
+    private final IBinder mBinder = new LocalBinder();
+    private NestedWorldSocketAPI mNestedWorldSocketAPI = null;
 
     /*
      * #############################################################################################
@@ -208,16 +208,6 @@ public class SocketService extends Service {
         return mNestedWorldSocketAPI;
     }
 
-    /**
-     * Simple binder
-     */
-    public class LocalBinder extends Binder {
-        public SocketService getService() {
-            // Return this instance of SocketService so clients can call public methods
-            return SocketService.this;
-        }
-    }
-
     /*
      * #############################################################################################
      * # Internal method
@@ -235,6 +225,16 @@ public class SocketService extends Service {
             LogHelper.d(TAG, "Unsupported message: " + messageKind);
         } else {
             mHandlers.get(messageKind).handleMessage(message, messageKind, idKind);
+        }
+    }
+
+    /**
+     * Simple binder
+     */
+    public class LocalBinder extends Binder {
+        public SocketService getService() {
+            // Return this instance of SocketService so clients can call public methods
+            return SocketService.this;
         }
     }
 }

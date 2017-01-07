@@ -52,8 +52,8 @@ public class Monster {
 
     @Generated(hash = 1610346844)
     public Monster(Long monsterId, float hp, float defense, float attack,
-            String name, String enragedSprite, String baseSprite, String type,
-            float speed, Long id) {
+                   String name, String enragedSprite, String baseSprite, String type,
+                   float speed, Long id) {
         this.monsterId = monsterId;
         this.hp = hp;
         this.defense = defense;

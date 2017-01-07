@@ -67,6 +67,7 @@ public final class NestedWorldHttpApi {
 
     /**
      * Singleton
+     *
      * @return singleton instance
      */
     @NonNull

@@ -1,6 +1,5 @@
 package com.nestedworld.nestedworld.data.database.models;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
@@ -38,26 +37,20 @@ public class UserMonster {
     @Id(autoincrement = true)
     @Unique
     private Long id;
-
-    @Nullable
-    public Monster getMonster() {
-        return daoSession.getMonsterDao()
-                .queryBuilder()
-                .where(MonsterDao.Properties.MonsterId.eq(monsterId))
-                .unique();
-    }
-
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1432864299)
     private transient UserMonsterDao myDao;
 
     @Generated(hash = 17730337)
     public UserMonster(Long userMonsterId, Long level, Long monsterId, String surname,
-            long experience, Long id) {
+                       long experience, Long id) {
         this.userMonsterId = userMonsterId;
         this.level = level;
         this.monsterId = monsterId;
@@ -68,6 +61,14 @@ public class UserMonster {
 
     @Generated(hash = 120169445)
     public UserMonster() {
+    }
+
+    @Nullable
+    public Monster getMonster() {
+        return daoSession.getMonsterDao()
+                .queryBuilder()
+                .where(MonsterDao.Properties.MonsterId.eq(monsterId))
+                .unique();
     }
 
     public Long getUserMonsterId() {

@@ -9,15 +9,15 @@ public final class SocketEndPoint {
 
     public final static String SOCKET_END_POINT =
             (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_URL
-            : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
-            : DEV_URL;
+                    : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
+                    : DEV_URL;
 
-    public final int DEV_PORT = 6465;
-    public final int PROD_PORT = 6464;
-    public final int SOCKET_PORT =
+    public final static int DEV_PORT = 6465;
+    public final static int PROD_PORT = 6464;
+    public final static int SOCKET_PORT =
             (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_PORT
-            : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_PORT
-            : DEV_PORT;
+                    : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_PORT
+                    : DEV_PORT;
 
     /*
      * #############################################################################################

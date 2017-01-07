@@ -31,21 +31,14 @@ public class UserItem {
     @Id(autoincrement = true)
     @Unique
     private Long id;
-
-    @Nullable
-    public ShopItem getShopItem() {
-        return daoSession
-                .getShopItemDao()
-                .queryBuilder()
-                .where(ShopItemDao.Properties.ShopItemId.eq(shopItemId))
-                .unique();
-    }
-
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1940058155)
     private transient UserItemDao myDao;
 
@@ -58,6 +51,15 @@ public class UserItem {
 
     @Generated(hash = 402134942)
     public UserItem() {
+    }
+
+    @Nullable
+    public ShopItem getShopItem() {
+        return daoSession
+                .getShopItemDao()
+                .queryBuilder()
+                .where(ShopItemDao.Properties.ShopItemId.eq(shopItemId))
+                .unique();
     }
 
     public Long getUserItemId() {

@@ -26,7 +26,8 @@ public final class NestedWorldSocketAPI implements SocketListener {
     private final static int TIME_OUT = 10000;
     private static NestedWorldSocketAPI mSingleton;
     private final String TAG = getClass().getSimpleName();
-    @Nullable private final SocketManager mSocketManager;
+    @Nullable
+    private final SocketManager mSocketManager;
     private final List<ConnectionListener> mConnectionListener = new ArrayList<>();
     private boolean isAuth = false;
 

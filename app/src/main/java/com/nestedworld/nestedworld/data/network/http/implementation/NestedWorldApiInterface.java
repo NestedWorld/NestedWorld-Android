@@ -29,45 +29,59 @@ import retrofit2.http.Path;
 
 public interface NestedWorldApiInterface {
     @GET(HttpEndPoint.USER_MONSTERS)
-    @NonNull Call<UserMonsterResponse> getUserMonsters();
+    @NonNull
+    Call<UserMonsterResponse> getUserMonsters();
 
     @GET(HttpEndPoint.USER_FRIENDS)
-    @NonNull Call<FriendsResponse> getFriends();
+    @NonNull
+    Call<FriendsResponse> getFriends();
 
     @POST(HttpEndPoint.USER_FRIENDS)
-    @NonNull Call<AddFriendResponse> addFriends(@NonNull @Body final AddFriendRequest body);
+    @NonNull
+    Call<AddFriendResponse> addFriends(@NonNull @Body final AddFriendRequest body);
 
     @POST(HttpEndPoint.USER_LOGOUT)
-    @NonNull Call<LogoutResponse> logout();
+    @NonNull
+    Call<LogoutResponse> logout();
 
     @POST(HttpEndPoint.USER_REGISTER)
-    @NonNull Call<RegisterResponse> register(@NonNull @Body final RegisterRequest body);
+    @NonNull
+    Call<RegisterResponse> register(@NonNull @Body final RegisterRequest body);
 
     @POST(HttpEndPoint.USER_SIGN_IN)
-    @NonNull Call<SignInResponse> signIn(@NonNull @Body final SignInRequest body);
+    @NonNull
+    Call<SignInResponse> signIn(@NonNull @Body final SignInRequest body);
 
     @POST(HttpEndPoint.USER_PASSWORD)
-    @NonNull Call<ForgotPasswordResponse> forgotPassword(@NonNull @Body final ForgotPasswordRequest body);
+    @NonNull
+    Call<ForgotPasswordResponse> forgotPassword(@NonNull @Body final ForgotPasswordRequest body);
 
     @GET(HttpEndPoint.MONSTERS_LIST)
-    @NonNull Call<MonstersResponse> getMonsters();
+    @NonNull
+    Call<MonstersResponse> getMonsters();
 
     @GET(HttpEndPoint.USER_INFO)
-    @NonNull Call<UserResponse> getUserInfo();
+    @NonNull
+    Call<UserResponse> getUserInfo();
 
     @GET(HttpEndPoint.ATTACK_LIST)
-    @NonNull Call<AttacksResponse> getAttacks();
+    @NonNull
+    Call<AttacksResponse> getAttacks();
 
     @GET(HttpEndPoint.MONSTER_ATTACK)
-    @NonNull Call<MonsterAttackResponse> getMonsterAttack(@Path("monsterId") final long monsterId);
+    @NonNull
+    Call<MonsterAttackResponse> getMonsterAttack(@Path("monsterId") final long monsterId);
 
     @GET(HttpEndPoint.USER_INVENTORY)
-    @NonNull Call<UserInventoryResponse> getUserInventory();
+    @NonNull
+    Call<UserInventoryResponse> getUserInventory();
 
     @GET(HttpEndPoint.OBJECT_LIST)
-    @NonNull Call<ObjectsResponse> getObjects();
+    @NonNull
+    Call<ObjectsResponse> getObjects();
 
     @GET(HttpEndPoint.PORTALS_LIST)
-    @NonNull Call<PortalsResponse> getPortals(@Path("latitude") final double latitude,
-                                              @Path("longitude") final double longitude);
+    @NonNull
+    Call<PortalsResponse> getPortals(@Path("latitude") final double latitude,
+                                     @Path("longitude") final double longitude);
 }

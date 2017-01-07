@@ -11,6 +11,7 @@ import com.nestedworld.nestedworld.data.database.models.DaoSession;
 import com.nestedworld.nestedworld.data.database.updater.callback.OnEntityUpdated;
 import com.nestedworld.nestedworld.data.network.http.implementation.NestedWorldHttpApi;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+
 import java.io.IOException;
 
 import retrofit2.Call;

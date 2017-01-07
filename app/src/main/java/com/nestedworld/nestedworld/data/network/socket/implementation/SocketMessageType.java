@@ -4,7 +4,7 @@ import com.nestedworld.nestedworld.helpers.bimap.BiMap;
 
 public final class SocketMessageType {
 
-    public final BiMap<MessageKind, String> MESSAGE_TYPE = new BiMap<MessageKind, String>() {{
+    public final static BiMap<MessageKind, String> MESSAGE_TYPE = new BiMap<MessageKind, String>() {{
          /*
         ** Spontaneous message (server side)
         ** Key = request.type
@@ -52,6 +52,15 @@ public final class SocketMessageType {
         put(MessageKind.TYPE_RESULT, "result");
     }};
 
+    /*
+     * #############################################################################################
+     * # Constructor
+     * #############################################################################################
+     */
+    private SocketMessageType() {
+        //Private constructor for avoiding this class to be construct
+    }
+
     /**
      * used for listing every message (send & response)
      */
@@ -81,14 +90,5 @@ public final class SocketMessageType {
 
         //Client and Server
         TYPE_RESULT
-    }
-
-    /*
-     * #############################################################################################
-     * # Constructor
-     * #############################################################################################
-     */
-    private SocketMessageType() {
-        //Private constructor for avoiding this class to be construct
     }
 }

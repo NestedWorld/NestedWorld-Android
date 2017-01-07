@@ -25,9 +25,12 @@ public final class SocketManager {
     private final LinkedList<SocketListener> listeners = new LinkedList<>(); /* Stores the list of SocketListeners to notify whenever an onEvent occurs. */
     private int timeOut;
     private boolean isConnected = false;
-    @Nullable private Socket socket = new Socket();
-    @Nullable private MessagePacker messagePacker;/*input stream reader.*/
-    @Nullable private MessageUnpacker messageUnpacker;/*output stream writer.*/
+    @Nullable
+    private Socket socket = new Socket();
+    @Nullable
+    private MessagePacker messagePacker;/*input stream reader.*/
+    @Nullable
+    private MessageUnpacker messageUnpacker;/*output stream writer.*/
 
     /*
     ** Constructor (Creates a new unconnected socket).
