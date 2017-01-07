@@ -110,7 +110,7 @@
     <string name="friend_defy">Defy</string>
 
     <!--Attack adapter-->
-    <string name="item_attack_msg_attackType">Attack type: %s</string>
-    <string name="item_attack_msg_attackName">Attack name: %s</string>
+    <string name="item_attack_msg_attackType">Type: %s</string>
+    <string name="item_attack_msg_attackName">Name: %s</string>
     <string name="monsterDetail_title_attack">Attacks:</string>
 </resources>
