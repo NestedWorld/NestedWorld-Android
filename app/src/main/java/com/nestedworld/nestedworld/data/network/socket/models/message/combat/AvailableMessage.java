@@ -44,7 +44,7 @@ public class AvailableMessage extends DefaultMessage {
         NestedWorldDatabase.getInstance()
                 .getDataBase()
                 .getCombatDao()
-                .insert(combat);
+                .insertOrReplace(combat);//Could be replace if you start a combat with yourself
 
         return combat;
     }
