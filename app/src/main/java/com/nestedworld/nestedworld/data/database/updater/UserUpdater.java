@@ -30,11 +30,9 @@ public class UserUpdater extends EntityUpdater<UserResponse> {
 
     @Override
     public void updateEntity(@NonNull final Response<UserResponse> response) {
-        final SessionDao sessionDao = getDatabase().getSessionDao();
         final SessionDataDao sessionDataDao = getDatabase().getSessionDataDao();
 
         //Delete old entity
-        sessionDao.deleteAll();
         sessionDataDao.deleteAll();
 
         //Save entity
