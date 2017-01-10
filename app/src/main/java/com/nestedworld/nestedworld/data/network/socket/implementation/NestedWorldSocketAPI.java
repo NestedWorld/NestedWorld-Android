@@ -183,9 +183,15 @@ public final class NestedWorldSocketAPI implements SocketListener {
             LogHelper.d(TAG, "authRequest > sending");
 
             final AuthRequest authRequest = new AuthRequest(session.authToken);
+            final String requestId = SocketMessageType.MESSAGE_TYPE.getValueFromKey(SocketMessageType.MessageKind.TYPE_AUTHENTICATE);
+
+            if (requestId == null) {
+                throw new IllegalArgumentException("No key associated with SocketMessageType.MessageKind.TYPE_AUTHENTICATE");
+            }
+
             sendMessage(authRequest.serialise(),
                     SocketMessageType.MessageKind.TYPE_AUTHENTICATE,
-                    SocketMessageType.MESSAGE_TYPE.getValueFromKey(SocketMessageType.MessageKind.TYPE_AUTHENTICATE));
+                    requestId);
         } else {
             LogHelper.d(TAG, "authRequest > session null");
         }
@@ -199,7 +205,9 @@ public final class NestedWorldSocketAPI implements SocketListener {
             mapBuilder.put(ValueFactory.newString("id"), ValueFactory.newString(requestId));
 
             //Add type field
-            mapBuilder.put(ValueFactory.newString("type"), ValueFactory.newString(SocketMessageType.MESSAGE_TYPE.getValueFromKey(messageKind)));
+            mapBuilder.put(
+                    ValueFactory.newString("type"),
+                    ValueFactory.newString(SocketMessageType.MESSAGE_TYPE.getValueFromKey(messageKind)));
 
             //Send message
             mSocketManager.send(mapBuilder.build());
