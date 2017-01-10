@@ -158,12 +158,12 @@ public class AddFriendDialog extends BaseDialogFragment {
         new FriendsUpdater().start(null);
 
         //Display message
-        Toast.makeText(getContext(), R.string.tab_home_msg_addFriendSuccess, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), R.string.tabHome_msg_addFriendSuccess, Toast.LENGTH_LONG).show();
     }
 
     private void onAddFriendFailure(@Nullable String cause) {
         //Initialise a default error message
-        String errorMessage = getString(R.string.tab_home_msg_addFriendFailed);
+        String errorMessage = getString(R.string.tabHome_msg_addFriendFailed);
 
         //If we have an error from the server, we complete our default error message
         if (cause != null) {

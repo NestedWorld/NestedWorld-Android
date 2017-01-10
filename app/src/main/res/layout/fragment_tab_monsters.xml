@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="8dip"
-            android:text="No monsters"
+            android:text="@string/tabMonster_msg_no_monsters"
             android:textColor="@color/apptheme_color"/>
 
         <android.support.v4.widget.SwipeRefreshLayout

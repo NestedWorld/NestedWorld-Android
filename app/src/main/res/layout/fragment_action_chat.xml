@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="8dip"
-            android:text="@string/chat_msg_start_chat"
+            android:text="@string/chat_msg_startChat"
             android:textColor="@color/apptheme_background"/>
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="8dip"
-            android:text="You don't have any friend"
+            android:text="@string/chat_msg_noFriend"
             android:textColor="@color/apptheme_background"/>
 
         <android.support.v4.widget.SwipeRefreshLayout

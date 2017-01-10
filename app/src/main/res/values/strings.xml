@@ -3,6 +3,7 @@
 
     <!--Generic-->
     <string name="integer" translatable="false">%d</string>
+    <string name="unknown">Unknown</string>
 
     <!--Error message-->
     <string name="error_emailInvalid">Invalid email !</string>
@@ -48,6 +49,10 @@
     <!-- MonsterDetail-->
     <string name="monsterDetail_no_attack">This monster didn\'t have any attack</string>
     <string name="monsterDetail_title_characteristics">Characteristics: </string>
+    <string name="monsterDetail_title_attack">Attacks:</string>
+    <string name="monsterDetail_title_type">Type</string>
+    <string name="monsterDetail_title_level">Level</string>
+    <string name="monsterDetail_title_exp">Exp</string>
 
     <!--MainMenu-->
     <string name="mainMenu_action_chat">Chat</string>
@@ -58,6 +63,7 @@
     <string name="tabMonster_msg_monsterDefence" formatted="false">Defense : %d / %d</string>
     <string name="tabMonster_msg_monsterHp" formatted="false">Hp : %d / %d</string>
     <string name="tabMonster_msg_monsterSpeed" formatted="false">Speed : %d / %d</string>
+    <string name="tabMonster_msg_no_monsters">No monsters</string>
 
     <!--MainMenu.tab.home-->
     <string name="tabHome_title_creditsNumber">Credits</string>
@@ -70,18 +76,25 @@
     <!--MainMenu.tab.home.monsterList-->
     <string name="tabHome_title_monsterList">Your monster</string>
     <string name="tabHome_msg_userLvl">lvl %d</string>
+    <string name="tabHome_msg_noMonster">You didn\'t have any monster</string>
 
     <!--MainMenu.tab.home.friendList-->
     <string name="tabHome_title_friendList">Your friend</string>
-    <string name="tabHome_msg_addFriend">Add</string>
     <string name="tabHome_title_addFriend">Add friend</string>
-    <string name="tabHome_msg_friendPseudo">Pseudo</string>
     <string name="tabHome_title_addFriendDetail">Enter your friend\'s pseudo</string>
+    <string name="tabHome_msg_addFriend">Add</string>
+    <string name="tabHome_msg_friendPseudo">Pseudo</string>
     <string name="tabHome_msg_requestFightSend">Your fight request has been send</string>
     <string name="tabHome_msg_requestFightSuccess">Request send</string>
     <string name="tabHome_msg_requestFightFail">Request send</string>
-    <string name="tab_home_msg_addFriendSuccess">Successfully added</string>
-    <string name="tab_home_msg_addFriendFailed">Cannot add your friend</string>
+    <string name="tabHome_msg_addFriendSuccess">Successfully added</string>
+    <string name="tabHome_msg_addFriendFailed">Cannot add your friend</string>
+
+    <!--MainMenu.tab.home.inventory-->
+    <string name="tabInventory_msg_emptyInventory">Your inventory is empty</string>
+
+    <!--MainMenu.tab.shop-->
+    <string name="tabShop_nothing_to_buy">Nothing to buy</string>
 
     <!--Fight.teamSelection-->
     <string name="teamSelection_msg_help">Select the monster you want to fight with by clicking on the blue arrow.\n\nEach monster can be select only one time.</string>
@@ -94,7 +107,7 @@
     <!--Fight.combat-->
     <string name="combat_msg_monsterLife">Life</string>
     <string name="combat_msg_monster_lvl">Lvl: %d</string>
-    <string name="combat_msg_send_atk_failed">Cannot send your attack, try again</string>
+    <string name="combat_msg_sendAtkFailed">Cannot send your attack, try again</string>
 
     <!--Fight.fightList-->
     <string name="fightList_title">Fight list</string>
@@ -104,7 +117,8 @@
     <!--Chat-->
     <string name="chat_title">Chat</string>
     <string name="chat_msg_button">Send</string>
-    <string name="chat_msg_start_chat">Select the friend you want to chat with</string>
+    <string name="chat_msg_startChat">Select the friend you want to chat with</string>
+    <string name="chat_msg_noFriend">You don\'t have any friend</string>
 
     <!--Friend-->
     <string name="friend_defy">Defy</string>
@@ -112,5 +126,4 @@
     <!--Attack adapter-->
     <string name="item_attack_msg_attackType">Type: %s</string>
     <string name="item_attack_msg_attackName">Name: %s</string>
-    <string name="monsterDetail_title_attack">Attacks:</string>
 </resources>

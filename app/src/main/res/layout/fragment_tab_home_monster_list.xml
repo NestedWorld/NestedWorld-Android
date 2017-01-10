@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="8dip"
-        android:text="You didn't have any monster"
+        android:text="@string/tabHome_msg_noMonster"
         android:textColor="@color/apptheme_color"/>
 
     <LinearLayout

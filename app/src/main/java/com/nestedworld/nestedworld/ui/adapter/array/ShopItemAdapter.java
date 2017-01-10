@@ -73,7 +73,7 @@ public class ShopItemAdapter extends ArrayAdapter<ShopItem> {
         //Populate widget
         textViewObjectName.setText(shopObject.name);
         textViewObjectDescription.setText(shopObject.description);
-        textViewObjectKind.setText("Kind: " + shopObject.kind);
+        textViewObjectKind.setText("Kind: " + shopObject.kind);//TODO should use String.format
         textViewObjectPower.setText("Power: " + shopObject.power);
         textViewObjectPremium.setText("Is prenium : " + (shopObject.premium ? "yes" : "no"));
         textViewObjectPrice.setText("Price : " + String.valueOf(shopObject.price));

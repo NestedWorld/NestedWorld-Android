@@ -445,7 +445,7 @@ public class BattleFragment extends BaseFragment {
 
                 //Cannot send attack (api not available)
                 //Display error message
-                Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, R.string.combat_msg_sendAtkFailed, Toast.LENGTH_LONG).show();
 
                 //Stop loading animation and re-enable drawingGestureView
                 progressView.stop();
@@ -491,7 +491,7 @@ public class BattleFragment extends BaseFragment {
 
                 //Cannot send attack (api not available)
                 //Display error message
-                Toast.makeText(mContext, R.string.combat_msg_send_atk_failed, Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, R.string.combat_msg_sendAtkFailed, Toast.LENGTH_LONG).show();
 
                 //Stop loading animation and re-enable drawingGestureView
                 progressView.stop();

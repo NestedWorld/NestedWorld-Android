@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dip"
-            android:text="Nothing to buy"
+            android:text="@string/tabShop_nothing_to_buy"
             android:textColor="@color/apptheme_color"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
