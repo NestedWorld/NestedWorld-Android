@@ -87,11 +87,11 @@ public interface NestedWorldApiInterface {
     Call<PortalsResponse> getPortals(@Path("latitude") @NonNull final Double latitude,
                                      @Path("longitude") @NonNull final Double longitude);
 
-    @GET(HttpEndPoint.USER_DETAIL)
+    @GET(HttpEndPoint.USER_DETAILS)
     @NonNull
-    Call<UserDetailResponse> getUserDetail(@Path("userId") @NonNull final String userId);
+    Call<UserDetailResponse> getUserDetails(@Path("userId") @NonNull final Long userId);
 
     @GET(HttpEndPoint.USER_STATS)
     @NonNull
-    Call<UserStatsResponse> getUserStats(@Path("userId") @NonNull final String userId);
+    Call<UserStatsResponse> getUserStats(@Path("userId") @NonNull final Long userId);
 }

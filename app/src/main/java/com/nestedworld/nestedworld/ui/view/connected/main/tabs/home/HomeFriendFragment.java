@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.nestedworld.nestedworld.ui.adapter.array.FriendsAdapter;
 import com.nestedworld.nestedworld.ui.dialog.AddFriendDialog;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
+import com.nestedworld.nestedworld.ui.view.connected.friend.FriendDetailActivity;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,8 +37,6 @@ import butterknife.OnClick;
 
 public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private FriendsAdapter mAdapter;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -48,6 +48,7 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
     ProgressView progressView;
     @BindView(R.id.swipeRefreshLayout_home_friend)
     SwipeRefreshLayout swipeRefreshLayout;
+    private FriendsAdapter mAdapter;
 
     /*
      * #############################################################################################
@@ -179,6 +180,13 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
         //init adapter for our listView
         mAdapter = new FriendsAdapter(mContext);
         listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Friend friend = (Friend) parent.getItemAtPosition(position);
+                onFriendClick(friend);
+            }
+        });
     }
 
     @UiThread
@@ -198,5 +206,17 @@ public class HomeFriendFragment extends BaseFragment implements SwipeRefreshLayo
             mAdapter.clear();
             mAdapter.addAll(friends);
         }
+    }
+
+    private void onFriendClick(@NonNull final Friend friend) {
+        //check if fragment hasn't been detach
+        if (mContext == null) {
+            return;
+        }
+
+        final FriendDetailActivity.Builder builder = new FriendDetailActivity.Builder(getActivity());
+        builder.setFieldValue(FriendDetailActivity.Builder.FRIEND_ID_KEY, friend.getId());
+
+        startActivity(builder.build());
     }
 }

@@ -147,13 +147,13 @@ public final class NestedWorldHttpApi {
     }
 
     @NonNull
-    public Call<UserStatsResponse> getUserStat(@NonNull final String userId) {
+    public Call<UserStatsResponse> getUserStats(@NonNull final Long userId) {
         return mClient.getUserStats(userId);
     }
 
     @NonNull
-    public Call<UserDetailResponse> getUserDetail(@NonNull final String userId) {
-        return mClient.getUserDetail(userId);
+    public Call<UserDetailResponse> getUserDetails(@NonNull final Long userId) {
+        return mClient.getUserDetails(userId);
     }
 
     @NonNull
