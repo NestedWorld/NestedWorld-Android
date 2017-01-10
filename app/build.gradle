@@ -21,7 +21,7 @@ apply plugin: 'org.greenrobot.greendao'
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 16
@@ -108,7 +108,7 @@ greendao {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ext {
-    supportLibVersion = '25.0.1'
+    supportLibVersion = '25.1.0'
     retrofitVersion = '2.1.0'
     okHttpVersion = '3.4.1'
     butterknifeVersion = '8.4.0'
@@ -120,7 +120,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     //GPS
-    compile 'com.google.android.gms:play-services-maps:10.0.0'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
 
     //Annotation replacing findViewById()
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
