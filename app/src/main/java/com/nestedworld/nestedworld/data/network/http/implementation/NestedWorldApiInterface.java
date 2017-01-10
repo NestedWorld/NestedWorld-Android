@@ -72,7 +72,7 @@ public interface NestedWorldApiInterface {
 
     @GET(HttpEndPoint.MONSTER_ATTACK)
     @NonNull
-    Call<MonsterAttackResponse> getMonsterAttack(@Path("monsterId") final long monsterId);
+    Call<MonsterAttackResponse> getMonsterAttack(@Path("monsterId") @NonNull final Long monsterId);
 
     @GET(HttpEndPoint.USER_INVENTORY)
     @NonNull
@@ -84,14 +84,14 @@ public interface NestedWorldApiInterface {
 
     @GET(HttpEndPoint.PORTALS_LIST)
     @NonNull
-    Call<PortalsResponse> getPortals(@Path("latitude") final double latitude,
-                                     @Path("longitude") final double longitude);
+    Call<PortalsResponse> getPortals(@Path("latitude") @NonNull final Double latitude,
+                                     @Path("longitude") @NonNull final Double longitude);
 
     @GET(HttpEndPoint.USER_DETAIL)
     @NonNull
-    Call<UserDetailResponse> getUserDetail(@Path("userId") final String userId);
+    Call<UserDetailResponse> getUserDetail(@Path("userId") @NonNull final String userId);
 
     @GET(HttpEndPoint.USER_STATS)
     @NonNull
-    Call<UserStatsResponse> getUserStats(@Path("userId") final String userId);
+    Call<UserStatsResponse> getUserStats(@Path("userId") @NonNull final String userId);
 }

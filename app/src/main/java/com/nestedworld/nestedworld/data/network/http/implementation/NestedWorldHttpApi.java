@@ -117,7 +117,7 @@ public final class NestedWorldHttpApi {
     }
 
     @NonNull
-    public Call<MonsterAttackResponse> getMonsterAttack(final long monsterId) {
+    public Call<MonsterAttackResponse> getMonsterAttack(@NonNull final Long monsterId) {
         return mClient.getMonsterAttack(monsterId);
     }
 
@@ -172,8 +172,8 @@ public final class NestedWorldHttpApi {
     }
 
     @NonNull
-    public Call<PortalsResponse> getPortals(final double latitude,
-                                            final double longitude) {
+    public Call<PortalsResponse> getPortals(@NonNull final Double latitude,
+                                            @NonNull final Double longitude) {
         return mClient.getPortals(latitude, longitude);
     }
 
