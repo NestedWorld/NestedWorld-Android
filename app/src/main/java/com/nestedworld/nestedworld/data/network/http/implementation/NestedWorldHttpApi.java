@@ -14,7 +14,9 @@ import com.nestedworld.nestedworld.data.network.http.models.response.geo.portal.
 import com.nestedworld.nestedworld.data.network.http.models.response.monsters.MonsterAttackResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.monsters.MonstersResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.objects.ObjectsResponse;
+import com.nestedworld.nestedworld.data.network.http.models.response.users.UserDetailResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.UserResponse;
+import com.nestedworld.nestedworld.data.network.http.models.response.users.UserStatsResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.auth.ForgotPasswordResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.auth.LogoutResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.auth.RegisterResponse;
@@ -142,6 +144,16 @@ public final class NestedWorldHttpApi {
     @NonNull
     public Call<FriendsResponse> getFriends() {
         return mClient.getFriends();
+    }
+
+    @NonNull
+    public Call<UserStatsResponse> getUserStat(@NonNull final String userId) {
+        return mClient.getUserStats(userId);
+    }
+
+    @NonNull
+    public Call<UserDetailResponse> getUserDetail(@NonNull final String userId) {
+        return mClient.getUserDetail(userId);
     }
 
     @NonNull

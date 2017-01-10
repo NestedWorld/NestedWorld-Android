@@ -89,9 +89,9 @@ public interface NestedWorldApiInterface {
 
     @GET(HttpEndPoint.USER_DETAIL)
     @NonNull
-    Call<UserDetailResponse> getUserDetail(@Path("userId") final long userId);
+    Call<UserDetailResponse> getUserDetail(@Path("userId") final String userId);
 
     @GET(HttpEndPoint.USER_STATS)
     @NonNull
-    Call<UserStatsResponse> getUserStats(@Path("userId") final long userId);
+    Call<UserStatsResponse> getUserStats(@Path("userId") final String userId);
 }
