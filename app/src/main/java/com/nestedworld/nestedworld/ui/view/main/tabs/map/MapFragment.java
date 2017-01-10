@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.view.mainMenu.tabs.map;
+package com.nestedworld.nestedworld.ui.view.main.tabs.map;
 
 import android.Manifest;
 import android.content.Context;

@@ -20,7 +20,7 @@ import com.nestedworld.nestedworld.helpers.input.InputChecker;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.base.BaseFragment;
-import com.nestedworld.nestedworld.ui.view.mainMenu.MainMenuActivity;
+import com.nestedworld.nestedworld.ui.view.main.MainMenuActivity;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.BindView;

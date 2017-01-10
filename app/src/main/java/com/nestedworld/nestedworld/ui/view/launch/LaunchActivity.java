@@ -9,7 +9,7 @@ import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.session.SessionHelper;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.view.mainMenu.MainMenuActivity;
+import com.nestedworld.nestedworld.ui.view.main.MainMenuActivity;
 import com.nestedworld.nestedworld.ui.view.welcome.WelcomeActivity;
 
 import butterknife.BindView;

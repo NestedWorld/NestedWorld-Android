@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.view.mainMenu.tabs.home;
+package com.nestedworld.nestedworld.ui.view.main.tabs.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

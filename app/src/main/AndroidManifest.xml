@@ -57,19 +57,19 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".ui.view.mainMenu.MainMenuActivity"
+            android:name=".ui.view.main.MainMenuActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".ui.view.profil.ProfileActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".ui.view.mainMenu.MainMenuActivity"
+            android:parentActivityName=".ui.view.main.MainMenuActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity android:name=".ui.view.fight.FightProcessActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".ui.view.mainMenu.MainMenuActivity"
+            android:parentActivityName=".ui.view.main.MainMenuActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!--Service-->

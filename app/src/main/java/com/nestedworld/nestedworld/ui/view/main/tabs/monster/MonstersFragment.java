@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.view.mainMenu.tabs.monster;
+package com.nestedworld.nestedworld.ui.view.main.tabs.monster;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

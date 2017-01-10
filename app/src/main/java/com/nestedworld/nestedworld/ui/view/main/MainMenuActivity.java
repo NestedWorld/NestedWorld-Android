@@ -1,4 +1,4 @@
-package com.nestedworld.nestedworld.ui.view.mainMenu;
+package com.nestedworld.nestedworld.ui.view.main;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,11 +35,11 @@ import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.chat.ChatListFragment;
 import com.nestedworld.nestedworld.ui.view.fight.FightProcessActivity;
 import com.nestedworld.nestedworld.ui.view.launch.LaunchActivity;
-import com.nestedworld.nestedworld.ui.view.mainMenu.tabs.home.HomeFragment;
-import com.nestedworld.nestedworld.ui.view.mainMenu.tabs.inventory.UserInventoryFragment;
-import com.nestedworld.nestedworld.ui.view.mainMenu.tabs.map.MapFragment;
-import com.nestedworld.nestedworld.ui.view.mainMenu.tabs.monster.MonstersFragment;
-import com.nestedworld.nestedworld.ui.view.mainMenu.tabs.shop.ShopFragment;
+import com.nestedworld.nestedworld.ui.view.main.tabs.home.HomeFragment;
+import com.nestedworld.nestedworld.ui.view.main.tabs.inventory.UserInventoryFragment;
+import com.nestedworld.nestedworld.ui.view.main.tabs.map.MapFragment;
+import com.nestedworld.nestedworld.ui.view.main.tabs.monster.MonstersFragment;
+import com.nestedworld.nestedworld.ui.view.main.tabs.shop.ShopFragment;
 import com.nestedworld.nestedworld.ui.view.profil.ProfileActivity;
 import com.rey.material.widget.ProgressView;
 
