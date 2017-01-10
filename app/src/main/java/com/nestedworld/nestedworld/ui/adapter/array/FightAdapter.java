@@ -23,7 +23,7 @@ import com.nestedworld.nestedworld.data.network.socket.service.SocketService;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.helpers.service.ServiceHelper;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
-import com.nestedworld.nestedworld.ui.view.fight.teamSelection.TeamSelectionFragment;
+import com.nestedworld.nestedworld.ui.view.connected.fight.teamSelection.TeamSelectionFragment;
 
 import org.msgpack.value.ValueFactory;
 

@@ -13,7 +13,7 @@ import com.nestedworld.nestedworld.data.network.socket.models.message.combat.Ava
 import com.nestedworld.nestedworld.gcm.handler.GcmHandler;
 import com.nestedworld.nestedworld.gcm.model.NotificationMessage;
 import com.nestedworld.nestedworld.helpers.gcm.GcmHelper;
-import com.nestedworld.nestedworld.ui.view.launch.LaunchActivity;
+import com.nestedworld.nestedworld.ui.view.disconnected.launch.LaunchActivity;
 
 import org.msgpack.value.Value;
 

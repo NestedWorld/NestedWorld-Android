@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.analytics.NestedWorldAnalytics;
 import com.nestedworld.nestedworld.helpers.application.ApplicationHelper;
-import com.nestedworld.nestedworld.ui.view.welcome.WelcomeActivity;
+import com.nestedworld.nestedworld.ui.view.disconnected.welcome.WelcomeActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
