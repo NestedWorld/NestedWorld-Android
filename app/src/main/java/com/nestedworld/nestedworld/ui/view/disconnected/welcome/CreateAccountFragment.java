@@ -169,7 +169,7 @@ public class CreateAccountFragment extends BaseFragment {
                     public void onError(@NonNull KIND errorKind, @Nullable Response<RegisterResponse> response) {
                         //Check if fragment hasn't been detach
                         if (mContext == null) {
-                           return;
+                            return;
                         }
 
                         //Stop loading animation
@@ -180,8 +180,8 @@ public class CreateAccountFragment extends BaseFragment {
 
                         //Display error message
                         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
-            }
-        });
+                    }
+                });
     }
 
     private void sendLoginRequest(@NonNull final String email,

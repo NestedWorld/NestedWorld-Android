@@ -19,9 +19,6 @@ import butterknife.BindView;
 
 public class UserMonsterDetailActivity extends BaseAppCompatActivity {
     private final static String ARG_MONSTER = "UserMonsterDetailActivity_ARG_MONSTER";
-
-    private UserMonster mUserMonster;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -29,6 +26,7 @@ public class UserMonsterDetailActivity extends BaseAppCompatActivity {
      */
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private UserMonster mUserMonster;
 
     /*
      * #############################################################################################

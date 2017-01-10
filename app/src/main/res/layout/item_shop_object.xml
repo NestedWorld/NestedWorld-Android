@@ -6,25 +6,25 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_gravity="center"
         android:layout_width="72dip"
         android:layout_height="72dip"
+        android:layout_gravity="center"
+        android:paddingBottom="8dip"
         android:paddingLeft="16dip"
         android:paddingRight="16dip"
-        android:paddingTop="8dip"
-        android:paddingBottom="8dip">
+        android:paddingTop="8dip">
 
         <LinearLayout
-            android:layout_gravity="center"
             android:layout_width="40dip"
             android:layout_height="40dip"
+            android:layout_gravity="center"
             android:background="@drawable/circle_stroke_apptheme">
 
             <ImageView
-                android:padding="3dip"
                 android:id="@+id/imageView_object"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="3dip"
                 android:src="@drawable/default_monster"/>
 
         </LinearLayout>

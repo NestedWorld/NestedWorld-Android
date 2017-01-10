@@ -29,8 +29,6 @@ import retrofit2.Response;
 
 public class MonsterDetailFragment extends BaseFragment {
 
-    private Monster mMonster;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -41,11 +39,9 @@ public class MonsterDetailFragment extends BaseFragment {
     ImageView imageViewSprite;
     @BindView(R.id.textview_monster_name)
     TextView textViewMonsterName;
-
     //Sub header related
     @BindView(R.id.imageview_monster_type)
     ImageView imageViewMonsterType;
-
     //Body (characteristics) related
     @BindView(R.id.textView_monsterHp)
     TextView textViewHp;
@@ -63,7 +59,6 @@ public class MonsterDetailFragment extends BaseFragment {
     TextView textViewSpeed;
     @BindView(R.id.progress_monster_speed)
     ProgressBar progressBarSpeed;
-
     //Body (attack) related
     @BindView(R.id.textview_monster_no_attack)
     TextView textViewMonsterNoAttack;
@@ -71,6 +66,7 @@ public class MonsterDetailFragment extends BaseFragment {
     ListView listView;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    private Monster mMonster;
 
     /*
      * #############################################################################################

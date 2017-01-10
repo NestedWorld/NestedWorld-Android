@@ -33,9 +33,6 @@ import butterknife.BindView;
 public class UserPlayerFragment extends BattlePlayerFragment {
 
     private final static String TAG = UserPlayerFragment.class.getSimpleName();
-
-    private List<UserMonster> mTeam = null;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -57,6 +54,7 @@ public class UserPlayerFragment extends BattlePlayerFragment {
     View viewBody;
     @BindView(R.id.view_header_border)
     View viewHeaderBorder;
+    private List<UserMonster> mTeam = null;
 
     /*
      * #############################################################################################

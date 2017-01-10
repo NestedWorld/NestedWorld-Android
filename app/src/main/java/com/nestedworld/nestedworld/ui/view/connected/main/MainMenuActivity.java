@@ -34,13 +34,13 @@ import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 import com.nestedworld.nestedworld.ui.view.connected.chat.ChatListFragment;
 import com.nestedworld.nestedworld.ui.view.connected.fight.FightProcessActivity;
-import com.nestedworld.nestedworld.ui.view.disconnected.launch.LaunchActivity;
 import com.nestedworld.nestedworld.ui.view.connected.main.tabs.home.HomeFragment;
 import com.nestedworld.nestedworld.ui.view.connected.main.tabs.inventory.UserInventoryFragment;
 import com.nestedworld.nestedworld.ui.view.connected.main.tabs.map.MapFragment;
 import com.nestedworld.nestedworld.ui.view.connected.main.tabs.monster.MonstersFragment;
 import com.nestedworld.nestedworld.ui.view.connected.main.tabs.shop.ShopFragment;
 import com.nestedworld.nestedworld.ui.view.connected.profil.ProfileActivity;
+import com.nestedworld.nestedworld.ui.view.disconnected.launch.LaunchActivity;
 import com.rey.material.widget.ProgressView;
 
 import org.greenrobot.eventbus.EventBus;

@@ -46,9 +46,6 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     private final static int MIN_TIME = 10000; //Minimum time between 2 update (in millisecond)
     private final static int MIN_DIST = 1; //Minimum distance between 2 update (in meter)
     private final static int ZOOM = 15;
-
-    private NestedWorldMap mMap = null;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -58,6 +55,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Googl
     MapView mMapView;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    private NestedWorldMap mMap = null;
 
     /*
      * #############################################################################################

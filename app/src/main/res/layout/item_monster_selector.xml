@@ -9,11 +9,11 @@
     android:padding="8dip">
 
     <TextView
-        android:gravity="center"
         android:id="@+id/textview_monster_name"
         style="@style/TypefaceStyle.ProximaNova.semibold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:maxLines="1"
         android:textSize="14sp"/>
 
@@ -28,22 +28,22 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="72dip"
+                android:layout_gravity="center"
+                android:paddingBottom="8dip"
                 android:paddingLeft="16dip"
                 android:paddingRight="16dip"
-                android:paddingTop="8dip"
-                android:paddingBottom="8dip">
+                android:paddingTop="8dip">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView_monster"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:civ_border_width="2dp"
+                    android:src="@drawable/default_monster"
                     app:civ_border_color="@color/black"
-                    android:src="@drawable/default_monster"/>
+                    app:civ_border_width="2dp"/>
 
                 <TextView
                     android:id="@+id/textview_monster_lvl"
@@ -52,21 +52,21 @@
                     android:layout_height="18dip"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_margin="1dip"
                     android:background="@drawable/circle_fill_apptheme"
                     android:gravity="center"
                     android:textColor="@color/apptheme_accent"
-                    android:textSize="12sp"
-                    android:layout_alignParentRight="true"/>
+                    android:textSize="12sp"/>
 
             </RelativeLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical"
             android:paddingEnd="8dip"
             android:paddingStart="8dip">

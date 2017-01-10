@@ -9,9 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,10 +43,10 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dip"
+            android:background="@color/white"
             android:padding="8dip">
 
             <ImageView
@@ -77,78 +77,78 @@
 
         <ImageView
             android:id="@+id/button_select_monster"
-            android:layout_margin="8dip"
-            android:layout_gravity="center"
             android:layout_width="56dip"
             android:layout_height="56dip"
+            android:layout_gravity="center"
+            android:layout_margin="8dip"
             android:background="@drawable/circle_fill_apptheme"
             android:src="@drawable/ic_expand_more_accent_24dp"/>
 
         <LinearLayout
-            android:padding="8dip"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
             android:orientation="vertical"
-            android:gravity="center">
+            android:padding="8dip">
 
             <TextView
-                android:padding="8dip"
                 android:id="@+id/textView_state"
                 style="@style/TypefaceStyle.ProximaNova"
-                android:textSize="15sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:padding="8dip"
+                android:textSize="15sp"/>
 
             <LinearLayout
-                android:padding="8dip"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dip">
 
                 <ImageView
-                    android:layout_marginRight="8dip"
-                    android:layout_marginLeft="8dip"
-                    android:background="@drawable/circle_stroke_apptheme"
-                    android:paddingLeft="8dip"
-                    android:paddingRight="8dip"
                     android:id="@+id/imageview_selectedmonster_1"
                     android:layout_width="58dip"
                     android:layout_height="58dip"
-                    app:srcCompat="@drawable/ic_clear_24dp"/>
-
-                <ImageView
-                    android:layout_marginRight="8dip"
                     android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
                     android:background="@drawable/circle_stroke_apptheme"
                     android:paddingLeft="8dip"
                     android:paddingRight="8dip"
+                    app:srcCompat="@drawable/ic_clear_24dp"/>
+
+                <ImageView
                     android:id="@+id/imageview_selectedmonster_2"
                     android:layout_width="58dip"
                     android:layout_height="58dip"
-                    app:srcCompat="@drawable/ic_clear_24dp"/>
-
-                <ImageView
-                    android:layout_marginRight="8dip"
                     android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
                     android:background="@drawable/circle_stroke_apptheme"
                     android:paddingLeft="8dip"
                     android:paddingRight="8dip"
+                    app:srcCompat="@drawable/ic_clear_24dp"/>
+
+                <ImageView
                     android:id="@+id/imageview_selectedmonster_3"
                     android:layout_width="58dip"
                     android:layout_height="58dip"
-                    app:srcCompat="@drawable/ic_clear_24dp"/>
-
-                <ImageView
-                    android:layout_marginRight="8dip"
                     android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
                     android:background="@drawable/circle_stroke_apptheme"
                     android:paddingLeft="8dip"
                     android:paddingRight="8dip"
+                    app:srcCompat="@drawable/ic_clear_24dp"/>
+
+                <ImageView
                     android:id="@+id/imageview_selectedmonster_4"
                     android:layout_width="58dip"
                     android:layout_height="58dip"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:background="@drawable/circle_stroke_apptheme"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
                     app:srcCompat="@drawable/ic_clear_24dp"/>
 
             </LinearLayout>
@@ -166,7 +166,7 @@
                 style="@style/AppTheme.button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
                 style="@style/AppTheme.button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"

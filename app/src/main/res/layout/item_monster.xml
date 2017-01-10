@@ -10,29 +10,29 @@
         android:id="@+id/imageView_monster"
         android:layout_width="72dip"
         android:layout_height="match_parent"
+        android:paddingBottom="8dip"
         android:paddingLeft="16dip"
         android:paddingRight="16dip"
         android:paddingTop="8dip"
-        android:paddingBottom="8dip"
         android:scaleType="centerCrop"
         android:src="@drawable/default_monster"/>
 
     <TextView
-        android:gravity="center"
         android:id="@+id/textview_monster_name"
         style="@style/TypefaceStyle.ProximaNova"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:padding="8dip"
         android:textSize="14sp"/>
 
     <LinearLayout
-        android:paddingLeft="16dip"
-        android:paddingRight="16dip"
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center|end">
+        android:layout_weight="1"
+        android:gravity="center|end"
+        android:paddingLeft="16dip"
+        android:paddingRight="16dip">
 
         <LinearLayout
             android:layout_width="26dip"
@@ -40,18 +40,17 @@
             android:background="@drawable/circle_stroke_apptheme">
 
             <ImageView
-                android:padding="3dip"
-                android:background="@drawable/circle_stroke_apptheme"
                 android:id="@+id/imageview_monster_type"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/circle_stroke_apptheme"
+                android:padding="3dip"
                 android:scaleType="fitEnd"
                 app:srcCompat="@drawable/elem_electric"/>
 
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

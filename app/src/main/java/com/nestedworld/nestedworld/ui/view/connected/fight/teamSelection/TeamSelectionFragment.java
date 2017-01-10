@@ -59,12 +59,6 @@ public class TeamSelectionFragment extends BaseFragment {
 
     private final List<UserMonster> mSelectedMonster = new ArrayList<>();
     private final UserMonsterPagerAdapter mAdapter = new UserMonsterPagerAdapter();
-
-    private List<UserMonster> mUserMonsters;
-    private int mMonsterCountRecommended;
-    private int mMonsterRequire;
-    private Combat mCombat = null;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -92,6 +86,10 @@ public class TeamSelectionFragment extends BaseFragment {
     ProgressView progressView;
     @BindView(R.id.textView_state)
     TextView textViewState;
+    private List<UserMonster> mUserMonsters;
+    private int mMonsterCountRecommended;
+    private int mMonsterRequire;
+    private Combat mCombat = null;
 
     /*
      * #############################################################################################

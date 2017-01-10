@@ -2,16 +2,15 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="512.000000dp"
         android:height="512.000000dp"
-        android:viewportWidth="512.000000"
-        android:viewportHeight="512.000000">
+        android:viewportHeight="512.000000"
+        android:viewportWidth="512.000000">
 
     <group
-        android:translateY="512.000000"
         android:scaleX="0.100000"
-        android:scaleY="-0.100000">
+        android:scaleY="-0.100000"
+        android:translateY="512.000000">
         <path
             android:fillColor="@color/monster_water"
-            android:strokeWidth="1"
             android:pathData="M2563 5109 c-33 -10 -63 -42 -63 -69 0 -9 -43 -65 -97 -125 -215 -245 -457 -562
 -661 -867 -621 -930 -959 -1846 -928 -2513 16 -359 111 -635 302 -881 252 -324 736
 -578 1218 -640 177 -22 455 -15 606 16 545 112 955 413 1189 871 344 675 193 1409
@@ -19,6 +18,7 @@
 -167 214z m-940 -2867 c36 -115 109 -256 180 -347 71 -93 167 -169 447 -358 339
 -229 459 -338 532 -484 70 -142 16 -261 -176 -387 -230 -152 -385 -163 -606 -44
 -114 62 -178 109 -251 185 -164 168 -297 443 -334 690 -21 137 -19 199 10 316 29
-118 156 517 164 517 3 0 19 -40 34 -88z" />
+118 156 517 164 517 3 0 19 -40 34 -88z"
+            android:strokeWidth="1"/>
     </group>
 </vector>

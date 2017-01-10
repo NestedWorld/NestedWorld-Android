@@ -27,9 +27,6 @@ import butterknife.OnClick;
 
 public class ChatFragment extends BaseFragment {
 
-    private ArrayAdapter<String> mItemAdapter;
-    private Friend mFriend;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -39,6 +36,8 @@ public class ChatFragment extends BaseFragment {
     EditText editTextChat;
     @BindView(R.id.listView_chat)
     ListView listViewChat;
+    private ArrayAdapter<String> mItemAdapter;
+    private Friend mFriend;
 
     /*
      * #############################################################################################

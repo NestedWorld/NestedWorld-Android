@@ -57,6 +57,23 @@ import retrofit2.Response;
 
 public class BattleFragment extends BaseFragment {
 
+    /*
+     * #############################################################################################
+     * # Butterknife widget binding
+     * #############################################################################################
+     */
+    @BindView(R.id.progressView)
+    ProgressView progressView;
+    @BindView(R.id.imageView_battle_background)
+    ImageView battleBackground;
+    @BindViews({
+            R.id.imageView_top,
+            R.id.imageView_top_right,
+            R.id.imageView_bottom_right,
+            R.id.imageView_bottom,
+            R.id.imageView_bottom_left,
+            R.id.imageView_top_left})
+    List<ImageView> mTitles;
     private String mUserGestureInput = "";
     private final DrawingGestureListener mDrawingGestureListener = new DrawingGestureListener() {
         @Override
@@ -96,25 +113,6 @@ public class BattleFragment extends BaseFragment {
             sendAttack();
         }
     };
-
-    /*
-     * #############################################################################################
-     * # Butterknife widget binding
-     * #############################################################################################
-     */
-    @BindView(R.id.progressView)
-    ProgressView progressView;
-    @BindView(R.id.imageView_battle_background)
-    ImageView battleBackground;
-    @BindViews({
-            R.id.imageView_top,
-            R.id.imageView_top_right,
-            R.id.imageView_bottom_right,
-            R.id.imageView_bottom,
-            R.id.imageView_bottom_left,
-            R.id.imageView_top_left})
-    List<ImageView> mTitles;
-
 
     /*
      * #############################################################################################
@@ -427,7 +425,7 @@ public class BattleFragment extends BaseFragment {
                 }
 
                 //Service connected, retrieving socketApi instance
-               final NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
+                final NestedWorldSocketAPI nestedWorldSocketAPI = ((SocketService.LocalBinder) service).getService().getApiInstance();
 
                 if (nestedWorldSocketAPI != null) {
                     //Sending request

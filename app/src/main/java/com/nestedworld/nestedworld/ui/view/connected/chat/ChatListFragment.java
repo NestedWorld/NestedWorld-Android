@@ -34,9 +34,6 @@ import butterknife.BindView;
 public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public final static String FRAGMENT_NAME = ChatListFragment.class.getSimpleName();
-
-    private ChatAdapter mAdapter;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -50,6 +47,7 @@ public class ChatListFragment extends BaseFragment implements SwipeRefreshLayout
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.textview_no_friend)
     TextView textViewNoFriend;
+    private ChatAdapter mAdapter;
 
     /*
      * #############################################################################################

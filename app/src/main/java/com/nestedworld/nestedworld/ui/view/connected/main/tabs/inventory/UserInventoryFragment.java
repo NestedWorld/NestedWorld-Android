@@ -34,8 +34,6 @@ import butterknife.BindView;
  */
 public class UserInventoryFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private UserItemAdapter mAdapter;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -49,6 +47,7 @@ public class UserInventoryFragment extends BaseFragment implements SwipeRefreshL
     ListView listViewInventory;
     @BindView(R.id.progressView)
     ProgressView progressView;
+    private UserItemAdapter mAdapter;
 
     /*
      * #############################################################################################

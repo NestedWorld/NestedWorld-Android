@@ -29,8 +29,6 @@ import butterknife.BindView;
 
 public class FightListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private FightAdapter mAdapter;
-
     /*
      * #############################################################################################
      * # Butterknife widget binding
@@ -40,6 +38,7 @@ public class FightListFragment extends BaseFragment implements SwipeRefreshLayou
     ListView listView;
     @BindView(R.id.swipeRefreshLayout_fight_list)
     SwipeRefreshLayout swipeRefreshLayout;
+    private FightAdapter mAdapter;
 
     /*
      * #############################################################################################
