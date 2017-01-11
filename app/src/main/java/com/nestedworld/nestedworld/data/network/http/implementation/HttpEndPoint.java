@@ -46,7 +46,7 @@ public final class HttpEndPoint {
     public final static String USER_FRIENDS = USER_PREFIX + "/friends/";
     public final static String USER_MONSTERS = USER_PREFIX + "/monsters";
     public final static String USER_INVENTORY = USER_INFO + "/inventory";
-    public final static String USER_DETAIL = USER_PREFIX + "/{userId]";
+    public final static String USER_DETAILS = USER_PREFIX + "/{userId]";
     public final static String USER_STATS = USER_PREFIX + "/{userId]/stats";
 
     /*

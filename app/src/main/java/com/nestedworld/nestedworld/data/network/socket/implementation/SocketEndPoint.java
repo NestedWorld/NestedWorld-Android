@@ -12,8 +12,8 @@ public final class SocketEndPoint {
                     : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_URL
                     : DEV_URL;
 
-    private final static int DEV_PORT = 6465;
-    private final static int PROD_PORT = 6464;
+    private final static int DEV_PORT = 6466;
+    private final static int PROD_PORT = 6466;
     public final static int SOCKET_PORT =
             (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.DEV) ? DEV_PORT
                     : (BuildConfig.ENVIRONMENT == NetworkConstant.Environement.PROD) ? PROD_PORT
