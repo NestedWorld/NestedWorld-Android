@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.nestedworld.nestedworld.data.converter.socket.combat.AvailableMessageConverter;
 import com.nestedworld.nestedworld.data.database.entities.Combat;
 import com.nestedworld.nestedworld.data.database.entities.CombatDao;
 import com.nestedworld.nestedworld.data.database.implementation.NestedWorldDatabase;
@@ -13,6 +14,7 @@ import com.nestedworld.nestedworld.data.network.socket.models.message.combat.Ava
 import com.nestedworld.nestedworld.gcm.handler.GcmHandler;
 import com.nestedworld.nestedworld.gcm.model.NotificationMessage;
 import com.nestedworld.nestedworld.helpers.gcm.GcmHelper;
+import com.nestedworld.nestedworld.helpers.log.LogHelper;
 import com.nestedworld.nestedworld.ui.view.disconnected.launch.LaunchActivity;
 
 import org.msgpack.value.Value;
@@ -30,19 +32,18 @@ public final class NestedWorldGcm {
                                @NonNull NotificationMessage notification,
                                @NonNull SocketMessageType.MessageKind messageKind,
                                @Nullable SocketMessageType.MessageKind idKind) {
-                AvailableMessage availableMessage = new AvailableMessage(notification.content, messageKind, idKind);
+                final AvailableMessage availableMessage = new AvailableMessage(notification.content, messageKind, idKind);
 
-                Combat combat = NestedWorldDatabase.getInstance()
+                //Convert response into entity
+                final Combat combat = new AvailableMessageConverter().convert(availableMessage);
+
+                //Save entity
+                NestedWorldDatabase.getInstance()
                         .getDataBase()
                         .getCombatDao()
-                        .queryBuilder()
-                        .where(CombatDao.Properties.CombatId.eq(availableMessage.combatId))
-                        .unique();
+                        .insertOrReplace(combat);//insertOrReplace cause user can start a combat with himself
 
-                if (combat != null) {
-                    //Display notification
-                    GcmHelper.displayNotification(context, "A new combat is available: " + combat.origin, LaunchActivity.class);
-                }
+                GcmHelper.displayNotification(context, "A new combat is available: " + combat.origin, LaunchActivity.class);
             }
         });
     }};
