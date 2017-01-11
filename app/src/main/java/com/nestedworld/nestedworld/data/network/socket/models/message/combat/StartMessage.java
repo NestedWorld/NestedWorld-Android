@@ -149,12 +149,18 @@ public class StartMessage extends DefaultMessage {
          */
         @Override
         protected void unSerialise(@NonNull Map<Value, Value> message) {
+            //non nullable field
             this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
             this.name = message.get(ValueFactory.newString("name")).asStringValue().asString();
             this.monsterId = message.get(ValueFactory.newString("monster_id")).asIntegerValue().asLong();
-            this.userMonsterId = message.get(ValueFactory.newString("user_monster_id")).asIntegerValue().asLong();
             this.hp = message.get(ValueFactory.newString("hp")).asIntegerValue().asInt();
             this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();
+
+            //nullable field
+            Value rawUserMonsterId = message.get(ValueFactory.newString("user_monster_id"));
+            if (rawUserMonsterId != null) {
+                this.userMonsterId = -1;
+            }
         }
 
         /*
