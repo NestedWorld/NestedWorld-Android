@@ -50,7 +50,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
-                UserJoinedMessage userJoinedMessage = new UserJoinedMessage(message, messageKind, idKind);
+                final UserJoinedMessage userJoinedMessage = new UserJoinedMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnUserJoinedEvent(userJoinedMessage));
@@ -61,7 +61,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
-                UserPartedMessage userPartedMessage = new UserPartedMessage(message, messageKind, idKind);
+                final UserPartedMessage userPartedMessage = new UserPartedMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnUserPartedEvent(userPartedMessage));
@@ -72,7 +72,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
-                MessageReceivedMessage messageReceivedMessage = new MessageReceivedMessage(message, messageKind, idKind);
+                final MessageReceivedMessage messageReceivedMessage = new MessageReceivedMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnMessageReceivedEvent(messageReceivedMessage));
@@ -83,7 +83,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
-                StartMessage startMessage = new StartMessage(message, messageKind, idKind);
+                final StartMessage startMessage = new StartMessage(message, messageKind, idKind);
 
                 //Send notification
                 EventBus.getDefault().post(new OnCombatStartMessageEvent(startMessage));
@@ -94,17 +94,16 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
-                AvailableMessage availableMessage = new AvailableMessage(message, messageKind, idKind);
+                final AvailableMessage availableMessage = new AvailableMessage(message, messageKind, idKind);
 
                 //Convert response into entity
-                Combat combat = new AvailableMessageConverter().convert(availableMessage);
+                final Combat combat = new AvailableMessageConverter().convert(availableMessage);
 
                 //Save entity
                 NestedWorldDatabase.getInstance()
                         .getDataBase()
                         .getCombatDao()
                         .insertOrReplace(combat);//insertOrReplace cause user can start a combat with himself
-
 
                 //Send event
                 EventBus.getDefault().post(new OnAvailableMessageEvent(availableMessage));
@@ -115,7 +114,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
-                MonsterKoMessage monsterKoMessage = new MonsterKoMessage(message, messageKind, idKind);
+                final MonsterKoMessage monsterKoMessage = new MonsterKoMessage(message, messageKind, idKind);
 
                 //Send Event
                 EventBus.getDefault().post(new OnMonsterKoEvent(monsterKoMessage));
@@ -126,7 +125,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse response
-                AttackReceiveMessage attackReveiveMessage = new AttackReceiveMessage(message, messageKind, idKind);
+                final AttackReceiveMessage attackReveiveMessage = new AttackReceiveMessage(message, messageKind, idKind);
 
                 //Send Event
                 EventBus.getDefault().post(new OnAttackReceiveEvent(attackReveiveMessage));
@@ -137,7 +136,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Parse message
-                CombatEndMessage combatEndMessage = new CombatEndMessage(message, messageKind, idKind);
+                final CombatEndMessage combatEndMessage = new CombatEndMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnCombatEndEvent(combatEndMessage));
@@ -148,7 +147,7 @@ public class SocketService extends Service {
             @Override
             public void handleMessage(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
                 //Generic response
-                ResultMessage resultMessage = new ResultMessage(message, messageKind, idKind);
+                final ResultMessage resultMessage = new ResultMessage(message, messageKind, idKind);
 
                 //Send event
                 EventBus.getDefault().post(new OnResultResponseEvent(resultMessage));

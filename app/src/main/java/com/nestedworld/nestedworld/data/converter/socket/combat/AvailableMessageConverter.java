@@ -15,8 +15,8 @@ public class AvailableMessageConverter implements SocketMessageConverter<Availab
      */
     @NonNull
     @Override
-    public Combat convert(@NonNull AvailableMessage source) {
-        Combat combat = new Combat();
+    public Combat convert(@NonNull final AvailableMessage source) {
+        final Combat combat = new Combat();
         combat.type = source.type;
         combat.combatId = source.combatId;
         combat.origin = source.origin;

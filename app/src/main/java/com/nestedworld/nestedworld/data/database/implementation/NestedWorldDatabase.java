@@ -14,6 +14,11 @@ import org.greenrobot.greendao.query.QueryBuilder;
 public final class NestedWorldDatabase {
     private final static String TAG = NestedWorldDatabase.class.getSimpleName();
 
+    /*
+     * #############################################################################################
+     * # Private field
+     * #############################################################################################
+     */
     private static NestedWorldDatabase mSingleton = null;
     private final DaoSession mDaoSession;
     private final DaoMaster.DevOpenHelper mDevOpenHelper;

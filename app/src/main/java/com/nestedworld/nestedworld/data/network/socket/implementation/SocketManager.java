@@ -207,7 +207,7 @@ public final class SocketManager {
                     LogHelper.d(TAG, "Listening on mSocket...");
                     while (mIsConnected) {
                         if (mMessageUnpacker != null) {
-                            ImmutableValue message = mMessageUnpacker.unpackValue();
+                            final ImmutableValue message = mMessageUnpacker.unpackValue();
                             notifyMessageReceived(message);
                         }
                     }

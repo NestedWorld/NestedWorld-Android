@@ -148,7 +148,7 @@ public class HomeFragment extends BaseFragment {
         if (resultCode == Activity.RESULT_OK) {
             if ((requestCode == PICK_BACKGROUND_IMAGE_REQUEST) || (requestCode == PICK_PROFIL_IMAGE_REQUEST)) {
                 if (data != null && data.getData() != null) {
-                    Uri uri = data.getData();
+                    final Uri uri = data.getData();
                     handleImagePickerResult(requestCode, uri);
                 }
             }
@@ -272,7 +272,8 @@ public class HomeFragment extends BaseFragment {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), requestCode);
     }
 
-    private void handleImagePickerResult(final int requestCode, @NonNull final Uri uri) {
+    private void handleImagePickerResult(final int requestCode,
+                                         @NonNull final Uri uri) {
         //Check if fragment hasn't been detach
         if (mContext == null) {
             return;

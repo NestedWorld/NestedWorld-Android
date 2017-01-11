@@ -28,9 +28,9 @@ public class StartMessage extends DefaultMessage {
     /*
     ** Constructor
      */
-    public StartMessage(@NonNull Map<Value, Value> message,
-                        @NonNull SocketMessageType.MessageKind messageKind,
-                        @Nullable SocketMessageType.MessageKind idKind) {
+    public StartMessage(@NonNull final Map<Value, Value> message,
+                        @NonNull final SocketMessageType.MessageKind messageKind,
+                        @Nullable final SocketMessageType.MessageKind idKind) {
         super(message, messageKind, idKind);
     }
 
@@ -47,14 +47,14 @@ public class StartMessage extends DefaultMessage {
         this.first = message.get(ValueFactory.newString("first")).asBooleanValue().getBoolean();
 
         if (message.containsKey(ValueFactory.newString("user"))) {
-            Map<Value, Value> userMap = message.get(ValueFactory.newString("user")).asMapValue().map();
+            final Map<Value, Value> userMap = message.get(ValueFactory.newString("user")).asMapValue().map();
             if (userMap != null) {
                 this.user = new StartMessagePlayer(userMap, getMessageKind(), null);
             }
         }
 
         if (message.containsKey(ValueFactory.newString("opponent"))) {
-            Map<Value, Value> opponentMap = message.get(ValueFactory.newString("opponent")).asMapValue().map();
+            final Map<Value, Value> opponentMap = message.get(ValueFactory.newString("opponent")).asMapValue().map();
             if (opponentMap != null) {
                 this.opponent = new StartMessageOpponent(opponentMap, getMessageKind(), null);
             }
@@ -85,12 +85,14 @@ public class StartMessage extends DefaultMessage {
 
         public StartMessagePlayerMonster monster;
 
-        public StartMessagePlayer(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+        public StartMessagePlayer(@NonNull final Map<Value, Value> message,
+                                  @NonNull final SocketMessageType.MessageKind messageKind,
+                                  @Nullable final SocketMessageType.MessageKind idKind) {
             super(message, messageKind, idKind);
         }
 
         @Override
-        protected void unSerialise(@NonNull Map<Value, Value> message) {
+        protected void unSerialise(@NonNull final Map<Value, Value> message) {
             this.monster = new StartMessagePlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
         }
     }
@@ -102,7 +104,9 @@ public class StartMessage extends DefaultMessage {
         /*
         ** Constructor
          */
-        public StartMessageOpponent(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+        public StartMessageOpponent(@NonNull final Map<Value, Value> message,
+                                    @NonNull final SocketMessageType.MessageKind messageKind,
+                                    @Nullable final SocketMessageType.MessageKind idKind) {
             super(message, messageKind, idKind);
         }
 
@@ -110,7 +114,7 @@ public class StartMessage extends DefaultMessage {
         ** Life cycle
          */
         @Override
-        protected void unSerialise(@NonNull Map<Value, Value> message) {
+        protected void unSerialise(@NonNull final Map<Value, Value> message) {
             this.monster = new StartMessagePlayerMonster(message.get(ValueFactory.newString("monster")).asMapValue().map(), getMessageKind(), null);
             this.monsterCount = message.get(ValueFactory.newString("monsters_count")).asIntegerValue().asInt();
         }
@@ -127,7 +131,9 @@ public class StartMessage extends DefaultMessage {
         /*
         ** Constructor
          */
-        public StartMessagePlayerMonster(@NonNull Map<Value, Value> message, @NonNull SocketMessageType.MessageKind messageKind, @Nullable SocketMessageType.MessageKind idKind) {
+        public StartMessagePlayerMonster(@NonNull final Map<Value, Value> message,
+                                         @NonNull final SocketMessageType.MessageKind messageKind,
+                                         @Nullable final SocketMessageType.MessageKind idKind) {
             super(message, messageKind, idKind);
         }
 
@@ -148,7 +154,7 @@ public class StartMessage extends DefaultMessage {
         ** Life cycle
          */
         @Override
-        protected void unSerialise(@NonNull Map<Value, Value> message) {
+        protected void unSerialise(@NonNull final Map<Value, Value> message) {
             //non nullable field
             this.id = message.get(ValueFactory.newString("id")).asIntegerValue().asLong();
             this.name = message.get(ValueFactory.newString("name")).asStringValue().asString();
@@ -157,7 +163,7 @@ public class StartMessage extends DefaultMessage {
             this.level = message.get(ValueFactory.newString("level")).asIntegerValue().asInt();
 
             //nullable field
-            Value rawUserMonsterId = message.get(ValueFactory.newString("user_monster_id"));
+            final Value rawUserMonsterId = message.get(ValueFactory.newString("user_monster_id"));
             if (rawUserMonsterId != null) {
                 this.userMonsterId = -1;
             }

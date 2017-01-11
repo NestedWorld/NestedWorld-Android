@@ -38,7 +38,11 @@ public final class GcmHelper {
 
         //Add action on notification
         final Intent intentTarget = new Intent(context, target);
-        final PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 1, intentTarget, PendingIntent.FLAG_CANCEL_CURRENT);
+        final PendingIntent resultPendingIntent = PendingIntent.getActivity(
+                context,
+                1,
+                intentTarget,
+                PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(resultPendingIntent);
 
         //Display notification

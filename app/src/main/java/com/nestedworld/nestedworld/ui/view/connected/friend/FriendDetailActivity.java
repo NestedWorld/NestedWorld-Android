@@ -46,6 +46,7 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
     TextView textViewFriendName;
     @BindView(R.id.swipeRefreshLayout_friend_detail)
     SwipeRefreshLayout swipeRefreshLayout;
+
     /*
      * #############################################################################################
      * # Private field
@@ -128,7 +129,7 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
         }
 
         //Check if the retrieved friend is valid (IE has friendData)
-        FriendData friendData = friend.getData();
+        final FriendData friendData = friend.getData();
         if (friendData == null) {
             LogHelper.e(TAG, "Couldn't launch activity without friendData");
             finish();
