@@ -163,6 +163,9 @@ dependencies {
     //multi dex
     compile 'com.android.support:multidex:1.0.1'
 
+    //Pie chart
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+
     //AWS
     compile "com.amazonaws:aws-android-sdk-core:${awsVersion}"
     compile "com.amazonaws:aws-android-sdk-s3:${awsVersion}"
