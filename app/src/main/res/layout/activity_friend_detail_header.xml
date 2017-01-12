@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="75dip">
+    android:layout_height="150dip">
 
     <ImageView
+        android:id="@+id/imageView_friend_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.5"
@@ -14,10 +15,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/apptheme_background_half"
+        android:gravity="center"
+        android:orientation="vertical"
         android:paddingBottom="8dip"
-        android:paddingEnd="16dip"
-        android:paddingStart="16dip"
         android:paddingTop="8dip">
 
         <ImageView
@@ -25,15 +27,27 @@
             android:layout_width="55dip"
             android:layout_height="55dip"
             android:scaleType="fitCenter"
-            android:src="@drawable/default_avatar"/>
+            android:src="@drawable/default_avatar_rounded"/>
 
         <TextView
             android:id="@+id/textview_friendName"
+            style="@style/TypefaceStyle.ProximaNova.bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dip"
-            android:textColor="@color/apptheme_color"/>
+            android:gravity="center"
+            android:lines="2"
+            android:maxLines="2"
+            android:textSize="14sp"/>
 
+        <TextView
+            android:id="@+id/textview_friendLevel"
+            style="@style/TypefaceStyle.ProximaNova.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lines="2"
+            android:maxLines="2"
+            android:textSize="14sp"/>
     </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>

@@ -76,7 +76,7 @@ public class HomeFragment extends BaseFragment {
 
     /*
      * #############################################################################################
-     * # Public (static)
+     * # Public (static) method
      * #############################################################################################
      */
     public static void load(@NonNull final FragmentManager fragmentManager) {
@@ -241,7 +241,7 @@ public class HomeFragment extends BaseFragment {
                         .bitmapTransform(new CropCircleTransformation(mContext))
                         .into(imageViewUser);
             } catch (OutOfMemoryError e) {
-                //can no display picture, probably due to CropCircleTransaction()
+                //can not display picture, probably due to CropCircleTransaction()
             }
         }
 

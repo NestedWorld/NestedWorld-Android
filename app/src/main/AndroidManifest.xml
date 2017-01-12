@@ -42,17 +42,20 @@
 
         </activity>
 
-        <activity android:name=".ui.view.connected.fight.PortalFightProcess"
-                  android:label="@string/app_name"
-                  android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".ui.view.connected.fight.PortalFightProcess"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
-        <activity android:name=".ui.view.connected.friend.FriendDetailActivity"
-                  android:label="@string/app_name"
-                  android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".ui.view.connected.friend.FriendDetailActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
-        <activity android:name=".ui.view.connected.monster.userMonsterDetail.UserMonsterDetailActivity"
-                  android:label="@string/app_name"
-                  android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".ui.view.connected.monster.userMonsterDetail.UserMonsterDetailActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <activity
             android:name=".ui.view.connected.monster.monsterDetail.MonsterDetailActivity"
@@ -75,7 +78,8 @@
             android:parentActivityName=".ui.view.connected.main.MainMenuActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <activity android:name=".ui.view.connected.fight.FightProcessActivity"
+        <activity
+            android:name=".ui.view.connected.fight.FightProcessActivity"
             android:label="@string/app_name"
             android:parentActivityName=".ui.view.connected.main.MainMenuActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />

@@ -46,7 +46,7 @@
                 android:background="@drawable/circle_stroke_apptheme"
                 android:padding="3dip"
                 android:scaleType="fitEnd"
-                app:srcCompat="@drawable/elem_electric"/>
+                app:srcCompat="@drawable/element_electric"/>
 
         </LinearLayout>
 

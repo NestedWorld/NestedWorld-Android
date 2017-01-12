@@ -1,4 +1,7 @@
 <resources>
     <dimen name="global_padding">8dip</dimen>
     <dimen name="item_user_monster_width">72dip</dimen>
+    <dimen name="friend_piechart">88dip</dimen>
+    <dimen name="friend_monster_type">88dip</dimen>
+    <dimen name="friend_monsters_type_container">264dip</dimen>
 </resources>

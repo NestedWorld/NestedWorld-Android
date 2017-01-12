@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nestedworld.nestedworld.R;
 import com.nestedworld.nestedworld.data.database.entities.friend.Friend;
 import com.nestedworld.nestedworld.data.database.entities.friend.FriendDao;
@@ -20,6 +23,7 @@ import com.nestedworld.nestedworld.data.network.http.implementation.NestedWorldH
 import com.nestedworld.nestedworld.data.network.http.models.response.users.UserDetailResponse;
 import com.nestedworld.nestedworld.data.network.http.models.response.users.UserStatsResponse;
 import com.nestedworld.nestedworld.helpers.log.LogHelper;
+import com.nestedworld.nestedworld.ui.adapter.fragmentStatePager.TabsAdapter;
 import com.nestedworld.nestedworld.ui.view.base.BaseAppCompatActivity;
 
 import java.io.Serializable;
@@ -27,11 +31,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendDetailActivity extends BaseAppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class FriendDetailActivity extends BaseAppCompatActivity {
 
     /*
      * #############################################################################################
@@ -44,8 +49,14 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
     ImageView imageViewFriendPicture;
     @BindView(R.id.textview_friendName)
     TextView textViewFriendName;
-    @BindView(R.id.swipeRefreshLayout_friend_detail)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.imageView_friend_background)
+    ImageView imageViewFriendBackground;
+    @BindView(R.id.textview_friendLevel)
+    TextView textViewFriendLevel;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+    @BindView(R.id.sliding_tabs)
+    TabLayout tabLayout;
 
     /*
      * #############################################################################################
@@ -54,17 +65,6 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
      */
     private Friend mFriend;
     private FriendData mFriendData;
-
-    /*
-     * #############################################################################################
-     * # SwipeRefreshLayout.OnRefreshListener implementation
-     * #############################################################################################
-     */
-    @Override
-    public void onRefresh() {
-        retrieveFriendDetail();
-        retrieveFriendStat();
-    }
 
     /*
      * #############################################################################################
@@ -78,9 +78,15 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
 
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
-        setUpToolbar();
+        //parse intent (should be called firstly)
         retrieveFriendFromIntent();
-        setupSwipeRefreshLayout();
+
+        //Setup view
+        setupTabs();
+        setUpToolbar();
+        setupLocalFriendInfo();
+
+        //send needed request
         retrieveFriendDetail();
         retrieveFriendStat();
     }
@@ -92,10 +98,28 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
      */
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
+
+        //Get back the Toolbar as actionBar and then custom it
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            //customise the actionBar
+            actionBar.setTitle(R.string.friendDetail_title);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
-    private void setupSwipeRefreshLayout() {
-        swipeRefreshLayout.setOnRefreshListener(this);
+    private void setupTabs() {
+        //Setup adapter
+        final TabsAdapter viewPagerAdapter = new TabsAdapter(getSupportFragmentManager())
+                .setDisplayPageTitle(true)
+                .addFragment(new FriendCatchFragment(), getString(R.string.friendDetail_title_catch))
+                .addFragment(new FriendMonsterFragment(), getString(R.string.friendDetail_title_monster));
+
+        viewPager.setAdapter(viewPagerAdapter);
+
+        //Add view pager to the tabLayout
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void retrieveFriendFromIntent() {
@@ -145,12 +169,14 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
                 .getUserDetails(mFriendData.playerId)
                 .enqueue(new Callback<UserDetailResponse>() {
                     @Override
-                    public void onResponse(Call<UserDetailResponse> call, Response<UserDetailResponse> response) {
+                    public void onResponse(Call<UserDetailResponse> call,
+                                           Response<UserDetailResponse> response) {
 
                     }
 
                     @Override
-                    public void onFailure(Call<UserDetailResponse> call, Throwable t) {
+                    public void onFailure(Call<UserDetailResponse> call,
+                                          Throwable t) {
 
                     }
                 });
@@ -170,6 +196,41 @@ public class FriendDetailActivity extends BaseAppCompatActivity implements Swipe
 
                     }
                 });
+    }
+
+    private void setupLocalFriendInfo() {
+        //Setup friend lvl/pseudo
+        textViewFriendName.setText(mFriendData.pseudo);
+        textViewFriendLevel.setText(String.format(getString(R.string.friendDetail_msg_level), mFriendData.level));
+
+        //Setup friend avatar
+        if (mFriendData.avatar != null) {
+            try {
+                Glide.with(this)
+                        .load(mFriendData.avatar)
+                        .placeholder(R.drawable.default_avatar_rounded)
+                        .error(R.drawable.default_avatar_rounded)
+                        .centerCrop()
+                        .bitmapTransform(new CropCircleTransformation(this))
+                        .into(imageViewFriendPicture);
+            } catch (OutOfMemoryError e) {
+                //can not display picture, probably due to CropCircleTransaction()
+            }
+        }
+
+        //Setup header background
+        if (mFriendData.background != null) {
+            try {
+                Glide.with(this)
+                        .load(mFriendData.background)
+                        .placeholder(R.drawable.logo)
+                        .error(R.drawable.logo)
+                        .centerCrop()
+                        .into(imageViewFriendBackground);
+            } catch (OutOfMemoryError e) {
+                //can not display picture, probably due to CropCircleTransaction()
+            }
+        }
     }
 
     /*

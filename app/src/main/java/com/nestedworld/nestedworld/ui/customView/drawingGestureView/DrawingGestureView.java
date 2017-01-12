@@ -25,17 +25,17 @@ import java.util.List;
  **/
 public class DrawingGestureView extends View {
     private final static String TAG = DrawingGestureView.class.getSimpleName();
+
     private static final float TOUCH_TOLERANCE = 4;
 
     private final Paint mPaint;
     private final Path mPath;
     private final Paint mBitmapPaint;
-    private final Paint circlePaint;
-    private final Path circlePath;
+    private final Paint mCirclePaint;
+    private final Path mCirclePath;
 
-    private int width;
-    private int height;
-    private Canvas mCanvas;
+    private int mWidth;
+    private int mHeight;
     private Bitmap mBitmap;
     private float mX, mY;
     private List<ImageView> mTiles = new ArrayList<>();
@@ -56,13 +56,13 @@ public class DrawingGestureView extends View {
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
-        circlePaint = new Paint();
-        circlePath = new Path();
-        circlePaint.setAntiAlias(true);
-        circlePaint.setColor(Color.BLUE);
-        circlePaint.setStyle(Paint.Style.STROKE);
-        circlePaint.setStrokeJoin(Paint.Join.MITER);
-        circlePaint.setStrokeWidth(4f);
+        mCirclePaint = new Paint();
+        mCirclePath = new Path();
+        mCirclePaint.setAntiAlias(true);
+        mCirclePaint.setColor(Color.BLUE);
+        mCirclePaint.setStyle(Paint.Style.STROKE);
+        mCirclePaint.setStrokeJoin(Paint.Join.MITER);
+        mCirclePaint.setStrokeWidth(4f);
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -103,11 +103,10 @@ public class DrawingGestureView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        width = w;
-        height = h;
+        mWidth = w;
+        mHeight = h;
 
         mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
     }
 
     @Override
@@ -116,15 +115,15 @@ public class DrawingGestureView extends View {
 
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
         canvas.drawPath(mPath, mPaint);
-        canvas.drawPath(circlePath, circlePaint);
+        canvas.drawPath(mCirclePath, mCirclePaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
 
-        float x = event.getX();
-        float y = event.getY();
+        final float x = event.getX();
+        final float y = event.getY();
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -174,8 +173,8 @@ public class DrawingGestureView extends View {
             mX = x;
             mY = y;
 
-            circlePath.reset();
-            circlePath.addCircle(mX, mY, 30, Path.Direction.CW);
+            mCirclePath.reset();
+            mCirclePath.addCircle(mX, mY, 30, Path.Direction.CW);
         }
     }
 
@@ -204,19 +203,19 @@ public class DrawingGestureView extends View {
     }
 
     private void clearDrawing() {
-        circlePath.reset();
+        mCirclePath.reset();
         mPath.reset();
 
         setDrawingCacheEnabled(false);
 
-        onSizeChanged(width, height, width, height);
+        onSizeChanged(mWidth, mHeight, mWidth, mHeight);
         invalidate();
 
         setDrawingCacheEnabled(true);
     }
 
     private void clearTilesBackground() {
-        for (View tiles : mTiles) {
+        for (final View tiles : mTiles) {
             tiles.setBackgroundColor(Color.TRANSPARENT);
         }
     }

@@ -102,13 +102,13 @@ public class Monster extends BaseEntity {
 
         switch (type) {
             case "water":
-                return R.drawable.elem_water;
+                return R.drawable.element_water;
             case "fire":
                 return R.drawable.element_fire;
             case "earth":
                 return R.drawable.element_earth;
             case "electric":
-                return R.drawable.elem_electric;
+                return R.drawable.element_electric;
             case "plant":
                 return R.drawable.element_plant;
             default:

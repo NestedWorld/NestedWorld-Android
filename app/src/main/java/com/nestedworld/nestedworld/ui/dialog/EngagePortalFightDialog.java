@@ -40,7 +40,7 @@ public class EngagePortalFightDialog extends BaseDialogFragment {
         if (mPortal != null) {
             initialBuilder
                     .setTitle(mPortal.name)
-                    .setMessage("Engage a fight with this portal ?")
+                    .setMessage("Engage a fight with this portal ?")//TODO should use place holder
                     .setPositiveButton("yes", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

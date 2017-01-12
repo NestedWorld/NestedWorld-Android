@@ -4,6 +4,7 @@
     <!--Generic-->
     <string name="integer" translatable="false">%d</string>
     <string name="unknown">Unknown</string>
+    <string name="item_friend_defy">Defy</string>
 
     <!--Error message-->
     <string name="error_emailInvalid">Invalid email !</string>
@@ -121,7 +122,10 @@
     <string name="chat_msg_noFriend">You don\'t have any friend</string>
 
     <!--Friend-->
-    <string name="friend_defy">Defy</string>
+    <string name="friendDetail_title">Statistics</string>
+    <string name="friendDetail_title_catch">Catch</string>
+    <string name="friendDetail_title_monster">Monster</string>
+    <string name="friendDetail_msg_level" formatted="false">Level : %d</string>
 
     <!--Attack adapter-->
     <string name="item_attack_msg_attackType">Type: %s</string>
