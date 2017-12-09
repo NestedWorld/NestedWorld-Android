@@ -1,34 +1,13 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'https://maven.fabric.io/public' }
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'//Needed by greeenDao
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-    maven {
-        url 'https://maven.google.com/'
-        name 'Google'
-    }
-}
-
 apply plugin: 'org.greenrobot.greendao'
-////////////////////////////////////////////////////////////////////////////////////////////////////
+
 android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.kassisdion.nestedworld"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -43,6 +22,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/rxjava.properties'
+    }
+
     dexOptions {
         javaMaxHeapSize "12g"
     }
@@ -53,12 +46,10 @@ android {
             resValue "string", "app_name", "Nestedworld"
             buildConfigField "Boolean", "LOG", 'false'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
         debug {//Same as dev (without app_name and environment)
             buildConfigField "Boolean", "LOG", 'true'
             versionNameSuffix "-SNAPSHOT"
-            signingConfig signingConfigs.debug
         }
         with_back_dev {
             initWith debug // inherit from debug (attribute and signing configurations).
@@ -77,15 +68,9 @@ android {
         dev {
             applicationIdSuffix = ".dev"
             dimension "environement"
-
-            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-            // to pre-dex each module and produce an APK that can be tested on
-            // Android Lollipop without time consuming dex merging processes.
-            minSdkVersion 21
         }
         prod {
             dimension "environement"
-            minSdkVersion 16
         }
     }
 
@@ -95,16 +80,16 @@ android {
        //Loop over flavor
         variant.getFlavors().each { flavor ->
             //If we build a build dev flavor, we just want to ignore the "default" buildType
-            if (flavor.name.equals('dev')) {
+            if (flavor.name == 'dev') {
                 //If it's a "default" buildtype, ignore it
-                if (variant.buildType.name.equals('debug') || variant.buildType.name.equals('release')) {
+                if (variant.buildType.name == 'debug' || variant.buildType.name == 'release') {
                     variant.setIgnore(true)
                 }
             }
             //If we build a build prod flavor, we only a back_prod buildType
-            else if (flavor.name.equals('prod')) {
+            else if (flavor.name == 'prod') {
                 //If it's not a back_prod buildType, ignore it
-                if (!variant.buildType.name.equals('with_back_prod')) {
+                if (variant.buildType.name != 'with_back_prod') {
                     variant.setIgnore(true)
                 }
             }
@@ -116,70 +101,61 @@ greendao {
     schemaVersion 2
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-ext {
-    supportLibVersion = '25.1.0'
-    retrofitVersion = '2.1.0'
-    okHttpVersion = '3.4.1'
-    butterknifeVersion = '8.4.0'
-    awsVersion = '2.2.22'
-}
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //GPS
-    compile 'com.google.android.gms:play-services-maps:10.0.1'
+    implementation 'com.google.android.gms:play-services-maps:11.6.2'
 
     //Annotation replacing findViewById()
-    compile "com.jakewharton:butterknife:${butterknifeVersion}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 
     //Support library
-    compile "com.android.support:appcompat-v7:${supportLibVersion}"
-    compile "com.android.support:design:${supportLibVersion}"
-    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
 
     //Material design support helper
-    compile 'com.github.rey5137:material:1.2.4'
-    compile 'com.avast:android-styled-dialogs:2.3.3'
+    implementation 'com.github.rey5137:material:1.2.4'
+    implementation 'com.avast:android-styled-dialogs:2.3.3'
 
     //Rounded image (with border)
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
 
     //API
-    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"//send request
-    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"//use Json converter
-    compile "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"//display log
-    compile "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"//send request
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"//use Json converter
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okHttpVersion"//display log
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.okHttpVersion"
 
     //ORM
-    compile 'org.greenrobot:greendao:3.2.0'
+    implementation 'org.greenrobot:greendao:3.2.0'
 
     //MessagePack (real time API)
-    compile 'org.msgpack:msgpack-core:0.8.11'
+    implementation 'org.msgpack:msgpack-core:0.8.11'
 
     //Customize typeface
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 
     //Image management
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'jp.wasabeef:glide-transformations:1.3.1'//rounded image
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'jp.wasabeef:glide-transformations:2.0.2'//rounded image
 
     //Public / Subsbrice to event
-    compile 'org.greenrobot:eventbus:3.0.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
 
     //multi dex
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.2'
 
     //Pie chart
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 
     //AWS
-    compile "com.amazonaws:aws-android-sdk-core:${awsVersion}"
-    compile "com.amazonaws:aws-android-sdk-s3:${awsVersion}"
-    compile "com.amazonaws:aws-android-sdk-ddb:${awsVersion}"
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
-        transitive = true;
+    implementation "com.amazonaws:aws-android-sdk-core:$rootProject.ext.awsVersion"
+    implementation "com.amazonaws:aws-android-sdk-s3:$rootProject.ext.awsVersion"
+    implementation "com.amazonaws:aws-android-sdk-ddb:$rootProject.ext.awsVersion"
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true
     }
 }
