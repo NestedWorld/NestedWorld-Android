@@ -4,7 +4,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'//Needed by greeenDao
         classpath 'io.fabric.tools:gradle:1.+'
     }
@@ -15,47 +15,38 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
 }
 
 apply plugin: 'org.greenrobot.greendao'
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-
+    compileSdkVersion 27
     defaultConfig {
+        applicationId "com.kassisdion.nestedworld"
         minSdkVersion 16
         targetSdkVersion 25
-        applicationId "com.kassisdion.nestedworld"
         versionCode 1
         versionName "1.0"
-        resConfigs ("en", "fr")
-        multiDexEnabled true
-        vectorDrawables.useSupportLibrary = true
+
+        renderscriptTargetApi 19
         renderscriptSupportModeEnabled true
-    }
-    productFlavors {
-        dev {
-            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-            // to pre-dex each module and produce an APK that can be tested on
-            // Android Lollipop without time consuming dex merging processes.
-            minSdkVersion 21
-        }
-        prod {
-            minSdkVersion 16
-        }
-    }
-    signingConfigs {
-        release {
 
-        }
-        debug {
+        vectorDrawables.useSupportLibrary = true
+        resConfigs ("en", "fr")
 
-        }
+        multiDexEnabled true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     dexOptions {
-        javaMaxHeapSize "4g"
+        javaMaxHeapSize "12g"
     }
+
     buildTypes {
         release {
             buildConfigField "com.nestedworld.nestedworld.data.network.NetworkConstant.Environement", "ENVIRONMENT", "com.nestedworld.nestedworld.data.network.NetworkConstant.Environement.PROD"
@@ -80,6 +71,24 @@ android {
             resValue "string", "app_name", "Nestedworld Prod"
         }
     }
+
+    flavorDimensions("environement")
+    productFlavors {
+        dev {
+            applicationIdSuffix = ".dev"
+            dimension "environement"
+
+            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+        }
+        prod {
+            dimension "environement"
+            minSdkVersion 16
+        }
+    }
+
     //Special rules for allowing only some buildType/flavor pair
     //Loop over variants
    variantFilter { variant ->
